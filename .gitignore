@@ -1,0 +1,40 @@
+# Hugo build directories
+/public/
+/resources/
+
+# Hugo and theme specific
+/themes/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE or Editor-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+
+# Node.js (if you're using npm for the theme or custom scripts)
+node_modules/
+
+# Hugo Cache
+.cache/
+
+# Build cache
+/hugo_cache/
+
+# Personal environment files (you may have specific files for dev environments, secrets, etc.)
+*.env
+
+# Temporary files
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# GitHub Pages specific:
+# If you're using GitHub Pages, ensure you don't push the build directory, which contains the static files for the website
+# You should only commit your source files, not the public files that get generated.

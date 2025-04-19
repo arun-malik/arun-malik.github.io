@@ -1,0 +1,45 @@
+baseURL = 'https://blog.arunmalik.dev/'
+languageCode = 'en-us'
+title = "Shift Happens 😱"
+subTitle = "Especially in PROD🚨 and it’s always at 3 AM ⏰"
+theme = 'PaperMod'
+
+[params]
+  defaultTheme = "auto"  # Options: "auto", "light", "dark"
+  showShareButtons = true  # Use camelCase for parameters
+  showReadingTime = true
+  showPostNavLinks = true
+  showBreadCrumbs = true
+  enableSidebar = true  # Corrected to lowercase "enableSidebar"
+  sidebarPosition = "right"  # "left" or "right"
+  recentPosts = true  # Corrected to lowercase "recentPosts"
+  paginate = 10  # Number of posts per page
+  showAuthorInfo = true  # Corrected to lowercase "showAuthorInfo"
+  enableTOC = true  # Corrected to lowercase "enableTOC"
+  ShowRecentPosts = true  # Make sure this is set to true
+  author = "Arun Malik"
+  authorHomepage = "/authors/"
+
+  [params.footer]
+    text = "Made with ❤️ by Arun Malik."
+
+  [params.social]
+    twitter = "https://twitter.com/itsmearunmalik"
+    linkedin = "https://www.linkedin.com/in/malik-arun/"
+    github = "https://github.com/arun-malik"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 3
