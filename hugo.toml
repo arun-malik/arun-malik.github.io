@@ -1,0 +1,81 @@
+baseURL = 'https://blog.arunmalik.dev/'
+languageCode = 'en-US'
+enableRobotsTXT = true
+
+title = "Shift Happens"
+subTitle = "Especially in PROD and it’s always at 3 AM !!"
+
+theme = 'rusty-typewriter'
+
+[params.author]
+name = 'Arun Malik'
+
+[params]
+  defaultTheme = "auto"              # Theme switching option (light/dark/auto)
+  showShareButtons = true            # Show social share buttons
+  showReadingTime = true             # Show reading time on posts
+  showPostNavLinks = true            # Show navigation links for posts (next/previous)
+  showBreadCrumbs = true             # Show breadcrumbs
+  recentPosts = true                 # Display recent posts in the sidebar
+  paginate = 10                      # Number of posts per page (pagination)
+  showAuthorInfo = true              # Display author information in posts
+  enableTOC = true                   # Show table of contents for posts (set to false if not needed)
+  ShowRecentPosts = true             # Show recent posts (sidebar or footer, based on theme setup)
+
+  # Rusty Typewriter specific customizations
+  showTags = true                    # Show tags in posts (if applicable)
+  enableComments = false             # Disable comments (set to true if you want to enable them)
+
+
+[params.rtwt]
+  sidePane = true
+  countPageItems = 6
+
+[params.rtwt.home]
+  showBio = true
+  showAuthorImg = true
+  sidePaneTags = true
+  showFeatured = true
+  showRecent = true
+  hideRecentWhenFeatured = true
+  countRecent = 6
+
+[params.rtwt.side.home]
+  sidePaneSticky = false
+  taxonomies = ['tags','series']
+  countTaxonomy = 6
+
+[taxonomies]
+tag = 'tags'
+topic = 'topics'
+series = 'series'
+
+[params.rtwt.side.single]
+  sidePaneSticky = true
+  showDetails = true
+  showTableOfContents = true
+  showAttachments = true
+  showRelated = true
+  countRelated = 5
+
+[params.social]
+  twitter = "https://twitter.com/itsmearunmalik"
+  linkedin = "https://www.linkedin.com/in/malik-arun/"
+  github = "https://github.com/arun-malik"
+
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 3

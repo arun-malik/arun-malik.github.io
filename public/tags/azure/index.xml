@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Azure on Shift Happens</title>
+    <link>https://blog.arunmalik.dev/tags/azure/</link>
+    <description>Recent content in Azure on Shift Happens</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 19 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.arunmalik.dev/tags/azure/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zero Trust in Azure: Because Trust is Overrated</title>
+      <link>https://blog.arunmalik.dev/posts/zerotrust/</link>
+      <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.arunmalik.dev/posts/zerotrust/</guid>
+      <description>&lt;h1 id=&#34;zero-trust-in-azure-because-trust-is-overrated&#34;&gt;Zero Trust in Azure: Because Trust is Overrated&lt;/h1&gt;&#xA;&lt;p&gt;In today’s digital world, securing your cloud environment is crucial, and a &lt;strong&gt;Zero Trust&lt;/strong&gt; approach is one of the best ways to protect against unauthorized access and potential breaches. When implementing Zero Trust in &lt;strong&gt;Azure&lt;/strong&gt;, there are several strategies that can help secure your network and ensure that every request, connection, and user is continuously verified. Here’s a breakdown of key strategies to secure your Azure environment using &lt;strong&gt;Zero Trust&lt;/strong&gt; principles.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,71 @@
+baseURL = 'https://blog.arunmalik.dev/'
+languageCode = 'en-us'
+title = "Shift Happens 😱"
+subTitle = "Especially in PROD🚨 and it’s always at 3 AM ⏰"
+theme = 'rusty-typewriter'
+
+[params]
+  defaultTheme = "auto"  # Options: "auto", "light", "dark"
+  showShareButtons = true  # Use camelCase for parameters
+  showReadingTime = true
+  showPostNavLinks = true
+  showBreadCrumbs = true
+  enableSidebar = true  # Corrected to lowercase "enableSidebar"
+  sidebarPosition = "right"  # "left" or "right"
+  recentPosts = true  # Corrected to lowercase "recentPosts"
+  paginate = 10  # Number of posts per page
+  showAuthorInfo = true  # Corrected to lowercase "showAuthorInfo"
+  enableTOC = true  # Corrected to lowercase "enableTOC"
+  ShowRecentPosts = true  # Make sure this is set to true
+  author = "Arun Malik"
+  authorHomepage = "/authors/"
+
+[params.rtwt]
+  sidePane = true
+  countPageItems = 7
+
+[params.rtwt.home]
+  showBio = true
+  showAuthorImg = true
+  sidePaneTags = true
+  showFeatured = true
+  showRecent = true
+  hideRecentWhenFeatured = true
+  countRecent = 5
+
+[params.rtwt.side.home]
+  sidePaneSticky = false
+  taxonomies = ['tags']
+  countTaxonomy = 5
+
+[params.rtwt.side.single]
+  sidePaneSticky = true
+  showDetails = true
+  showTableOfContents = true
+  showAttachments = true
+  showRelated = true
+  countRelated = 5
+
+[params.footer]
+  text = "Made with ❤️ by Arun Malik."
+
+[params.social]
+  twitter = "https://twitter.com/itsmearunmalik"
+  linkedin = "https://www.linkedin.com/in/malik-arun/"
+  github = "https://github.com/arun-malik"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 3
