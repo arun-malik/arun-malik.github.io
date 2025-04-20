@@ -10,15 +10,15 @@ jobs:
 
     steps:
       - name: Checkout code with submodules
-        uses: actions/checkout@v3  # Ensure using the latest stable version (v3)
+        uses: actions/checkout@v4
         with:
-          submodules: recursive   # Ensures that submodules are also pulled
-          fetch-depth: 0          # Fetch full history to get all submodules history
+          submodules: recursive
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.146.0'  # Hugo version
+          hugo-version: '0.146.5'  # Hugo version
           extended: true           # Enable extended version for things like Sass
 
       - name: Build site
