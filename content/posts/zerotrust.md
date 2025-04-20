@@ -8,11 +8,14 @@ draft: false
 description: "Learn how to implement Zero Trust security in Azure to protect your environment with powerful tools like NSGs, Azure Policies, and more."
 series: ["Zero Trust"]
 featured: true
-images : ["images/posts/zerotrust/zts-01.png"]
+featuredImage : "/images/posts/zerotrust/zts-01.png"
 ---
-# Zero Trust in Azure: Because Trust is Overrated
 
-In today’s digital world, securing your cloud environment is crucial, and a **Zero Trust** approach is one of the best ways to protect against unauthorized access and potential breaches. When implementing Zero Trust in **Azure**, there are several strategies that can help secure your network and ensure that every request, connection, and user is continuously verified. Here’s a breakdown of key strategies to secure your Azure environment using **Zero Trust** principles.
+## Zero Trust in Azure: Because Trust is Overrated
+
+In today’s digital world, securing your cloud environment is crucial, and a **Zero Trust** approach is one of the best ways to protect against unauthorized access and potential breaches. When implementing Zero Trust in **Azure**, there are several strategies that can help secure your network and ensure that every request, connection, and user is continuously verified. Here’s a breakdown of key strategies to secure your Azure environment using **Zero Trust** principles. 
+
+![Zero Trust Banner](/images/posts/zerotrust/zts-01.png)  [AI generated image]
 
 ---
 ## Key Strategies for Zero Trust in Azure
