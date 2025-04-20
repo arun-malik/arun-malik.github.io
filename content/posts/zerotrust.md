@@ -8,6 +8,7 @@ draft: false
 description: "Learn how to implement Zero Trust security in Azure to protect your environment with powerful tools like NSGs, Azure Policies, and more."
 series: ["Zero Trust"]
 featured: true
+images : ["images/posts/zerotrust/zts-01.png"]
 ---
 # Zero Trust in Azure: Because Trust is Overrated
 
