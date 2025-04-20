@@ -84,6 +84,7 @@ As part of maintaining a **Zero Trust** model, it’s essential to regularly att
    Security should not be an afterthought but part of the development process from the very beginning. Implement a **Shift Left** approach by integrating security practices early in the software development lifecycle (SDLC). This can include practices such as code scanning, vulnerability assessments, and automated security testing, all before the code reaches production. By identifying potential threats earlier, you reduce the risk of security issues later. Learn more about [Shift Left in DevSecOps](https://docs.microsoft.com/en-us/azure/devops/security/shift-left).
 
 ---
+![Zero Trust Banner](/images/posts/zerotrust/zts-02.png)  [AI generated image]
 
 ## Conclusion
 
