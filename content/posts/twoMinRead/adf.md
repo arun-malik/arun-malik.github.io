@@ -9,11 +9,12 @@ description: "Learn how to use Azure Data Factory (ADF) to integrate, manage, an
 series: ["Data Engineering"]
 featured: false
 ---
-![Zero Trust Banner](/images/posts/twoMinRead/adf-01.png)  [AI generated image]
 
 # **Getting Started with Azure Data Factory: Orchestrating Your Data Workflows**
 
 In today’s data-driven world, organizations need a robust solution to efficiently move and transform data across different systems and environments. **Azure Data Factory (ADF)** is a fully managed cloud-based ETL (Extract, Transform, Load) service that helps you integrate, transform, and load data from multiple sources to a centralized data store like Azure SQL, Azure Blob Storage, or even external services like Amazon S3.
+
+![ADF](/images/posts/twoMinRead/adf-01.png)  [AI generated image]
 
 Let’s walk through **what ADF is**, why you need it, and some common use cases.
 
