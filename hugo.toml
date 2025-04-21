@@ -23,11 +23,11 @@ avatar = "images/author.jpg"
   showFeatured = true
   showRecent = true
   hideRecentWhenFeatured = true
-  countRecent = 5
+  countRecent = 7
  [params.rtwt.side.home]
   sidePaneSticky = false
   taxonomies = ['tags','series']
-  countTaxonomy = 6
+  countTaxonomy = 10
  [params.rtwt.side.list]
   sidePaneSticky = false
  [params.rtwt.side.single]
@@ -36,7 +36,7 @@ avatar = "images/author.jpg"
   showTableOfContents = true
   showAttachments = true
   showRelated = true
-  countRelated = 5
+  countRelated = 10
 
 [taxonomies]
 tag = 'tags'
