@@ -1,20 +1,18 @@
 (function () {
   const storageKey = 'theme';
-  const root = document.documentElement;
 
   function getInitialTheme() {
     const saved = localStorage.getItem(storageKey);
     if (saved === 'light' || saved === 'dark') return saved;
-
-    // Default to light unless OS prefers dark.
-    try {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-    } catch {}
     return 'light';
   }
 
   function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.removeAttribute('data-theme');
+    }
     try { localStorage.setItem(storageKey, theme); } catch {}
 
     const icon = document.getElementById('themeIcon');
@@ -28,17 +26,16 @@
   applyTheme(getInitialTheme());
 
   window.toggleTheme = function toggleTheme() {
-    const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const current = document.body.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     applyTheme(current === 'dark' ? 'light' : 'dark');
   };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-
-    btn.addEventListener('click', (e) => {
+  // Use event delegation on document to catch dynamically loaded buttons
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#themeToggle');
+    if (btn) {
       e.preventDefault();
       window.toggleTheme();
-    });
+    }
   });
 })();

@@ -1,11 +1,18 @@
 <footer class="footer">
   <div class="container">
-    <div class="footer-row">
-      <div>© <span class="footer-year"></span> Arun Malik</div>
-      <div class="footer-links">
-        <a href="/#sites" data-site-root>Sites</a>
-        <a href="/learn/" data-site-root>Learn</a>
-      </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <img src="./sites/_shared/images/logos/OO.svg" alt="OO Logo" style="width: 20px; height: 20px;">
+      <p style="margin: 0; font-size: 12px; color: var(--text-secondary);">© <span class="footer-year"></span> Observation Odyssey. Where Knowledge Meets the Cosmos.</p>
     </div>
   </div>
 </footer>
+
+<script>
+// Set current year in footer
+document.addEventListener('DOMContentLoaded', function() {
+  const yearSpan = document.querySelector('.footer-year');
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+  }
+});
+</script>

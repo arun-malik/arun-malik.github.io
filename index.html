@@ -1,60 +1,120 @@
 <!doctype html>
 <html lang="en">
+  <!-- Observation Odyssey - Where Knowledge Meets the Cosmos -->
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Arun Malik</title>
-    <meta name="description" content="Notes, lessons, and multiple small static sites." />
-    <link rel="stylesheet" href="./sites/_shared/styles.css" />
+    <title>Observation Odyssey - Where Knowledge Meets the Cosmos</title>
+    <meta name="description" content="Interactive learning platform exploring AI, security, tech deep dives, and the pursuit of endless knowledge." />
+    <link rel="stylesheet" href="./sites/_shared/viki-styles.css" />
   </head>
   <body>
-    <div id="header-placeholder"></div>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
 
-    <main>
-      <section class="hero" data-track-section="hero">
-        <div class="container">
-          <div class="hero-center">
-            <div class="hero-logo" aria-hidden="true"></div>
-            <p class="badge">GitHub Pages · Simple · Fast</p>
-            <h1>
-              Build small.
-              <span class="muted">Learn daily.</span>
-              <span class="accent">Ship reliably.</span>
-            </h1>
-            <p class="lead">This repo hosts multiple static sites under different paths — shared theme + analytics included.</p>
+    <!-- Header Placeholder -->
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <!-- Horizontal Scrolling Container (Full Page) -->
+    <div class="horizontal-scroll-container">
+      <div class="scroll-content">
+        
+        <!-- Tech Deep Dives Card -->
+        <a href="/learn/ai/" class="content-card" id="card-ai" data-section="ai" target="_blank">
+          <div class="card-icon">🚀</div>
+          <h3 class="card-title">Tech Deep Dives</h3>
+          
+          <div class="card-section">
+            <h4 class="section-label">Definition</h4>
+            <p class="section-text">In-depth articles and resources breaking down complex technical topics from AI and machine learning to emerging technologies into digestible, understandable pieces.</p>
           </div>
-        </div>
-      </section>
-
-      <section class="section" id="sites" data-track-section="sites">
-        <div class="container">
-          <h2>Sites</h2>
-          <p class="sub">Pick a site to explore.</p>
-
-          <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
-            <a class="tile" href="./learn/" data-track-section="site-learn">
-              <h3>Learn</h3>
-              <p>Notes, lessons, and walkthroughs.</p>
-              <span class="link">/learn/</span>
-            </a>
-            <a class="tile" href="./hello/" data-track-section="site-hello">
-              <h3>Hello</h3>
-              <p>Small demo site.</p>
-              <span class="link">/hello/</span>
-            </a>
+          
+          <div class="card-section">
+            <h4 class="section-label">Simplified</h4>
+            <p class="section-text">Complex tech explained simply - we don't just scratch the surface. We dive deep into how technologies work and why they matter for the future.</p>
           </div>
-        </div>
-      </section>
-    </main>
+          
+          <div class="card-section analogy-box">
+            <h4 class="section-label">Approach</h4>
+            <p class="section-text">🔬 Like exploring a galaxy - we start with the big picture and zoom in to understand every fascinating detail along the way.</p>
+          </div>
+        </a>
 
-    <div id="footer-placeholder"></div>
+        <!-- Security & Privacy Card -->
+        <a href="/learn/security/" class="content-card" id="card-security" data-section="security" target="_blank">
+          <div class="card-icon">🔐</div>
+          <h3 class="card-title">Security & Privacy</h3>
+          
+          <div class="card-section">
+            <h4 class="section-label">Definition</h4>
+            <p class="section-text">Essential knowledge about protecting systems, networks, and data from unauthorized access while maintaining privacy and building robust defense mechanisms.</p>
+          </div>
+          
+          <div class="card-section">
+            <h4 class="section-label">Simplified</h4>
+            <p class="section-text">Understanding threats and defenses - learn practical approaches to keep your digital assets safe and secure in an increasingly connected world.</p>
+          </div>
+          
+          <div class="card-section analogy-box">
+            <h4 class="section-label">Philosophy</h4>
+            <p class="section-text">🏰 Multiple layers of protection - just like a castle has walls, moats, guards, and hidden vaults, security is about layered defenses.</p>
+          </div>
+        </a>
+
+        <!-- Interactive Playgrounds Card -->
+        <a href="/learn/interactive/" class="content-card" id="card-interactive" data-section="interactive" target="_blank">
+          <div class="card-icon">🎮</div>
+          <h3 class="card-title">Interactive Playgrounds</h3>
+          
+          <div class="card-section">
+            <h4 class="section-label">Definition</h4>
+            <p class="section-text">Hands-on tools and challenges designed to help you practice and apply new skills in real-time, transforming theory into actionable experience.</p>
+          </div>
+          
+          <div class="card-section">
+            <h4 class="section-label">Simplified</h4>
+            <p class="section-text">Learning by doing - build projects, solve challenges, and experiment with code to truly understand concepts instead of just reading about them.</p>
+          </div>
+          
+          <div class="card-section analogy-box">
+            <h4 class="section-label">Philosophy</h4>
+            <p class="section-text">🎯 Practice makes progress - engage with interactive challenges to turn knowledge into mastery, one step at a time.</p>
+          </div>
+        </a>
+
+        <!-- About Card -->
+        <a href="/about/" class="content-card" id="card-about" data-section="about" target="_blank">
+          <div class="card-icon">🌌</div>
+          <h3 class="card-title">About Observation Odyssey</h3>
+          
+          <div class="card-section">
+            <h4 class="section-label">Our Mission</h4>
+            <p class="section-text">Knowledge is boundless, and just as the cosmos stretches into infinity, so does the potential for discovery and growth. We provide a platform where learning is limitless and the pursuit of knowledge is an exhilarating adventure.</p>
+          </div>
+          
+          <div class="card-section">
+            <h4 class="section-label">What We Offer</h4>
+            <p class="section-text">From interactive playgrounds and tech deep dives to inspiring stories and curated learning resources - we serve curious minds at every level.</p>
+          </div>
+          
+          <div class="card-section analogy-box">
+            <h4 class="section-label">Our Promise</h4>
+            <p class="section-text">📚 Endless exploration, deeper insights, interactive learning, and a community of curious minds embarking on a shared journey of discovery.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Footer Placeholder -->
+    <div class="footer-wrapper" id="footer-placeholder"></div>
 
     <script src="./sites/_shared/components.js"></script>
     <script src="./sites/_shared/scroll-nav.js"></script>
     <script src="./sites/_shared/theme.js"></script>
-
-    <script src="./sites/_shared/analytics-config.js"></script>
-    <script defer src="./sites/_shared/analytics-loader.js"></script>
-    <script defer src="./sites/_shared/analytics.js"></script>
+    <script src="./sites/_shared/horizontal-scroll.js"></script>
   </body>
 </html>
+
