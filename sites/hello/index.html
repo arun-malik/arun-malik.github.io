@@ -7,14 +7,21 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="wrap">
-      <h1>Hello from /hello/</h1>
-      <p>This is a standalone static site hosted under a subpath.</p>
-      <p><a href="../">Back to sites list</a></p>
+      <div class="row">
+        <div>
+          <h1>Hello from /hello/</h1>
+          <p>This is a standalone static site hosted under a subpath.</p>
+          <p><a href="../">Back to sites list</a></p>
+        </div>
+        <button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
       <button id="btn" type="button">Click me</button>
       <p class="out" id="out"></p>
     </main>
 
+    <script src="../_shared/theme.js"></script>
     <script src="./app.js"></script>
       <script src="../_shared/analytics-config.js"></script>
       <script defer src="../_shared/analytics-loader.js"></script>

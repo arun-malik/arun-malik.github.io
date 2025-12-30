@@ -18,6 +18,9 @@
             <a href="#testimonials">Wins</a>
             <a href="#faq">FAQ</a>
             <a class="btn" href="#contact">Contact</a>
+            <button class="btn icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+              <span id="themeIcon" aria-hidden="true">🌙</span>
+            </button>
           </nav>
         </div>
       </div>
@@ -186,6 +189,7 @@
       document.getElementById('y').textContent = String(new Date().getFullYear());
     </script>
 
+    <script src="../_shared/theme.js"></script>
     <script src="../_shared/analytics-config.js"></script>
     <script defer src="../_shared/analytics-loader.js"></script>
     <script defer src="../_shared/analytics.js"></script>
