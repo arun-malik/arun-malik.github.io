@@ -298,6 +298,56 @@ body[data-theme="dark"] .content-card::before {
     text-align: center;
 }
 
+/* Diagram blocks (used by /learn/ai/) */
+.diagram {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.diagram-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .diagram-row {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-arrow {
+    display: none;
+  }
+}
+
+.diagram-box {
+  background: var(--card-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+
+.diagram-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.diagram-sub {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.diagram-arrow {
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-align: center;
+  user-select: none;
+}
+
 .card-icon img {
     width: 48px;
     height: 48px;
