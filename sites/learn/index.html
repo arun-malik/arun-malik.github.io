@@ -10,53 +10,44 @@
   <body>
     <header class="top">
       <div class="container">
-        <a class="brand" href="./">Learn</a>
-        <nav class="nav" aria-label="Primary">
-          <a href="#benefits">Benefits</a>
-          <a href="#tracks">Tracks</a>
-          <a href="#testimonials">Wins</a>
-          <a href="#faq">FAQ</a>
-          <a class="btn" href="#contact">Contact</a>
-        </nav>
+        <div class="nav-pill">
+          <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span>Learn</a>
+          <nav class="nav" aria-label="Primary">
+            <a href="#benefits">Benefits</a>
+            <a href="#tracks">Tracks</a>
+            <a href="#testimonials">Wins</a>
+            <a href="#faq">FAQ</a>
+            <a class="btn" href="#contact">Contact</a>
+          </nav>
+        </div>
       </div>
     </header>
 
     <main>
       <section class="hero" data-track-section="hero">
         <div class="container">
-          <div class="hero-grid">
-            <div>
-              <p class="badge">Handwritten HTML · Fast · Practical</p>
-              <h1>Learn by building.
-                <span class="muted">Short notes, real examples.</span>
-              </h1>
-              <p class="lead">
-                This site is where I publish engineering notes, mini-guides, and step-by-step walkthroughs.
-                No fluff—just concepts, code, and practice.
-              </p>
-              <div class="cta-row">
-                <a class="btn" href="#tracks">Explore tracks</a>
-                <a class="btn ghost" href="#contact">Get updates</a>
-              </div>
-              <p class="fine">Deployed on GitHub Pages. Analytics: Clarity + GA4.</p>
-            </div>
-            <div class="hero-card" aria-hidden="true">
-              <div class="card">
-                <div class="card-title">What you’ll find here</div>
-                <ul class="bullets">
-                  <li>Cloud & data engineering patterns</li>
-                  <li>Security fundamentals (Zero Trust)</li>
-                  <li>Hands-on labs and checklists</li>
-                  <li>Short “two-minute reads”</li>
-                </ul>
-              </div>
-              <div class="card" style="margin-top: 14px;">
-                <div class="card-title">How I write</div>
-                <ul class="bullets">
-                  <li>Simple language, clear diagrams (when needed)</li>
-                  <li>Working snippets you can reuse</li>
-                  <li>Links to deeper references</li>
-                </ul>
+          <div class="hero-center">
+            <div class="hero-logo" aria-hidden="true"></div>
+            <p class="badge">Handwritten HTML · Fast · Practical</p>
+            <h1>
+              Learn by building.
+              <span class="muted">Short notes,</span>
+              <span class="accent">real examples.</span>
+            </h1>
+            <p class="lead">
+              Engineering notes, mini-guides, and step-by-step walkthroughs.
+              Simple, practical, and easy to follow.
+            </p>
+
+            <div class="waitlist" data-track-section="updates">
+              <div class="tile">
+                <div class="card-title">Get updates</div>
+                <p class="sub">No forms yet—this is the next thing we’ll build.</p>
+                <div class="waitlist-row">
+                  <input class="input" type="email" placeholder="Enter your email" aria-label="Email (not collected yet)" disabled />
+                  <a class="btn primary" href="#contact">Join</a>
+                </div>
+                <p class="fine">Deployed on GitHub Pages. Analytics: Clarity + GA4.</p>
               </div>
             </div>
           </div>
