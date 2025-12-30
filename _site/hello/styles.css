@@ -1,6 +1,4 @@
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 body {
   margin: 0;
@@ -14,6 +12,10 @@ body {
   margin: 0 auto;
   padding: 48px 16px;
 }
+
+a { color: inherit; }
+
+a:hover { opacity: 0.9; }
 
 button {
   padding: 10px 14px;

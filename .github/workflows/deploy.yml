@@ -32,8 +32,9 @@ jobs:
           rm -rf _site
           mkdir -p _site
           cp index.html _site/index.html
-          if [ -f styles.css ]; then cp styles.css _site/styles.css; fi
-          if [ -f app.js ]; then cp app.js _site/app.js; fi
+          if [ -d sites ]; then
+            cp -R sites/* _site/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
