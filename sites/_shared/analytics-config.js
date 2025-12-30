@@ -8,8 +8,8 @@
 //
 // You can leave either empty to disable it.
 window.__ANALYTICS_CONFIG__ = {
-  clarityProjectId: "",
-  ga4MeasurementId: "",
+  clarityProjectId: "uti9a22v45",
+  ga4MeasurementId: "G-9SFX09D06W",
 
   // Optional: enable section engagement tracking.
   // Add `data-track-section="some-name"` to any element you want timed.
