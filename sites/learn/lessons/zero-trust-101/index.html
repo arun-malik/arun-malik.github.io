@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zero Trust 101 · Learn</title>
+    <meta name="description" content="A practical beginner guide to Zero Trust: principles, controls, and a simple rollout checklist." />
+    <link rel="stylesheet" href="../../styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="container">
+        <a class="brand" href="../../">Learn</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../#tracks">Tracks</a>
+          <a href="#checklist">Checklist</a>
+          <a class="btn" href="../../#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" data-track-section="lesson-hero">
+        <div class="container">
+          <p class="badge">Security · Lesson</p>
+          <h1>Zero Trust 101
+            <span class="muted">A practical starter guide</span>
+          </h1>
+          <p class="lead">
+            Zero Trust is not a product—it’s a strategy. This page explains the core ideas in plain terms and gives you a checklist you can actually apply.
+          </p>
+          <div class="cta-row">
+            <a class="btn" href="#principles">Start reading</a>
+            <a class="btn ghost" href="../../">Back to Learn</a>
+          </div>
+          <p class="fine">Last updated: 2025-12-30</p>
+        </div>
+      </section>
+
+      <section class="section" id="principles" data-track-section="principles">
+        <div class="container">
+          <h2>The three core principles</h2>
+          <p class="sub">A good mental model before tools and architecture.</p>
+
+          <div class="grid">
+            <article class="tile">
+              <h3>Verify explicitly</h3>
+              <p>Authenticate and authorize using all available signals: identity, device, location, risk, and workload context.</p>
+            </article>
+            <article class="tile">
+              <h3>Use least privilege</h3>
+              <p>Give only what’s needed, just-in-time, and ideally time-bound. Reduce standing access.</p>
+            </article>
+            <article class="tile">
+              <h3>Assume breach</h3>
+              <p>Design as if an attacker is already inside. Limit blast radius with segmentation, logging, and rapid response.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="controls" data-track-section="controls">
+        <div class="container">
+          <h2>Controls that usually matter first</h2>
+          <p class="sub">If you’re starting from scratch, focus on these before anything fancy.</p>
+
+          <div class="grid">
+            <article class="tile">
+              <h3>Identity</h3>
+              <p>MFA, conditional access, strong auth for admins, and clean group / role design.</p>
+            </article>
+            <article class="tile">
+              <h3>Device</h3>
+              <p>Managed devices, posture checks, encryption, patching, and a clear BYOD stance.</p>
+            </article>
+            <article class="tile">
+              <h3>Network</h3>
+              <p>Reduce implicit trust: segment, restrict inbound paths, prefer private endpoints, monitor east-west traffic.</p>
+            </article>
+          </div>
+
+          <div class="grid" style="margin-top: 14px;">
+            <article class="tile">
+              <h3>Workload access</h3>
+              <p>Use workload identities, rotate secrets, and avoid shared credentials between services.</p>
+            </article>
+            <article class="tile">
+              <h3>Logging</h3>
+              <p>Centralize logs early. If you can’t see it, you can’t defend it.</p>
+            </article>
+            <article class="tile">
+              <h3>Recovery</h3>
+              <p>Backups, break-glass accounts, and tested incident response playbooks.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="checklist" data-track-section="checklist">
+        <div class="container">
+          <h2>A simple rollout checklist</h2>
+          <p class="sub">Keep it small, iterate, and measure impact.</p>
+
+          <div class="faq">
+            <details open>
+              <summary>Week 1: baseline</summary>
+              <p>Inventory users, devices, apps, and admin roles. Turn on audit logs. Define “managed device”.</p>
+            </details>
+            <details>
+              <summary>Week 2–3: protect identity</summary>
+              <p>Enforce MFA, reduce standing admin access, add conditional access policies with monitoring mode first.</p>
+            </details>
+            <details>
+              <summary>Week 4: protect apps + data</summary>
+              <p>Start with the highest value apps. Add least-privileged access patterns and strengthen data controls.</p>
+            </details>
+            <details>
+              <summary>Ongoing: measure + improve</summary>
+              <p>Track sign-in risk, policy blocks, helpdesk volume, and incident response improvements.</p>
+            </details>
+          </div>
+
+          <p class="fine">Next: I can add a deeper Azure-focused version when you’re ready.</p>
+        </div>
+      </section>
+
+      <section class="section" data-track-section="cta">
+        <div class="container">
+          <h2>Want this tailored?</h2>
+          <p class="sub">Tell me your environment (cloud/on-prem, team size, biggest risks) and I’ll adapt the checklist.</p>
+          <div class="cta-row">
+            <a class="btn" href="../../#contact">Contact</a>
+            <a class="btn ghost" href="../../">Back to Learn</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <div>© <span id="y"></span> Arun Malik</div>
+          <div class="footer-links">
+            <a href="#principles">Principles</a>
+            <a href="#controls">Controls</a>
+            <a href="#checklist">Checklist</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('y').textContent = String(new Date().getFullYear());
+    </script>
+
+    <script src="../../../_shared/analytics-config.js"></script>
+    <script defer src="../../../_shared/analytics-loader.js"></script>
+    <script defer src="../../../_shared/analytics.js"></script>
+  </body>
+</html>
