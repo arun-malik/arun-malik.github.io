@@ -248,12 +248,44 @@ body[data-theme="dark"] .nav-pill {
     color: inherit;
     text-decoration: none;
     cursor: pointer;
+  position: relative;
 }
+
+/* Launch-style border frame (uses existing theme accent vars) */
+.content-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 2px;
+  background: linear-gradient(var(--card-accent-angle, 45deg), var(--primary-blue), var(--accent-hover));
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+
+  /* Show gradient only on the border */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+      mask-composite: exclude;
+}
+
+body[data-theme="dark"] .content-card::before {
+  opacity: 0.45;
+}
+
+.content-card[data-section="ai"] { --card-accent-angle: 25deg; }
+.content-card[data-section="security"] { --card-accent-angle: 110deg; }
+.content-card[data-section="interactive"] { --card-accent-angle: 200deg; }
+.content-card[data-section="about"] { --card-accent-angle: 300deg; }
 
 .content-card:hover {
     border-color: var(--primary-blue);
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
+}
+
+.content-card:hover::before {
+  opacity: 0.95;
 }
 
 .card-icon {
