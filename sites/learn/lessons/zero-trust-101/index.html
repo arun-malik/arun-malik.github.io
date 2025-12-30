@@ -5,22 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Zero Trust 101 · Learn</title>
     <meta name="description" content="A practical beginner guide to Zero Trust: principles, controls, and a simple rollout checklist." />
-    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../../_shared/styles.css" />
   </head>
   <body>
-    <header class="top">
-      <div class="container">
-        <a class="brand" href="../../">Learn</a>
-        <nav class="nav" aria-label="Primary">
-          <a href="../../#tracks">Tracks</a>
-          <a href="#checklist">Checklist</a>
-          <a class="btn" href="../../#contact">Contact</a>
-          <button class="btn icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
-            <span id="themeIcon" aria-hidden="true">🌙</span>
-          </button>
-        </nav>
-      </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main>
       <section class="hero" data-track-section="lesson-hero">
@@ -139,23 +127,9 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-row">
-          <div>© <span id="y"></span> Arun Malik</div>
-          <div class="footer-links">
-            <a href="#principles">Principles</a>
-            <a href="#controls">Controls</a>
-            <a href="#checklist">Checklist</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
-    <script>
-      document.getElementById('y').textContent = String(new Date().getFullYear());
-    </script>
-
+    <script src="../../../_shared/components.js"></script>
     <script src="../../../_shared/scroll-nav.js"></script>
     <script src="../../../_shared/theme.js"></script>
 
