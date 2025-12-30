@@ -4,215 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Arun Malik</title>
-    <style>
-      :root {
-        --bg: #f4f6fb;
-        --panel: rgba(255, 255, 255, 0.78);
-        --border: rgba(15, 23, 42, 0.10);
-        --text: #0f172a;
-        --muted: rgba(15, 23, 42, 0.68);
-        --muted-2: rgba(15, 23, 42, 0.56);
-        --accent: #1677ff;
-        --shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
-        --shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.10);
-        --radius: 18px;
-        --radius-pill: 999px;
-      }
-
-      html[data-theme="dark"] {
-        --bg: #0b1220;
-        --panel: rgba(17, 24, 39, 0.70);
-        --border: rgba(226, 232, 240, 0.14);
-        --text: #e6edf3;
-        --muted: rgba(230, 237, 243, 0.74);
-        --muted-2: rgba(230, 237, 243, 0.62);
-        --accent: #7dd3fc;
-        --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
-        --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.28);
-      }
-
-      * { box-sizing: border-box; }
-      html, body { height: 100%; }
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background:
-          radial-gradient(900px 560px at 50% 0%, rgba(22, 119, 255, 0.12), transparent 60%),
-          radial-gradient(900px 560px at 80% 10%, rgba(37, 99, 235, 0.10), transparent 65%),
-          var(--bg);
-        color: var(--text);
-        line-height: 1.55;
-      }
-
-      html[data-theme="dark"] body {
-        background:
-          radial-gradient(900px 560px at 50% 0%, rgba(125, 211, 252, 0.10), transparent 60%),
-          radial-gradient(900px 560px at 80% 10%, rgba(167, 139, 250, 0.10), transparent 65%),
-          var(--bg);
-      }
-
-      a { color: inherit; text-decoration: none; }
-      a:hover { opacity: 0.92; }
-
-      .container {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 0 16px;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        padding: 14px 0;
-      }
-
-      .nav-pill {
-        width: min(1040px, 100%);
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 10px 14px;
-        border-radius: var(--radius-pill);
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.70);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
-      }
-
-      html[data-theme="dark"] .nav-pill {
-        background: rgba(17, 24, 39, 0.66);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 750;
-      }
-
-      .brand-dot {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 35% 35%, rgba(22, 119, 255, 0.95), rgba(37, 99, 235, 0.45));
-        box-shadow: 0 18px 40px rgba(22, 119, 255, 0.22);
-        border: 1px solid rgba(15, 23, 42, 0.08);
-      }
-
-      nav {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
-
-      nav a {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      nav a:hover { color: var(--text); opacity: 1; }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 10px 14px;
-        border-radius: var(--radius-pill);
-        border: 1px solid rgba(15, 23, 42, 0.12);
-        background: rgba(255, 255, 255, 0.8);
-        color: var(--text);
-        font-weight: 600;
-        font-size: 14px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-        cursor: pointer;
-      }
-
-      .btn:hover {
-        opacity: 1;
-        border-color: rgba(15, 23, 42, 0.18);
-        background: rgba(255, 255, 255, 0.92);
-      }
-
-      .icon-btn {
-        width: 42px;
-        height: 42px;
-        padding: 0;
-      }
-
-      main {
-        max-width: 980px;
-        margin: 0 auto;
-        padding: 54px 16px 60px;
-        text-align: center;
-      }
-
-      h1 {
-        margin: 0 0 10px;
-        font-size: clamp(34px, 4vw, 52px);
-        line-height: 1.06;
-        letter-spacing: -0.6px;
-        font-weight: 820;
-      }
-
-      .sub {
-        margin: 0 0 24px;
-        color: var(--muted);
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 18px;
-      }
-
-      .tile {
-        text-align: left;
-        border: 1px solid rgba(15, 23, 42, 0.10);
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.72);
-        padding: 16px;
-        box-shadow: var(--shadow-soft);
-      }
-
-      html[data-theme="dark"] .tile { background: rgba(17, 24, 39, 0.70); }
-
-      .tile h2 {
-        margin: 0 0 6px;
-        font-size: 18px;
-      }
-
-      .tile p {
-        margin: 0;
-        color: var(--muted);
-      }
-
-      .path {
-        display: inline-block;
-        margin-top: 10px;
-        color: var(--accent);
-        font-weight: 650;
-        font-size: 14px;
-      }
-
-      @media (max-width: 860px) {
-        .grid { grid-template-columns: 1fr; }
-        nav { gap: 10px; }
-        nav a { font-size: 13px; }
-      }
-    </style>
+    <meta name="description" content="Notes, lessons, and multiple small static sites." />
+    <link rel="stylesheet" href="./_shared/styles.css" />
   </head>
   <body>
-    <header>
+    <header class="top">
       <div class="container">
         <div class="nav-pill">
           <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span>Arun Malik</a>
-          <nav aria-label="Primary">
+          <nav class="nav" aria-label="Primary">
             <a href="#sites">Sites</a>
             <a class="btn" href="./learn/">Learn</a>
             <button class="btn icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
@@ -223,22 +23,58 @@
       </div>
     </header>
 
-    <main id="sites">
-      <h1>Sites</h1>
-      <p class="sub">This repo hosts multiple static sites under different paths.</p>
-      <div class="grid">
-        <a class="tile" href="./hello/" data-track-section="site-hello">
-          <h2>Hello site</h2>
-          <p>Small demo site.</p>
-          <span class="path">/hello/</span>
-        </a>
-        <a class="tile" href="./learn/" data-track-section="site-learn">
-          <h2>Learn</h2>
-          <p>Notes, lessons, and walkthroughs.</p>
-          <span class="path">/learn/</span>
-        </a>
-      </div>
+    <main>
+      <section class="hero" data-track-section="hero">
+        <div class="container">
+          <div class="hero-center">
+            <div class="hero-logo" aria-hidden="true"></div>
+            <p class="badge">GitHub Pages · Simple · Fast</p>
+            <h1>
+              Build small.
+              <span class="muted">Learn daily.</span>
+              <span class="accent">Ship reliably.</span>
+            </h1>
+            <p class="lead">This repo hosts multiple static sites under different paths — shared theme + analytics included.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="sites" data-track-section="sites">
+        <div class="container">
+          <h2>Sites</h2>
+          <p class="sub">Pick a site to explore.</p>
+
+          <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+            <a class="tile" href="./learn/" data-track-section="site-learn">
+              <h3>Learn</h3>
+              <p>Notes, lessons, and walkthroughs.</p>
+              <span class="link">/learn/</span>
+            </a>
+            <a class="tile" href="./hello/" data-track-section="site-hello">
+              <h3>Hello</h3>
+              <p>Small demo site.</p>
+              <span class="link">/hello/</span>
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <div>© <span id="y"></span> Arun Malik</div>
+          <div class="footer-links">
+            <a href="#sites">Sites</a>
+            <a href="./learn/">Learn</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('y').textContent = String(new Date().getFullYear());
+    </script>
 
     <script src="./_shared/theme.js"></script>
 
