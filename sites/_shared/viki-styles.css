@@ -262,6 +262,7 @@ body[data-theme="dark"] .nav-pill {
   pointer-events: none;
   opacity: 0.55;
   transition: opacity 0.3s ease;
+  filter: hue-rotate(var(--card-accent-hue, 0deg)) saturate(1.25);
 
   /* Show gradient only on the border */
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -273,10 +274,10 @@ body[data-theme="dark"] .content-card::before {
   opacity: 0.45;
 }
 
-.content-card[data-section="ai"] { --card-accent-angle: 25deg; }
-.content-card[data-section="security"] { --card-accent-angle: 110deg; }
-.content-card[data-section="interactive"] { --card-accent-angle: 200deg; }
-.content-card[data-section="about"] { --card-accent-angle: 300deg; }
+.content-card[data-section="ai"] { --card-accent-angle: 25deg; --card-accent-hue: 0deg; }
+.content-card[data-section="security"] { --card-accent-angle: 110deg; --card-accent-hue: 120deg; }
+.content-card[data-section="interactive"] { --card-accent-angle: 200deg; --card-accent-hue: 240deg; }
+.content-card[data-section="about"] { --card-accent-angle: 300deg; --card-accent-hue: 300deg; }
 
 .content-card:hover {
     border-color: var(--primary-blue);
