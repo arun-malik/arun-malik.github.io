@@ -518,7 +518,7 @@ body[data-theme="dark"] .content-card::before {
 .scroll-indicator {
   position: fixed;
   left: 50%;
-  bottom: 18px;
+  bottom: clamp(64px, 9vh, 92px);
   transform: translateX(-50%);
   display: flex;
   align-items: center;
