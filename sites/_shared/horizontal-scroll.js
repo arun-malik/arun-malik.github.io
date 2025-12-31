@@ -1,10 +1,31 @@
 // Handle horizontal scroll and update active navigation
 (function() {
   const container = document.querySelector('.horizontal-scroll-container');
-  const cards = document.querySelectorAll('[data-section]');
+  const cards = document.querySelectorAll('.content-card[data-section]');
   const navLinks = document.querySelectorAll('.nav-link');
+  const indicator = document.querySelector('.scroll-indicator');
 
   if (!container || cards.length === 0) return;
+
+  // Build scroll indicator dots (if present)
+  const dotsBySection = new Map();
+  if (indicator) {
+    indicator.innerHTML = '';
+    cards.forEach((card, idx) => {
+      const section = card.getAttribute('data-section');
+      if (!section) return;
+
+      const dot = document.createElement('span');
+      dot.className = 'scroll-dot' + (idx === 0 ? ' active' : '');
+      dot.setAttribute('aria-hidden', 'true');
+      dot.dataset.section = section;
+      indicator.appendChild(dot);
+      dotsBySection.set(section, dot);
+    });
+
+    // Ensure the overlay positions correctly
+    container.style.position = 'relative';
+  }
 
   // Convert vertical scroll to horizontal scroll with smooth animation
   let animationFrameId = null;
@@ -58,6 +79,13 @@
             link.classList.add('active');
           }
         });
+
+        // Update active dot
+        if (dotsBySection.size > 0 && section) {
+          dotsBySection.forEach((dot) => dot.classList.remove('active'));
+          const activeDot = dotsBySection.get(section);
+          if (activeDot) activeDot.classList.add('active');
+        }
       }
     });
   }, {

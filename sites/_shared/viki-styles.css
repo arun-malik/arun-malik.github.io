@@ -514,6 +514,39 @@ body[data-theme="dark"] .content-card::before {
     display: none;
 }
 
+/* Homepage scroll indicator (dots) */
+.scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.scroll-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  opacity: 0.7;
+}
+
+.scroll-dot.active {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  opacity: 1;
+}
+
 .scroll-content {
     display: flex;
     gap: 24px;
