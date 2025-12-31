@@ -23,55 +23,71 @@
             A diagram-first walkthrough of the Transformer: why it replaced RNNs/LSTMs and how attention lets tokens communicate.
           </p>
 
+          <div class="diagram-tour" data-diagram-tour>
+            <div class="diagram-tour-header">
+              <div class="diagram-tour-heading">
+                <div class="diagram-tour-kicker">Interactive walkthrough</div>
+                <div class="diagram-tour-title" data-tour-title>Start here</div>
+              </div>
+              <div class="diagram-tour-controls">
+                <button type="button" class="diagram-tour-btn" data-tour-prev>Prev</button>
+                <span class="diagram-tour-progress" data-tour-progress></span>
+                <button type="button" class="diagram-tour-btn" data-tour-next>Next</button>
+              </div>
+            </div>
+            <div class="diagram-tour-body" data-tour-body></div>
+            <div class="diagram-tour-hint">Tip: click any box to jump to its explanation.</div>
+          </div>
+
           <div class="card-section">
             <h4 class="section-label">Big Idea</h4>
             <div class="diagram" role="img" aria-label="High level diagram: inputs to outputs mapping; sequential problems with RNNs; transformer uses attention for all-to-all communication; parallel training and long-range context.">
               <div class="diagram-row">
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="ml-goal">
                   <div class="diagram-title">Machine Learning Goal</div>
                   <div class="diagram-sub">Learn a mapping: Inputs → Outputs</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="neural-network">
                   <div class="diagram-title">Neural Network</div>
                   <div class="diagram-sub">Stacked layers transform representations</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="task-output">
                   <div class="diagram-title">Task Output</div>
                   <div class="diagram-sub">Price, label, next token, …</div>
                 </div>
               </div>
 
               <div class="diagram-row" style="margin-top: 14px;">
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="sequential-data">
                   <div class="diagram-title">Sequential Data</div>
                   <div class="diagram-sub">Words / tokens need context</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="rnn-lstm">
                   <div class="diagram-title">RNN / LSTM</div>
                   <div class="diagram-sub">One token at a time (slow)</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="rnn-problems">
                   <div class="diagram-title">Problems</div>
                   <div class="diagram-sub">No parallelism + weak long-range memory</div>
                 </div>
               </div>
 
               <div class="diagram-row" style="margin-top: 14px;">
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="transformer-2017">
                   <div class="diagram-title">Transformer (2017)</div>
                   <div class="diagram-sub">Adds an attention “communication layer”</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="all-to-all">
                   <div class="diagram-title">All-to-all context</div>
                   <div class="diagram-sub">Every token can look at every other token</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="why-won">
                   <div class="diagram-title">Why it won</div>
                   <div class="diagram-sub">Parallel training + long dependencies</div>
                 </div>
@@ -83,17 +99,17 @@
             <h4 class="section-label">Transformer Block (repeated N times)</h4>
             <div class="diagram" role="img" aria-label="Transformer block diagram: attention mixes information across tokens; MLP refines per-token; residual and layer norm stabilize.">
               <div class="diagram-row">
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="block-attention">
                   <div class="diagram-title">Attention</div>
                   <div class="diagram-sub">Tokens communicate (mix information)</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="block-mlp">
                   <div class="diagram-title">MLP / Feed-Forward</div>
                   <div class="diagram-sub">Each token refines privately</div>
                 </div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box">
+                <div class="diagram-box" data-node="block-stability">
                   <div class="diagram-title">Stable Training</div>
                   <div class="diagram-sub">Residual connections + LayerNorm</div>
                 </div>
@@ -105,18 +121,18 @@
             <h4 class="section-label">Data Flow (text → representations)</h4>
             <div class="diagram" role="img" aria-label="Data flow diagram: tokenizer to tokens, embeddings, positional info, repeated blocks, final contextual vectors for tasks like generation or classification.">
               <div class="diagram-row">
-                <div class="diagram-box"><div class="diagram-title">Tokenizer</div><div class="diagram-sub">Text → tokens</div></div>
+                <div class="diagram-box" data-node="tokenizer"><div class="diagram-title">Tokenizer</div><div class="diagram-sub">Text → tokens</div></div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box"><div class="diagram-title">Embedding</div><div class="diagram-sub">Tokens → vectors</div></div>
+                <div class="diagram-box" data-node="embedding"><div class="diagram-title">Embedding</div><div class="diagram-sub">Tokens → vectors</div></div>
                 <div class="diagram-arrow">+</div>
-                <div class="diagram-box"><div class="diagram-title">Positional Info</div><div class="diagram-sub">Adds order</div></div>
+                <div class="diagram-box" data-node="positional"><div class="diagram-title">Positional Info</div><div class="diagram-sub">Adds order</div></div>
               </div>
               <div class="diagram-row" style="margin-top: 14px;">
-                <div class="diagram-box"><div class="diagram-title">Stacked Blocks</div><div class="diagram-sub">Attention + MLP repeated</div></div>
+                <div class="diagram-box" data-node="stacked-blocks"><div class="diagram-title">Stacked Blocks</div><div class="diagram-sub">Attention + MLP repeated</div></div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box"><div class="diagram-title">Contextual Vectors</div><div class="diagram-sub">One vector per token</div></div>
+                <div class="diagram-box" data-node="contextual-vectors"><div class="diagram-title">Contextual Vectors</div><div class="diagram-sub">One vector per token</div></div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box"><div class="diagram-title">Task Head</div><div class="diagram-sub">Next token / classifier / etc.</div></div>
+                <div class="diagram-box" data-node="task-head"><div class="diagram-title">Task Head</div><div class="diagram-sub">Next token / classifier / etc.</div></div>
               </div>
             </div>
           </div>
@@ -125,18 +141,18 @@
             <h4 class="section-label">Zoom-in: Attention (Q, K, V)</h4>
             <div class="diagram" role="img" aria-label="Attention math diagram: Q queries compare with K keys, softmax becomes weights, weighted sum over V values produces new representation; done in parallel with matrices.">
               <div class="diagram-row">
-                <div class="diagram-box"><div class="diagram-title">Query (Q)</div><div class="diagram-sub">What am I looking for?</div></div>
+                <div class="diagram-box" data-node="q"><div class="diagram-title">Query (Q)</div><div class="diagram-sub">What am I looking for?</div></div>
                 <div class="diagram-arrow">×</div>
-                <div class="diagram-box"><div class="diagram-title">Keys (K)</div><div class="diagram-sub">What do others have?</div></div>
+                <div class="diagram-box" data-node="k"><div class="diagram-title">Keys (K)</div><div class="diagram-sub">What do others have?</div></div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box"><div class="diagram-title">Scores</div><div class="diagram-sub">Similarity via dot products</div></div>
+                <div class="diagram-box" data-node="scores"><div class="diagram-title">Scores</div><div class="diagram-sub">Similarity via dot products</div></div>
               </div>
               <div class="diagram-row" style="margin-top: 14px;">
-                <div class="diagram-box"><div class="diagram-title">Softmax</div><div class="diagram-sub">Normalize → attention weights</div></div>
+                <div class="diagram-box" data-node="softmax"><div class="diagram-title">Softmax</div><div class="diagram-sub">Normalize → attention weights</div></div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box"><div class="diagram-title">Values (V)</div><div class="diagram-sub">Content to share</div></div>
+                <div class="diagram-box" data-node="v"><div class="diagram-title">Values (V)</div><div class="diagram-sub">Content to share</div></div>
                 <div class="diagram-arrow">→</div>
-                <div class="diagram-box"><div class="diagram-title">Weighted Sum</div><div class="diagram-sub">New token representation</div></div>
+                <div class="diagram-box" data-node="weighted-sum"><div class="diagram-title">Weighted Sum</div><div class="diagram-sub">New token representation</div></div>
               </div>
               <p class="section-text" style="margin: 12px 0 0 0; color: var(--text-secondary);">
                 Computed in parallel by stacking Q, K, V into matrices — that’s why training is fast.
@@ -174,5 +190,6 @@
     <script src="/_shared/components.js"></script>
     <script src="/_shared/scroll-nav.js"></script>
     <script src="/_shared/theme.js"></script>
+    <script src="/_shared/interactive-diagram.js"></script>
   </body>
 </html>

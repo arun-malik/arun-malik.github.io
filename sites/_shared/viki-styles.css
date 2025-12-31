@@ -348,6 +348,102 @@ body[data-theme="dark"] .content-card::before {
   user-select: none;
 }
 
+/* Interactive diagram tour (used by /learn/ai/) */
+.diagram-tour {
+  margin: 12px 0 18px 0;
+  padding: 12px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--card-secondary);
+}
+
+.diagram-tour-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.diagram-tour-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--primary-blue);
+}
+
+.diagram-tour-title {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.diagram-tour-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diagram-tour-btn {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.diagram-tour-btn:hover {
+  border-color: var(--primary-blue);
+}
+
+.diagram-tour-btn:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.diagram-tour-progress {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.diagram-tour-body {
+  margin-top: 10px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.diagram-tour-hint {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.diagram-box[data-node] {
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.diagram-box[data-node]:hover {
+  border-color: var(--primary-blue);
+  transform: translateY(-1px);
+}
+
+.diagram-box.is-focus {
+  border-color: var(--primary-blue);
+  box-shadow: var(--shadow-hover);
+}
+
+.diagram.is-dimming .diagram-box[data-node] {
+  opacity: 0.45;
+}
+
+.diagram.is-dimming .diagram-box.is-focus {
+  opacity: 1;
+}
+
 .card-icon img {
     width: 48px;
     height: 48px;
