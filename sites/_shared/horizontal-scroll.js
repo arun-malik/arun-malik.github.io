@@ -22,9 +22,6 @@
       indicator.appendChild(dot);
       dotsBySection.set(section, dot);
     });
-
-    // Ensure the overlay positions correctly
-    container.style.position = 'relative';
   }
 
   // Convert vertical scroll to horizontal scroll with smooth animation

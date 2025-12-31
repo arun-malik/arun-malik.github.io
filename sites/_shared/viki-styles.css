@@ -516,7 +516,7 @@ body[data-theme="dark"] .content-card::before {
 
 /* Homepage scroll indicator (dots) */
 .scroll-indicator {
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 18px;
   transform: translateX(-50%);
