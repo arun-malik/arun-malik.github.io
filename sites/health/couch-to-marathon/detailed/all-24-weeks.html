@@ -267,6 +267,184 @@
         text-align: center;
         margin-bottom: 8px;
       }
+
+      .download-section {
+        margin: 30px 0;
+        padding: 24px;
+        background: var(--card-secondary);
+        border-radius: 12px;
+        border: 2px solid var(--primary-blue);
+      }
+
+      .download-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 16px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .download-subtitle {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+      }
+
+      .download-btn {
+        padding: 12px 16px;
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+      }
+
+      .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      .download-btn:active {
+        transform: translateY(0);
+      }
+
+      .download-btn.secondary {
+        background: var(--card-primary);
+        color: var(--text-primary);
+        border: 2px solid var(--primary-blue);
+      }
+
+      .download-btn.secondary:hover {
+        background: var(--primary-blue);
+        color: white;
+      }
+
+      .download-note {
+        margin-top: 12px;
+        padding: 12px;
+        background: rgba(59, 130, 246, 0.1);
+        border-left: 3px solid var(--primary-blue);
+        border-radius: 6px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      /* Print Styles */
+      @media print {
+        /* Hide UI elements that shouldn't be printed */
+        .download-section,
+        .back-to-top,
+        .theme-toggle,
+        nav,
+        header,
+        .header-wrapper,
+        .week-toggle {
+          display: none !important;
+        }
+
+        /* Remove horizontal scroll wrapper for print */
+        .horizontal-scroll-container,
+        .scroll-content {
+          overflow: visible !important;
+          height: auto !important;
+          display: block !important;
+        }
+
+        /* Force all accordions to be open - override inline styles */
+        .week-content,
+        .week-content.open,
+        div[class*="week-content"] {
+          max-height: none !important;
+          height: auto !important;
+          display: block !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
+        /* Adjust page layout for printing */
+        body {
+          background: white !important;
+          margin: 0;
+          padding: 20px;
+        }
+
+        .container,
+        main,
+        article {
+          max-width: 100% !important;
+          padding: 0 !important;
+          width: 100% !important;
+        }
+
+        .week-accordion {
+          page-break-after: always;
+          page-break-inside: avoid;
+          border: 2px solid #333;
+          margin: 0 0 20px 0;
+          padding: 10px;
+        }
+
+        .week-header {
+          background: #e8e8e8 !important;
+          color: #000 !important;
+          padding: 10px;
+          border-bottom: 2px solid #333;
+        }
+
+        .week-content {
+          padding: 10px;
+          background: white !important;
+        }
+
+        .day-schedule {
+          page-break-inside: avoid;
+          margin: 10px 0;
+          border: 1px solid #666;
+          padding: 10px;
+          background: white !important;
+        }
+
+        .day-title {
+          font-weight: bold;
+          color: #000 !important;
+        }
+
+        /* Make charts visible in print */
+        .chart-container,
+        .chart-section {
+          page-break-inside: avoid;
+          page-break-after: always;
+          margin: 20px 0;
+          border: 2px solid #333;
+          padding: 15px;
+        }
+
+        /* Ensure good contrast for print */
+        h1, h2, h3, h4, h5, h6,
+        p, span, div, li {
+          color: #000 !important;
+        }
+
+        .week-title,
+        .week-meta {
+          color: #000 !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -282,10 +460,27 @@
       <main class="scroll-content">
         <article>
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 2.2rem; margin: 0;">📅 All 24 Weeks - Detailed Breakdown</h1>
+            <h1 style="font-size: 2.2rem; margin: 0;">All 24 Weeks - Detailed Breakdown</h1>
             <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px;">Complete training schedule with progressive exercises and recovery focus</p>
             <div style="margin-top: 12px;">
               <a href="/health/couch-to-marathon/detailed/" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">← Back to Detailed Overview</a>
+            </div>
+          </div>
+
+          <!-- Download & Export Section -->
+          <div class="download-section">
+            <div class="download-title">📥 Download & Export Your Plan</div>
+            <div class="download-subtitle">Get your 24-week marathon plan in multiple formats for easy tracking and import into your favorite fitness apps</div>
+            
+            <div class="download-grid">
+              <button class="download-btn" onclick="exportToCSV()">📊 Export as CSV (Excel)</button>
+              <button class="download-btn" onclick="exportToJSON()">📋 Export as JSON</button>
+              <button class="download-btn" onclick="expandAllWeeks()">👀 Expand All Weeks</button>
+              <button class="download-btn secondary" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            </div>
+
+            <div class="download-note">
+              <strong>Compatible with:</strong> JEFIT, Fitbod, Garmin Connect, Apple Health, MyFitnessPal, Strong, Hevy, and more. The CSV/JSON files can be imported into most fitness tracking apps.
             </div>
           </div>
 
@@ -2489,6 +2684,171 @@
           behavior: 'smooth'
         });
       });
+
+      // Export functions for fitness plans
+      function generateWorkoutData() {
+        const plan = {
+          title: 'Couch to Marathon - 24 Week Training Plan',
+          startDate: new Date().toISOString().split('T')[0],
+          totalWeeks: 24,
+          workouts: []
+        };
+
+        // Parse all weeks from the document
+        const weekAccordions = document.querySelectorAll('.week-accordion');
+        weekAccordions.forEach((accordion, weekIndex) => {
+          const week = weekIndex + 1;
+          const weekHeader = accordion.querySelector('.week-title span:nth-child(2)');
+          const weekTitle = weekHeader ? weekHeader.textContent : `Week ${week}`;
+          const daySchedules = accordion.querySelectorAll('.day-schedule');
+          
+          daySchedules.forEach((day, dayIndex) => {
+            const dayTitle = day.querySelector('.day-title');
+            const dayName = dayTitle ? dayTitle.textContent.trim() : `Day ${dayIndex + 1}`;
+            const details = day.querySelector('.run-details, .strength-details, .flexibility-details');
+            const detailText = details ? details.textContent.trim() : '';
+            
+            const exercises = [];
+            const exerciseLists = day.querySelectorAll('.exercise-list');
+            exerciseLists.forEach(list => {
+              const items = list.querySelectorAll('.exercise-item');
+              items.forEach(item => {
+                exercises.push(item.textContent.trim());
+              });
+            });
+
+            plan.workouts.push({
+              week: week,
+              weekName: weekTitle,
+              day: dayIndex + 1,
+              dayName: dayName,
+              description: detailText,
+              exercises: exercises
+            });
+          });
+        });
+
+        return plan;
+      }
+
+      function exportToCSV() {
+        const data = generateWorkoutData();
+        let csv = 'Week,Day,Activity,Duration/Details,Exercise,Sets x Reps,Notes\n';
+        
+        data.workouts.forEach(workout => {
+          const dayName = workout.dayName.split('-')[0].trim();
+          const description = workout.description.replace(/\n/g, ' ');
+          
+          if (workout.exercises.length === 0) {
+            csv += `${workout.week},${workout.day},"${dayName}","${description}",,\n`;
+          } else {
+            workout.exercises.forEach((exercise, index) => {
+              if (index === 0) {
+                csv += `${workout.week},${workout.day},"${dayName}","${description}","${exercise.replace(/"/g, '""')}"\n`;
+              } else {
+                csv += `,,,"","${exercise.replace(/"/g, '""')}"\n`;
+              }
+            });
+          }
+        });
+
+        // Add UTF-8 BOM for proper Excel encoding
+        const BOM = '\uFEFF';
+        downloadFile(BOM + csv, 'couch-to-marathon-plan.csv', 'text/csv;charset=utf-8');
+      }
+
+      function exportToJSON() {
+        const data = generateWorkoutData();
+        const jsonString = JSON.stringify(data, null, 2);
+        downloadFile(jsonString, 'couch-to-marathon-plan.json', 'application/json');
+      }
+
+      function expandAllWeeks() {
+        const allWeekContents = document.querySelectorAll('.week-content');
+        const allWeekHeaders = document.querySelectorAll('.week-header');
+        
+        allWeekContents.forEach(content => {
+          content.classList.add('open');
+        });
+        
+        allWeekHeaders.forEach(header => {
+          header.classList.add('open');
+        });
+      }
+
+      function expandAllWeeks() {
+        const allWeekContents = document.querySelectorAll('.week-content');
+        const allWeekHeaders = document.querySelectorAll('.week-header');
+        
+        allWeekContents.forEach(content => {
+          content.classList.add('open');
+        });
+        
+        allWeekHeaders.forEach(header => {
+          header.classList.add('open');
+        });
+      }
+
+      function printPage() {
+        // Store original state
+        const scrollContainer = document.querySelector('.horizontal-scroll-container');
+        const originalScrollTop = scrollContainer.scrollTop;
+        
+        // Open all accordions before printing
+        const allWeekContents = document.querySelectorAll('.week-content');
+        const allWeekHeaders = document.querySelectorAll('.week-header');
+        
+        // Force open all accordions with both classes and inline styles
+        allWeekContents.forEach(content => {
+          content.classList.add('open');
+          content.style.display = 'block';
+          content.style.maxHeight = 'none';
+          content.style.height = 'auto';
+          content.style.visibility = 'visible';
+          content.style.opacity = '1';
+        });
+        
+        allWeekHeaders.forEach(header => {
+          header.classList.add('open');
+        });
+        
+        // Force a reflow to ensure all content is rendered
+        document.body.offsetHeight;
+        
+        // Scroll to top to ensure content is in viewport
+        scrollContainer.scrollTop = 0;
+        
+        // Trigger print after a longer delay to ensure all content renders
+        setTimeout(() => {
+          window.print();
+          
+          // Restore scroll position after print dialog closes
+          scrollContainer.scrollTop = originalScrollTop;
+        }, 500);
+      }
+
+      function copyToClipboard() {
+        const data = generateWorkoutData();
+        const text = JSON.stringify(data, null, 2);
+        navigator.clipboard.writeText(text).then(() => {
+          alert('Training plan copied to clipboard! You can paste it into any fitness app that accepts JSON format.');
+        }).catch(err => {
+          alert('Failed to copy to clipboard. Please try again.');
+        });
+      }
+
+      function downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
     </script>
   </body>
 </html>
+
