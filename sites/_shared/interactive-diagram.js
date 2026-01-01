@@ -102,6 +102,30 @@
       body: "Use the weights to blend values (V). The result is a new representation that ‘pulled in’ relevant information.",
       nodes: ["weighted-sum"],
     },
+    {
+      id: "encoder",
+      title: "Encoder / decoder",
+      body: "In the classic encoder-decoder Transformer, the encoder builds representations of the input. The decoder generates outputs using masked self-attention + cross-attention to the encoder’s memory.",
+      nodes: ["enc-input", "encoder", "memory", "dec-input", "decoder", "dec-output"],
+    },
+    {
+      id: "example",
+      title: "Worked example",
+      body: "Pronouns like ‘it’ need context. Attention lets the token ‘it’ look across the sentence to gather meaning from relevant tokens.",
+      nodes: ["all-to-all"],
+    },
+    {
+      id: "training",
+      title: "Training makes attention meaningful",
+      body: "At initialization, Q/K/V are random and attention is noise. Training tunes parameters so attention reflects useful patterns.",
+      nodes: ["random-init", "training-loop", "learned-patterns"],
+    },
+    {
+      id: "variants",
+      title: "Attention variants",
+      body: "Masked attention enforces causality (no looking ahead). Multi-head attention combines multiple ‘views’. Cross-attention mixes information from another sequence.",
+      nodes: ["masked", "multihead", "cross"],
+    },
   ];
 
   function clamp(n, min, max) {
