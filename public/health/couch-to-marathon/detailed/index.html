@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Detailed Couch to Marathon (24-Week Plan) · Observation Odyssey</title>
+    <meta name="description" content="Detailed 24-week marathon plan with specific exercises, weights, reps, stretches, asanas, and multi-metric training chart." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+    <style>
+      .training-detail {
+        margin-top: 20px;
+      }
+
+      .phase-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        padding: 16px;
+        background: var(--card-secondary);
+        border-radius: 10px;
+        border-left: 4px solid var(--primary-blue);
+      }
+
+      .phase-icon {
+        font-size: 2rem;
+      }
+
+      .phase-title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .metric-card {
+        padding: 14px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        text-align: center;
+      }
+
+      .metric-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 6px;
+      }
+
+      .metric-value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .weekly-breakdown {
+        margin: 14px 0;
+        padding: 16px;
+        background: var(--card-secondary);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .day-schedule {
+        margin-top: 12px;
+        padding: 12px;
+        background: var(--card-bg);
+        border-left: 3px solid var(--primary-blue);
+        border-radius: 6px;
+      }
+
+      .day-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .day-emoji {
+        font-size: 1.2rem;
+      }
+
+      .exercise-block {
+        margin: 10px 0;
+        padding: 10px;
+        background: var(--card-primary);
+        border-radius: 6px;
+        border-left: 3px solid var(--primary-blue);
+      }
+
+      .exercise-type {
+        font-weight: 600;
+        color: var(--primary-blue);
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+      }
+
+      .exercise-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .exercise-item {
+        padding: 6px 0;
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .exercise-item:last-child {
+        border-bottom: none;
+      }
+
+      .sets-reps {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .run-details {
+        padding: 8px 12px;
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 3px solid #10b981;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+
+      .strength-details {
+        padding: 8px 12px;
+        background: rgba(59, 130, 246, 0.1);
+        border-left: 3px solid #3b82f6;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+
+      .flexibility-details {
+        padding: 8px 12px;
+        background: rgba(168, 85, 247, 0.1);
+        border-left: 3px solid #a855f7;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+
+      .chart-section {
+        margin: 30px 0;
+        padding: 20px;
+        background: var(--card-secondary);
+        border-radius: 10px;
+        border: 2px solid var(--primary-blue);
+      }
+
+      .chart-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+
+      .chart-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+      }
+
+      .multi-metric-chart {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(24, 1fr);
+        gap: 4px;
+        align-items: flex-end;
+        height: 80px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .metric-row-title {
+        grid-column: 1 / -1;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+
+      .week-segment {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .week-segment:hover {
+        opacity: 0.8;
+      }
+
+      .segment-bar {
+        width: 100%;
+        border-radius: 3px;
+        transition: all 0.2s ease;
+      }
+
+      .week-number {
+        font-size: 0.65rem;
+        font-weight: 600;
+        margin-top: 4px;
+        color: var(--text-secondary);
+      }
+
+      .metric-legend {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+      }
+
+      .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 3px;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      }
+
+      .back-to-top:active {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <article class="training-detail">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 2.5rem; margin: 0;">🏃 Detailed Couch to Marathon</h1>
+            <p style="font-size: 1rem; color: var(--text-secondary); margin-top: 8px;">24-week comprehensive training with exercise specifics</p>
+            <div style="margin-top: 12px;">
+              <a href="/health/couch-to-marathon/intro/" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">← Back to Overview</a> | 
+              <a href="/health/couch-to-marathon/detailed/all-24-weeks.html" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">View All 24 Weeks →</a>
+            </div>
+          </div>
+
+          <!-- Phase 1: Base Building -->
+          <div class="phase-header">
+            <div class="phase-icon">🌱</div>
+            <div>
+              <div class="phase-title">Phase 1: Base Building (Weeks 1-6)</div>
+              <div style="font-size: 0.9rem; color: var(--text-secondary);">Foundation & habit formation</div>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-label">Weekly Mileage</div>
+              <div class="metric-value">12-21 mi</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Strength Days</div>
+              <div class="metric-value">2x/week</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Yoga/Stretch</div>
+              <div class="metric-value">3x/week</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Rest Days</div>
+              <div class="metric-value">2-3/week</div>
+            </div>
+          </div>
+
+          <!-- Week 1 Sample -->
+          <div class="weekly-breakdown">
+            <h3 style="margin: 0 0 12px 0; color: var(--text-primary);">📅 Week 1 Detailed Schedule</h3>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run</div>
+              <div class="run-details">
+                <strong>Distance:</strong> 2 miles | <strong>Pace:</strong> Conversational (9:30-10:00 min/mile) | <strong>Duration:</strong> 20 minutes
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Warm-up (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Arm circles: 10 forward, 10 backward</li>
+                  <li class="exercise-item">Leg swings: 10 front-back each leg</li>
+                  <li class="exercise-item">Dynamic stretches: Walking lunges x10</li>
+                  <li class="exercise-item">Light jog: 2 min at easy pace</li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Cool-down (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Walk: 2 minutes to bring HR down</li>
+                  <li class="exercise-item">Static stretches: Each 30 seconds</li>
+                  <li class="exercise-item">Quad stretch (each leg)</li>
+                  <li class="exercise-item">Hamstring stretch (each leg)</li>
+                  <li class="exercise-item">Calf stretch (each leg)</li>
+                  <li class="exercise-item">Hip flexor stretch (each leg)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Strength Training (30 min)</div>
+              <div class="strength-details">
+                <strong>Focus:</strong> Lower body strength | <strong>Rest between sets:</strong> 60-90 seconds
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Warm-up (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Bodyweight squats: 15 reps</li>
+                  <li class="exercise-item">Glute bridges: 15 reps</li>
+                  <li class="exercise-item">Leg swings: 10 each direction, each leg</li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Main Strength (20 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Goblet Squats: 3 sets × 12 reps <span class="sets-reps">(15-20 lb dumbbell)</span></li>
+                  <li class="exercise-item">Romanian Deadlifts: 3 sets × 10 reps <span class="sets-reps">(20-25 lb dumbbells)</span></li>
+                  <li class="exercise-item">Walking Lunges: 3 sets × 10 per leg <span class="sets-reps">(bodyweight or 8-10 lb dumbbells)</span></li>
+                  <li class="exercise-item">Glute Bridges: 2 sets × 15 reps <span class="sets-reps">(bodyweight)</span></li>
+                  <li class="exercise-item">Calf Raises: 2 sets × 15 reps <span class="sets-reps">(holding 15 lb dumbbell)</span></li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Cool-down (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Quad stretch: 30 sec each leg</li>
+                  <li class="exercise-item">Hamstring stretch: 30 sec each leg</li>
+                  <li class="exercise-item">Hip opener: 30 sec each side</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga & Flexibility (30 min)</div>
+              <div class="flexibility-details">
+                <strong>Style:</strong> Restorative Yin Yoga | <strong>Focus:</strong> Hip openers and hamstring stretches
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Warm-up (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Cat-Cow stretches: 10 rounds, 1 min</li>
+                  <li class="exercise-item">Child's pose: 1 min deep breathing</li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Main Flow (20 min) - Hold each 2-3 min</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item"><strong>Pigeon Pose (Eka Pada Rajakapotasana prep)</strong> - Deep hip opener, targets glutes</li>
+                  <li class="exercise-item"><strong>Butterfly Pose (Baddha Konasana)</strong> - Inner thigh and hip flexibility</li>
+                  <li class="exercise-item"><strong>Lizard Pose (Utthan Pristhasana)</strong> - Hip flexor and groin stretch</li>
+                  <li class="exercise-item"><strong>Pyramid Pose (Parsvottanasana)</strong> - Hamstring and calf stretch</li>
+                  <li class="exercise-item"><strong>Downward Dog (Adho Mukha Svanasana)</strong> - Full posterior chain, 1 min</li>
+                  <li class="exercise-item"><strong>Low Lunge (Anjaneyasana)</strong> - Hip flexor stretch, each side 2 min</li>
+                  <li class="exercise-item"><strong>Supine Figure Four (Sucirandhrasana)</strong> - Glute and hip opener, each side 2 min</li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Cool-down/Savasana (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Legs up the wall or Savasana: Full body relaxation, deep breathing</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Recovery Run</div>
+              <div class="run-details">
+                <strong>Distance:</strong> 1.5 miles | <strong>Pace:</strong> Very easy (10:00-10:30 min/mile) | <strong>Duration:</strong> 16 minutes
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Main Workout</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Warm-up walk: 2 minutes</li>
+                  <li class="exercise-item">Easy jog: 12 minutes at conversational pace</li>
+                  <li class="exercise-item">Cool-down walk: 2 minutes</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">💪</span> Friday - Strength Training (30 min)</div>
+              <div class="strength-details">
+                <strong>Focus:</strong> Upper body & core | <strong>Rest between sets:</strong> 60-90 seconds
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Warm-up (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Arm circles: 20 total (10 forward, 10 back)</li>
+                  <li class="exercise-item">Bodyweight push-ups: 10 reps</li>
+                  <li class="exercise-item">Plank hold: 20 seconds</li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Main Strength (20 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Push-ups: 3 sets × 8-10 reps <span class="sets-reps">(modify on knees if needed)</span></li>
+                  <li class="exercise-item">Dumbbell Rows: 3 sets × 10 reps <span class="sets-reps">(15-20 lb dumbbells)</span></li>
+                  <li class="exercise-item">Plank: 3 sets × 30-45 seconds <span class="sets-reps">(maintain neutral spine)</span></li>
+                  <li class="exercise-item">Dumbbell Bench Press: 3 sets × 10 reps <span class="sets-reps">(12-15 lb dumbbells)</span></li>
+                  <li class="exercise-item">Pallof Press: 2 sets × 10 per side <span class="sets-reps">(5-10 lb dumbbell for core stability)</span></li>
+                </ul>
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Cool-down (5 min)</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Chest stretch: 30 sec each side (doorway stretch)</li>
+                  <li class="exercise-item">Shoulder stretch: 30 sec each arm (cross-body)</li>
+                  <li class="exercise-item">Child's pose: 1 min</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">🧘</span> Saturday - Long Run</div>
+              <div class="run-details">
+                <strong>Distance:</strong> 4 miles | <strong>Pace:</strong> Easy (10:00 min/mile) | <strong>Duration:</strong> 40 minutes
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Run Details</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Warm-up walk: 3 minutes</li>
+                  <li class="exercise-item">Easy run: 34 minutes (should be conversational pace)</li>
+                  <li class="exercise-item">Cool-down walk: 3 minutes</li>
+                  <li class="exercise-item">Hydration: Sip water every 10 min</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="day-schedule">
+              <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest & Recovery</div>
+              <div style="padding: 8px 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; border-radius: 4px; font-size: 0.85rem;">
+                <strong>Active Recovery Option:</strong> 20-30 min easy walk or gentle swimming (optional)
+              </div>
+              <div class="exercise-block">
+                <div class="exercise-type">Recovery Focus</div>
+                <ul class="exercise-list">
+                  <li class="exercise-item">Sleep: 7-9 hours per night</li>
+                  <li class="exercise-item">Nutrition: Balanced meals with adequate protein and carbs</li>
+                  <li class="exercise-item">Hydration: Minimum 2 liters of water</li>
+                  <li class="exercise-item">Light mobility: 10 min stretching session</li>
+                  <li class="exercise-item">Mental rest: No running thoughts, focus on recovery</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 30px; padding: 20px; background: var(--card-secondary); border-radius: 10px; border-left: 4px solid var(--primary-blue);">
+            <h3 style="margin-top: 0;">📚 Key Progression Notes</h3>
+            <ul style="margin: 12px 0; padding-left: 20px;">
+              <li><strong>Weeks 1-6 (Base):</strong> Focus on consistency and building aerobic base. Add 1-2 miles to long run every 2 weeks.</li>
+              <li><strong>Weeks 7-12 (Build):</strong> Increase strength to 2-3x/week. Long run grows to 10-12 miles.</li>
+              <li><strong>Weeks 13-18 (Peak):</strong> Maximum mileage 40-45 mi/week. Add tempo runs and speed work. Maintain strength 2x/week.</li>
+              <li><strong>Weeks 19-24 (Taper):</strong> Reduce volume by 20-50%. Focus on rest and race-specific drills.</li>
+              <li><strong>General Rules:</strong> Never increase weekly mileage by more than 10%. If injury occurs, take 5-7 days off fully.</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%); border-radius: 12px; text-align: center; border: 2px solid var(--primary-blue);">
+            <h3 style="margin: 0 0 12px 0; color: white; font-size: 1.3rem;">📖 Want to see ALL 24 weeks with full details?</h3>
+            <p style="color: rgba(255,255,255,0.9); margin: 0 0 20px 0; font-size: 0.95rem;">The page above shows only Week 1 as a sample. Click below to view the complete day-by-day breakdown for all 24 weeks.</p>
+            <a href="/health/couch-to-marathon/detailed/all-24-weeks.html" style="display: inline-block; padding: 14px 32px; background: white; color: var(--primary-blue); text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">View All 24 Weeks (Complete Details) →</a>
+          </div>
+
+          <div style="margin-top: 30px; text-align: center;">
+            <a href="/health/couch-to-marathon/intro/" style="display: inline-block; padding: 12px 24px; background: var(--card-secondary); color: var(--text-primary); text-decoration: none; border-radius: 8px; font-weight: 600; border: 1px solid var(--border-color);">← Back to Overview</a>
+          </div>
+        </article>
+      </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/_shared/theme.js"></script>
+    <script src="/_shared/components.js"></script>
+    <script>
+      // Back to top button
+      const backToTopBtn = document.getElementById('backToTop');
+      const scrollContainer = document.querySelector('.horizontal-scroll-container');
+      
+      scrollContainer.addEventListener('scroll', function() {
+        if (scrollContainer.scrollTop > 300) {
+          backToTopBtn.classList.add('show');
+        } else {
+          backToTopBtn.classList.remove('show');
+        }
+      });
+      
+      backToTopBtn.addEventListener('click', function() {
+        scrollContainer.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    </script>
+  </body>
+</html>

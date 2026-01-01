@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Embeddings (Intro) · Observation Odyssey</title>
+    <meta name="description" content="A transcript-driven introduction to text representations: one-hot, bag-of-words, dense embeddings, Word2Vec, and positional encoding." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <section class="ai-lesson ai-page" id="launch">
+          <div class="card-icon">🧩</div>
+          <h1 class="card-title" style="margin: 0 0 8px 0; font-size: 1.6rem;">Embeddings: turning words into meaning-carrying vectors</h1>
+          <p class="section-text" style="margin-top: 0; color: var(--text-secondary);">
+            Why simple token IDs fail, how one-hot and bag-of-words work (and break), and how dense embeddings + positional encoding prepare inputs for attention.
+          </p>
+
+          <div class="lesson-quote">
+            <div class="lesson-quote-title">If you remember one thing</div>
+            <div class="lesson-quote-text">An embedding is a dense vector where “nearby” vectors mean “similar” words.</div>
+          </div>
+
+          <div class="lesson-toc" aria-label="Lesson sections">
+            <a class="lesson-toc-link" href="#numbers">Everything becomes numbers</a>
+            <a class="lesson-toc-link" href="#token-ids">Token IDs (why not)</a>
+            <a class="lesson-toc-link" href="#one-hot">One-hot encoding</a>
+            <a class="lesson-toc-link" href="#bow">Bag of words / n-grams</a>
+            <a class="lesson-toc-link" href="#meaning">Semantic + context</a>
+            <a class="lesson-toc-link" href="#embeddings">Word embeddings</a>
+            <a class="lesson-toc-link" href="#word2vec">Word2Vec training</a>
+            <a class="lesson-toc-link" href="#transformer-embed">Transformer embedding layer</a>
+            <a class="lesson-toc-link" href="#positional">Positional encoding</a>
+          </div>
+
+          <div class="card-section" id="numbers">
+            <h4 class="section-label">Everything becomes numbers</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              The first rule of training a machine learning model: convert the input into numbers.
+            </p>
+            <div class="diagram" role="img" aria-label="Numerical representations diagram: images become pixel values; text becomes token-based representations.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Images</div><div class="diagram-sub">Pixels → numbers (0..1)</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Model input</div><div class="diagram-sub">Vectors / matrices</div></div>
+              </div>
+              <div class="diagram-row" style="margin-top: 14px;">
+                <div class="diagram-box"><div class="diagram-title">Text</div><div class="diagram-sub">Words → tokens</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Model input</div><div class="diagram-sub">Features (numbers)</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section" id="token-ids">
+            <h4 class="section-label">Token IDs (why not)</h4>
+            <p class="section-text">
+              A simple idea is to assign each unique word a unique number (token ID). But token IDs create fake “distances”. If <span style="color: var(--text-primary);">bad</span> is 22 and <span style="color: var(--text-primary);">great</span> is 21, the model may treat them as similar just because the numbers are close.
+            </p>
+            <div class="diagram" role="img" aria-label="Token IDs pitfall diagram: numeric closeness does not imply semantic closeness.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Token ID</div><div class="diagram-sub">good → 6</div></div>
+                <div class="diagram-arrow">≠</div>
+                <div class="diagram-box"><div class="diagram-title">Meaning</div><div class="diagram-sub">good ≈ great</div></div>
+              </div>
+              <div class="diagram-row" style="margin-top: 14px;">
+                <div class="diagram-box"><div class="diagram-title">Token ID</div><div class="diagram-sub">great → 21, bad → 22</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Wrong signal</div><div class="diagram-sub">21 close to 22 ⇒ “similar”</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section" id="one-hot">
+            <h4 class="section-label">One-hot encoding</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              One-hot represents each word as a vector of length |V| (vocabulary size). Only one position is 1; all others are 0.
+            </p>
+            <div class="diagram" role="img" aria-label="One-hot encoding diagram: each word maps to a sparse vector of vocabulary size.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Word</div><div class="diagram-sub">"great"</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">One-hot</div><div class="diagram-sub">[0,0,0,1,0, …]</div></div>
+              </div>
+            </div>
+
+            <details class="lesson-details">
+              <summary>Why one-hot is limited</summary>
+              <div class="section-text">
+                It’s sparse (50k vocab ⇒ 50k dimensions), expensive, and it can’t represent similarity (good vs great) because every word is independent.
+              </div>
+            </details>
+          </div>
+
+          <div class="card-section" id="bow">
+            <h4 class="section-label">Bag of Words / n-grams</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              Bag-of-words counts occurrences of words in a sentence. Unigram uses single words; bigram/trigram add short context by counting word pairs/triples.
+            </p>
+            <div class="diagram" role="img" aria-label="Bag of words and n-grams diagram: unigram counts, bigram counts, n-gram increases context but sparsity grows.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Unigram</div><div class="diagram-sub">Count words</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Bigram</div><div class="diagram-sub">Count word pairs</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">N-gram</div><div class="diagram-sub">Short context (but huge space)</div></div>
+              </div>
+            </div>
+
+            <details class="lesson-details">
+              <summary>Why n-grams don’t scale</summary>
+              <div class="section-text">
+                The feature space explodes and stays sparse, and the model only sees a tiny local window (e.g., trigram sees only 3 words).
+              </div>
+            </details>
+          </div>
+
+          <div class="card-section" id="meaning">
+            <h4 class="section-label">Semantic + contextual meaning</h4>
+            <p class="section-text">
+              To predict the next token, a model needs semantic understanding (similar words keep meaning) and context (what “old” describes; what “dusty” refers to). This is why embeddings and attention matter.
+            </p>
+          </div>
+
+          <div class="card-section" id="embeddings">
+            <h4 class="section-label">Word embeddings</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              An embedding is a dense vector in a continuous space. Similar words have vectors that are close. The direction between vectors can encode relationships.
+            </p>
+            <div class="diagram" role="img" aria-label="Embeddings diagram: dense vectors, similarity as distance, and analogy as vector arithmetic.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Dense vector</div><div class="diagram-sub">Not sparse like one-hot</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Similarity</div><div class="diagram-sub">king close to queen</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Analogy</div><div class="diagram-sub">king − man + woman ≈ queen</div></div>
+              </div>
+            </div>
+
+            <details class="lesson-details">
+              <summary>What’s inside an embedding dimension?</summary>
+              <div class="section-text">
+                We don’t hand-design the “features”. They emerge from training data and the learning objective.
+              </div>
+            </details>
+          </div>
+
+          <div class="card-section" id="word2vec">
+            <h4 class="section-label">Word2Vec training (CBOW & Skip-gram)</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              Word2Vec trains embeddings by predicting words from context (CBOW) or predicting context from a word (Skip-gram). After training, the learned weight matrix acts like an embedding lookup table.
+            </p>
+            <div class="diagram" role="img" aria-label="Word2Vec diagram: CBOW predicts center word from context; Skip-gram predicts context from center word; learned weights become embeddings.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">CBOW</div><div class="diagram-sub">context → target</div></div>
+                <div class="diagram-arrow">·</div>
+                <div class="diagram-box"><div class="diagram-title">Skip-gram</div><div class="diagram-sub">target → context</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Embedding matrix</div><div class="diagram-sub">Weights as lookup table</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section" id="transformer-embed">
+            <h4 class="section-label">Embedding layer in Transformers</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              Transformers use a trainable embedding layer: token IDs select rows from an embedding matrix (a learned lookup table). These embeddings are trained jointly with the whole model.
+            </p>
+            <div class="diagram" role="img" aria-label="Transformer embedding layer diagram: token IDs map to embedding vectors; matrix shape is vocab_size x d_model.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Token IDs</div><div class="diagram-sub">[t1, t2, …]</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Embedding matrix</div><div class="diagram-sub">|V| × d</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Token vectors</div><div class="diagram-sub">n × d</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section" id="positional">
+            <h4 class="section-label">Positional encoding</h4>
+            <p class="section-text" style="margin-bottom: 10px;">
+              Because Transformers process tokens in parallel, we must add position information. We add a positional vector to each token embedding (same shape, values change).
+            </p>
+            <div class="diagram" role="img" aria-label="Positional encoding diagram: embeddings plus positional vectors produce position-aware representations fed into attention.">
+              <div class="diagram-row">
+                <div class="diagram-box"><div class="diagram-title">Embedding</div><div class="diagram-sub">Token meaning</div></div>
+                <div class="diagram-arrow">+</div>
+                <div class="diagram-box"><div class="diagram-title">Position</div><div class="diagram-sub">Token order</div></div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box"><div class="diagram-title">Ready for attention</div><div class="diagram-sub">Context building</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section">
+            <a href="../../../" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to AI</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/scroll-nav.js"></script>
+    <script src="/_shared/theme.js"></script>
+  </body>
+</html>

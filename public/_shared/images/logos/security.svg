@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+  <!-- Shield shape -->
+  <path d="M 50 10 L 85 25 L 85 50 Q 85 75 50 90 Q 15 75 15 50 L 15 25 Z" fill="none" stroke="#0078d4" stroke-width="3" stroke-linejoin="round"/>
+  
+  <!-- Lock symbol inside shield -->
+  <rect x="40" y="45" width="20" height="18" rx="2" fill="none" stroke="#0078d4" stroke-width="2"/>
+  <path d="M 45 45 Q 45 38 50 38 Q 55 38 55 45" fill="none" stroke="#0078d4" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="50" cy="56" r="2" fill="#0078d4"/>
+</svg>

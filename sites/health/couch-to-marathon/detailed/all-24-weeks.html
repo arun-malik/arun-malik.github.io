@@ -1,0 +1,2494 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All 24 Weeks - Detailed Couch to Marathon · Observation Odyssey</title>
+    <meta name="description" content="Complete 24-week detailed marathon training with specific exercises for every week, progressive overload, and recovery focus." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+    <style>
+      .week-accordion {
+        margin: 12px 0;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .week-header {
+        background: var(--card-secondary);
+        padding: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        user-select: none;
+        transition: background 0.2s ease;
+      }
+
+      .week-header:hover {
+        background: var(--card-primary);
+      }
+
+      .week-header.open {
+        background: var(--primary-blue);
+        color: white;
+      }
+
+      .week-title {
+        font-weight: 700;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .week-meta {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      .week-header.open .week-meta {
+        color: rgba(255,255,255,0.8);
+      }
+
+      .toggle-icon {
+        font-size: 1.2rem;
+        transition: transform 0.2s ease;
+      }
+
+      .week-header.open .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .week-content {
+        display: none;
+        padding: 16px;
+        background: var(--card-primary);
+        border-top: 1px solid var(--border-color);
+      }
+
+      .week-content.open {
+        display: block;
+      }
+
+      .day-schedule {
+        margin: 12px 0;
+        padding: 12px;
+        background: var(--card-bg);
+        border-left: 3px solid var(--primary-blue);
+        border-radius: 6px;
+      }
+
+      .day-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .day-emoji {
+        font-size: 1.2rem;
+      }
+
+      .run-details {
+        padding: 8px 12px;
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 3px solid #10b981;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+
+      .strength-details {
+        padding: 8px 12px;
+        background: rgba(59, 130, 246, 0.1);
+        border-left: 3px solid #3b82f6;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+
+      .flexibility-details {
+        padding: 8px 12px;
+        background: rgba(168, 85, 247, 0.1);
+        border-left: 3px solid #a855f7;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+
+      .exercise-block {
+        margin: 10px 0;
+        padding: 10px;
+        background: var(--card-secondary);
+        border-radius: 6px;
+        border-left: 3px solid var(--primary-blue);
+      }
+
+      .exercise-type {
+        font-weight: 600;
+        color: var(--primary-blue);
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+      }
+
+      .exercise-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .exercise-item {
+        padding: 6px 0;
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .exercise-item:last-child {
+        border-bottom: none;
+      }
+
+      .sets-reps {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .phase-indicator {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 8px;
+      }
+
+      .phase-1 {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+      }
+
+      .week-header.open .phase-1 {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+      }
+
+      .phase-2 {
+        background: rgba(59, 130, 246, 0.2);
+        color: #3b82f6;
+      }
+
+      .week-header.open .phase-2 {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+      }
+
+      .phase-3 {
+        background: rgba(245, 158, 11, 0.2);
+        color: #f59e0b;
+      }
+
+      .week-header.open .phase-3 {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+      }
+
+      .phase-4 {
+        background: rgba(139, 92, 246, 0.2);
+        color: #8b5cf6;
+      }
+
+      .week-header.open .phase-4 {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      }
+
+      .back-to-top:active {
+        transform: translateY(-2px);
+      }
+
+      .chart-section {
+        margin: 30px 0;
+        padding: 24px;
+        background: var(--card-secondary);
+        border-radius: 12px;
+        border: 2px solid var(--primary-blue);
+      }
+
+      .chart-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 6px;
+      }
+
+      .chart-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <article>
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 2.2rem; margin: 0;">📅 All 24 Weeks - Detailed Breakdown</h1>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px;">Complete training schedule with progressive exercises and recovery focus</p>
+            <div style="margin-top: 12px;">
+              <a href="/health/couch-to-marathon/detailed/" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">← Back to Detailed Overview</a>
+            </div>
+          </div>
+
+          <!-- Training Load Chart -->
+          <div class="chart-section">
+            <div class="chart-title">📊 Training Load Breakdown (All 3 Metrics)</div>
+            <div class="chart-subtitle">Stacked view: Running Miles + Strength Training (min) + Flexibility/Yoga (min)</div>
+            
+            <div style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 4px; height: 200px; align-items: flex-end; margin-top: 20px;">
+              <!-- Week 1 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 1: 15mi + 30min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 24%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">1</div>
+              </div>
+              <!-- Week 2 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 2: 15mi + 30min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 24%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">2</div>
+              </div>
+              <!-- Week 3 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 3: 17mi + 40min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 28%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 20%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">3</div>
+              </div>
+              <!-- Week 4 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 4: 17mi + 40min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 28%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 20%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">4</div>
+              </div>
+              <!-- Week 5 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 5: 20mi + 50min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 33%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 25%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">5</div>
+              </div>
+              <!-- Week 6 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 6: 20mi + 50min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 33%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 25%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">6</div>
+              </div>
+              <!-- Week 7 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 7: 23mi + 60min strength + 35min flex">
+                <div style="width: 100%; background: #10b981; height: 38%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">7</div>
+              </div>
+              <!-- Week 8 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 8: 23mi + 60min strength + 35min flex">
+                <div style="width: 100%; background: #10b981; height: 38%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">8</div>
+              </div>
+              <!-- Week 9 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 9: 26mi + 60min strength + 35min flex">
+                <div style="width: 100%; background: #10b981; height: 42%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">9</div>
+              </div>
+              <!-- Week 10 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 10: 26mi + 60min strength + 35min flex">
+                <div style="width: 100%; background: #10b981; height: 42%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">10</div>
+              </div>
+              <!-- Week 11 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 11: 30mi + 60min strength + 40min flex">
+                <div style="width: 100%; background: #10b981; height: 48%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">11</div>
+              </div>
+              <!-- Week 12 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 12: 30mi + 60min strength + 40min flex">
+                <div style="width: 100%; background: #10b981; height: 48%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">12</div>
+              </div>
+              <!-- Week 13 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 13: 38mi + 60min strength + 45min flex">
+                <div style="width: 100%; background: #10b981; height: 61%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">13</div>
+              </div>
+              <!-- Week 14 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 14: 38mi + 60min strength + 45min flex">
+                <div style="width: 100%; background: #10b981; height: 61%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">14</div>
+              </div>
+              <!-- Week 15 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 15: 43mi + 60min strength + 45min flex">
+                <div style="width: 100%; background: #10b981; height: 70%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">15</div>
+              </div>
+              <!-- Week 16 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 16: 43mi + 60min strength + 45min flex">
+                <div style="width: 100%; background: #10b981; height: 70%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">16</div>
+              </div>
+              <!-- Week 17 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 17: 41mi + 45min strength + 40min flex">
+                <div style="width: 100%; background: #10b981; height: 66%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 22%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">17</div>
+              </div>
+              <!-- Week 18 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 18: 41mi + 45min strength + 40min flex">
+                <div style="width: 100%; background: #10b981; height: 66%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 22%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">18</div>
+              </div>
+              <!-- Week 19 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 19: 31mi + 30min strength + 35min flex">
+                <div style="width: 100%; background: #10b981; height: 50%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">19</div>
+              </div>
+              <!-- Week 20 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 20: 31mi + 30min strength + 35min flex">
+                <div style="width: 100%; background: #10b981; height: 50%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">20</div>
+              </div>
+              <!-- Week 21 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 21: 25mi + 20min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 40%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 10%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">21</div>
+              </div>
+              <!-- Week 22 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 22: 25mi + 20min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 40%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 10%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">22</div>
+              </div>
+              <!-- Week 23 -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 23: 19mi + 15min strength + 30min flex">
+                <div style="width: 100%; background: #10b981; height: 30%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 7%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">23</div>
+              </div>
+              <!-- Week 24 (Race) -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 24: RACE DAY + light training">
+                <div style="width: 100%; background: #ef4444; height: 20%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 100%; background: #3b82f6; height: 0%; border-radius: 0;"></div>
+                <div style="width: 100%; background: #a855f7; height: 10%; border-radius: 0 0 0 0;"></div>
+                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">24</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
+                <div style="width: 16px; height: 16px; background: #10b981; border-radius: 3px;"></div>
+                <span>Running Miles</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
+                <div style="width: 16px; height: 16px; background: #3b82f6; border-radius: 3px;"></div>
+                <span>Strength (min)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
+                <div style="width: 16px; height: 16px; background: #a855f7; border-radius: 3px;"></div>
+                <span>Flexibility (min)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 1: WEEKS 1-6 -->
+          <div style="margin: 30px 0; padding: 20px; background: var(--card-secondary); border-left: 4px solid #10b981; border-radius: 10px;">
+            <h2 style="margin: 0 0 16px 0; color: #10b981; font-size: 1.4rem;">🌱 Phase 1: Base Building (Weeks 1-6)</h2>
+            <p style="color: var(--text-secondary); margin: 0;">Focus: Build aerobic base, establish routine, foundational strength</p>
+          </div>
+
+          <!-- Week 1 -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-1">Week 1</span>
+                <span>Easy Base Building - 12-15 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">2 runs, 2 strength, 1 yoga</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content open">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (2 mi)</div>
+                <div class="run-details">20 min at conversational pace (9:30-10:00 /mi)</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (2 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Arm circles: 10 each direction</li>
+                    <li class="exercise-item">Leg swings: 10 front-back each leg</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Cool-down & Stretch (5 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Quad stretch: 30 sec each leg</li>
+                    <li class="exercise-item">Hamstring stretch: 30 sec each leg</li>
+                    <li class="exercise-item">Calf stretch: 30 sec each leg</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (30 min)</div>
+                <div class="strength-details">Rest: 60-90 sec between sets | Focus: Glutes, quads, hamstrings</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (5 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Bodyweight squats: 15 reps</li>
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (20 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×12 <span class="sets-reps">(15-20 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×10 <span class="sets-reps">(20-25 lb)</span></li>
+                    <li class="exercise-item">Walking Lunges: 3×10/leg <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Glute Bridges: 2×15 <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga & Flexibility (30 min)</div>
+                <div class="flexibility-details">Yin Yoga | Hold each pose 2-3 min | Focus: Hip openers, hamstrings</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Asana Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> - Deep hip opener</li>
+                    <li class="exercise-item"><strong>Butterfly Pose</strong> - Inner thigh stretch</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> - Hip flexor release</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> - Glute & hip opener</li>
+                    <li class="exercise-item"><strong>Savasana</strong> - 5 min full body relaxation</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Recovery Run (1.5 mi)</div>
+                <div class="run-details">16 min very easy (10:00-10:30 /mi) | Active recovery</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (30 min)</div>
+                <div class="strength-details">Rest: 60 sec between sets | Focus: Chest, back, core stability</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (25 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×8-10 <span class="sets-reps">(mod on knees ok)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×10 <span class="sets-reps">(15-20 lb)</span></li>
+                    <li class="exercise-item">Plank: 3×30-45 sec</li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×10 <span class="sets-reps">(12-15 lb)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi) | Hydrate every 10 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest & Recovery</div>
+                <div class="flexibility-details">Optional 20-min walk or easy swim | Sleep 7-9 hrs | Hydration focus</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 2 -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-1">Week 2</span>
+                <span>Repeat & Build - 12-15 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Add reps & first weight increase</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (2 mi)</div>
+                <div class="run-details">20 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body + Volume (32 min)</div>
+                <div class="strength-details">Rest: 75 sec | Add 1-2 reps to each exercise</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (5 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Bodyweight squats: 15 reps</li>
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (22 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×13 <span class="sets-reps">(15-20 lb) ↑ +1 rep</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×11 <span class="sets-reps">(20-25 lb) ↑ +1 rep</span></li>
+                    <li class="exercise-item">Walking Lunges: 3×11/leg <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Glute Bridges: 2×16 <span class="sets-reps">(bodyweight) ↑ +1 rep</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga & Flexibility (32 min)</div>
+                <div class="flexibility-details">Yin + dynamic stretching</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Asana Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Butterfly Pose</strong> (2.5 min)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (2 min each side) NEW</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> (2.5 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (5 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Recovery Run (1.5 mi)</div>
+                <div class="run-details">16 min very easy (10:00-10:30 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body + Core (32 min)</div>
+                <div class="strength-details">Rest: 75 sec | Add reps</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (27 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×10-12 <span class="sets-reps">(+2 reps)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×11 <span class="sets-reps">(15-20 lb) ↑ +1 rep</span></li>
+                    <li class="exercise-item">Plank: 3×45-55 sec <span class="sets-reps">(+10 sec)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×11 <span class="sets-reps">(12-15 lb) ↑ +1 rep</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest & Recovery</div>
+                <div class="flexibility-details">Optional walk 20 min | Foam roll 5-10 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 3 -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-1">Week 3</span>
+                <span>Strength Progression - 15-18 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">+10% mileage, add weight & new exercises</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (2.5 mi)</div>
+                <div class="run-details">25 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Progression (35 min)</div>
+                <div class="strength-details">Rest: 75-90 sec | Add weight & new exercises | NEW exercise introduction</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (5 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Bodyweight squats: 15 reps</li>
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (25 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×13 <span class="sets-reps">(20-25 lb) ↑ weight increase</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×8/leg <span class="sets-reps">(10-12 lb dumbbells) NEW</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×11 <span class="sets-reps">(25-30 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Single-Leg Glute Bridges: 2×10/leg <span class="sets-reps">(bodyweight) NEW</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Dynamic Yoga + Mobility (35 min)</div>
+                <div class="flexibility-details">Mix of dynamic & yin | Mobility emphasis | Extended holds</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Cat-Cow Stretches</strong> - Spinal mobility (1 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Butterfly Pose</strong> (2.5 min)</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Hip Circles & Mobility</strong> - Dynamic (2 min)</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> (2.5 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (5 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Recovery Run (2 mi)</div>
+                <div class="run-details">20 min very easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core Advancement (35 min)</div>
+                <div class="strength-details">Rest: 75 sec | Add weight & new exercise (Dead Bug)</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (30 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×12 <span class="sets-reps">(+2 reps from Week 2)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×12 <span class="sets-reps">(15-20 lb) ↑ +1 rep</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×20 total <span class="sets-reps">(dynamic core) NEW</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×12 <span class="sets-reps">(12-15 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×10/side <span class="sets-reps">(core stability) NEW</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (5 mi)</div>
+                <div class="run-details">50 min easy (10:00 /mi) | Hydrate every 12 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest & Recovery</div>
+                <div class="flexibility-details">Optional walk 20 min | Foam roll 10 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weeks 4-6 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-1">Week 4</span>
+                <span>Recovery Week - 12-14 mi/week (Deload)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">20% reduction, maintenance strength</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (2 mi)</div>
+                <div class="run-details">20 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Maintenance (30 min)</div>
+                <div class="strength-details">Same weight, same reps | Focus on movement quality</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (25 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×13 <span class="sets-reps">(20-25 lb)</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×8/leg <span class="sets-reps">(10-12 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×11 <span class="sets-reps">(25-30 lb)</span></li>
+                    <li class="exercise-item">Single-Leg Glute Bridges: 2×10/leg <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Deep Restorative Yoga (40 min)</div>
+                <div class="flexibility-details">Longer holds | Recovery focus | Yin emphasis</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Restorative Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Supported Child's Pose</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Butterfly Pose</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> (3 min each)</li>
+                    <li class="exercise-item"><strong>Legs Up the Wall</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Rest OR easy walk (1-2 mi optional)</div>
+                <div class="run-details">Complete rest OR 15 min leisurely walk</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body Maintenance (30 min)</div>
+                <div class="strength-details">Same weight, same reps</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (25 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×12 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×12 <span class="sets-reps">(15-20 lb)</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×20 <span class="sets-reps">(dynamic)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×12 <span class="sets-reps">(12-15 lb)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi) | Recovery pace</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Complete Rest</div>
+                <div class="flexibility-details">No structured exercise | Light stretching ok | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-1">Week 5</span>
+                <span>Build Again - 18-21 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Back to progression | Add step-ups</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (2.5 mi)</div>
+                <div class="run-details">25 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Progressive (37 min)</div>
+                <div class="strength-details">Rest: 75-90 sec | Add 5 lb to lower body | NEW exercise: Step-ups</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (32 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×13 <span class="sets-reps">(25-30 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×9/leg <span class="sets-reps">(12-15 lb) ↑ weight+reps</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×12 <span class="sets-reps">(30-35 lb) ↑ +5 lb, +1 rep</span></li>
+                    <li class="exercise-item">Step-ups: 3×10/leg <span class="sets-reps">(12-14 in bench, 8-10 lb dumbbells) NEW</span></li>
+                    <li class="exercise-item">Single-Leg Glute Bridges: 2×11/leg <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Dynamic Yoga + Mobility (38 min)</div>
+                <div class="flexibility-details">Mix dynamic & yin | Mobility focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation A</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Warrior Flows</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Downward Dog</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Hip Circles & Mobility</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (7 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Recovery Run (2 mi)</div>
+                <div class="run-details">20 min very easy (10:00-10:30 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body Progressive (37 min)</div>
+                <div class="strength-details">Rest: 75 sec | Add weight & reps</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (32 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×13 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×13 <span class="sets-reps">(15-20 lb) ↑ +1 rep</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×25 total <span class="sets-reps">(+5 taps)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×13 <span class="sets-reps">(12-15 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×12/side <span class="sets-reps">(+2 reps)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (5.5 mi)</div>
+                <div class="run-details">55 min easy (10:00 /mi) | Hydrate every 12 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest & Recovery</div>
+                <div class="flexibility-details">Optional 20 min walk | Foam roll 10 min</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-1">Week 6</span>
+                <span>Phase 1 Peak - 18-21 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Finish strong | Band work & core emphasis</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Peak (40 min)</div>
+                <div class="strength-details">Rest: 90 sec | Add 5 lb to main lifts</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (35 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×14 <span class="sets-reps">(30-35 lb) ↑ +5 lb, +1 rep</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×10/leg <span class="sets-reps">(15-18 lb) ↑ weight</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×12 <span class="sets-reps">(35-40 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Step-ups: 3×11/leg <span class="sets-reps">(12-14 in bench, 10-12 lb)</span></li>
+                    <li class="exercise-item">Single-Leg Glute Bridges: 2×12/leg <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Extended Flexibility (45 min)</div>
+                <div class="flexibility-details">Deep yin + warrior flows | Recovery emphasis</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Extended Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Warm-up Cat-Cow</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Warrior I & II Flow</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> (3 min each)</li>
+                    <li class="exercise-item"><strong>Downward Dog</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Recovery Run (2 mi)</div>
+                <div class="run-details">20 min very easy (10:00-10:30 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body + Shoulder Health (40 min)</div>
+                <div class="strength-details">Rest: 90 sec | Add resistance band work | NEW</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (35 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×14 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×14 <span class="sets-reps">(15-20 lb) ↑ +1 rep</span></li>
+                    <li class="exercise-item">Resistance Band Pull-aparts: 3×15 <span class="sets-reps">(light/medium band) NEW</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×30 total <span class="sets-reps">(+5 taps)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×14 <span class="sets-reps">(12-15 lb)</span></li>
+                    <li class="exercise-item">Pallof Press: 2×12/side <span class="sets-reps">(8-10 lb) NEW - anti-rotation</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (6 mi)</div>
+                <div class="run-details">60 min easy (10:00 /mi) | Hydrate & fuel every 12 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Active Recovery</div>
+                <div class="flexibility-details">Easy 30 min walk OR swim | Foam roll 15 min | Sleep priority</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 2: WEEKS 7-12 -->
+          <div style="margin: 30px 0; padding: 20px; background: var(--card-secondary); border-left: 4px solid #3b82f6; border-radius: 10px;">
+            <h2 style="margin: 0 0 16px 0; color: #3b82f6; font-size: 1.4rem;">🚀 Phase 2: Building Endurance (Weeks 7-12)</h2>
+            <p style="color: var(--text-secondary); margin: 0;">Focus: Increase running volume, maintain strength, add speed work</p>
+          </div>
+
+          <!-- Week 7 -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-2">Week 7</span>
+                <span>Endurance Building Starts - 21-24 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Introduce tempo run | Strength to 2x/week</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Increase weights 5 lb | Add Lateral Lunges NEW</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min mobility)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Bodyweight squats: 15 reps</li>
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                    <li class="exercise-item">Leg swings: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×14 <span class="sets-reps">(35-40 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×10/leg <span class="sets-reps">(15-18 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×13 <span class="sets-reps">(40-45 lb) ↑ +5 lb, +1 rep</span></li>
+                    <li class="exercise-item">Lateral Lunges: 3×10/side <span class="sets-reps">(12 lb dumbbells) NEW</span></li>
+                    <li class="exercise-item">Step-ups: 3×11/leg <span class="sets-reps">(12-14 in, 10-12 lb)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Mobility (35 min)</div>
+                <div class="flexibility-details">Dynamic stretching + yin | Recovery focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Butterfly + Lizard</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Downward Dog</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Foam Roll Quads & IT Band</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (7 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Tempo Run (3-3.5 mi) NEW!</div>
+                <div class="run-details">Warm-up 1 mi easy → 1.5-2 mi at tempo (8:30-9:00 /mi) → Cool-down 1 mi easy</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Add weight to rows & chest press | Pull-up progression NEW</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×15 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×15 <span class="sets-reps">(18-22 lb) ↑ weight</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×5-8 <span class="sets-reps">(assist band or eccentric) NEW</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×30 <span class="sets-reps">(+5 taps)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×15 <span class="sets-reps">(14-17 lb) ↑ weight</span></li>
+                    <li class="exercise-item">Dead Bug: 2×14/side <span class="sets-reps">(+2 reps)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×8 <span class="sets-reps">(from knees) NEW</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (6 mi)</div>
+                <div class="run-details">60 min easy (10:00 /mi) | Hydrate & fuel every 12 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 30 min easy walk | Foam roll 10 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 8 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-2">Week 8</span>
+                <span>Progressive Endurance - 24 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 7 mi | Tempo 2.5-3 mi | Weights +5 lb</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Add Cossack Squats NEW | Weights +5 lb</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Cat-Cow: 10 reps</li>
+                    <li class="exercise-item">Leg swings: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×14 <span class="sets-reps">(40-45 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×11/leg <span class="sets-reps">(18-20 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×13 <span class="sets-reps">(45-50 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×10/side <span class="sets-reps">(12 lb dumbbell) NEW dynamic mobility</span></li>
+                    <li class="exercise-item">Step-ups: 3×12/leg <span class="sets-reps">(12-14 in, 12-15 lb) ↑</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Mobility (40 min)</div>
+                <div class="flexibility-details">Dynamic stretching + foam roll</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon + Butterfly</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Low Lunge</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll Quads, IT Band, Calves</strong> (10 min)</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (8 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Tempo Run (3.5 mi)</div>
+                <div class="run-details">Warm-up 1 mi easy → 2-2.5 mi tempo (8:30-9:00 /mi) → Cool-down 1 mi easy</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Weights +5 lb on all pressing movements</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×16 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×15 <span class="sets-reps">(20-25 lb) ↑ weight</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×6-8 <span class="sets-reps">(band assisted or eccentric)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×15 <span class="sets-reps">(16-20 lb) ↑ weight</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×35 <span class="sets-reps">(+5 taps)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×15/side <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×9 <span class="sets-reps">(from knees, +1 rep)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (7 mi)</div>
+                <div class="run-details">70 min easy (10:00 /mi) | Fuel every 12-15 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 20 min walk | Foam roll 10 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 9 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-2">Week 9</span>
+                <span>Build Endurance Peak - 28 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 8 mi | Tempo 2.5-3 mi | Cossack Squats progression</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Continue progression | Cossack Squats +2/side</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 20 reps</li>
+                    <li class="exercise-item">Hip circles: 15 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×15 <span class="sets-reps">(40-45 lb) +1 rep</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×11/leg <span class="sets-reps">(20-22 lb) ↑ weight</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×14 <span class="sets-reps">(45-50 lb) +1 rep</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×12/side <span class="sets-reps">(12-15 lb dumbbell) +2/side</span></li>
+                    <li class="exercise-item">Step-ups: 3×12/leg <span class="sets-reps">(14-16 in, 14-17 lb) ↑ weight</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Mobility (40 min)</div>
+                <div class="flexibility-details">Deep hip & hamstring work | Foam rolling emphasis</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Warrior Flow</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll Full Body</strong> (12 min) - Quads, IT Band, Hamstrings, Calves, Upper Back</li>
+                    <li class="exercise-item"><strong>Supine Figure Four</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (8 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Tempo Run (3.5-4 mi)</div>
+                <div class="run-details">Warm-up 1 mi easy → 2.5-3 mi tempo (8:15-9:00 /mi) → Cool-down 1 mi easy</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Maintenance weights, 1-2 rep increases</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×17 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×16 <span class="sets-reps">(20-25 lb) +1 rep</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×8 <span class="sets-reps">(band assisted or eccentric)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×16 <span class="sets-reps">(16-20 lb) +1 rep</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×40 <span class="sets-reps">(+5 taps)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×16/side <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×10 <span class="sets-reps">(from knees, +1 rep)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (8 mi)</div>
+                <div class="run-details">80 min easy (10:00 /mi) | Fuel every 15 min, hydrate every 10 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 20-30 min easy walk | Foam roll 10-15 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 10 Detailed (Deload) -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-2">Week 10</span>
+                <span>Recovery Week (Deload) - 20 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">20% reduction | Same weights/reps | Extended yoga & recovery</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min easy (10:15 /mi) - very conversational pace</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Light Lower Body (50 min)</div>
+                <div class="strength-details">DELOAD: Same weight/reps as Week 9 | No progression</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min) - Easy mobility</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Leg swings: 10 easy</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (35 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×14 <span class="sets-reps">(40-45 lb) - SAME</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×10/leg <span class="sets-reps">(18-20 lb) - SAME</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×13 <span class="sets-reps">(45-50 lb) - SAME</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×12/side <span class="sets-reps">(12-15 lb) - SAME</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Extended Restorative Yoga (45 min)</div>
+                <div class="flexibility-details">Deep stretching, yin, heavy recovery focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (5 min each side)</li>
+                    <li class="exercise-item"><strong>Butterfly Stretch</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll Entire Body</strong> (8 min) - Slow, deliberate</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Easy Run (2.5 mi)</div>
+                <div class="run-details">25 min easy (10:15 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Light Upper Body (45 min)</div>
+                <div class="strength-details">DELOAD: Same weight/reps | Light only</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (40 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×15 <span class="sets-reps">(SAME)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×15 <span class="sets-reps">(20-25 lb) - SAME</span></li>
+                    <li class="exercise-item">Plank: 3×45 sec <span class="sets-reps">- just hold</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Easy Long Run (5 mi)</div>
+                <div class="run-details">50 min very easy (10:15 /mi) | Should feel great!</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest</div>
+                <div class="flexibility-details">Full rest day | 20 min easy stretching | Sleep 9+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-2">Week 11</span>
+                <span>Build Back Up - 30 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 10 mi | Intervals intro | Weights +5 lb</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Weights +5 lb | NEW Single-Leg Deadlifts</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×15 <span class="sets-reps">(45-50 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×12/leg <span class="sets-reps">(20-25 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×14 <span class="sets-reps">(50-55 lb) ↑ +5 lb</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×8/leg <span class="sets-reps">(12-15 lb) NEW</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×13/side <span class="sets-reps">(15-18 lb)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Mobility (40 min)</div>
+                <div class="flexibility-details">Single-leg balance focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Warrior Flow</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Interval Workout (5 mi) NEW!</div>
+                <div class="run-details">Warm-up 1 mi easy → 6×3 min hard (2 min recovery) @ 7:30-8:00 /mi → Cool-down 1 mi easy</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Weights +5 lb on pressing | Rest 90 sec</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×18 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×17 <span class="sets-reps">(22-27 lb) ↑</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×8-10 <span class="sets-reps">(band)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×17 <span class="sets-reps">(18-22 lb) ↑</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×50 <span class="sets-reps">(+10)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (10 mi)</div>
+                <div class="run-details">100 min easy (10:00 /mi) | Fuel every 15 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest</div>
+                <div class="flexibility-details">Rest day OR 20 min walk | Foam roll 10 min</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-2">Week 12</span>
+                <span>Push Toward Peak - 32 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 11 mi | Intervals 6×2 min | Power focus</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Power (60 min)</div>
+                <div class="strength-details">Rest: 2 min | Power focus | Lower reps, heavier</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×13 <span class="sets-reps">(50-55 lb)</span></li>
+                    <li class="exercise-item">Bulgarian Split Squats: 3×10/leg <span class="sets-reps">(22-27 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×12 <span class="sets-reps">(55-60 lb)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×9/leg <span class="sets-reps">(15-18 lb)</span></li>
+                    <li class="exercise-item">Lateral Lunges with Rotation: 3×10/side <span class="sets-reps">(10-12 lb) NEW</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Mobility (45 min)</div>
+                <div class="flexibility-details">Extended hamstring & hip stretching</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Warrior Flow</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Pigeon + Lizard</strong> (7 min each side)</li>
+                    <li class="exercise-item"><strong>Hamstring Stretch</strong> (5 min each)</li>
+                    <li class="exercise-item"><strong>Foam Roll</strong> (10 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - High Intensity Intervals (5.5 mi)</div>
+                <div class="run-details">Warm-up 1 mi easy → 6×2 min hard (2 min recovery) @ 7:15-7:45 /mi → Cool-down 1 mi easy</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body Power (60 min)</div>
+                <div class="strength-details">Explosive focus | Rest 2 min | Lower reps</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups (explosive): 3×15 <span class="sets-reps">- pause at bottom</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×15 <span class="sets-reps">(25-30 lb)</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×10 <span class="sets-reps">(band or negatives)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×14 <span class="sets-reps">(20-25 lb)</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×60 <span class="sets-reps">(+10)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (11 mi)</div>
+                <div class="run-details">110 min easy (10:00 /mi) | Last before Phase 3 | Fuel every 15 min</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest</div>
+                <div class="flexibility-details">Full rest day | Stretching 20 min | Sleep 8.5+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 3: WEEKS 13-18 -->
+          <div style="margin: 30px 0; padding: 20px; background: var(--card-secondary); border-left: 4px solid #f59e0b; border-radius: 10px;">
+            <h2 style="margin: 0 0 16px 0; color: #f59e0b; font-size: 1.4rem;">⛰️ Phase 3: Peak Training (Weeks 13-18)</h2>
+            <p style="color: var(--text-secondary); margin: 0;">Focus: Maximum mileage, maintain muscle, speed work & surges</p>
+          </div>
+
+          <!-- Week 13 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-3">Week 13</span>
+                <span>Peak Phase Begins - 38-40 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 11 mi | Strength maintenance 2x/week | Fartlek intro</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Focus: Glute activation & single-leg stability | Maintenance weights</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min mobility)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Single-leg glute bridges: 10/leg</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                    <li class="exercise-item">Leg swings: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×15 <span class="sets-reps">(50-55 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×15 <span class="sets-reps">(55-60 lb)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×10/leg <span class="sets-reps">(18-20 lb dumbbells)</span></li>
+                    <li class="exercise-item">Step-ups: 3×13/leg <span class="sets-reps">(14 in, 12-15 lb)</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×10/side <span class="sets-reps">(12 lb dumbbell)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Hip Mobility (45 min)</div>
+                <div class="flexibility-details">Deep stretching | Recovery focus | Hip openers</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>90/90 Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge with Quad Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll IT Band & Glutes</strong> (8 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (8 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Fartlek Run (8-9 mi)</div>
+                <div class="run-details">Warm-up 2 mi → Fartlek: 8 min hard, 3 min easy × 4-5 reps → Cool-down 1 mi (Total ~8-9 mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Maintenance phase - steady weights</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×15 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×15 <span class="sets-reps">(20-25 lb)</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×6-8 <span class="sets-reps">(assist band or eccentric)</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×35 <span class="sets-reps">(controlled)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×15 <span class="sets-reps">(16-20 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×15/side <span class="sets-reps">(controlled)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×8 <span class="sets-reps">(from knees)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (11 mi)</div>
+                <div class="run-details">110 min easy (10:00 /mi) | Hydrate & fuel every 12-15 min | Focus on steady pace</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 30 min easy walk | Foam roll 15 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 14 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-3">Week 14</span>
+                <span>Building to Peak - 38-40 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 12 mi | 2x/week strength | Tempo run focus</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (4 mi)</div>
+                <div class="run-details">40 min conversational pace (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Same exercises as W13 | Focus: Form over weight</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min mobility)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Single-leg glute bridges: 10/leg</li>
+                    <li class="exercise-item">Cat-Cow: 10 reps</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×15 <span class="sets-reps">(50-55 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×15 <span class="sets-reps">(55-60 lb)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×10/leg <span class="sets-reps">(18-20 lb dumbbells)</span></li>
+                    <li class="exercise-item">Step-ups: 3×13/leg <span class="sets-reps">(14 in, 12-15 lb)</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×10/side <span class="sets-reps">(12 lb dumbbell)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Hip Mobility (45 min)</div>
+                <div class="flexibility-details">Deep stretching | Recovery focus | Hip openers</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>90/90 Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge with Quad Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll IT Band & Glutes</strong> (8 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (8 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Tempo Run (8-10 mi)</div>
+                <div class="run-details">Warm-up 2 mi → Tempo 4-5 mi at tempo pace (8:45-9:00 /mi) → Cool-down 2 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Maintenance phase</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×16 <span class="sets-reps">(+1 rep)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×15 <span class="sets-reps">(20-25 lb)</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×6-8 <span class="sets-reps">(assist band)</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×36 <span class="sets-reps">(+1 tap)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×16 <span class="sets-reps">(16-20 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×15/side <span class="sets-reps">(controlled)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×8 <span class="sets-reps">(from knees)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (12 mi)</div>
+                <div class="run-details">120 min easy (10:00 /mi) | Hydrate & fuel every 12-15 min | Strong finish</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 30 min easy walk | Foam roll 15 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 15: PEAK WEEK -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-3">Week 15</span>
+                <span>🏔️ PEAK WEEK - 43-45 mi/week (HIGHEST MILEAGE!)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">13 mi long run | Minimal strength | Heavy yoga 45+ min</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi) | Recovery pace</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧗</span> Tuesday - Minimal Strength - Glute Activation (20-30 min)</div>
+                <div class="strength-details">Light activation only | No heavy lifting this week | Glutes & hamstring focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Glute Activation (20-30 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 3×15 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Single-leg glute bridges: 3×12/leg <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Clamshells: 3×15/side <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Fire hydrants: 3×12/side <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Nordic Hamstring Curls (eccentric): 3×5 <span class="sets-reps">(slow &amp; controlled)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Heavy Yoga + Hip Mobility (45+ min)</div>
+                <div class="flexibility-details">Deep recovery session | Hip openers | Stretching focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Extended Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (5 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (5 min each side)</li>
+                    <li class="exercise-item"><strong>Reclined Figure 4</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge with Quad Stretch</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Deep Calf Stretches</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Foam Roll Full Body</strong> (10 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">⚡</span> Thursday - Speed Workout (6-7 mi)</div>
+                <div class="run-details">Warm-up 2 mi → 5×2 min hard (2 min recovery) → Cool-down 1-2 mi | Total ~6-7 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Friday - Light Mobility ONLY (30-40 min)</div>
+                <div class="flexibility-details">Yoga or mobility work | NO running | Prepare body for long run</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Light Mobility Session</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Gentle Stretching</strong> (20 min)</li>
+                    <li class="exercise-item"><strong>Foam Roll</strong> (15 min)</li>
+                    <li class="exercise-item"><strong>Breathing/Meditation</strong> (5 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - LONG RUN (13 mi - LONGEST EVER!)</div>
+                <div class="run-details">130 min easy (10:00 /mi) | Hydrate &amp; fuel every 12-15 min | Mental victory lap</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Complete Rest</div>
+                <div class="flexibility-details">Rest day | No running | Foam roll lightly if desired | Sleep 8-9 hrs | Celebrate this week!</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 16 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-3">Week 16</span>
+                <span>Maintain Peak - 40-42 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 12 mi with surges | 2x/week strength | Fartlek focus</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi) | Recovery</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Light weights, movement quality focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Single-leg glute bridges: 10/leg</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×15 <span class="sets-reps">(45-50 lb - slightly reduced)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×15 <span class="sets-reps">(50-55 lb - maintain form)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×10/leg <span class="sets-reps">(18-20 lb)</span></li>
+                    <li class="exercise-item">Step-ups: 3×12/leg <span class="sets-reps">(14 in, 10-12 lb)</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×10/side <span class="sets-reps">(10 lb dumbbell)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Hip Mobility (45 min)</div>
+                <div class="flexibility-details">Deep stretching | Hip openers</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge with Quad Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Butterfly + Forward Fold</strong> (4 min)</li>
+                    <li class="exercise-item"><strong>Foam Roll Full Body</strong> (10 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (8 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Fartlek Run (8-9 mi)</div>
+                <div class="run-details">Warm-up 2 mi → Fartlek: 8 min hard, 3 min easy × 4 reps → Cool-down 1-2 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Light weights, focus on movement quality</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×15 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×14 <span class="sets-reps">(18-20 lb)</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×6 <span class="sets-reps">(assist band)</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×30 <span class="sets-reps">(controlled)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×14 <span class="sets-reps">(14-16 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×14/side <span class="sets-reps">(smooth)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×7 <span class="sets-reps">(from knees)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run with Surges (12 mi)</div>
+                <div class="run-details">Easy 4 mi warm-up → 8×1 min faster surges mid-run with 2 min easy between → Easy 2-3 mi cool-down | Total 12 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 30 min easy walk | Foam roll 15 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 17 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-3">Week 17</span>
+                <span>Maintain Peak - 40-42 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 12 mi | Tempo focus | Heavy yoga 45+ min</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi) | Recovery</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Maintenance phase | Same as Week 16</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Single-leg glute bridges: 10/leg</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (45 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Goblet Squats: 3×15 <span class="sets-reps">(45-50 lb)</span></li>
+                    <li class="exercise-item">Romanian Deadlifts: 3×15 <span class="sets-reps">(50-55 lb)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×10/leg <span class="sets-reps">(18-20 lb)</span></li>
+                    <li class="exercise-item">Step-ups: 3×12/leg <span class="sets-reps">(14 in, 10-12 lb)</span></li>
+                    <li class="exercise-item">Cossack Squats: 3×10/side <span class="sets-reps">(10 lb dumbbell)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Heavy Yoga + Hip Mobility (45+ min)</div>
+                <div class="flexibility-details">Deep stretching | Hip openers | Extended session</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Extended Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (5 min each side)</li>
+                    <li class="exercise-item"><strong>90/90 Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge with Quad Stretch</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll Full Body</strong> (10 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Tempo Run (9-10 mi)</div>
+                <div class="run-details">Warm-up 2 mi → Tempo 5 mi at 8:45-9:00 /mi → Cool-down 2-3 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core (60 min)</div>
+                <div class="strength-details">Rest: 90 sec | Maintenance phase | Same as Week 16</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (50 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×15 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×14 <span class="sets-reps">(18-20 lb)</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×6 <span class="sets-reps">(assist band)</span></li>
+                    <li class="exercise-item">Plank with Shoulder Taps: 3×30 <span class="sets-reps">(controlled)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×14 <span class="sets-reps">(14-16 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×14/side <span class="sets-reps">(smooth)</span></li>
+                    <li class="exercise-item">Ab Wheel Rollouts: 3×7 <span class="sets-reps">(from knees)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run with Surges (12 mi)</div>
+                <div class="run-details">Easy 4 mi warm-up → 6×1 min faster surges with 2 min easy between → Easy 2-3 mi cool-down | Total 12 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 30 min easy walk | Foam roll 15 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 18 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-3">Week 18</span>
+                <span>Begin Taper Prep - 40-42 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run reduces to 11 mi | 5×4 min at marathon pace | Begin taper mentally</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength - Glute/Hip Focus (50 min)</div>
+                <div class="strength-details">Rest: 90 sec | Shift to activation & minimal heavy lifting | Lighter weights</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Warm-up (10 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute bridges: 15 reps</li>
+                    <li class="exercise-item">Single-leg glute bridges: 10/leg</li>
+                    <li class="exercise-item">Hip circles: 10 each direction</li>
+                  </ul>
+                </div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (35 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute Bridges: 3×15 <span class="sets-reps">(bodyweight or light band)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×10/leg <span class="sets-reps">(15 lb dumbbells - light)</span></li>
+                    <li class="exercise-item">Clamshells: 3×15/side <span class="sets-reps">(band or bodyweight)</span></li>
+                    <li class="exercise-item">Step-ups: 3×10/leg <span class="sets-reps">(12 in, 8-10 lb)</span></li>
+                    <li class="exercise-item">Monster Walks: 3×12 steps/direction <span class="sets-reps">(light band)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Mobility (45 min)</div>
+                <div class="flexibility-details">Deep stretching | Recovery focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (3 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (4 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge with Quad Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Lizard Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll Full Body</strong> (12 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">⚡</span> Thursday - Marathon Pace Workout (7-8 mi)</div>
+                <div class="run-details">Warm-up 2 mi → 5×4 min at marathon pace (8:50-9:00 /mi) with 2 min easy recovery → Cool-down 1-2 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Friday - Upper Body & Core - Light (50 min)</div>
+                <div class="strength-details">Rest: 90 sec | Reduce volume slightly | Bodyweight focus</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Main Workout (40 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Push-ups: 3×12 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Dumbbell Rows: 3×12 <span class="sets-reps">(16-18 lb)</span></li>
+                    <li class="exercise-item">Pull-up Progression: 3×5 <span class="sets-reps">(assist band)</span></li>
+                    <li class="exercise-item">Plank: 3×45 sec <span class="sets-reps">(hold, no taps)</span></li>
+                    <li class="exercise-item">Dumbbell Chest Press: 3×12 <span class="sets-reps">(12-14 lb)</span></li>
+                    <li class="exercise-item">Dead Bug: 2×12/side <span class="sets-reps">(controlled)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (11 mi)</div>
+                <div class="run-details">110 min easy (10:00 /mi) | Hydrate &amp; fuel every 12-15 min | Reduce from peak</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest or Active Recovery</div>
+                <div class="flexibility-details">Rest day OR 30 min easy walk | Foam roll 15 min | Sleep 8+ hrs | Begin mental taper</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 4: WEEKS 19-24 -->
+          <div style="margin: 30px 0; padding: 20px; background: var(--card-secondary); border-left: 4px solid #8b5cf6; border-radius: 10px;">
+            <h2 style="margin: 0 0 16px 0; color: #8b5cf6; font-size: 1.4rem;">🏁 Phase 4: Taper & Race (Weeks 19-24)</h2>
+            <p style="color: var(--text-secondary); margin: 0;">Focus: Recovery, maintain fitness, reduce volume, sharp execution</p>
+          </div>
+
+          <!-- Week 19 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-4">Week 19</span>
+                <span>Taper Begins - 32-35 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">20% volume drop | Long run 10 mi | Strength 1x/week light</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Strength - Light Activation (40 min)</div>
+                <div class="strength-details">Rest: 60 sec | Very light weights | Movement activation only</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Activation Circuit (40 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute Bridges: 3×12 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×8/leg <span class="sets-reps">(10 lb dumbbells)</span></li>
+                    <li class="exercise-item">Clamshells: 3×12/side <span class="sets-reps">(light band)</span></li>
+                    <li class="exercise-item">Fire Hydrants: 3×10/side <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Lunges: 3×8/leg <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Stretching (40 min)</div>
+                <div class="flexibility-details">Light recovery | Hip work</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Gentle Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll</strong> (12 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Easy Run with Strides (6-7 mi)</div>
+                <div class="run-details">Easy 5-6 mi → 5 strides (20-30 sec) at marathon pace with 90 sec walk recovery → Total ~6-7 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Friday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min easy (10:00 /mi) | Recovery</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (10 mi)</div>
+                <div class="run-details">100 min easy (10:00 /mi) | Hydrate &amp; fuel every 15 min | Keep it steady</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest</div>
+                <div class="flexibility-details">Complete rest | Foam roll lightly 10 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 20 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-4">Week 20</span>
+                <span>Taper Continues - 32-35 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 9 mi | Light strides | Strength 1x/week</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3.5 mi)</div>
+                <div class="run-details">35 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body Light (40 min)</div>
+                <div class="strength-details">Rest: 60 sec | Same as Week 19 - minimal volume</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Activation Circuit (40 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute Bridges: 3×12 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Single-Leg Deadlifts: 3×8/leg <span class="sets-reps">(10 lb dumbbells)</span></li>
+                    <li class="exercise-item">Clamshells: 3×12/side <span class="sets-reps">(light band)</span></li>
+                    <li class="exercise-item">Fire Hydrants: 3×10/side <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Lunges: 3×8/leg <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🧘</span> Wednesday - Yoga + Stretching (40 min)</div>
+                <div class="flexibility-details">Light recovery | Hip work</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Gentle Flow</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item"><strong>Sun Salutation</strong> (2 min)</li>
+                    <li class="exercise-item"><strong>Pigeon Pose</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Low Lunge Stretch</strong> (3 min each side)</li>
+                    <li class="exercise-item"><strong>Foam Roll</strong> (12 min)</li>
+                    <li class="exercise-item"><strong>Savasana</strong> (10 min)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Thursday - Easy Run with Strides (6-7 mi)</div>
+                <div class="run-details">Easy 5-6 mi → 4 strides (20-30 sec) at marathon pace with 90 sec walk recovery → Total ~6-7 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Friday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run (9 mi)</div>
+                <div class="run-details">90 min easy (10:00 /mi) | Hydrate &amp; fuel every 15 min | Reduce mileage feeling good</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest</div>
+                <div class="flexibility-details">Complete rest | Light foam roll 10 min | Sleep 8+ hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 21 Detailed -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-4">Week 21</span>
+                <span>Continue Taper - 30 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Long run 8 mi | High-quality miles | Strength 1x/week</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Tuesday - Lower Body - Glute Work Only (20-25 min)</div>
+                <div class="strength-details">Very light | Glute activation focus only | Minimal volume</div>
+                <div class="exercise-block">
+                  <div class="exercise-type">Glute Work (20-25 min)</div>
+                  <ul class="exercise-list">
+                    <li class="exercise-item">Glute Bridges: 3×12 <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Single-Leg Glute Bridges: 2×10/leg <span class="sets-reps">(bodyweight)</span></li>
+                    <li class="exercise-item">Clamshells: 3×12/side <span class="sets-reps">(light band)</span></li>
+                    <li class="exercise-item">Fire Hydrants: 2×10/side <span class="sets-reps">(bodyweight)</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Wednesday - Easy Run (4 mi)</div>
+                <div class="run-details">40 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">⚡</span> Thursday - Speed Work - Short &amp; Sharp (6 mi)</div>
+                <div class="run-details">Warm-up 2 mi → 4×2 min at marathon pace (8:50-9:00 /mi) with 2 min easy recovery → Cool-down 1-2 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Friday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min easy (10:00 /mi)</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Long Run with Strides (8 mi)</div>
+                <div class="run-details">7.5 mi easy → 6×30 sec strides at marathon pace with 90 sec walk recovery → Total ~8 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Rest</div>
+                <div class="flexibility-details">Complete rest | Yoga 30-35 min light stretching | Sleep 8+ hrs | Monitor nutrition carefully</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 22: HEAVY TAPER -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-4">Week 22</span>
+                <span>🏃 Heavy Taper - 15 mi/week (50% DROP!)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Much lower volume | This feels weird. Trust it! | Focus: Rest &amp; prep</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min easy (10:00 /mi) | Very light effort</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Tuesday - Run with Strides (4 mi)</div>
+                <div class="run-details">Easy 3 mi → 4 strides (20 sec) at marathon pace with 90 sec walk recovery → Total 4 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Wednesday - REST or Yoga ONLY</div>
+                <div class="flexibility-details">Complete rest day OR 20-25 min very gentle yoga | NO running | Mobility work only</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Easy Run (3 mi)</div>
+                <div class="run-details">30 min easy (10:00 /mi) | Keep it short</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Friday - REST</div>
+                <div class="flexibility-details">Complete rest | Extra sleep | No training | Hydrate well</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Saturday - Prime Run (5 mi)</div>
+                <div class="run-details">Very easy 5 mi (10:15 /mi) | Should feel GOOD, not hard! | Shakeout run | Hydrate well</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - REST</div>
+                <div class="flexibility-details">Complete rest | Yoga 20-30 min light stretching only | Extra sleep 8.5-9 hrs | Mental visualization of race course</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 23: RACE WEEK -->
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-4">Week 23</span>
+                <span>🎯 Race Week Prep - 6-8 mi/week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Minimal miles | Ready to race | Mental focus | RACE DAY SATURDAY</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Monday - Easy Shakeout (2 mi)</div>
+                <div class="run-details">20 min very easy (10:15 /mi) | Just loosen up legs | Recovery focused</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Tuesday - Short Run with Strides (3 mi)</div>
+                <div class="run-details">Easy 2 mi → 3 strides (15 sec) at marathon pace with 90 sec walk recovery → Total 3 mi</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Wednesday - REST (Race Packet Pickup Day!)</div>
+                <div class="flexibility-details">NO running | Pick up race bib &amp; gear | Review course map | Light stretching 10 min | Sleep well</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃‍♂️</span> Thursday - Very Easy Shakeout (2 mi)</div>
+                <div class="run-details">20 min very easy (10:15 /mi) | Keep legs fresh | Minimal effort</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Friday - REST or Gentle Mobility ONLY</div>
+                <div class="flexibility-details">NO running | 10 min gentle yoga OR mobility work | Rest &amp; hydrate | Sleep 8-9 hrs | Finalize race strategy</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏆</span> Saturday - MARATHON RACE DAY! 26.2 miles</div>
+                <div class="run-details">
+                  <strong>Race Strategy:</strong><br>
+                  • <strong>Miles 0-6:</strong> Start controlled (slightly under race pace). Get into rhythm. Hydrate every 15 min.<br>
+                  • <strong>Miles 7-18:</strong> Settle into marathon pace (8:50-9:00 /mi). Maintain steady effort. Fuel every 30-45 min.<br>
+                  • <strong>Miles 19-20:</strong> Mental toughness zone. This is where training shows. Stay positive.<br>
+                  • <strong>Miles 21-26.2:</strong> Empty the tank. Dig deep. Run for the finish line, not the clock.<br>
+                  <strong>Nutrition:</strong> Pre-race breakfast (2-3 hrs before) &amp; hydrate. Use race fueling (gels, sports drink). Test nothing new!<br>
+                  <strong>Mental:</strong> TRUST YOUR TRAINING. You've earned this. Enjoy the experience!
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🎉</span> Sunday - Recovery Day 1</div>
+                <div class="flexibility-details">Rest | Walk around | Light stretching | Celebrate! Sleep as much as needed | Hydrate &amp; refuel</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="week-accordion">
+            <div class="week-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+              <div class="week-title">
+                <span class="phase-indicator phase-4">Week 24</span>
+                <span>� Marathon Complete - Recovery Week</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="week-meta">Post-race protocol | Celebrate! | Gradual return to easy activity</div>
+                <div class="toggle-icon">▼</div>
+              </div>
+            </div>
+            <div class="week-content">
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🥇</span> Race Day (Saturday) - MARATHON COMPLETED!</div>
+                <div class="run-details">26.2 miles | You did it! | Celebrate your achievement!</div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">😴</span> Sunday - Recovery Day 1 (Post-Race Day 1)</div>
+                <div class="flexibility-details">
+                  <strong>DO:</strong> Walk around lightly | Light stretching | Eat &amp; hydrate | Sleep as much as possible | Celebrate!<br>
+                  <strong>DON'T:</strong> Run | Heavy exercise | Push yourself | Stand for long periods (elevate legs!)
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🛌</span> Days 2-3 (Mon-Tue) - Passive Recovery</div>
+                <div class="flexibility-details">
+                  <strong>Activity:</strong> Walking only (20-30 min light walk if feeling ok)<br>
+                  <strong>Recovery Tools:</strong> Foam rolling (LIGHT!), gentle stretching, massage if available, ice baths if sore<br>
+                  <strong>Nutrition:</strong> Focus on protein &amp; carbs to rebuild glycogen. Hydrate heavily. Sleep 8-9+ hrs.<br>
+                  <strong>Mental:</strong> Reflect on your race. Journal your experience. You are a marathoner!
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">🏃</span> Days 4-7 (Wed-Sat) - Active Recovery Begins</div>
+                <div class="flexibility-details">
+                  <strong>Running IF FEELING GOOD:</strong> Easy 2-3 mi at 11:00 /mi or SLOWER. Listen to your body! No speed work, no structure.<br>
+                  <strong>Non-Running Days:</strong> Yoga 20-30 min, walk 30-45 min, light swimming if available<br>
+                  <strong>Strength:</strong> None yet. Just light mobility.<br>
+                  <strong>Recovery Focus:</strong> Foam rolling 15-20 min daily, deep stretching, consider massage<br>
+                  <strong>Nutrition:</strong> Continue fueling well. Protein with every meal. Sleep prioritized.<br>
+                  <strong>Mental:</strong> Enjoy your rest! You've earned it. Let injuries heal (blisters, muscle soreness).<br>
+                  <strong>Mileage for Week 24:</strong> 0-8 mi total depending on how you feel
+                </div>
+              </div>
+
+              <div class="day-schedule">
+                <div class="day-title"><span class="day-emoji">💪</span> Looking Ahead - Week 2+ Post-Marathon</div>
+                <div class="flexibility-details">
+                  <strong>Week 2:</strong> Begin very easy running 2-3 mi / 3x per week. Add gentle yoga 30 min 2x/week. No strength training yet.<br>
+                  <strong>Week 3:</strong> Progress to 3-4 mi runs, 3-4x per week. Can return to light strength 1x/week if feeling good.<br>
+                  <strong>Weeks 4+:</strong> Gradually build back to normal base training (20-25 mi/week). Strength 2x/week.<br>
+                  <strong>Full Return:</strong> 4-6 weeks before returning to structured training. Give your body time to repair!<br>
+                  <strong>Important:</strong> Pain (sharp, shooting) = stop &amp; rest. Soreness is normal. Listen to your body.<br>
+                  <strong>Mental Shift:</strong> You've accomplished an incredible goal. Reflect on this achievement. Whether you want to run another marathon or explore new goals, you now know what's possible!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Principles -->
+          <div style="margin: 30px 0; padding: 20px; background: var(--card-secondary); border-radius: 10px; border-left: 4px solid var(--primary-blue);">
+            <h3 style="margin-top: 0;">⚡ Key Progressive Overload Principles</h3>
+            <ul class="exercise-list" style="padding-left: 20px;">
+              <li class="exercise-item"><strong>Every 1-2 weeks:</strong> Add 2-5 lbs to strength exercises OR increase reps by 1-2</li>
+              <li class="exercise-item"><strong>Every 3-4 weeks:</strong> Recovery/deload week (20% volume reduction)</li>
+              <li class="exercise-item"><strong>Running progression:</strong> Never increase total mileage >10% per week</li>
+              <li class="exercise-item"><strong>Injury prevention:</strong> Pain (sharp/shooting) = stop immediately; soreness is ok</li>
+              <li class="exercise-item"><strong>Recovery is training:</strong> Sleep 7-9 hrs, foam roll 10 min daily, stretch 30 min 3x/week minimum</li>
+              <li class="exercise-item"><strong>Flexibility focus:</strong> Spend more time on tight muscles (usually glutes, hip flexors, hamstrings)</li>
+            </ul>
+          </div>
+
+        </article>
+      </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/_shared/theme.js"></script>
+    <script src="/_shared/components.js"></script>
+    <script>
+      // Back to top button
+      const backToTopBtn = document.getElementById('backToTop');
+      const scrollContainer = document.querySelector('.horizontal-scroll-container');
+      
+      scrollContainer.addEventListener('scroll', function() {
+        if (scrollContainer.scrollTop > 300) {
+          backToTopBtn.classList.add('show');
+        } else {
+          backToTopBtn.classList.remove('show');
+        }
+      });
+      
+      backToTopBtn.addEventListener('click', function() {
+        scrollContainer.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    </script>
+  </body>
+</html>

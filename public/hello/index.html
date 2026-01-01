@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello Site</title>
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+      <div class="row">
+        <div>
+          <h1>Hello from /hello/</h1>
+          <p>This is a standalone static site hosted under a subpath.</p>
+          <p><a href="../">Back to sites list</a></p>
+        </div>
+        <button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+      <button id="btn" type="button">Click me</button>
+      <p class="out" id="out"></p>
+    </main>
+
+    <script src="../_shared/theme.js"></script>
+    <script src="./app.js"></script>
+      <script src="../_shared/analytics-config.js"></script>
+      <script defer src="../_shared/analytics-loader.js"></script>
+      <script defer src="../_shared/analytics.js"></script>
+  </body>
+</html>

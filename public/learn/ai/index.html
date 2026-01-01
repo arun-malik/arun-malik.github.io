@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI · Observation Odyssey</title>
+    <meta name="description" content="AI articles: Transformers and Embeddings." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <section class="ai-lesson ai-page" id="hub">
+          <div class="card-icon">🧠</div>
+          <h1 class="card-title" style="margin: 0 0 8px 0; font-size: 1.6rem;">AI</h1>
+          <p class="section-text" style="margin-top: 0; color: var(--text-secondary);">
+            Short, diagram-first articles. Start with an intro, then go deeper.
+          </p>
+
+          <div class="card-section">
+            <h4 class="section-label">Articles</h4>
+            <div class="diagram" role="img" aria-label="AI articles list">
+              <div class="diagram-row">
+                <div class="diagram-box">
+                  <div class="diagram-title">AI Basics</div>
+                  <div class="diagram-sub"><a class="nav-link" href="./basics/intro/#welcome" style="border-bottom-color: transparent;">Intro</a></div>
+                </div>
+                <div class="diagram-arrow">·</div>
+                <div class="diagram-box">
+                  <div class="diagram-title">Transformers</div>
+                  <div class="diagram-sub"><a class="nav-link" href="./transformers/intro/#launch" style="border-bottom-color: transparent;">Intro</a></div>
+                </div>
+                <div class="diagram-arrow">·</div>
+                <div class="diagram-box">
+                  <div class="diagram-title">Embeddings</div>
+                  <div class="diagram-sub"><a class="nav-link" href="./embeddings/intro/#launch" style="border-bottom-color: transparent;">Intro</a></div>
+                </div>
+                <div class="diagram-arrow">·</div>
+                <div class="diagram-box">
+                  <div class="diagram-title">Embeddings</div>
+                  <div class="diagram-sub"><a class="nav-link" href="./embeddings/detailed/#launch" style="border-bottom-color: transparent;">Detailed</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section">
+            <a href="../" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to Learn</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script>
+      // Back-compat: old links used /learn/ai/#launch
+      if (location.hash === '#launch') {
+        location.replace('./transformers/intro/#launch');
+      }
+    </script>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/scroll-nav.js"></script>
+    <script src="/_shared/theme.js"></script>
+  </body>
+</html>

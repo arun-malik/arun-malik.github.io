@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Basics (Intro) · Observation Odyssey</title>
+    <meta name="description" content="A very basic, exercise-driven intro to AI concepts, from what AI is to LLMs, embeddings, and retrieval." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <main class="ai-deck-shell" aria-label="AI Basics slides">
+      <div class="deck-nav-arrow left" data-deck-prev aria-label="Previous slide" role="button">‹</div>
+      <div class="deck-nav-arrow right" data-deck-next aria-label="Next slide" role="button">›</div>
+
+      <div class="deck-indicator" data-deck-indicator aria-label="Slide indicator"></div>
+
+      <div class="ai-deck" data-deck>
+        <!-- Slide 1 -->
+        <section class="deck-slide is-active" data-slide data-hash="welcome" aria-hidden="false">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>AI basics</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">Very, very basic — with tiny exercises on every step.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="card-title" style="text-align: left; margin-bottom: 10px;">What you’ll learn</div>
+              <p class="section-text">We’ll start with the simplest mental model (inputs → outputs), then build up: data, learning, tokens, vectors (embeddings), and finally how modern LLM apps work.</p>
+
+              <div class="lesson-details" style="margin-top: 14px;">
+                <summary>How to use this page</summary>
+                <div class="section-text" style="margin-top: 10px;">
+                  Use <strong>←/→</strong> (keyboard) or the arrows. Each slide has a 30–60 second exercise.
+                </div>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: identify AI">
+                <div class="exercise-title">Exercise (30 sec): Is it “AI”?</div>
+                <div class="exercise-question">Which of these best fits “AI” (a system that learns patterns from data)?</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="false">A calculator that adds numbers</button>
+                  <button type="button" class="exercise-option" data-option data-correct="true">A spam filter trained on labeled emails</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">A hard-coded rules list (if/else only)</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+
+              <div class="card-section" style="margin-top: 14px;">
+                <a href="../../../" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to AI hub</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="deck-slide" data-slide data-hash="inputs-outputs" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>AI as a mapping</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">The simplest mental model: learn a mapping from inputs to outputs.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="diagram" role="img" aria-label="Diagram: input to output">
+                <div class="diagram-row">
+                  <div class="diagram-box">
+                    <div class="diagram-title">Inputs</div>
+                    <div class="diagram-sub">Text, images, clicks, numbers…</div>
+                  </div>
+                  <div class="diagram-arrow">→</div>
+                  <div class="diagram-box">
+                    <div class="diagram-title">Model</div>
+                    <div class="diagram-sub">Learns a pattern</div>
+                  </div>
+                  <div class="diagram-arrow">→</div>
+                  <div class="diagram-box">
+                    <div class="diagram-title">Outputs</div>
+                    <div class="diagram-sub">Label, score, text, action…</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: choose input-output">
+                <div class="exercise-title">Exercise (30 sec): Pick the mapping</div>
+                <div class="exercise-question">Which is a valid “input → output” AI task?</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="true">Email text → “spam / not spam”</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">“Make it faster” → (no measurable output)</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">A random number → “truth”</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="deck-slide" data-slide data-hash="data" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>Data teaches patterns</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">Rules are written by people. ML rules are learned from examples.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="card-section">
+                <div class="section-label">Key idea</div>
+                <p class="section-text">If you can collect examples, a model can learn the pattern. If you can’t define the pattern clearly, rules often break.</p>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: rules vs data">
+                <div class="exercise-title">Exercise (45 sec): Rules or data?</div>
+                <div class="exercise-question">Which problem is best suited to learning from data?</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="false">Compute sales tax from a fixed table</button>
+                  <button type="button" class="exercise-option" data-option data-correct="true">Detect toxic comments (many edge cases)</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">Sort numbers ascending</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="deck-slide" data-slide data-hash="learning-loop" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>How learning works (tiny loop)</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">Predict → compare → adjust → repeat.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="diagram" role="img" aria-label="Diagram: training loop">
+                <div class="diagram-row">
+                  <div class="diagram-box">
+                    <div class="diagram-title">Predict</div>
+                    <div class="diagram-sub">Model guesses an output</div>
+                  </div>
+                  <div class="diagram-arrow">→</div>
+                  <div class="diagram-box">
+                    <div class="diagram-title">Loss</div>
+                    <div class="diagram-sub">How wrong was it?</div>
+                  </div>
+                  <div class="diagram-arrow">→</div>
+                  <div class="diagram-box">
+                    <div class="diagram-title">Update</div>
+                    <div class="diagram-sub">Adjust parameters a little</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: what changes">
+                <div class="exercise-title">Exercise (30 sec): What actually changes?</div>
+                <div class="exercise-question">During training, what changes the most?</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="true">The model’s parameters (weights)</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">The meaning of the input text</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">The laws of math</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="deck-slide" data-slide data-hash="tokens" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>Tokens</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">LLMs don’t read “words” — they read tokens.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="card-section">
+                <div class="section-label">Key idea</div>
+                <p class="section-text">A tokenizer turns text into a sequence of IDs. Different models tokenize differently, but the idea is the same: text → pieces.</p>
+              </div>
+
+              <div class="exercise" data-exercise="tokenize" style="margin-top: 16px;" aria-label="Exercise: tokenize">
+                <div class="exercise-title">Exercise (60 sec): Tokenize a sentence (demo)</div>
+                <div class="exercise-question">Type a short sentence and click Tokenize.</div>
+                <div class="exercise-row">
+                  <input class="exercise-input" type="text" value="AI is about patterns." aria-label="Text to tokenize" />
+                  <button type="button" class="exercise-action" data-tokenize>Tokenize</button>
+                </div>
+                <div class="exercise-output" data-tokenize-output aria-label="Tokenization output"></div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="deck-slide" data-slide data-hash="vectors" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>Vectors (Embeddings)</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">Meaning is represented as numbers.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="card-section">
+                <div class="section-label">Key idea</div>
+                <p class="section-text">An embedding is a vector (a list of numbers). “Similar meaning” ends up closer together in vector space.</p>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: similarity">
+                <div class="exercise-title">Exercise (30 sec): Which is closer?</div>
+                <div class="exercise-question">In a good embedding space, which pair should be closer?</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="true">king ↔ queen</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">king ↔ banana</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">queen ↔ screwdriver</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+
+              <div class="card-section" style="margin-top: 14px;">
+                <a class="nav-link" href="../../embeddings/intro/#launch" style="display: inline-block; border-bottom-color: transparent;">Read more: Embeddings (Intro) →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="deck-slide" data-slide data-hash="llm" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>LLMs: next-token prediction</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">The core trick: predict the next token, many times.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="card-section">
+                <div class="section-label">Key idea</div>
+                <p class="section-text">Given a context, the model outputs a probability for the next token. Repeating that generates text.</p>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: next token">
+                <div class="exercise-title">Exercise (30 sec): Next token</div>
+                <div class="exercise-question">Prompt: “The capital of France is …”</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="true">Paris</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">Banana</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">Laptop</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+
+              <div class="card-section" style="margin-top: 14px;">
+                <a class="nav-link" href="../../transformers/intro/#launch" style="display: inline-block; border-bottom-color: transparent;">See how it’s built: Transformers (Intro) →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 8 -->
+        <section class="deck-slide" data-slide data-hash="apps" aria-hidden="true">
+          <div class="container" style="padding-top: 34px;">
+            <h1 tabindex="-1" data-slide-title>Modern AI apps (LLM + RAG + tools)</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">Models are powerful, but they still need fresh data and actions.</p>
+
+            <div class="content-card" style="max-width: 1040px; margin: 0 auto;">
+              <div class="diagram" role="img" aria-label="Diagram: RAG and tools">
+                <div class="diagram-row">
+                  <div class="diagram-box">
+                    <div class="diagram-title">User question</div>
+                    <div class="diagram-sub">“What’s our latest policy?”</div>
+                  </div>
+                  <div class="diagram-arrow">→</div>
+                  <div class="diagram-box">
+                    <div class="diagram-title">Retrieve</div>
+                    <div class="diagram-sub">Search docs via embeddings</div>
+                  </div>
+                  <div class="diagram-arrow">→</div>
+                  <div class="diagram-box">
+                    <div class="diagram-title">LLM + tools</div>
+                    <div class="diagram-sub">Answer + take actions</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exercise" data-exercise="mcq" style="margin-top: 16px;" aria-label="Exercise: pick the best approach">
+                <div class="exercise-title">Exercise (45 sec): Choose the best approach</div>
+                <div class="exercise-question">You need answers that match a frequently changing internal wiki. What’s the best setup?</div>
+                <div class="exercise-options">
+                  <button type="button" class="exercise-option" data-option data-correct="false">Train a new LLM from scratch each week</button>
+                  <button type="button" class="exercise-option" data-option data-correct="true">RAG: retrieve wiki pages at runtime + cite them</button>
+                  <button type="button" class="exercise-option" data-option data-correct="false">Only prompt the model with “be accurate”</button>
+                </div>
+                <div class="exercise-feedback" data-exercise-feedback aria-live="polite"></div>
+              </div>
+
+              <div class="card-section" style="margin-top: 16px;">
+                <div class="section-label">Next</div>
+                <p class="section-text" style="margin-bottom: 10px;">You’re ready to go deeper. Pick a path:</p>
+                <a class="nav-link" href="../../transformers/intro/#launch" style="display: inline-block; margin-right: 14px; border-bottom-color: transparent;">Transformers</a>
+                <a class="nav-link" href="../../embeddings/intro/#launch" style="display: inline-block; border-bottom-color: transparent;">Embeddings</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="deck-progress" data-deck-progress aria-label="Slide progress"></div>
+    </main>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/ai-deck.js"></script>
+    <script src="/_shared/theme.js"></script>
+  </body>
+</html>
