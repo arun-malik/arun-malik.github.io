@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Couch to Marathon (24-Week Plan) · Observation Odyssey</title>
+    <meta name="description" content="A comprehensive 24-week couch-to-marathon training plan with running, strength training, stretching, and progressive build-up." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+    <style>
+      .training-section {
+        margin-top: 20px;
+        padding: 14px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--card-secondary);
+      }
+      .training-week {
+        margin-top: 14px;
+        padding: 12px;
+        border-left: 4px solid var(--primary-blue);
+        background: var(--card-bg);
+        border-radius: 6px;
+      }
+      .training-day {
+        margin-top: 8px;
+        padding: 10px;
+        background: var(--card-secondary);
+        border-radius: 6px;
+        font-size: 0.95rem;
+      }
+      .day-label {
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 4px;
+      }
+      .day-details {
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      .key-principles {
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 10px;
+        background: var(--card-secondary);
+      }
+      .principle-item {
+        margin-top: 8px;
+        color: var(--text-secondary);
+      }
+      .principle-item strong {
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <section class="ai-lesson ai-page" id="launch">
+          <div class="card-icon">🏃</div>
+          <h1 class="card-title" style="margin: 0 0 8px 0; font-size: 1.6rem;">Couch to Marathon</h1>
+          <p class="section-text" style="margin-top: 0; color: var(--text-secondary);">
+            A 24-week comprehensive training plan: progressive running build-up, strength training, stretching, and recovery.
+          </p>
+
+          <div class="lesson-quote">
+            <div class="lesson-quote-title">Core principle</div>
+            <div class="lesson-quote-text">Start slow, build steady, stay consistent. A marathon is not a sprint—it's about progressive adaptation and intelligent recovery.</div>
+          </div>
+
+          <!-- Key Principles -->
+          <div class="key-principles">
+            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 10px;">Key Principles</div>
+            <div class="principle-item">
+              <strong>Progressive overload:</strong> Gradually increase weekly mileage by 10% maximum to avoid injury.
+            </div>
+            <div class="principle-item">
+              <strong>Easy runs:</strong> 70% of runs should be at conversational pace (you can speak in full sentences).
+            </div>
+            <div class="principle-item">
+              <strong>Cross-training:</strong> Strength and flexibility work prevents injuries and builds resilience.
+            </div>
+            <div class="principle-item">
+              <strong>Recovery is training:</strong> Rest days and sleep are as important as workout days.
+            </div>
+            <div class="principle-item">
+              <strong>Listen to your body:</strong> Pain (not soreness) is a signal to take an extra rest day or modify.
+            </div>
+          </div>
+
+          <!-- Phase 1: Base Building (Weeks 1-6) -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 1: Base Building (Weeks 1–6)</div>
+            <p class="section-text">Focus: Build aerobic base, establish routine, introduce strength foundation.</p>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 1–2: Introduction (12–15 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Full-body intro (20 min) — bodyweight exercises, mobility</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 2–3 miles (conversational pace)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Core: 20 min static stretches, light core work (planks, bird dogs)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Easy run: 2–3 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body focus (20 min) — squats, lunges, calf raises</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 3–4 miles (easy pace, walk breaks allowed)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest or light yoga (10–15 min gentle stretching)</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 3–4: Building (15–18 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Upper body + Core (25 min) — push-ups, rows, plank variations</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 3–4 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Mobility: 25 min — focus on hip flexors, hamstrings, calves</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Easy run: 3 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body (25 min) — squats, lunges, single-leg work, glute bridges</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 4–5 miles (easy pace)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest or yoga (15 min)</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 5–6: Progression (18–21 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Full-body circuit (30 min) — 3–4 rounds of compound movements</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 3–4 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Plyometrics: 25 min — dynamic stretches, light jump work (box step-ups, step-overs)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Tempo run: 1 mile warm-up, 2 miles at "comfortably hard" pace, 1 mile cool-down (4 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body power (30 min) — step-ups, lunges, single-leg squats, glute work</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 5–6 miles (easy pace, walk breaks if needed)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest or yoga (20 min)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2: Building Endurance (Weeks 7-12) -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 2: Building Endurance (Weeks 7–12)</div>
+            <p class="section-text">Focus: Increase weekly mileage, introduce varied paces, strengthen weak points.</p>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 7–8: Mileage Build (21–25 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Full-body (30 min) — heavier weights if available, focus on injury prevention</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 4–5 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Yoga: 30 min — build flexibility, address weak points (typically hip flexors, IT band)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Interval run: 1 mile warm-up, 4x 3-min hard with 2-min easy recovery, 1 mile cool-down (6–7 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body (30 min) — single-leg squats, Bulgarian split squats, lunges, calf raises</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 6–7 miles (easy, conversational pace)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest or 20-min easy walk</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 9–10: Pace Development (25–30 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Upper body + Core (30 min) — focus on posture to prevent running injuries</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 4–5 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Foam rolling: 30 min — active recovery, release muscle tension</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Tempo run: 1 mile warm-up, 3–4 miles at tempo pace (faster but sustainable), 1 mile cool-down (5–6 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body focus (30 min) — running-specific strength (short hill repeats if possible, or stair climbing)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 7–8 miles (easy pace, build aerobic base)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 11–12: Peak Build (30–35 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Full-body circuit (35 min) — maintain strength, avoid fatigue accumulation</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 5–6 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Mobility: 30 min — key focus on areas of tightness</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Ladder run: 1 mile warm-up, 2–3–4–3–2 min segments at varied hard pace with 1-min recovery, 1 mile cool-down (8–9 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body (30 min) — single-leg stability, prevent imbalance injuries</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 8–10 miles (conversational pace, fuel strategy practice)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest and proper nutrition</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3: Peak Training (Weeks 13-18) -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 3: Peak Training (Weeks 13–18)</div>
+            <p class="section-text">Focus: Long run progression, race-pace development, mental toughness, peak mileage.</p>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 13–14: High Mileage (35–40 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Maintenance (25 min) — reduce volume slightly to avoid overtraining</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 5–6 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Yoga: 35 min — flexibility, core stability, balance work</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Race-pace run: 1 mile warm-up, 5 miles at marathon pace (a pace you can sustain for the full marathon), 1 mile cool-down (7 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Lower body (25 min) — focus on endurance strength, not power</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 10–12 miles (conversational pace, experiment with fueling strategy)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest, recovery nutrition, hydration</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 15–16: Peak Mileage (40–45 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Minimal work (20 min) — maintain muscle, avoid injury</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 6–7 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Foam rolling: 35 min — active recovery, reduce accumulated fatigue</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Workout run: 1 mile warm-up, 3 miles at marathon pace, 2 miles at faster pace (5K speed), 1 mile cool-down (7–8 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Strength: Light (15–20 min) — minimal, focus on recovery between long runs</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 12–14 miles (easy pace, practice race-day routine — gear, fuel, hydration)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest (full recovery day)</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 17–18: Final Peak (40–42 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Minimal (15 min) — very light maintenance only</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 5–6 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Mobility: 35 min — focus on mental prep, visualization</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Lactate threshold run: 1 mile warm-up, 4 miles at tempo/marathon pace +, 1 mile cool-down (6 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Rest or very easy 2-mile jog</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 14–16 miles (conversational pace, full race preparation)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest and mental preparation</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 4: Taper & Race (Weeks 19-24) -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 4: Taper & Race Prep (Weeks 19–24)</div>
+            <p class="section-text">Focus: Reduce volume, stay sharp, recover fully, execute race plan.</p>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 19–20: Taper Begin (30–32 mi/week, 20–25% reduction)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Strength: Very light or rest (10 min only, if anything)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 4–5 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Core: 30 min — keep body ready, avoid stiffness</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Strides: 1 mile easy, 4–6 x 100m strides at 85% effort with 100m recovery jog, 1 mile easy (3 mi total) — keep legs sharp</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Rest or very easy 2 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 10 miles (easy pace, don't push)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest, hydrate, fuel properly</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 21–22: Taper Deep (24–26 mi/week, 35–40% reduction)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Rest or very light stretching (10 min)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 3–4 miles</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Mobility + Yoga: 30 min — stay loose, mental focus on race</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Easy run with strides: 2 miles easy, 4 x 100m strides, 1 mile cool-down (3–4 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Rest</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 8 miles (easy, conversational pace, build confidence)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest, recovery meals, hydration</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Weeks 23: Final Taper (18–20 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Rest</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 2–3 miles (relaxed, no pressure)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Stretching + Relaxation: 25 min — breathwork, visualization</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Easy run with short strides: 2 miles easy, 3 x 100m strides, 1 mile easy (3 mi total)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday</div>
+                <div class="day-details">Rest or 1-mile easy jog (test legs, nothing more)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday</div>
+                <div class="day-details">Long run: 6 miles (very easy, joy run — this should feel great)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday</div>
+                <div class="day-details">Rest, lay out gear, finalize race plan</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div style="font-weight: 700; color: var(--text-primary);">Week 24: Race Week (10–12 mi/week)</div>
+              <div class="training-day">
+                <div class="day-label">Monday</div>
+                <div class="day-details">Rest</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Tuesday</div>
+                <div class="day-details">Easy run: 2 miles (light, just to shake out legs)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Wednesday</div>
+                <div class="day-details">Rest or 1 mile very easy jog</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Thursday</div>
+                <div class="day-details">Easy run: 2 miles with 2 x 20 second pickups (light strides to keep turnover sharp)</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Friday (Race Eve)</div>
+                <div class="day-details">Rest completely — walk, stretch lightly, stay hydrated, review race plan, carb-load sensibly</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Saturday (RACE DAY)</div>
+                <div class="day-details">42.2 kilometers (26.2 miles) of pure determination. Pace smart, fuel early and often, believe in your training.</div>
+              </div>
+              <div class="training-day">
+                <div class="day-label">Sunday (Recovery)</div>
+                <div class="day-details">Easy 1–2 mile recovery jog or walk; focus on proper nutrition and sleep</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nutrition & Hydration -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Nutrition & Hydration</div>
+            <div class="principle-item">
+              <strong>Daily intake:</strong> Aim for 50–60% carbs (fuel for running), 20–25% protein (muscle repair), 20–25% fat. Total calories depend on your weight and mileage.
+            </div>
+            <div class="principle-item">
+              <strong>During long runs (over 60 min):</strong> Consume 30–60g carbs per hour (gels, sports drinks, bars). Hydrate 500–750ml per hour depending on conditions.
+            </div>
+            <div class="principle-item">
+              <strong>Post-run (within 30 min):</strong> Carbs + protein in a 3:1 or 4:1 ratio to aid recovery (e.g., banana + protein shake, toast + peanut butter).
+            </div>
+            <div class="principle-item">
+              <strong>Race day:</strong> Don't try anything new. Use the fueling strategy you've practiced. Start hydrating and fueling early (mile 3–4) rather than waiting until you're depleted.
+            </div>
+          </div>
+
+          <!-- Injury Prevention & Recovery -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Injury Prevention & Recovery</div>
+            <div class="principle-item">
+              <strong>Listen to your body:</strong> Soreness ≠ pain. Soreness fades within 24–48 hours; pain persists. Take extra rest days if needed.
+            </div>
+            <div class="principle-item">
+              <strong>Dynamic warm-up before runs:</strong> Leg swings, walking lunges, high knees (5–10 min).
+            </div>
+            <div class="principle-item">
+              <strong>Static stretching post-run:</strong> 10–15 min holding stretches (don't bounce).
+            </div>
+            <div class="principle-item">
+              <strong>Foam rolling:</strong> 10–15 min 2–3x per week on quads, IT band, calves, glutes (avoid rolling directly on bones).
+            </div>
+            <div class="principle-item">
+              <strong>Sleep & rest:</strong> Aim for 7–9 hours. Recovery happens during sleep, not during the run.
+            </div>
+            <div class="principle-item">
+              <strong>Common issues:</strong> Runner's knee, IT band syndrome, plantar fasciitis. Address early with rest, stretching, or professional help.
+            </div>
+          </div>
+
+          <!-- Race Day Strategy -->
+          <div class="training-section">
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Race Day Strategy</div>
+            <div class="principle-item">
+              <strong>Pacing:</strong> Start conservatively (20–30 sec slower than goal pace). You can make up time later if you feel good. Even splits or slight negative splits (faster second half) are ideal.
+            </div>
+            <div class="principle-item">
+              <strong>Fueling:</strong> Take a gel or sports drink every 5–10km. Hydrate at every aid station (water or electrolyte drink). Don't overdo it.
+            </div>
+            <div class="principle-item">
+              <strong>Mental game:</strong> Break the race into chunks (5k at a time). Focus on effort, not the distance remaining. You've trained for this.
+            </div>
+            <div class="principle-item">
+              <strong>The wall:</strong> Around mile 18–20, fatigue will spike. This is normal. Slow down, fuel up, and push through mentally. The last 6 miles are a mental battle.
+            </div>
+            <div class="principle-item">
+              <strong>Finish strong:</strong> If you have energy in the last 2 miles, empty the tank. You've earned it.
+            </div>
+          </div>
+
+          <div class="card-section" style="margin-top: 20px;">
+            <a href="../" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to Health & Training</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/scroll-nav.js"></script>
+    <script src="/_shared/theme.js"></script>
+  </body>
+</html>
