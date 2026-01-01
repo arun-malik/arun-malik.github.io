@@ -12,46 +12,377 @@
     <style>
       .training-section {
         margin-top: 20px;
-        padding: 14px;
+        padding: 16px;
         border: 1px solid var(--border-color);
         border-radius: 10px;
         background: var(--card-secondary);
       }
-      .training-week {
-        margin-top: 14px;
+
+      .phase-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary-blue);
+      }
+
+      .phase-icon {
+        font-size: 1.8rem;
+      }
+
+      .phase-title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+      }
+
+      .phase-meta {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-left: auto;
+      }
+
+      .mileage-chart {
+        margin: 14px 0;
         padding: 12px;
+        background: var(--card-bg);
+        border-radius: 8px;
+      }
+
+      .mileage-bar {
+        margin: 6px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .mileage-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        min-width: 60px;
+      }
+
+      .mileage-fill {
+        height: 20px;
+        background: linear-gradient(90deg, var(--primary-blue), #667eea);
+        border-radius: 4px;
+        flex: 1;
+        position: relative;
+      }
+
+      .mileage-value {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: white;
+      }
+
+      .training-week {
+        margin-top: 12px;
+        padding: 14px;
         border-left: 4px solid var(--primary-blue);
         background: var(--card-bg);
         border-radius: 6px;
       }
+
+      .week-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .week-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+      }
+
+      .week-mileage {
+        font-size: 0.85rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
       .training-day {
         margin-top: 8px;
         padding: 10px;
         background: var(--card-secondary);
         border-radius: 6px;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        border-left: 2px solid transparent;
       }
+
+      .training-day.easy-run {
+        border-left-color: #7fba00;
+      }
+
+      .training-day.strength {
+        border-left-color: #f093fb;
+      }
+
+      .training-day.stretching {
+        border-left-color: #00a4ef;
+      }
+
+      .training-day.tempo {
+        border-left-color: #ff8c00;
+      }
+
+      .training-day.rest {
+        border-left-color: #999;
+        opacity: 0.75;
+      }
+
       .day-label {
         font-weight: 700;
-        color: var(--primary-blue);
+        color: var(--text-primary);
         margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
+
+      .day-emoji {
+        font-size: 1.1rem;
+      }
+
       .day-details {
         color: var(--text-secondary);
-        line-height: 1.5;
+        line-height: 1.4;
+        font-size: 0.85rem;
       }
+
       .key-principles {
         margin-top: 14px;
-        padding: 12px;
+        padding: 14px;
         border-radius: 10px;
         background: var(--card-secondary);
       }
+
       .principle-item {
-        margin-top: 8px;
+        margin-top: 10px;
         color: var(--text-secondary);
+        line-height: 1.5;
       }
+
       .principle-item strong {
         color: var(--text-primary);
+      }
+
+      .workout-legend {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin: 14px 0;
+        padding: 12px;
+        background: var(--card-bg);
+        border-radius: 8px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+      }
+
+      .legend-icon {
+        font-size: 1.2rem;
+      }
+
+      .legend-label {
+        color: var(--text-secondary);
+      }
+
+      /* 24-Week Interactive Overview Chart */
+      .program-overview {
+        margin: 20px 0;
+        padding: 20px;
+        background: var(--card-secondary);
+        border: 2px solid var(--primary-blue);
+        border-radius: 12px;
+      }
+
+      .overview-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 6px;
+      }
+
+      .overview-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .weeks-chart {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        height: 200px;
+        padding: 10px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        gap: 4px;
+        position: relative;
+      }
+
+      .week-bar {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        min-width: 0;
+      }
+
+      .week-bar:hover {
+        transform: translateY(-4px);
+      }
+
+      .bar-fill {
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        transition: all 0.2s ease;
+      }
+
+      .week-bar.phase-1 .bar-fill {
+        background: linear-gradient(to top, #10b981, #34d399);
+      }
+
+      .week-bar.phase-2 .bar-fill {
+        background: linear-gradient(to top, #3b82f6, #60a5fa);
+      }
+
+      .week-bar.phase-3 .bar-fill {
+        background: linear-gradient(to top, #f59e0b, #fbbf24);
+      }
+
+      .week-bar.phase-4 .bar-fill {
+        background: linear-gradient(to top, #8b5cf6, #a78bfa);
+      }
+
+      .week-bar.race-week .bar-fill {
+        background: linear-gradient(to top, #ef4444, #fbbf24) !important;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+
+      .week-bar:hover .bar-fill {
+        filter: brightness(1.2);
+      }
+
+      .week-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-top: 4px;
+      }
+
+      .week-tooltip {
+        position: fixed;
+        background: var(--card-primary);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 1000;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+      }
+
+      .week-tooltip.show {
+        opacity: 1;
+      }
+
+      .phase-labels {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .phase-label-item {
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        padding: 8px;
+        border-radius: 6px;
+        border: 2px solid;
+      }
+
+      .phase-1-label {
+        border-color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+      }
+
+      .phase-2-label {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.1);
+      }
+
+      .phase-3-label {
+        border-color: #f59e0b;
+        background: rgba(245, 158, 11, 0.1);
+      }
+
+      .phase-4-label {
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.1);
+      }
+
+      .phase-label-item span {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+      }
+
+      .progression-visual {
+        margin: 14px 0;
+        padding: 12px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .progression-arrow {
+        font-size: 1.4rem;
+        margin: 0 8px;
+        color: var(--primary-blue);
+      }
+
+      .phase-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-right: 8px;
       }
     </style>
   </head>
@@ -76,6 +407,156 @@
             <div class="lesson-quote-text">Start slow, build steady, stay consistent. A marathon is not a sprint—it's about progressive adaptation and intelligent recovery.</div>
           </div>
 
+          <!-- Workout Legend -->
+          <div class="workout-legend">
+            <div class="legend-item">
+              <div class="legend-icon">🏃</div>
+              <div class="legend-label"><strong>Easy Run:</strong> Conversational pace</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-icon">💨</div>
+              <div class="legend-label"><strong>Tempo/Speed:</strong> Faster, challenging</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-icon">💪</div>
+              <div class="legend-label"><strong>Strength:</strong> Weights + resistance</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-icon">🧘</div>
+              <div class="legend-label"><strong>Stretching:</strong> Flexibility + mobility</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-icon">😴</div>
+              <div class="legend-label"><strong>Rest:</strong> Recovery day</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-icon">📊</div>
+              <div class="legend-label"><strong>Long Run:</strong> Endurance build</div>
+            </div>
+          </div>
+
+          <!-- 24-Week Interactive Overview Chart -->
+          <div class="program-overview">
+            <div class="overview-title">24-Week Training Overview</div>
+            <div class="overview-subtitle">Click any week to jump to details · Hover for weekly mileage</div>
+            <div class="weeks-chart" id="weeksChart">
+              <!-- Phase 1: Weeks 1-6 -->
+              <div class="week-bar phase-1" data-week="1" data-miles="12-15" data-phase="Base Building">
+                <div class="bar-fill" style="height: 60px;"></div>
+                <div class="week-label">1</div>
+              </div>
+              <div class="week-bar phase-1" data-week="2" data-miles="12-15" data-phase="Base Building">
+                <div class="bar-fill" style="height: 60px;"></div>
+                <div class="week-label">2</div>
+              </div>
+              <div class="week-bar phase-1" data-week="3" data-miles="15-18" data-phase="Base Building">
+                <div class="bar-fill" style="height: 72px;"></div>
+                <div class="week-label">3</div>
+              </div>
+              <div class="week-bar phase-1" data-week="4" data-miles="15-18" data-phase="Base Building">
+                <div class="bar-fill" style="height: 72px;"></div>
+                <div class="week-label">4</div>
+              </div>
+              <div class="week-bar phase-1" data-week="5" data-miles="18-21" data-phase="Base Building">
+                <div class="bar-fill" style="height: 84px;"></div>
+                <div class="week-label">5</div>
+              </div>
+              <div class="week-bar phase-1" data-week="6" data-miles="18-21" data-phase="Base Building">
+                <div class="bar-fill" style="height: 84px;"></div>
+                <div class="week-label">6</div>
+              </div>
+              
+              <!-- Phase 2: Weeks 7-12 -->
+              <div class="week-bar phase-2" data-week="7" data-miles="21-24" data-phase="Building Endurance">
+                <div class="bar-fill" style="height: 96px;"></div>
+                <div class="week-label">7</div>
+              </div>
+              <div class="week-bar phase-2" data-week="8" data-miles="21-24" data-phase="Building Endurance">
+                <div class="bar-fill" style="height: 96px;"></div>
+                <div class="week-label">8</div>
+              </div>
+              <div class="week-bar phase-2" data-week="9" data-miles="24-27" data-phase="Building Endurance">
+                <div class="bar-fill" style="height: 108px;"></div>
+                <div class="week-label">9</div>
+              </div>
+              <div class="week-bar phase-2" data-week="10" data-miles="24-27" data-phase="Building Endurance">
+                <div class="bar-fill" style="height: 108px;"></div>
+                <div class="week-label">10</div>
+              </div>
+              <div class="week-bar phase-2" data-week="11" data-miles="27-32" data-phase="Building Endurance">
+                <div class="bar-fill" style="height: 128px;"></div>
+                <div class="week-label">11</div>
+              </div>
+              <div class="week-bar phase-2" data-week="12" data-miles="27-32" data-phase="Building Endurance">
+                <div class="bar-fill" style="height: 128px;"></div>
+                <div class="week-label">12</div>
+              </div>
+              
+              <!-- Phase 3: Weeks 13-18 -->
+              <div class="week-bar phase-3" data-week="13" data-miles="35-40" data-phase="Peak Training">
+                <div class="bar-fill" style="height: 148px;"></div>
+                <div class="week-label">13</div>
+              </div>
+              <div class="week-bar phase-3" data-week="14" data-miles="35-40" data-phase="Peak Training">
+                <div class="bar-fill" style="height: 148px;"></div>
+                <div class="week-label">14</div>
+              </div>
+              <div class="week-bar phase-3" data-week="15" data-miles="40-45" data-phase="Peak Training">
+                <div class="bar-fill" style="height: 180px;"></div>
+                <div class="week-label">15</div>
+              </div>
+              <div class="week-bar phase-3" data-week="16" data-miles="40-45" data-phase="Peak Training">
+                <div class="bar-fill" style="height: 180px;"></div>
+                <div class="week-label">16</div>
+              </div>
+              <div class="week-bar phase-3" data-week="17" data-miles="40-42" data-phase="Peak Training">
+                <div class="bar-fill" style="height: 168px;"></div>
+                <div class="week-label">17</div>
+              </div>
+              <div class="week-bar phase-3" data-week="18" data-miles="40-42" data-phase="Peak Training">
+                <div class="bar-fill" style="height: 168px;"></div>
+                <div class="week-label">18</div>
+              </div>
+              
+              <!-- Phase 4: Weeks 19-24 (Taper) -->
+              <div class="week-bar phase-4" data-week="19" data-miles="30-32" data-phase="Taper & Race">
+                <div class="bar-fill" style="height: 128px;"></div>
+                <div class="week-label">19</div>
+              </div>
+              <div class="week-bar phase-4" data-week="20" data-miles="30-32" data-phase="Taper & Race">
+                <div class="bar-fill" style="height: 128px;"></div>
+                <div class="week-label">20</div>
+              </div>
+              <div class="week-bar phase-4" data-week="21" data-miles="24-26" data-phase="Taper & Race">
+                <div class="bar-fill" style="height: 104px;"></div>
+                <div class="week-label">21</div>
+              </div>
+              <div class="week-bar phase-4" data-week="22" data-miles="24-26" data-phase="Taper & Race">
+                <div class="bar-fill" style="height: 104px;"></div>
+                <div class="week-label">22</div>
+              </div>
+              <div class="week-bar phase-4" data-week="23" data-miles="18-20" data-phase="Taper & Race">
+                <div class="bar-fill" style="height: 80px;"></div>
+                <div class="week-label">23</div>
+              </div>
+              <div class="week-bar phase-4 race-week" data-week="24" data-miles="10-12 + 26.2" data-phase="Race Week!">
+                <div class="bar-fill" style="height: 56px;"></div>
+                <div class="week-label">24</div>
+              </div>
+            </div>
+            
+            <!-- Phase Labels -->
+            <div class="phase-labels">
+              <div class="phase-label-item phase-1-label">🌱 Phase 1<br><span>Base Building</span></div>
+              <div class="phase-label-item phase-2-label">🚀 Phase 2<br><span>Building Endurance</span></div>
+              <div class="phase-label-item phase-3-label">⛰️ Phase 3<br><span>Peak Training</span></div>
+              <div class="phase-label-item phase-4-label">🏁 Phase 4<br><span>Taper & Race</span></div>
+            </div>
+
+            <!-- Tooltip for hover -->
+            <div class="week-tooltip" id="weekTooltip"></div>
+          </div>
+
           <!-- Key Principles -->
           <div class="key-principles">
             <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 10px;">Key Principles</div>
@@ -98,101 +579,130 @@
 
           <!-- Phase 1: Base Building (Weeks 1-6) -->
           <div class="training-section">
-            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 1: Base Building (Weeks 1–6)</div>
+            <div class="phase-header">
+              <div class="phase-icon">🌱</div>
+              <div class="phase-title">Phase 1: Base Building</div>
+              <div class="phase-meta">Weeks 1–6 · 12–21 mi/week</div>
+            </div>
             <p class="section-text">Focus: Build aerobic base, establish routine, introduce strength foundation.</p>
 
-            <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 1–2: Introduction (12–15 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Full-body intro (20 min) — bodyweight exercises, mobility</div>
+            <!-- Mileage Progression Chart -->
+            <div class="mileage-chart">
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 1–2</div>
+                <div class="mileage-fill" style="width: 43%;"><div class="mileage-value">13.5 mi</div></div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 3–4</div>
+                <div class="mileage-fill" style="width: 53%;"><div class="mileage-value">16.5 mi</div></div>
+              </div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 5–6</div>
+                <div class="mileage-fill" style="width: 60%;"><div class="mileage-value">19.5 mi</div></div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 1–2: Introduction</div>
+                <div class="week-mileage">12–15 mi/week</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Monday</div>
+                <div class="day-details">💪 Strength: Full-body intro (20 min) — bodyweight exercises, mobility</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 2–3 miles (conversational pace)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
-                <div class="day-details">Stretching + Core: 20 min static stretches, light core work (planks, bird dogs)</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
+                <div class="day-details">Stretching + Core: 20 min static stretches, light core work</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Thursday</div>
                 <div class="day-details">Easy run: 2–3 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
                 <div class="day-details">Strength: Lower body focus (20 min) — squats, lunges, calf raises</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
                 <div class="day-details">Long run: 3–4 miles (easy pace, walk breaks allowed)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest or light yoga (10–15 min gentle stretching)</div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 3–4: Building (15–18 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Upper body + Core (25 min) — push-ups, rows, plank variations</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 3–4: Building</div>
+                <div class="week-mileage">15–18 mi/week</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
+                <div class="day-details">Upper body + Core (25 min) — push-ups, rows, plank variations</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 3–4 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
                 <div class="day-details">Stretching + Mobility: 25 min — focus on hip flexors, hamstrings, calves</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Thursday</div>
                 <div class="day-details">Easy run: 3 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
-                <div class="day-details">Strength: Lower body (25 min) — squats, lunges, single-leg work, glute bridges</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
+                <div class="day-details">Lower body (25 min) — squats, lunges, single-leg work, glute bridges</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
                 <div class="day-details">Long run: 4–5 miles (easy pace)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest or yoga (15 min)</div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 5–6: Progression (18–21 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Full-body circuit (30 min) — 3–4 rounds of compound movements</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 5–6: Progression</div>
+                <div class="week-mileage">18–21 mi/week</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
+                <div class="day-details">Full-body circuit (30 min) — 3–4 rounds of compound movements</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 3–4 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
-                <div class="day-details">Stretching + Plyometrics: 25 min — dynamic stretches, light jump work (box step-ups, step-overs)</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
+                <div class="day-details">Stretching + Plyometrics: 25 min — dynamic stretches, light jump work</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Tempo run: 1 mile warm-up, 2 miles at "comfortably hard" pace, 1 mile cool-down (4 mi total)</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Tempo run: 1 mi warm-up, 2 mi at "comfortably hard" pace, 1 mi cool-down (4 mi total)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
-                <div class="day-details">Strength: Lower body power (30 min) — step-ups, lunges, single-leg squats, glute work</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
+                <div class="day-details">Lower body power (30 min) — step-ups, lunges, single-leg squats, glute work</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
                 <div class="day-details">Long run: 5–6 miles (easy pace, walk breaks if needed)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest or yoga (20 min)</div>
               </div>
             </div>
@@ -200,139 +710,191 @@
 
           <!-- Phase 2: Building Endurance (Weeks 7-12) -->
           <div class="training-section">
-            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 2: Building Endurance (Weeks 7–12)</div>
-            <p class="section-text">Focus: Increase weekly mileage, introduce varied paces, strengthen weak points.</p>
+            <div class="phase-header">
+              <div class="phase-icon">🚀</div>
+              <div class="phase-title">Phase 2: Building Endurance</div>
+              <div class="phase-meta">Weeks 7–12 · 21–32 mi/week</div>
+            </div>
+            <p class="section-text">Focus: Increase mileage, build aerobic capacity, introduce speed work and longer long runs.</p>
 
-            <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 7–8: Mileage Build (21–25 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Full-body (30 min) — heavier weights if available, focus on injury prevention</div>
+            <!-- Mileage Progression Chart -->
+            <div class="mileage-chart">
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 7–8</div>
+                <div class="mileage-fill" style="width: 68%;"><div class="mileage-value">22.5 mi</div></div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
-                <div class="day-details">Easy run: 4–5 miles</div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 9–10</div>
+                <div class="mileage-fill" style="width: 77%;"><div class="mileage-value">25.5 mi</div></div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
-                <div class="day-details">Stretching + Yoga: 30 min — build flexibility, address weak points (typically hip flexors, IT band)</div>
-              </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Interval run: 1 mile warm-up, 4x 3-min hard with 2-min easy recovery, 1 mile cool-down (6–7 mi total)</div>
-              </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
-                <div class="day-details">Strength: Lower body (30 min) — single-leg squats, Bulgarian split squats, lunges, calf raises</div>
-              </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
-                <div class="day-details">Long run: 6–7 miles (easy, conversational pace)</div>
-              </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
-                <div class="day-details">Rest or 20-min easy walk</div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 11–12</div>
+                <div class="mileage-fill" style="width: 92%;"><div class="mileage-value">30 mi</div></div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 9–10: Pace Development (25–30 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Upper body + Core (30 min) — focus on posture to prevent running injuries</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 7–8: Introducing Speed</div>
+                <div class="week-mileage">21–24 mi/week</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
-                <div class="day-details">Easy run: 4–5 miles</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
+                <div class="day-details">Full-body strength circuit (35 min) — focus on power and endurance</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
-                <div class="day-details">Stretching + Foam rolling: 30 min — active recovery, release muscle tension</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
+                <div class="day-details">Easy run: 4 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Tempo run: 1 mile warm-up, 3–4 miles at tempo pace (faster but sustainable), 1 mile cool-down (5–6 mi total)</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
+                <div class="day-details">Stretching + Core: 30 min — dynamic stretches, core circuits</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
-                <div class="day-details">Strength: Lower body focus (30 min) — running-specific strength (short hill repeats if possible, or stair climbing)</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Tempo run: 1 mi warm-up, 2.5 mi at "comfortably hard" pace, 1 mi cool-down</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
-                <div class="day-details">Long run: 7–8 miles (easy pace, build aerobic base)</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
+                <div class="day-details">Lower body + plyometrics (35 min) — ladder work, bounding drills</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
-                <div class="day-details">Rest</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
+                <div class="day-details">Long run: 7–8 miles (easy pace with 2–3 walk breaks)</div>
+              </div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
+                <div class="day-details">Rest or yoga (25 min)</div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 11–12: Peak Build (30–35 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Full-body circuit (35 min) — maintain strength, avoid fatigue accumulation</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 9–10: Speed Workouts</div>
+                <div class="week-mileage">24–27 mi/week</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
-                <div class="day-details">Easy run: 5–6 miles</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
+                <div class="day-details">Upper body + core power (35 min) — push-ups, rows, medicine ball work</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
-                <div class="day-details">Stretching + Mobility: 30 min — key focus on areas of tightness</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
+                <div class="day-details">Easy run: 4–5 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Ladder run: 1 mile warm-up, 2–3–4–3–2 min segments at varied hard pace with 1-min recovery, 1 mile cool-down (8–9 mi total)</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
+                <div class="day-details">Stretching + Mobility: 35 min — foam rolling, deep stretches, yoga flow</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
-                <div class="day-details">Strength: Lower body (30 min) — single-leg stability, prevent imbalance injuries</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Interval run: 1 mi warm-up, 6×800m at fast pace (200m recovery jog), 1 mi cool-down</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
-                <div class="day-details">Long run: 8–10 miles (conversational pace, fuel strategy practice)</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
+                <div class="day-details">Lower body power (35 min) — squat variations, plyometric lunges, hill bounds</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
-                <div class="day-details">Rest and proper nutrition</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
+                <div class="day-details">Long run: 8–10 miles (easy pace, 2–3 walk/hydration breaks)</div>
+              </div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
+                <div class="day-details">Rest or active recovery yoga (30 min)</div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 11–12: Ramping Up</div>
+                <div class="week-mileage">27–32 mi/week</div>
+              </div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
+                <div class="day-details">Full-body circuit (40 min) — 4–5 rounds with short recovery</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
+                <div class="day-details">Easy run: 5 miles</div>
+              </div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
+                <div class="day-details">Stretching + Plyometrics: 40 min — dynamic warm-ups, agility drills, deep stretches</div>
+              </div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Tempo run: 1.5 mi warm-up, 3 mi at "comfortably hard" pace, 1 mi cool-down (5.5 mi total)</div>
+              </div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
+                <div class="day-details">Lower body power circuit (40 min) — mix of strength and plyometric work</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
+                <div class="day-details">Long run: 11–12 miles (easy pace, 3–4 hydration breaks)</div>
+              </div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
+                <div class="day-details">Rest or gentle yoga (30 min)</div>
               </div>
             </div>
           </div>
 
           <!-- Phase 3: Peak Training (Weeks 13-18) -->
           <div class="training-section">
-            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 3: Peak Training (Weeks 13–18)</div>
+            <div class="phase-header">
+              <div class="phase-icon">⛰️</div>
+              <div class="phase-title">Phase 3: Peak Training</div>
+              <div class="phase-meta">Weeks 13–18 · 35–45 mi/week</div>
+            </div>
             <p class="section-text">Focus: Long run progression, race-pace development, mental toughness, peak mileage.</p>
 
+            <!-- Mileage Progression Chart -->
+            <div class="mileage-chart">
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 13–14</div>
+                <div class="mileage-fill" style="width: 82%;"><div class="mileage-value">34 mi</div></div>
+              </div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 15–16</div>
+                <div class="mileage-fill" style="width: 100%;"><div class="mileage-value">42.5 mi</div></div>
+              </div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 17–18</div>
+                <div class="mileage-fill" style="width: 96%;"><div class="mileage-value">41 mi</div></div>
+              </div>
+            </div>
+
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 13–14: High Mileage (35–40 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 13–14: High Mileage</div>
+                <div class="week-mileage">35–40 mi/week</div>
+              </div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
                 <div class="day-details">Strength: Maintenance (25 min) — reduce volume slightly to avoid overtraining</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 5–6 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
                 <div class="day-details">Stretching + Yoga: 35 min — flexibility, core stability, balance work</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Race-pace run: 1 mile warm-up, 5 miles at marathon pace (a pace you can sustain for the full marathon), 1 mile cool-down (7 mi total)</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Race-pace run: 1 mi warm-up, 5 mi at marathon pace, 1 mi cool-down (7 mi total)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Friday</div>
                 <div class="day-details">Strength: Lower body (25 min) — focus on endurance strength, not power</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
                 <div class="day-details">Long run: 10–12 miles (conversational pace, experiment with fueling strategy)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest, recovery nutrition, hydration</div>
               </div>
             </div>
@@ -404,134 +966,166 @@
 
           <!-- Phase 4: Taper & Race (Weeks 19-24) -->
           <div class="training-section">
-            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">Phase 4: Taper & Race Prep (Weeks 19–24)</div>
+            <div class="phase-header">
+              <div class="phase-icon">🏁</div>
+              <div class="phase-title">Phase 4: Taper & Race</div>
+              <div class="phase-meta">Weeks 19–24 · 24–30 mi/week</div>
+            </div>
             <p class="section-text">Focus: Reduce volume, stay sharp, recover fully, execute race plan.</p>
 
-            <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 19–20: Taper Begin (30–32 mi/week, 20–25% reduction)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
-                <div class="day-details">Strength: Very light or rest (10 min only, if anything)</div>
+            <!-- Mileage Progression Chart -->
+            <div class="mileage-chart">
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 19–20</div>
+                <div class="mileage-fill" style="width: 77%;"><div class="mileage-value">26 mi</div></div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 21–22</div>
+                <div class="mileage-fill" style="width: 60%;"><div class="mileage-value">20 mi</div></div>
+              </div>
+              <div class="mileage-bar">
+                <div class="mileage-label">Week 23–24</div>
+                <div class="mileage-fill" style="width: 35%;"><div class="mileage-value">11–15 mi</div></div>
+              </div>
+            </div>
+
+            <div class="training-week">
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 19–20: Taper Begin</div>
+                <div class="week-mileage">30–32 mi/week (20–25% reduction)</div>
+              </div>
+              <div class="training-day strength">
+                <div class="day-label"><div class="day-emoji">💪</div> Monday</div>
+                <div class="day-details">Strength: Very light or rest (10 min only)</div>
+              </div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 4–5 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
                 <div class="day-details">Stretching + Core: 30 min — keep body ready, avoid stiffness</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Strides: 1 mile easy, 4–6 x 100m strides at 85% effort with 100m recovery jog, 1 mile easy (3 mi total) — keep legs sharp</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Strides: 1 mi easy, 4–6×100m at 85% effort, 1 mi easy (3 mi total) — keep legs sharp</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Friday</div>
                 <div class="day-details">Rest or very easy 2 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
                 <div class="day-details">Long run: 10 miles (easy pace, don't push)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest, hydrate, fuel properly</div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 21–22: Taper Deep (24–26 mi/week, 35–40% reduction)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 21–22: Taper Deep</div>
+                <div class="week-mileage">24–26 mi/week (35–40% reduction)</div>
+              </div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Monday</div>
                 <div class="day-details">Rest or very light stretching (10 min)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 3–4 miles</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
                 <div class="day-details">Mobility + Yoga: 30 min — stay loose, mental focus on race</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Easy run with strides: 2 miles easy, 4 x 100m strides, 1 mile cool-down (3–4 mi total)</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Easy run with strides: 2 mi easy, 4×100m strides, 1 mi cool-down</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Friday</div>
                 <div class="day-details">Rest</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
-                <div class="day-details">Long run: 8 miles (easy, conversational pace, build confidence)</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
+                <div class="day-details">Long run: 8 miles (easy pace, build confidence)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest, recovery meals, hydration</div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Weeks 23: Final Taper (18–20 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
+              <div class="week-header">
+                <div class="week-title">📅 Weeks 23: Final Taper</div>
+                <div class="week-mileage">18–20 mi/week</div>
+              </div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Monday</div>
                 <div class="day-details">Rest</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 2–3 miles (relaxed, no pressure)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
+              <div class="training-day stretching">
+                <div class="day-label"><div class="day-emoji">🧘</div> Wednesday</div>
                 <div class="day-details">Stretching + Relaxation: 25 min — breathwork, visualization</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Easy run with short strides: 2 miles easy, 3 x 100m strides, 1 mile easy (3 mi total)</div>
+              <div class="training-day tempo">
+                <div class="day-label"><div class="day-emoji">💨</div> Thursday</div>
+                <div class="day-details">Easy run with short strides: 2 mi easy, 3×100m strides, 1 mi easy</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday</div>
-                <div class="day-details">Rest or 1-mile easy jog (test legs, nothing more)</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Friday</div>
+                <div class="day-details">Rest or 1 mi easy jog (test legs, nothing more)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">📊</div> Saturday</div>
                 <div class="day-details">Long run: 6 miles (very easy, joy run — this should feel great)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday</div>
                 <div class="day-details">Rest, lay out gear, finalize race plan</div>
               </div>
             </div>
 
             <div class="training-week">
-              <div style="font-weight: 700; color: var(--text-primary);">Week 24: Race Week (10–12 mi/week)</div>
-              <div class="training-day">
-                <div class="day-label">Monday</div>
+              <div class="week-header">
+                <div class="week-title">📅 Week 24: Race Week</div>
+                <div class="week-mileage">10–12 mi/week</div>
+              </div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Monday</div>
                 <div class="day-details">Rest</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Tuesday</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Tuesday</div>
                 <div class="day-details">Easy run: 2 miles (light, just to shake out legs)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Wednesday</div>
-                <div class="day-details">Rest or 1 mile very easy jog</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Wednesday</div>
+                <div class="day-details">Rest or 1 mi very easy jog</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Thursday</div>
-                <div class="day-details">Easy run: 2 miles with 2 x 20 second pickups (light strides to keep turnover sharp)</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏃</div> Thursday</div>
+                <div class="day-details">Easy run: 2 mi with 2×20 sec pickups (light strides to keep turnover sharp)</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Friday (Race Eve)</div>
-                <div class="day-details">Rest completely — walk, stretch lightly, stay hydrated, review race plan, carb-load sensibly</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Friday (Race Eve)</div>
+                <div class="day-details">Rest completely — walk, stretch lightly, stay hydrated, review race plan, carb-load</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Saturday (RACE DAY)</div>
-                <div class="day-details">42.2 kilometers (26.2 miles) of pure determination. Pace smart, fuel early and often, believe in your training.</div>
+              <div class="training-day easy-run">
+                <div class="day-label"><div class="day-emoji">🏆</div> Saturday (RACE DAY)</div>
+                <div class="day-details">42.2 km (26.2 miles) of pure determination. Pace smart, fuel early and often, believe in your training!</div>
               </div>
-              <div class="training-day">
-                <div class="day-label">Sunday (Recovery)</div>
-                <div class="day-details">Easy 1–2 mile recovery jog or walk; focus on proper nutrition and sleep</div>
+              <div class="training-day rest">
+                <div class="day-label"><div class="day-emoji">😴</div> Sunday (Recovery)</div>
+                <div class="day-details">Easy 1–2 mi recovery jog or walk; focus on nutrition and sleep</div>
               </div>
             </div>
           </div>
@@ -608,5 +1202,66 @@
     <script src="/_shared/components.js"></script>
     <script src="/_shared/scroll-nav.js"></script>
     <script src="/_shared/theme.js"></script>
+    <script>
+      // Interactive 24-Week Chart
+      document.addEventListener('DOMContentLoaded', function() {
+        const weekBars = document.querySelectorAll('.week-bar');
+        const tooltip = document.getElementById('weekTooltip');
+        
+        weekBars.forEach(bar => {
+          // Hover to show tooltip
+          bar.addEventListener('mouseenter', function(e) {
+            const week = this.dataset.week;
+            const miles = this.dataset.miles;
+            const phase = this.dataset.phase;
+            
+            tooltip.innerHTML = `<strong>Week ${week}</strong><br>${phase}<br>${miles} mi/week`;
+            tooltip.classList.add('show');
+            
+            // Position tooltip above the bar using viewport coordinates
+            const barFill = this.querySelector('.bar-fill');
+            const rect = barFill.getBoundingClientRect();
+            
+            // Position tooltip above the bar's top edge
+            const left = rect.left + rect.width / 2;
+            const top = rect.top - 10; // 10px above the bar
+            
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.style.transform = 'translate(-50%, -100%)';
+          });
+          
+          bar.addEventListener('mouseleave', function() {
+            tooltip.classList.remove('show');
+          });
+          
+          // Click to scroll to that week's details
+          bar.addEventListener('click', function() {
+            const week = parseInt(this.dataset.week);
+            let targetSection;
+            
+            // Map weeks to phase sections
+            if (week <= 6) {
+              targetSection = document.querySelector('.training-section:nth-of-type(1)');
+            } else if (week <= 12) {
+              targetSection = document.querySelector('.training-section:nth-of-type(2)');
+            } else if (week <= 18) {
+              targetSection = document.querySelector('.training-section:nth-of-type(3)');
+            } else {
+              targetSection = document.querySelector('.training-section:nth-of-type(4)');
+            }
+            
+            if (targetSection) {
+              targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // Brief highlight effect
+              targetSection.style.background = 'var(--primary-blue-10)';
+              setTimeout(() => {
+                targetSection.style.background = 'var(--card-secondary)';
+              }, 1000);
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>
