@@ -216,6 +216,153 @@
         margin-top: 20px;
       }
 
+      .progression-section {
+        background: var(--card-primary);
+        padding: 20px 24px;
+        border-radius: 12px;
+        margin: 24px 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      }
+
+      .progression-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .progression-eyebrow {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+
+      .progression-title {
+        margin: 4px 0 8px 0;
+        font-size: 1.4rem;
+      }
+
+      .progression-subtitle {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        max-width: 720px;
+      }
+
+      .progression-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .progression-button {
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .progression-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 26px rgba(59, 130, 246, 0.3);
+      }
+
+      .progression-chart-wrapper {
+        margin-top: 18px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--card-secondary);
+        padding: 12px;
+        position: relative;
+      }
+
+      .progression-info {
+        margin-top: 14px;
+        padding: 12px;
+        background: var(--card-secondary);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        display: none;
+      }
+
+      .progression-info h4 {
+        margin: 0 0 6px 0;
+        font-size: 1rem;
+      }
+
+      .progression-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .progression-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      .progression-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 8px;
+        background: var(--card-primary);
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+      }
+
+      .progression-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .progression-tooltip {
+        position: absolute;
+        background: rgba(18, 32, 47, 0.95);
+        color: white;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        pointer-events: none;
+        z-index: 5;
+        min-width: 180px;
+      }
+
+      .progression-tooltip h5 {
+        margin: 0 0 6px 0;
+        font-size: 0.95rem;
+      }
+
+      .progression-tooltip .metric-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 2px 0;
+      }
+
+      .progression-tooltip .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+      }
+
       .main-content {
         min-width: 0;
       }
@@ -360,47 +507,47 @@
       }
 
       .download-section {
-        margin: 30px 0;
-        padding: 24px;
+        margin: 18px 0;
+        padding: 14px 16px;
         background: var(--card-secondary);
-        border-radius: 12px;
-        border: 2px solid var(--primary-blue);
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
       }
 
       .download-title {
-        font-size: 1.2rem;
+        font-size: 1.05rem;
         font-weight: 700;
         color: var(--text-primary);
-        margin: 0 0 16px 0;
+        margin: 0 0 10px 0;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
       }
 
       .download-subtitle {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: var(--text-secondary);
-        margin-bottom: 16px;
+        margin-bottom: 12px;
       }
 
       .download-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 8px;
       }
 
       .download-btn {
-        padding: 12px 16px;
+        padding: 10px 12px;
         background: var(--primary-blue);
         color: white;
         border: none;
         border-radius: 8px;
         font-weight: 600;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         cursor: pointer;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         transition: all 0.2s ease;
         text-decoration: none;
       }
@@ -426,12 +573,12 @@
       }
 
       .download-note {
-        margin-top: 12px;
-        padding: 12px;
-        background: rgba(59, 130, 246, 0.1);
+        margin-top: 10px;
+        padding: 10px;
+        background: rgba(59, 130, 246, 0.08);
         border-left: 3px solid var(--primary-blue);
         border-radius: 6px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: var(--text-secondary);
       }
 
@@ -578,198 +725,53 @@
           <!-- Two Column Layout -->
           <div class="content-wrapper">
             <div class="main-content">
-              
-          <!-- Training Load Chart -->
-          <div class="chart-section">
-            <div class="chart-title">📊 Training Load Breakdown (All 3 Metrics)</div>
-            <div class="chart-subtitle">Stacked view: Running Miles + Strength Training (min) + Flexibility/Yoga (min)</div>
-            
-            <div style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 4px; height: 200px; align-items: flex-end; margin-top: 20px;">
-              <!-- Week 1 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 1: 15mi + 30min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 24%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">1</div>
-              </div>
-              <!-- Week 2 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 2: 15mi + 30min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 24%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">2</div>
-              </div>
-              <!-- Week 3 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 3: 17mi + 40min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 28%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 20%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">3</div>
-              </div>
-              <!-- Week 4 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 4: 17mi + 40min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 28%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 20%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">4</div>
-              </div>
-              <!-- Week 5 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 5: 20mi + 50min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 33%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 25%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">5</div>
-              </div>
-              <!-- Week 6 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 6: 20mi + 50min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 33%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 25%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">6</div>
-              </div>
-              <!-- Week 7 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 7: 23mi + 60min strength + 35min flex">
-                <div style="width: 100%; background: #10b981; height: 38%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">7</div>
-              </div>
-              <!-- Week 8 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 8: 23mi + 60min strength + 35min flex">
-                <div style="width: 100%; background: #10b981; height: 38%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">8</div>
-              </div>
-              <!-- Week 9 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 9: 26mi + 60min strength + 35min flex">
-                <div style="width: 100%; background: #10b981; height: 42%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">9</div>
-              </div>
-              <!-- Week 10 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 10: 26mi + 60min strength + 35min flex">
-                <div style="width: 100%; background: #10b981; height: 42%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">10</div>
-              </div>
-              <!-- Week 11 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 11: 30mi + 60min strength + 40min flex">
-                <div style="width: 100%; background: #10b981; height: 48%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">11</div>
-              </div>
-              <!-- Week 12 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 12: 30mi + 60min strength + 40min flex">
-                <div style="width: 100%; background: #10b981; height: 48%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">12</div>
-              </div>
-              <!-- Week 13 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 13: 38mi + 60min strength + 45min flex">
-                <div style="width: 100%; background: #10b981; height: 61%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">13</div>
-              </div>
-              <!-- Week 14 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 14: 38mi + 60min strength + 45min flex">
-                <div style="width: 100%; background: #10b981; height: 61%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">14</div>
-              </div>
-              <!-- Week 15 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 15: 43mi + 60min strength + 45min flex">
-                <div style="width: 100%; background: #10b981; height: 70%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">15</div>
-              </div>
-              <!-- Week 16 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 16: 43mi + 60min strength + 45min flex">
-                <div style="width: 100%; background: #10b981; height: 70%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 30%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 22%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">16</div>
-              </div>
-              <!-- Week 17 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 17: 41mi + 45min strength + 40min flex">
-                <div style="width: 100%; background: #10b981; height: 66%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 22%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">17</div>
-              </div>
-              <!-- Week 18 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 18: 41mi + 45min strength + 40min flex">
-                <div style="width: 100%; background: #10b981; height: 66%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 22%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 20%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">18</div>
-              </div>
-              <!-- Week 19 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 19: 31mi + 30min strength + 35min flex">
-                <div style="width: 100%; background: #10b981; height: 50%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">19</div>
-              </div>
-              <!-- Week 20 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 20: 31mi + 30min strength + 35min flex">
-                <div style="width: 100%; background: #10b981; height: 50%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 15%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 17%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">20</div>
-              </div>
-              <!-- Week 21 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 21: 25mi + 20min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 40%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 10%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">21</div>
-              </div>
-              <!-- Week 22 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 22: 25mi + 20min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 40%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 10%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">22</div>
-              </div>
-              <!-- Week 23 -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 23: 19mi + 15min strength + 30min flex">
-                <div style="width: 100%; background: #10b981; height: 30%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 7%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 15%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">23</div>
-              </div>
-              <!-- Week 24 (Race) -->
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;" title="Week 24: RACE DAY + light training">
-                <div style="width: 100%; background: #ef4444; height: 20%; border-radius: 2px 2px 0 0;"></div>
-                <div style="width: 100%; background: #3b82f6; height: 0%; border-radius: 0;"></div>
-                <div style="width: 100%; background: #a855f7; height: 10%; border-radius: 0 0 0 0;"></div>
-                <div style="font-size: 0.6rem; margin-top: 4px; color: var(--text-secondary); font-weight: 600;">24</div>
-              </div>
-            </div>
+              <!-- Interactive Training Progression -->
+              <div class="progression-section" id="progression-section">
+                <div class="progression-header">
+                  <div>
+                    <div class="progression-eyebrow">Interactive</div>
+                    <h2 class="progression-title">24-Week Training Progression</h2>
+                    <p class="progression-subtitle">See how mileage, strength (min), and flexibility/yoga (min) flow from base building through peak and taper. Hover or click any week to see all three metrics.</p>
+                  </div>
+                  <div class="progression-actions">
+                    <button class="progression-button" id="progression-play">▶ Play flow</button>
+                  </div>
+                </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
-                <div style="width: 16px; height: 16px; background: #10b981; border-radius: 3px;"></div>
-                <span>Running Miles</span>
+                <div class="progression-chart-wrapper">
+                  <svg id="progression-chart" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet" aria-labelledby="progression-title">
+                    <title id="progression-title">24-week training progression</title>
+                    <defs>
+                      <linearGradient id="progression-fill" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35" />
+                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <g id="progression-phase-bands"></g>
+                    <g id="progression-grid"></g>
+                    <g id="progression-mini"></g>
+                    <path id="progression-area" fill="url(#progression-fill)" stroke="none"></path>
+                    <path id="progression-curve" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="progression-markers"></g>
+                  </svg>
+                  <div class="progression-tooltip" id="progression-tooltip" style="display: none;"></div>
+                </div>
+
+                <div class="progression-legend">
+                  <span><span class="progression-dot" style="background: #10b981;"></span>Base building</span>
+                  <span><span class="progression-dot" style="background: #3b82f6;"></span>Build</span>
+                  <span><span class="progression-dot" style="background: #f59e0b;"></span>Peak</span>
+                  <span><span class="progression-dot" style="background: #8b5cf6;"></span>Taper</span>
+                  <span><span class="progression-dot" style="background: #3b82f6;"></span>Running miles (curve)</span>
+                  <span><span class="progression-dot" style="background: #2563eb;"></span>Strength (min, mini-bars)</span>
+                  <span><span class="progression-dot" style="background: #a855f7;"></span>Flexibility (min, mini-bars)</span>
+                </div>
+
+                <div class="progression-info" id="progression-info">
+                  <h4 id="progression-week-title">Week 1</h4>
+                  <p id="progression-week-copy">Starting with easy runs and bodyweight strength to build consistency.</p>
+                </div>
               </div>
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
-                <div style="width: 16px; height: 16px; background: #3b82f6; border-radius: 3px;"></div>
-                <span>Strength (min)</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
-                <div style="width: 16px; height: 16px; background: #a855f7; border-radius: 3px;"></div>
-                <span>Flexibility (min)</span>
-              </div>
-            </div>
-          </div>
 
           <!-- PHASE 1: WEEKS 1-6 -->
           <div style="margin: 30px 0; padding: 20px; background: var(--card-secondary); border-left: 4px solid #10b981; border-radius: 10px;">
@@ -2793,6 +2795,278 @@
           top: 0,
           behavior: 'smooth'
         });
+      });
+
+      // Interactive training progression diagram
+      const progressionSeries = [
+        { week: 1, miles: 15, strength: 30, flex: 30, phase: 'Base' },
+        { week: 2, miles: 15, strength: 30, flex: 30, phase: 'Base' },
+        { week: 3, miles: 17, strength: 40, flex: 30, phase: 'Base' },
+        { week: 4, miles: 17, strength: 40, flex: 30, phase: 'Base' },
+        { week: 5, miles: 20, strength: 50, flex: 30, phase: 'Base' },
+        { week: 6, miles: 20, strength: 50, flex: 30, phase: 'Base' },
+        { week: 7, miles: 23, strength: 60, flex: 35, phase: 'Build' },
+        { week: 8, miles: 23, strength: 60, flex: 35, phase: 'Build' },
+        { week: 9, miles: 26, strength: 60, flex: 35, phase: 'Build' },
+        { week: 10, miles: 26, strength: 60, flex: 35, phase: 'Build' },
+        { week: 11, miles: 30, strength: 60, flex: 40, phase: 'Build' },
+        { week: 12, miles: 30, strength: 60, flex: 40, phase: 'Build' },
+        { week: 13, miles: 38, strength: 60, flex: 45, phase: 'Peak' },
+        { week: 14, miles: 38, strength: 60, flex: 45, phase: 'Peak' },
+        { week: 15, miles: 43, strength: 60, flex: 45, phase: 'Peak' },
+        { week: 16, miles: 43, strength: 60, flex: 45, phase: 'Peak' },
+        { week: 17, miles: 41, strength: 45, flex: 40, phase: 'Peak' },
+        { week: 18, miles: 41, strength: 45, flex: 40, phase: 'Peak' },
+        { week: 19, miles: 31, strength: 30, flex: 35, phase: 'Taper' },
+        { week: 20, miles: 31, strength: 30, flex: 35, phase: 'Taper' },
+        { week: 21, miles: 25, strength: 20, flex: 30, phase: 'Taper' },
+        { week: 22, miles: 25, strength: 20, flex: 30, phase: 'Taper' },
+        { week: 23, miles: 19, strength: 15, flex: 30, phase: 'Taper' },
+        { week: 24, miles: 26.2, strength: 0, flex: 20, phase: 'Race' }
+      ];
+
+      const progressionPhases = [
+        { label: 'Base', start: 1, end: 6, color: '#10b981' },
+        { label: 'Build', start: 7, end: 12, color: '#3b82f6' },
+        { label: 'Peak', start: 13, end: 18, color: '#f59e0b' },
+        { label: 'Taper', start: 19, end: 23, color: '#8b5cf6' },
+        { label: 'Race', start: 24, end: 24, color: '#ef4444' }
+      ];
+
+      function getCopy(data) {
+        const phaseCopy = {
+          Base: 'Building consistency and durability.',
+          Build: 'Adding load and controlled intensity.',
+          Peak: 'Longest efforts and specificity.',
+          Taper: 'Freshening up while keeping sharp.',
+          Race: 'Race week — sharpen, rest, execute.'
+        };
+        const strengthText = data.strength > 0 ? `${data.strength} min strength` : '0 min strength';
+        const flexText = `${data.flex} min flex`; // matches chart labels
+        return `${data.miles} mi + ${strengthText} + ${flexText}. ${phaseCopy[data.phase] || ''}`;
+      }
+
+      function showProgressionInfo(data) {
+        const info = document.getElementById('progression-info');
+        if (!info) return;
+        const title = document.getElementById('progression-week-title');
+        const copy = document.getElementById('progression-week-copy');
+        info.style.display = 'block';
+        title.textContent = `Week ${data.week}: ${data.phase}`;
+        copy.textContent = getCopy(data);
+      }
+
+      function buildProgressionChart() {
+        const svg = document.getElementById('progression-chart');
+        if (!svg) return;
+
+        const area = svg.querySelector('#progression-area');
+        const curve = svg.querySelector('#progression-curve');
+        const markers = svg.querySelector('#progression-markers');
+        const grid = svg.querySelector('#progression-grid');
+        const bands = svg.querySelector('#progression-phase-bands');
+        const mini = svg.querySelector('#progression-mini');
+        const tooltip = document.getElementById('progression-tooltip');
+        const wrapper = svg.parentElement;
+
+        const dims = { width: 1000, height: 380, margin: { top: 28, right: 24, bottom: 46, left: 70 } };
+        const plotWidth = dims.width - dims.margin.left - dims.margin.right;
+        const plotHeight = dims.height - dims.margin.top - dims.margin.bottom;
+        const maxVolume = Math.max(...progressionSeries.map(d => d.miles), 50);
+        const baseY = dims.margin.top + plotHeight;
+
+        const maxStrength = Math.max(...progressionSeries.map(d => d.strength), 1);
+        const maxFlex = Math.max(...progressionSeries.map(d => d.flex), 1);
+        const miniHeight = 50;
+        const barWidth = (plotWidth / 24) * 0.6;
+
+        const toX = (week) => dims.margin.left + ((week - 1) / 23) * plotWidth;
+        const toY = (volume) => dims.margin.top + ((maxVolume - volume) / maxVolume) * plotHeight;
+
+        grid.innerHTML = '';
+        [0, 20, 40, 60, 80].forEach((v) => {
+          const y = toY(v);
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', dims.margin.left);
+          line.setAttribute('x2', dims.width - dims.margin.right);
+          line.setAttribute('y1', y);
+          line.setAttribute('y2', y);
+          line.setAttribute('stroke', 'var(--text-secondary)');
+          line.setAttribute('stroke-width', '1');
+          line.setAttribute('opacity', '0.15');
+          grid.appendChild(line);
+
+          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          label.setAttribute('x', dims.margin.left - 12);
+          label.setAttribute('y', y + 4);
+          label.setAttribute('text-anchor', 'end');
+          label.setAttribute('font-size', '11');
+          label.setAttribute('fill', 'var(--text-secondary)');
+          label.textContent = `${v} mi/wk`;
+          grid.appendChild(label);
+        });
+
+        [1, 5, 9, 13, 17, 21].forEach((wk) => {
+          const x = toX(wk);
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x);
+          line.setAttribute('x2', x);
+          line.setAttribute('y1', dims.margin.top);
+          line.setAttribute('y2', dims.height - dims.margin.bottom);
+          line.setAttribute('stroke', 'var(--text-secondary)');
+          line.setAttribute('stroke-width', '1');
+          line.setAttribute('opacity', '0.12');
+          line.setAttribute('stroke-dasharray', '4 4');
+          grid.appendChild(line);
+
+          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          label.setAttribute('x', x);
+          label.setAttribute('y', dims.height - dims.margin.bottom + 18);
+          label.setAttribute('text-anchor', 'middle');
+          label.setAttribute('font-size', '11');
+          label.setAttribute('fill', 'var(--text-secondary)');
+          label.textContent = `W${wk}`;
+          grid.appendChild(label);
+        });
+
+        bands.innerHTML = '';
+        progressionPhases.forEach((phase) => {
+          const x1 = toX(phase.start);
+          const x2 = toX(phase.end);
+          const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          rect.setAttribute('x', x1);
+          rect.setAttribute('y', dims.margin.top);
+          rect.setAttribute('width', x2 - x1);
+          rect.setAttribute('height', plotHeight);
+          rect.setAttribute('fill', phase.color);
+          rect.setAttribute('opacity', '0.08');
+          bands.appendChild(rect);
+
+          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          label.setAttribute('x', x1 + (x2 - x1) / 2);
+          label.setAttribute('y', dims.margin.top + 16);
+          label.setAttribute('text-anchor', 'middle');
+          label.setAttribute('font-size', '11');
+          label.setAttribute('fill', phase.color);
+          label.setAttribute('font-weight', '700');
+          label.textContent = phase.label;
+          bands.appendChild(label);
+        });
+
+        const points = progressionSeries.map((entry) => ({ x: toX(entry.week), y: toY(entry.miles) }));
+
+        if (points.length) {
+          const curvePath = points
+            .map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`)
+            .join(' ');
+          curve.setAttribute('d', curvePath);
+
+          const areaPath = `M ${points[0].x.toFixed(1)} ${baseY} ` +
+            points.map((p) => `L ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ') +
+            ` L ${points[points.length - 1].x.toFixed(1)} ${baseY} Z`;
+          area.setAttribute('d', areaPath);
+
+          const length = curve.getTotalLength();
+          curve.style.strokeDasharray = length;
+          curve.style.strokeDashoffset = length;
+          curve.animate([
+            { strokeDashoffset: length },
+            { strokeDashoffset: 0 }
+          ], { duration: 1600, easing: 'ease-out' });
+        }
+
+        mini.innerHTML = '';
+        progressionSeries.forEach((data) => {
+          const x = toX(data.week);
+          const barBase = baseY - 6;
+          const flexH = (data.flex / maxFlex) * miniHeight;
+          const strengthH = (data.strength / maxStrength) * miniHeight;
+          const barX = x - barWidth / 2;
+
+          const flexRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          flexRect.setAttribute('x', barX.toFixed(1));
+          flexRect.setAttribute('y', (barBase - flexH).toFixed(1));
+          flexRect.setAttribute('width', barWidth.toFixed(1));
+          flexRect.setAttribute('height', flexH.toFixed(1));
+          flexRect.setAttribute('fill', '#a855f7');
+          flexRect.setAttribute('opacity', '0.55');
+          mini.appendChild(flexRect);
+
+          const strengthRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          strengthRect.setAttribute('x', barX.toFixed(1));
+          strengthRect.setAttribute('y', (barBase - flexH - strengthH).toFixed(1));
+          strengthRect.setAttribute('width', barWidth.toFixed(1));
+          strengthRect.setAttribute('height', strengthH.toFixed(1));
+          strengthRect.setAttribute('fill', '#2563eb');
+          strengthRect.setAttribute('opacity', '0.65');
+          mini.appendChild(strengthRect);
+        });
+
+        markers.innerHTML = '';
+        progressionSeries.forEach((data) => {
+          const x = toX(data.week);
+          const y = toY(data.miles);
+
+          const markerGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          markerGroup.style.cursor = 'pointer';
+
+          const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          outer.setAttribute('cx', x);
+          outer.setAttribute('cy', y);
+          outer.setAttribute('r', '10');
+          outer.setAttribute('fill', 'white');
+          outer.setAttribute('stroke', '#3b82f6');
+          outer.setAttribute('stroke-width', '2');
+          outer.setAttribute('opacity', '0.7');
+          markerGroup.appendChild(outer);
+
+          const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          inner.setAttribute('cx', x);
+          inner.setAttribute('cy', y);
+          inner.setAttribute('r', '5');
+          inner.setAttribute('fill', '#3b82f6');
+          markerGroup.appendChild(inner);
+
+          const showTip = (evt) => {
+            if (!tooltip) return;
+            outer.setAttribute('opacity', '1');
+            showProgressionInfo(data);
+            const rect = wrapper.getBoundingClientRect();
+            const offsetX = evt.clientX - rect.left;
+            const offsetY = evt.clientY - rect.top;
+            tooltip.style.left = `${offsetX + 16}px`;
+            tooltip.style.top = `${offsetY - 10}px`;
+            tooltip.innerHTML = `
+              <h5>Week ${data.week} — ${data.phase}</h5>
+              <div class="metric-row"><span class="dot" style="background:#3b82f6"></span><strong>${data.miles}</strong> mi/wk</div>
+              <div class="metric-row"><span class="dot" style="background:#2563eb"></span><strong>${data.strength}</strong> min strength</div>
+              <div class="metric-row"><span class="dot" style="background:#a855f7"></span><strong>${data.flex}</strong> min flexibility</div>
+            `;
+            tooltip.style.display = 'block';
+          };
+
+          markerGroup.addEventListener('click', () => showProgressionInfo(data));
+          markerGroup.addEventListener('mousemove', showTip);
+          markerGroup.addEventListener('mouseover', showTip);
+          markerGroup.addEventListener('mouseout', () => {
+            outer.setAttribute('opacity', '0.7');
+            if (tooltip) tooltip.style.display = 'none';
+          });
+
+          markers.appendChild(markerGroup);
+        });
+
+        showProgressionInfo(progressionSeries[0]);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        buildProgressionChart();
+        const playBtn = document.getElementById('progression-play');
+        if (playBtn) {
+          playBtn.addEventListener('click', () => {
+            buildProgressionChart();
+          });
+        }
       });
 
       // Export functions for fitness plans
