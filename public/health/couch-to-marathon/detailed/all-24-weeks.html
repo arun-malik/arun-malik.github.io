@@ -209,6 +209,97 @@
         color: white;
       }
 
+      .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 24px;
+        margin-top: 20px;
+      }
+
+      .main-content {
+        min-width: 0;
+      }
+
+      .exercise-demo-sidebar {
+        position: sticky;
+        top: 80px;
+        height: fit-content;
+        max-height: calc(100vh - 100px);
+        background: var(--card-secondary);
+        border-radius: 12px;
+        padding: 20px;
+        border: 2px solid var(--primary-blue);
+        overflow-y: auto;
+      }
+
+      .demo-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .demo-placeholder {
+        text-align: center;
+        color: var(--text-secondary);
+        padding: 40px 20px;
+        font-size: 0.9rem;
+      }
+
+      .demo-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 12px;
+      }
+
+      .demo-description {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+
+      .demo-steps {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .demo-steps li {
+        margin-bottom: 6px;
+      }
+
+      .exercise-item {
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .exercise-item:hover {
+        color: var(--primary-blue);
+        text-decoration: underline;
+      }
+
+      .exercise-item.active {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      @media (max-width: 1200px) {
+        .content-wrapper {
+          grid-template-columns: 1fr;
+        }
+        
+        .exercise-demo-sidebar {
+          position: relative;
+          top: 0;
+          max-height: none;
+        }
+      }
+
       .back-to-top {
         position: fixed;
         bottom: 30px;
@@ -484,6 +575,10 @@
             </div>
           </div>
 
+          <!-- Two Column Layout -->
+          <div class="content-wrapper">
+            <div class="main-content">
+              
           <!-- Training Load Chart -->
           <div class="chart-section">
             <div class="chart-title">📊 Training Load Breakdown (All 3 Metrics)</div>
@@ -2657,6 +2752,21 @@
             </ul>
           </div>
 
+          </div><!-- End main-content -->
+
+          <!-- Exercise Demo Sidebar -->
+          <div class="exercise-demo-sidebar">
+            <div class="demo-title">💪 Exercise Demonstration</div>
+            <div id="demo-content" class="demo-placeholder">
+              Click on any exercise name to see a demonstration and instructions here.
+            </div>
+          </div>
+
+          </div><!-- End content-wrapper -->
+              <li class="exercise-item"><strong>Flexibility focus:</strong> Spend more time on tight muscles (usually glutes, hip flexors, hamstrings)</li>
+            </ul>
+          </div>
+
         </article>
       </main>
     </div>
@@ -2848,6 +2958,364 @@
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
       }
+
+      // Exercise demo functionality
+      const exerciseDatabase = {
+        'Goblet Squats': {
+          video: 'MeIiIdhvXT4',
+          description: 'A squat variation holding a dumbbell or kettlebell at chest level.',
+          steps: [
+            'Hold weight at chest with both hands',
+            'Feet shoulder-width apart, toes slightly out',
+            'Squat down keeping chest up and weight at chest',
+            'Drive through heels to stand',
+            'Keep core engaged throughout'
+          ]
+        },
+        'Romanian Deadlifts': {
+          video: 'XowKMitOVNc',
+          description: 'A hip hinge movement targeting hamstrings and glutes.',
+          steps: [
+            'Hold weights in front of thighs',
+            'Slight bend in knees, hinge at hips',
+            'Lower weights along legs keeping back straight',
+            'Feel stretch in hamstrings',
+            'Drive hips forward to return to start'
+          ]
+        },
+        'Walking Lunges': {
+          video: 'L8fvypPrzzs',
+          description: 'Dynamic leg exercise working quads, glutes, and balance.',
+          steps: [
+            'Step forward with one leg',
+            'Lower hips until both knees at 90 degrees',
+            'Keep front knee over ankle',
+            'Push through front heel to step forward',
+            'Alternate legs'
+          ]
+        },
+        'Glute bridges': {
+          video: 'WEvLyLsV0xs',
+          description: 'Targets glutes and lower back from lying position.',
+          steps: [
+            'Lie on back, knees bent, feet flat',
+            'Arms at sides, palms down',
+            'Lift hips by squeezing glutes',
+            'Form straight line from shoulders to knees',
+            'Lower slowly and repeat'
+          ]
+        },
+        'Push-ups': {
+          video: 'IODxDxX7oi4',
+          description: 'Classic upper body exercise for chest, shoulders, and triceps.',
+          steps: [
+            'Start in plank position, hands shoulder-width',
+            'Keep body straight from head to heels',
+            'Lower chest to ground, elbows at 45 degrees',
+            'Push back up to starting position',
+            'Maintain core engagement'
+          ]
+        },
+        'Plank': {
+          video: 'pvz7k5gO-DE',
+          description: 'Core stability exercise holding a static position.',
+          steps: [
+            'Start on forearms and toes',
+            'Body in straight line from head to heels',
+            'Pull belly button to spine',
+            'Keep hips level, do not sag or pike',
+            'Breathe steadily throughout hold'
+          ]
+        },
+        'Squats': {
+          video: 'aclHkVaku9U',
+          description: 'Fundamental lower body exercise.',
+          steps: [
+            'Feet shoulder-width apart',
+            'Lower hips back and down',
+            'Keep chest up, knees track over toes',
+            'Thighs parallel to ground',
+            'Drive through heels to stand'
+          ]
+        },
+        'Dumbbell Rows': {
+          video: 'roCP6wCXPqo',
+          description: 'Back exercise pulling weight to torso.',
+          steps: [
+            'Hinge at hips, slight knee bend',
+            'Hold weight in one hand',
+            'Pull weight to hip, elbow close to body',
+            'Squeeze shoulder blade',
+            'Lower with control'
+          ]
+        },
+        'Bodyweight squats': {
+          video: 'aclHkVaku9U',
+          description: 'Basic squat without added weight.',
+          steps: [
+            'Stand with feet shoulder-width apart',
+            'Lower hips back and down',
+            'Keep chest up, core engaged',
+            'Go as low as comfortable',
+            'Push through heels to stand'
+          ]
+        },
+        'Arm circles': {
+          video: 'lzR7tzI1JUI',
+          description: 'Dynamic shoulder warm-up movement.',
+          steps: [
+            'Stand with arms extended to sides',
+            'Make small circles forward',
+            'Gradually increase circle size',
+            'Reverse direction',
+            'Keep core engaged'
+          ]
+        },
+        'Leg swings': {
+          video: 'G2WyCoVwv8Y',
+          description: 'Dynamic hip mobility warm-up.',
+          steps: [
+            'Hold wall or support for balance',
+            'Swing one leg forward and back',
+            'Keep leg straight, controlled motion',
+            'Increase range gradually',
+            'Switch legs'
+          ]
+        },
+        'Quad stretch': {
+          video: 'ZKMYmIqnzrU',
+          description: 'Static stretch targeting the quadriceps muscles.',
+          steps: [
+            'Stand on one leg, hold support if needed',
+            'Bend other knee, grab ankle behind you',
+            'Pull heel toward glutes',
+            'Keep knees together, chest up',
+            'Hold for 30 seconds each side'
+          ]
+        },
+        'Hamstring stretch': {
+          video: 'YIJndOqIcLU',
+          description: 'Seated or standing stretch for hamstring flexibility.',
+          steps: [
+            'Sit with one leg extended, other bent',
+            'Reach toward toes of extended leg',
+            'Keep back straight, hinge at hips',
+            'Feel stretch in back of thigh',
+            'Hold 30 seconds each side'
+          ]
+        },
+        'Calf stretch': {
+          video: 'tUA4MO1kXV8',
+          description: 'Wall stretch targeting calf muscles.',
+          steps: [
+            'Face wall, hands on wall at shoulder height',
+            'Step one foot back, keep heel down',
+            'Front knee bent, back leg straight',
+            'Lean into wall to feel calf stretch',
+            'Hold 30 seconds each side'
+          ]
+        },
+        'Pigeon Pose': {
+          video: 'BBLFDbGvhg8',
+          description: 'Deep hip opener yoga pose targeting glutes and hips.',
+          steps: [
+            'From tabletop, bring one knee forward',
+            'Slide back leg straight behind you',
+            'Square hips forward',
+            'Fold forward over front leg',
+            'Hold 2-3 minutes each side'
+          ]
+        },
+        'Butterfly Pose': {
+          video: 'Vcr3fC4zF18',
+          description: 'Seated pose opening inner thighs and hips for flexibility.',
+          steps: [
+            'Sit with soles of feet together',
+            'Bring heels close to body',
+            'Hold feet with hands',
+            'Gently press knees toward ground',
+            'Fold forward for deeper stretch'
+          ]
+        },
+        'Low Lunge': {
+          video: 'kBJR22eaBuY',
+          description: 'Hip flexor release and quadriceps stretch in lunge position.',
+          steps: [
+            'Step one foot forward into lunge',
+            'Lower back knee to ground',
+            'Sink hips forward and down',
+            'Lift chest, arms overhead optional',
+            'Hold 2-3 minutes each side'
+          ]
+        },
+        'Supine Figure Four': {
+          video: 'NURGHgR7PDw',
+          description: 'Lying hip and glute stretch for deep relaxation.',
+          steps: [
+            'Lie on back, both knees bent',
+            'Cross one ankle over opposite knee',
+            'Thread hands through, clasp behind thigh',
+            'Pull knee toward chest',
+            'Hold 2-3 minutes each side'
+          ]
+        },
+        'Savasana': {
+          video: 'SN4UHEfQJyk',
+          description: 'Corpse pose for complete relaxation and recovery.',
+          steps: [
+            'Lie flat on back, legs slightly apart',
+            'Arms by sides, palms up',
+            'Close eyes, relax entire body',
+            'Focus on breath',
+            'Rest 5-10 minutes'
+          ]
+        },
+        'Dumbbell Chest Press': {
+          video: 'mTaiQemkEpU',
+          description: 'Upper body press for chest, shoulders, triceps.',
+          steps: [
+            'Lie on bench, dumbbells at chest level',
+            'Feet flat on ground',
+            'Press weights up until arms extended',
+            'Lower with control to chest',
+            'Keep core engaged throughout'
+          ]
+        },
+        'Hip circles': {
+          video: 'mSZWSZPSMeQ',
+          description: 'Dynamic hip mobility exercise for warm-up.',
+          steps: [
+            'Stand with hands on hips',
+            'Circle hips in one direction',
+            'Make large, controlled circles',
+            'Reverse direction',
+            'Do 10 circles each way'
+          ]
+        },
+        'Bulgarian Split Squats': {
+          video: 'xhFLdXfvh1U',
+          description: 'Single-leg squat with rear foot elevated on bench.',
+          steps: [
+            'Place back foot on bench behind you',
+            'Front foot 2-3 feet forward',
+            'Lower down until front thigh parallel',
+            'Keep front knee over ankle',
+            'Drive through front heel to stand'
+          ]
+        },
+        'Single-Leg Glute Bridges': {
+          video: 'TaKnJDkR1oM',
+          description: 'Advanced glute bridge targeting one leg at a time.',
+          steps: [
+            'Lie on back, one knee bent, foot flat',
+            'Extend other leg straight up',
+            'Drive through planted foot to lift hips',
+            'Form straight line from knee to shoulder',
+            'Lower with control, repeat'
+          ]
+        },
+        'Cat-Cow Stretches': {
+          video: 'IQhEzaVwP-c',
+          description: 'Spinal mobility flow between two poses for flexibility.',
+          steps: [
+            'Start on hands and knees',
+            'Inhale: arch back, lift head (cow)',
+            'Exhale: round spine, tuck chin (cat)',
+            'Flow smoothly between positions',
+            'Repeat for 1-2 minutes'
+          ]
+        },
+        'Lizard Pose': {
+          video: 'Y6pXAR6sL5k',
+          description: 'Deep hip opener with front foot wide and hips low.',
+          steps: [
+            'From lunge, step front foot to outside of hand',
+            'Lower to forearms if flexible',
+            'Keep back leg straight',
+            'Sink hips down and forward',
+            'Hold 2 minutes each side'
+          ]
+        },
+        'Hip Circles & Mobility': {
+          video: 'gqvNvZ-Ow2I',
+          description: 'Dynamic hip mobility movements and warm-ups.',
+          steps: [
+            'Stand with hands on hips',
+            'Make large hip circles',
+            'Add leg swings in all directions',
+            'Include hip flexor activation',
+            'Move dynamically for 2 minutes'
+          ]
+        }
+      };
+
+      function showExerciseDemo(exerciseName) {
+        const demoContent = document.getElementById('demo-content');
+        
+        // Remove active class from all exercises
+        document.querySelectorAll('.exercise-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // Clean exercise name (remove numbers, sets/reps info)
+        const cleanName = exerciseName.replace(/:/g, '').split('×')[0].split('(')[0].trim();
+        
+        // Find matching exercise in database (case-insensitive)
+        let exercise = null;
+        const lowerCleanName = cleanName.toLowerCase();
+        for (const key in exerciseDatabase) {
+          const lowerKey = key.toLowerCase();
+          if (lowerCleanName.includes(lowerKey) || lowerKey.includes(lowerCleanName)) {
+            exercise = exerciseDatabase[key];
+            break;
+          }
+        }
+        
+        if (exercise) {
+          demoContent.innerHTML = `
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 12px;">
+              <iframe 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                src="https://www.youtube.com/embed/${exercise.video}?rel=0&modestbranding=1"
+                title="${cleanName} Tutorial"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <h3 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--text-primary);">${cleanName}</h3>
+            <div class="demo-description">${exercise.description}</div>
+            <div style="font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">How to perform:</div>
+            <ol class="demo-steps">
+              ${exercise.steps.map(step => `<li>${step}</li>`).join('')}
+            </ol>
+          `;
+        } else {
+          demoContent.innerHTML = `
+            <div style="text-align: center;">
+              <div style="font-size: 3rem; margin-bottom: 12px;">💪</div>
+              <h3 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--text-primary);">${cleanName}</h3>
+              <div class="demo-description">Exercise demonstration coming soon! Search online for proper form guidance.</div>
+            </div>
+          `;
+        }
+      }
+
+      // Make all exercise items clickable
+      document.addEventListener('DOMContentLoaded', function() {
+        const exerciseItems = document.querySelectorAll('.exercise-item');
+        exerciseItems.forEach(item => {
+          item.addEventListener('click', function() {
+            const exerciseName = this.textContent;
+            showExerciseDemo(exerciseName);
+            this.classList.add('active');
+            
+            // Scroll sidebar into view on mobile
+            if (window.innerWidth <= 1200) {
+              document.querySelector('.exercise-demo-sidebar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
