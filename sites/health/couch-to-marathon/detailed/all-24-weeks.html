@@ -377,6 +377,11 @@
         padding: 20px;
         border: 2px solid var(--primary-blue);
         overflow-y: auto;
+        display: none;
+      }
+
+      .exercise-demo-sidebar.visible {
+        display: block;
       }
 
       .demo-title {
@@ -522,6 +527,27 @@
         display: flex;
         align-items: center;
         gap: 6px;
+        cursor: pointer;
+        user-select: none;
+        padding: 8px 0;
+      }
+
+      .download-title::before {
+        content: '▼';
+        display: inline-block;
+        transition: transform 0.3s ease;
+        font-size: 0.75em;
+        margin-right: 4px;
+      }
+
+      .download-title.collapsed::before {
+        transform: rotate(-90deg);
+      }
+
+      .download-section.collapsed .download-subtitle,
+      .download-section.collapsed .download-grid,
+      .download-section.collapsed .download-note {
+        display: none;
       }
 
       .download-subtitle {
@@ -706,7 +732,7 @@
           </div>
 
           <!-- Download & Export Section -->
-          <div class="download-section">
+          <div class="download-section collapsed">
             <div class="download-title">📥 Download & Export Your Plan</div>
             <div class="download-subtitle">Get your 24-week marathon plan in multiple formats for easy tracking and import into your favorite fitness apps</div>
             
@@ -3576,6 +3602,7 @@
 
       // Make all exercise items clickable
       document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.exercise-demo-sidebar');
         const exerciseItems = document.querySelectorAll('.exercise-item');
         exerciseItems.forEach(item => {
           item.addEventListener('click', function() {
@@ -3583,11 +3610,22 @@
             showExerciseDemo(exerciseName);
             this.classList.add('active');
             
+            // Show sidebar on click
+            sidebar.classList.add('visible');
+            
             // Scroll sidebar into view on mobile
             if (window.innerWidth <= 1200) {
-              document.querySelector('.exercise-demo-sidebar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              sidebar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
           });
+        });
+
+        // Toggle download section collapse
+        const downloadTitle = document.querySelector('.download-title');
+        const downloadSection = document.querySelector('.download-section');
+        downloadTitle.addEventListener('click', function() {
+          downloadSection.classList.toggle('collapsed');
+          downloadTitle.classList.toggle('collapsed');
         });
       });
     </script>
