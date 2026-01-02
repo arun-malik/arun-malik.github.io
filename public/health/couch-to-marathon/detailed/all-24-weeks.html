@@ -211,9 +211,13 @@
 
       .content-wrapper {
         display: grid;
-        grid-template-columns: 1fr 400px;
+        grid-template-columns: 1fr;
         gap: 24px;
         margin-top: 20px;
+      }
+
+      .content-wrapper.with-sidebar {
+        grid-template-columns: 1fr 400px;
       }
 
       .progression-section {
@@ -3603,6 +3607,7 @@
       // Make all exercise items clickable
       document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.querySelector('.exercise-demo-sidebar');
+        const contentWrapper = document.querySelector('.content-wrapper');
         const exerciseItems = document.querySelectorAll('.exercise-item');
         exerciseItems.forEach(item => {
           item.addEventListener('click', function() {
@@ -3610,8 +3615,9 @@
             showExerciseDemo(exerciseName);
             this.classList.add('active');
             
-            // Show sidebar on click
+            // Show sidebar on click and enable grid column
             sidebar.classList.add('visible');
+            contentWrapper.classList.add('with-sidebar');
             
             // Scroll sidebar into view on mobile
             if (window.innerWidth <= 1200) {
