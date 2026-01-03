@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog Posts · Tech Deep Dives · Observation Odyssey</title>
+    <meta name="description" content="Thoughts, insights, and technical discoveries." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+    <style>
+      .coming-soon-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin: 24px 0;
+      }
+
+      .coming-soon-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+        opacity: 0.7;
+      }
+
+      .coming-soon-icon {
+        font-size: 3rem;
+        margin-bottom: 12px;
+      }
+
+      .coming-soon-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+
+      .coming-soon-text {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .hero-message {
+        text-align: center;
+        padding: 40px 20px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        margin-bottom: 30px;
+      }
+
+      .hero-icon {
+        font-size: 4rem;
+        margin-bottom: 16px;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+      }
+
+      .hero-description {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <section class="ai-lesson ai-page" id="blog-posts">
+          <div class="card-icon">✍️</div>
+          <h1 class="card-title" style="margin: 0 0 8px 0; font-size: 1.6rem;">Blog Posts</h1>
+          <p class="section-text" style="margin-top: 0; color: var(--text-secondary);">
+            Thoughts, insights, and discoveries from exploring technology and learning.
+          </p>
+
+          <div class="hero-message">
+            <div class="hero-icon">📝</div>
+            <div class="hero-title">Coming Soon!</div>
+            <div class="hero-description">
+              We're working on thoughtful blog posts about technology trends, learning journeys, and insights. Stay tuned for updates!
+            </div>
+          </div>
+
+          <div class="card-section">
+            <h4 class="section-label">Topics We're Exploring</h4>
+            <div class="coming-soon-container">
+              <div class="coming-soon-card">
+                <div class="coming-soon-icon">🧠</div>
+                <div class="coming-soon-title">Learning AI</div>
+                <div class="coming-soon-text">Insights from exploring artificial intelligence</div>
+              </div>
+              <div class="coming-soon-card">
+                <div class="coming-soon-icon">🚀</div>
+                <div class="coming-soon-title">Tech Trends</div>
+                <div class="coming-soon-text">What's new and exciting in technology</div>
+              </div>
+              <div class="coming-soon-card">
+                <div class="coming-soon-icon">💭</div>
+                <div class="coming-soon-title">Problem Solving</div>
+                <div class="coming-soon-text">Approaches to tackling complex challenges</div>
+              </div>
+              <div class="coming-soon-card">
+                <div class="coming-soon-icon">🔍</div>
+                <div class="coming-soon-title">Deep Dives</div>
+                <div class="coming-soon-text">Exploring specific technical topics</div>
+              </div>
+              <div class="coming-soon-card">
+                <div class="coming-soon-icon">📚</div>
+                <div class="coming-soon-title">Learning Journey</div>
+                <div class="coming-soon-text">Reflections on the path to mastery</div>
+              </div>
+              <div class="coming-soon-card">
+                <div class="coming-soon-icon">💡</div>
+                <div class="coming-soon-title">Innovations</div>
+                <div class="coming-soon-text">Breakthrough ideas and solutions</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section">
+            <a href="../" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to Tech Deep Dives</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/scroll-nav.js"></script>
+    <script src="/_shared/theme.js"></script>
+  </body>
+</html>
