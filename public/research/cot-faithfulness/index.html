@@ -1356,41 +1356,48 @@
     <script src="/_shared/theme.js"></script>
     
     <script>
-        // Customize footer with paper citation
-        function customizeFooter() {
-            const footerContent = document.querySelector('.footer-content');
-            if (footerContent && footerContent.innerHTML.includes('Observation Odyssey')) {
-                footerContent.innerHTML = `
-                    <div style="flex: 1;">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                            📖 <strong>Source:</strong> "Reasoning Models Don't Always Say What They Think" - Anthropic Alignment Science Team (Chen et al., 2025)
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: center;">
-                        <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" style="color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
-                            📄 Read Full Paper ↗
-                        </a>
-                    </div>
-                `;
-            }
+        // Customize footer with paper citation after components load
+        async function customizeFooterWithPaperCitation() {
+            // Wait for footer to be loaded
+            return new Promise((resolve) => {
+                let attempts = 0;
+                const maxAttempts = 20;
+                
+                const checkAndUpdate = () => {
+                    const footerContent = document.querySelector('.footer-content');
+                    if (footerContent) {
+                        // Update footer content
+                        footerContent.innerHTML = `
+                            <div style="flex: 1;">
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                                    📖 <strong>Source:</strong> "Reasoning Models Don't Always Say What They Think" - Anthropic Alignment Science Team (Chen et al., 2025)
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 16px; align-items: center;">
+                                <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" style="color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                                    📄 Read Full Paper ↗
+                                </a>
+                            </div>
+                        `;
+                        resolve();
+                    } else if (attempts < maxAttempts) {
+                        attempts++;
+                        setTimeout(checkAndUpdate, 200);
+                    } else {
+                        resolve();
+                    }
+                };
+                
+                checkAndUpdate();
+            });
         }
 
-        // Use MutationObserver to detect when footer is loaded
-        const observer = new MutationObserver(function(mutations) {
-            customizeFooter();
-        });
-
-        const config = { childList: true, subtree: true };
-        document.addEventListener('DOMContentLoaded', function() {
-            const footerWrapper = document.getElementById('footer-placeholder');
-            if (footerWrapper) {
-                observer.observe(footerWrapper, config);
-            }
-            // Try immediately
-            setTimeout(customizeFooter, 100);
-            setTimeout(customizeFooter, 500);
-            setTimeout(customizeFooter, 1000);
-        });
+        // Call when page is fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', customizeFooterWithPaperCitation);
+        } else {
+            customizeFooterWithPaperCitation();
+        }
     </script>
 </body>
 </html>
