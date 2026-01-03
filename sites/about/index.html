@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Observation Odyssey</title>
+    <meta name="description" content="Learn about Observation Odyssey - making complex topics accessible through tech deep dives and health science." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+      .about-hero {
+        text-align: center;
+        padding: 60px 40px;
+        background: linear-gradient(135deg, var(--accent-color) 0%, var(--card-bg) 100%);
+        border-radius: 12px;
+        margin-bottom: 40px;
+      }
+
+      .about-hero h1 {
+        font-size: 2.5rem;
+        margin: 20px 0;
+        color: var(--text-primary);
+      }
+
+      .about-hero p {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .mission-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        margin: 60px 0;
+      }
+
+      .mission-text h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+      }
+
+      .mission-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 300px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      .sections-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin: 40px 0;
+      }
+
+      .section-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 32px;
+        transition: all 0.3s ease;
+      }
+
+      .section-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        border-color: var(--accent-color);
+      }
+
+      .section-icon {
+        font-size: 3rem;
+        margin-bottom: 16px;
+      }
+
+      .section-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+        color: var(--text-primary);
+      }
+
+      .section-card p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .diagram-section {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 32px;
+        margin: 40px 0;
+        text-align: center;
+      }
+
+      .diagram-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+        color: var(--text-primary);
+      }
+
+      .mermaid {
+        display: flex;
+        justify-content: center;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        margin: 40px 0;
+      }
+
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 8px;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: var(--text-secondary);
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, var(--accent-color) 0%, var(--card-bg) 100%);
+        border-radius: 12px;
+        padding: 48px;
+        text-align: center;
+        margin: 60px 0;
+      }
+
+      .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+      }
+
+      .cta-section p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 12px 32px;
+        background: var(--accent-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .cta-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      @media (max-width: 768px) {
+        .mission-section {
+          grid-template-columns: 1fr;
+        }
+
+        .about-hero h1 {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <section class="ai-lesson ai-page">
+          <!-- Hero Section -->
+          <div class="about-hero">
+            <div style="font-size: 4rem;">🌌</div>
+            <h1>Observation Odyssey</h1>
+            <p>Making complex topics accessible. Explaining cutting-edge research, emerging technologies, and health science in simple, digestible ways.</p>
+          </div>
+
+          <!-- Our Mission -->
+          <div class="card-section">
+            <h2 style="font-size: 2rem; margin-bottom: 30px;">Our Mission</h2>
+            <div class="mission-section">
+              <div class="mission-text">
+                <h3>Clarity Through Complexity</h3>
+                <p>Knowledge shouldn't be locked behind jargon and dense papers. We break down complex topics—from AI research to fitness science—into explanations anyone can understand and apply.</p>
+                <p>Whether you're curious about how Chain-of-Thought faithfulness works or training for your first marathon, we're here to illuminate the path.</p>
+              </div>
+              <div class="chart-container">
+                <canvas id="missionChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- What We Cover -->
+          <div class="card-section">
+            <h2 style="font-size: 2rem; margin-bottom: 30px;">What We Cover</h2>
+            <div class="sections-grid">
+              <div class="section-card">
+                <div class="section-icon">🧠</div>
+                <h3>Tech Deep Dives</h3>
+                <p>Research papers, emerging technologies, and AI breakthroughs explained through interactive explainers, articles, and concept guides. From CoT faithfulness to distributed systems.</p>
+              </div>
+              <div class="section-card">
+                <div class="section-icon">💪</div>
+                <h3>Health & Training</h3>
+                <p>Science-backed training programs and wellness guides informed by research. Build strength, endurance, and sustainable health practices with structured, progressive programs.</p>
+              </div>
+              <div class="section-card">
+                <div class="section-icon">🔗</div>
+                <h3>Knowledge Bridge</h3>
+                <p>We connect research insights to practical application. Discover how cutting-edge research informs our training methods and wellness approach for real-world benefit.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- How We Work -->
+          <div class="diagram-section">
+            <h3>How We Deliver Knowledge</h3>
+            <div class="mermaid">
+              graph LR
+                A["📚 Complex Topic"] -->|Break Down| B["🔬 Research & Analysis"]
+                B -->|Simplify| C["✍️ Clear Explanations"]
+                C -->|Visualize| D["📊 Charts & Diagrams"]
+                D -->|Apply| E["🚀 Practical Knowledge"]
+                style A fill:#e1f5ff
+                style B fill:#f3e5f5
+                style C fill:#f1f8e9
+                style D fill:#fff3e0
+                style E fill:#ffe0b2
+            </div>
+          </div>
+
+          <!-- Our Impact -->
+          <div class="card-section">
+            <h2 style="font-size: 2rem; margin-bottom: 30px;">Our Approach</h2>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">Interactive</div>
+                <div class="stat-label">Explainers & Visualizations</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">Research-Backed</div>
+                <div class="stat-label">Evidence-Based Content</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">Accessible</div>
+                <div class="stat-label">Simple Explanations</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">Practical</div>
+                <div class="stat-label">Real-World Application</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Learning Journey -->
+          <div class="diagram-section">
+            <h3>Your Learning Journey</h3>
+            <div class="mermaid">
+              graph TD
+                A["Start: Curious About Topic"] -->|Read| B["Concept Explanation"]
+                B -->|Explore| C["Research Paper"]
+                C -->|Visualize| D["Interactive Diagram"]
+                D -->|Apply| E["Practical Implementation"]
+                E -->|Share| F["Inspire Others"]
+                style A fill:#c8e6c9
+                style B fill:#bbdefb
+                style C fill:#ffe0b2
+                style D fill:#f8bbd0
+                style E fill:#e1bee7
+                style F fill:#b3e5fc
+            </div>
+          </div>
+
+          <!-- Core Values -->
+          <div class="card-section">
+            <h2 style="font-size: 2rem; margin-bottom: 30px;">Our Core Values</h2>
+            <div class="sections-grid">
+              <div class="section-card">
+                <div class="section-icon">💎</div>
+                <h3>Clarity</h3>
+                <p>We strip away unnecessary complexity. If it can't be explained simply, we haven't understood it yet.</p>
+              </div>
+              <div class="section-card">
+                <div class="section-icon">🎯</div>
+                <h3>Accuracy</h3>
+                <p>Every explanation is grounded in research and reviewed for accuracy. We don't oversimplify at the cost of truth.</p>
+              </div>
+              <div class="section-card">
+                <div class="section-icon">🌱</div>
+                <h3>Growth</h3>
+                <p>We believe in continuous learning and sustainable progress. Small steps compound into remarkable achievements.</p>
+              </div>
+              <div class="section-card">
+                <div class="section-icon">🤝</div>
+                <h3>Community</h3>
+                <p>Learning is better together. We build a community of curious minds exploring knowledge and building better lives.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Section -->
+          <div class="cta-section">
+            <h2>Ready to Begin Your Odyssey?</h2>
+            <p>Explore research, learn from the best minds, and apply knowledge to live better.</p>
+            <a href="/" class="cta-button">Explore Topics</a>
+          </div>
+
+          <div class="card-section">
+            <a href="/" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to home</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/scroll-nav.js"></script>
+    <script src="/_shared/theme.js"></script>
+    <script>
+      // Initialize Mermaid
+      mermaid.initialize({ startOnLoad: true, theme: 'default' });
+      mermaid.contentLoaded();
+
+      // Mission Impact Chart
+      const ctx = document.getElementById('missionChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Tech Deep Dives', 'Health & Training', 'Interactive Learning'],
+            datasets: [{
+              data: [40, 35, 25],
+              backgroundColor: [
+                'rgba(63, 81, 181, 0.6)',
+                'rgba(76, 175, 80, 0.6)',
+                'rgba(255, 152, 0, 0.6)',
+              ],
+              borderColor: [
+                'rgba(63, 81, 181, 1)',
+                'rgba(76, 175, 80, 1)',
+                'rgba(255, 152, 0, 1)',
+              ],
+              borderWidth: 2,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              }
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
