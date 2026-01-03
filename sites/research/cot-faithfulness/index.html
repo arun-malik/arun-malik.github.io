@@ -1356,11 +1356,10 @@
     <script src="/_shared/theme.js"></script>
     
     <script>
-        // Customize footer with paper citation after components load
-        setTimeout(function() {
+        // Customize footer with paper citation
+        function customizeFooter() {
             const footerContent = document.querySelector('.footer-content');
-            if (footerContent) {
-                // Clear existing footer content
+            if (footerContent && footerContent.innerHTML.includes('Observation Odyssey')) {
                 footerContent.innerHTML = `
                     <div style="flex: 1;">
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">
@@ -1374,7 +1373,24 @@
                     </div>
                 `;
             }
-        }, 500);
+        }
+
+        // Use MutationObserver to detect when footer is loaded
+        const observer = new MutationObserver(function(mutations) {
+            customizeFooter();
+        });
+
+        const config = { childList: true, subtree: true };
+        document.addEventListener('DOMContentLoaded', function() {
+            const footerWrapper = document.getElementById('footer-placeholder');
+            if (footerWrapper) {
+                observer.observe(footerWrapper, config);
+            }
+            // Try immediately
+            setTimeout(customizeFooter, 100);
+            setTimeout(customizeFooter, 500);
+            setTimeout(customizeFooter, 1000);
+        });
     </script>
 </body>
 </html>
