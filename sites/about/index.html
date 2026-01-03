@@ -261,7 +261,7 @@
             <div class="mission-section">
               <div class="mission-text">
                 <h3>Clarity Through Complexity</h3>
-                <p>Knowledge shouldn't be locked behind jargon and dense papers. We break down complex topics—from AI research to fitness science—into explanations anyone can understand and apply.</p>
+                <p>Knowledge shouldn't be locked behind jargon and dense papers. We break down complex topics (from AI research to fitness science) into explanations anyone can understand and apply.</p>
                 <p>Whether you're curious about how Chain-of-Thought faithfulness works or training for your first marathon, we're here to illuminate the path.</p>
               </div>
               <div class="chart-container">
@@ -319,18 +319,7 @@
           <!-- How We Work -->
           <div class="diagram-section">
             <h3>How We Deliver Knowledge</h3>
-            <div class="mermaid">
-              graph LR
-                A["📚 Complex Topic"] -->|Break Down| B["🔬 Research & Analysis"]
-                B -->|Simplify| C["✍️ Clear Explanations"]
-                C -->|Visualize| D["📊 Charts & Diagrams"]
-                D -->|Apply| E["🚀 Practical Knowledge"]
-                style A fill:#e1f5ff
-                style B fill:#f3e5f5
-                style C fill:#f1f8e9
-                style D fill:#fff3e0
-                style E fill:#ffe0b2
-            </div>
+            <div id="knowledgeDeliveryChart" style="width: 100%; min-height: 350px;"></div>
           </div>
 
           <!-- Our Impact -->
@@ -359,20 +348,7 @@
           <!-- Learning Journey -->
           <div class="diagram-section">
             <h3>Your Learning Journey</h3>
-            <div class="mermaid">
-              graph TD
-                A["Start: Curious About Topic"] -->|Read| B["Concept Explanation"]
-                B -->|Explore| C["Research Paper"]
-                C -->|Visualize| D["Interactive Diagram"]
-                D -->|Apply| E["Practical Implementation"]
-                E -->|Share| F["Inspire Others"]
-                style A fill:#c8e6c9
-                style B fill:#bbdefb
-                style C fill:#ffe0b2
-                style D fill:#f8bbd0
-                style E fill:#e1bee7
-                style F fill:#b3e5fc
-            </div>
+            <div id="learningJourneyChart" style="width: 100%; min-height: 600px;"></div>
           </div>
 
           <!-- Core Values -->
@@ -421,10 +397,430 @@
     <script src="/_shared/components.js"></script>
     <script src="/_shared/scroll-nav.js"></script>
     <script src="/_shared/theme.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
-      // Initialize Mermaid
-      mermaid.initialize({ startOnLoad: true, theme: 'default' });
-      mermaid.contentLoaded();
+      // Knowledge Delivery Pipeline Visualization
+      function createKnowledgeDeliveryChart() {
+        const container = document.getElementById('knowledgeDeliveryChart');
+        if (!container) return;
+        
+        const width = container.offsetWidth;
+        const height = 350;
+        const padding = 80;
+        
+        const svg = d3.select('#knowledgeDeliveryChart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .attr('viewBox', `0 0 ${width} ${height}`)
+          .attr('preserveAspectRatio', 'xMidYMid meet');
+        
+        const stages = [
+          { icon: '📚', label: 'Complex Topic', action: 'Break Down', color: '#4fc3f7' },
+          { icon: '🔬', label: 'Research & Analysis', action: 'Simplify', color: '#ba68c8' },
+          { icon: '✍️', label: 'Clear Explanations', action: 'Visualize', color: '#aed581' },
+          { icon: '📊', label: 'Charts & Diagrams', action: 'Apply', color: '#ffb74d' },
+          { icon: '🚀', label: 'Practical Knowledge', action: '', color: '#ff8a65' }
+        ];
+        
+        const nodeRadius = Math.min(50, (width - padding * 2) / (stages.length * 3));
+        const spacing = (width - padding * 2) / (stages.length - 1);
+        const centerY = height / 2;
+        
+        // Create gradient definitions
+        const defs = svg.append('defs');
+        stages.forEach((stage, i) => {
+          const gradient = defs.append('radialGradient')
+            .attr('id', `knowledgeGrad${i}`);
+          gradient.append('stop')
+            .attr('offset', '0%')
+            .attr('stop-color', stage.color)
+            .attr('stop-opacity', 0.9);
+          gradient.append('stop')
+            .attr('offset', '100%')
+            .attr('stop-color', stage.color)
+            .attr('stop-opacity', 0.3);
+        });
+        
+        // Arrow marker
+        defs.append('marker')
+          .attr('id', 'arrowhead')
+          .attr('markerWidth', 10)
+          .attr('markerHeight', 10)
+          .attr('refX', 8)
+          .attr('refY', 3)
+          .attr('orient', 'auto')
+          .append('polygon')
+          .attr('points', '0 0, 10 3, 0 6')
+          .attr('fill', '#999');
+        
+        // Create arrows between stages
+        svg.selectAll('.arrow')
+          .data(stages.slice(0, -1))
+          .enter()
+          .append('line')
+          .attr('x1', (d, i) => padding + spacing * i + nodeRadius + 5)
+          .attr('y1', centerY)
+          .attr('x2', (d, i) => padding + spacing * (i + 1) - nodeRadius - 5)
+          .attr('y2', centerY)
+          .attr('stroke', '#bbb')
+          .attr('stroke-width', 2)
+          .attr('stroke-dasharray', '5,5')
+          .attr('marker-end', 'url(#arrowhead)')
+          .style('opacity', 0)
+          .transition()
+          .duration(600)
+          .delay((d, i) => i * 300 + 400)
+          .style('opacity', 0.6);
+        
+        // Create stage groups
+        const stageGroups = svg.selectAll('.stage')
+          .data(stages)
+          .enter()
+          .append('g')
+          .attr('class', 'stage')
+          .attr('transform', (d, i) => `translate(${padding + spacing * i}, ${centerY})`)
+          .style('cursor', 'pointer')
+          .style('opacity', 0);
+        
+        // Animate stages
+        stageGroups.transition()
+          .duration(500)
+          .delay((d, i) => i * 300)
+          .style('opacity', 1);
+        
+        // Circles
+        stageGroups.append('circle')
+          .attr('r', nodeRadius)
+          .attr('fill', (d, i) => `url(#knowledgeGrad${i})`)
+          .attr('stroke', d => d.color)
+          .attr('stroke-width', 2)
+          .style('filter', 'drop-shadow(0 3px 6px rgba(0,0,0,0.2))')
+          .on('mouseenter', function() {
+            d3.select(this)
+              .transition()
+              .duration(200)
+              .attr('r', nodeRadius * 1.15)
+              .style('filter', 'drop-shadow(0 6px 12px rgba(0,0,0,0.3))');
+          })
+          .on('mouseleave', function() {
+            d3.select(this)
+              .transition()
+              .duration(200)
+              .attr('r', nodeRadius)
+              .style('filter', 'drop-shadow(0 3px 6px rgba(0,0,0,0.2))');
+          });
+        
+        // Icons
+        stageGroups.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .attr('font-size', `${nodeRadius * 0.8}px`)
+          .text(d => d.icon);
+        
+        // Labels below
+        stageGroups.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('y', nodeRadius + 20)
+          .attr('font-size', '13px')
+          .attr('font-weight', '600')
+          .attr('fill', 'var(--text-primary)')
+          .each(function(d) {
+            const words = d.label.split(' ');
+            const text = d3.select(this);
+            
+            if (words.length > 2) {
+              const mid = Math.ceil(words.length / 2);
+              text.append('tspan')
+                .attr('x', 0)
+                .attr('dy', 0)
+                .text(words.slice(0, mid).join(' '));
+              text.append('tspan')
+                .attr('x', 0)
+                .attr('dy', '1.1em')
+                .text(words.slice(mid).join(' '));
+            } else {
+              text.text(d.label);
+            }
+          });
+        
+        // Action labels on arrows
+        svg.selectAll('.action-label')
+          .data(stages.slice(0, -1))
+          .enter()
+          .append('text')
+          .attr('x', (d, i) => padding + spacing * i + spacing / 2)
+          .attr('y', centerY - 18)
+          .attr('text-anchor', 'middle')
+          .attr('font-size', '11px')
+          .attr('font-weight', '600')
+          .attr('fill', '#0078d4')
+          .style('opacity', 0)
+          .text(d => d.action)
+          .transition()
+          .duration(500)
+          .delay((d, i) => i * 300 + 600)
+          .style('opacity', 1);
+      }
+      
+      // Learning Journey Visualization - Clean Roadmap Style
+      function createLearningJourneyChart() {
+        const container = document.getElementById('learningJourneyChart');
+        if (!container) return;
+        
+        const width = container.offsetWidth;
+        const height = 500;
+        const leftMargin = 150;
+        const rightMargin = 150;
+        const topPadding = 40;
+        const bottomPadding = 40;
+        
+        const svg = d3.select('#learningJourneyChart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .attr('viewBox', `0 0 ${width} ${height}`)
+          .attr('preserveAspectRatio', 'xMidYMid meet');
+        
+        const stages = [
+          { icon: '🤔', step: '1', label: 'Start: Curious About Topic', action: 'Read', color: '#66bb6a', desc: 'Begin with curiosity' },
+          { icon: '📖', step: '2', label: 'Concept Explanation', action: 'Explore', color: '#42a5f5', desc: 'Understand the basics' },
+          { icon: '📄', step: '3', label: 'Research Paper', action: 'Visualize', color: '#ffa726', desc: 'Dive deeper' },
+          { icon: '🎨', step: '4', label: 'Interactive Diagram', action: 'Apply', color: '#ec407a', desc: 'See it in action' },
+          { icon: '💻', step: '5', label: 'Practical Implementation', action: 'Share', color: '#ab47bc', desc: 'Build something' },
+          { icon: '✨', step: '6', label: 'Inspire Others', action: '', color: '#26c6da', desc: 'Pass it forward' }
+        ];
+        
+        const usableHeight = height - topPadding - bottomPadding;
+        const stageHeight = usableHeight / stages.length;
+        const centerX = width / 2;
+        
+        // Position nodes
+        stages.forEach((stage, i) => {
+          stage.y = topPadding + stageHeight * i + stageHeight / 2;
+          // Alternate left and right
+          stage.x = i % 2 === 0 ? leftMargin : width - rightMargin;
+          stage.side = i % 2 === 0 ? 'left' : 'right';
+        });
+        
+        // Create gradients
+        const defs = svg.append('defs');
+        stages.forEach((stage, i) => {
+          const gradient = defs.append('radialGradient')
+            .attr('id', `roadmapGrad${i}`);
+          gradient.append('stop')
+            .attr('offset', '0%')
+            .attr('stop-color', stage.color)
+            .attr('stop-opacity', 1);
+          gradient.append('stop')
+            .attr('offset', '100%')
+            .attr('stop-color', stage.color)
+            .attr('stop-opacity', 0.6);
+        });
+        
+        // Arrow marker
+        defs.append('marker')
+          .attr('id', 'roadmapArrow')
+          .attr('markerWidth', 8)
+          .attr('markerHeight', 8)
+          .attr('refX', 7)
+          .attr('refY', 4)
+          .attr('orient', 'auto')
+          .append('polygon')
+          .attr('points', '0 0, 8 4, 0 8')
+          .attr('fill', '#0078d4');
+        
+        // Draw center timeline
+        svg.append('line')
+          .attr('x1', centerX)
+          .attr('y1', topPadding)
+          .attr('x2', centerX)
+          .attr('y2', height - bottomPadding)
+          .attr('stroke', '#ddd')
+          .attr('stroke-width', 3)
+          .attr('stroke-dasharray', '0')
+          .style('opacity', 0)
+          .transition()
+          .duration(1000)
+          .style('opacity', 0.5);
+        
+        // Draw connecting lines from timeline to nodes
+        stages.forEach((stage, i) => {
+          const line = svg.append('line')
+            .attr('x1', centerX)
+            .attr('y1', stage.y)
+            .attr('x2', stage.x)
+            .attr('y2', stage.y)
+            .attr('stroke', stage.color)
+            .attr('stroke-width', 2)
+            .attr('opacity', 0.4)
+            .attr('stroke-dasharray', '5,5');
+          
+          // Animate line drawing
+          const lineLength = Math.abs(stage.x - centerX);
+          line.attr('stroke-dasharray', `${lineLength} ${lineLength}`)
+            .attr('stroke-dashoffset', lineLength)
+            .transition()
+            .duration(600)
+            .delay(i * 250 + 200)
+            .attr('stroke-dashoffset', 0);
+        });
+        
+        // Create stage cards
+        const stageGroups = svg.selectAll('.stage-card')
+          .data(stages)
+          .enter()
+          .append('g')
+          .attr('class', 'stage-card')
+          .attr('transform', d => `translate(${d.x}, ${d.y})`)
+          .style('cursor', 'pointer')
+          .style('opacity', 0);
+        
+        // Animate cards appearing
+        stageGroups.transition()
+          .duration(600)
+          .delay((d, i) => i * 250)
+          .style('opacity', 1);
+        
+        // Add circles
+        const nodeRadius = 35;
+        stageGroups.append('circle')
+          .attr('r', nodeRadius)
+          .attr('fill', (d, i) => `url(#roadmapGrad${i})`)
+          .attr('stroke', d => d.color)
+          .attr('stroke-width', 3)
+          .style('filter', 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))')
+          .on('mouseenter', function(event, d) {
+            d3.select(this)
+              .transition()
+              .duration(200)
+              .attr('r', nodeRadius * 1.2)
+              .style('filter', 'drop-shadow(0 6px 12px rgba(0,0,0,0.3))');
+            
+            d3.select(this.parentNode).select('.stage-label')
+              .transition()
+              .duration(200)
+              .attr('font-size', '16px');
+          })
+          .on('mouseleave', function() {
+            d3.select(this)
+              .transition()
+              .duration(200)
+              .attr('r', nodeRadius)
+              .style('filter', 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))');
+            
+            d3.select(this.parentNode).select('.stage-label')
+              .transition()
+              .duration(200)
+              .attr('font-size', '15px');
+          });
+        
+        // Add step numbers
+        stageGroups.append('circle')
+          .attr('cx', -nodeRadius * 0.7)
+          .attr('cy', -nodeRadius * 0.7)
+          .attr('r', 12)
+          .attr('fill', 'white')
+          .attr('stroke', d => d.color)
+          .attr('stroke-width', 2);
+        
+        stageGroups.append('text')
+          .attr('x', -nodeRadius * 0.7)
+          .attr('y', -nodeRadius * 0.7)
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .attr('font-size', '11px')
+          .attr('font-weight', 'bold')
+          .attr('fill', d => d.color)
+          .text(d => d.step);
+        
+        // Icons
+        stageGroups.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .attr('font-size', '28px')
+          .text(d => d.icon);
+        
+        // Labels
+        stageGroups.append('text')
+          .attr('class', 'stage-label')
+          .attr('x', d => d.side === 'left' ? nodeRadius + 15 : -(nodeRadius + 15))
+          .attr('y', 0)
+          .attr('dy', '-0.3em')
+          .attr('text-anchor', d => d.side === 'left' ? 'start' : 'end')
+          .attr('font-size', '15px')
+          .attr('font-weight', '700')
+          .attr('fill', 'var(--text-primary)')
+          .text(d => d.label);
+        
+        // Descriptions
+        stageGroups.append('text')
+          .attr('x', d => d.side === 'left' ? nodeRadius + 15 : -(nodeRadius + 15))
+          .attr('y', 0)
+          .attr('dy', '1.2em')
+          .attr('text-anchor', d => d.side === 'left' ? 'start' : 'end')
+          .attr('font-size', '12px')
+          .attr('fill', 'var(--text-secondary)')
+          .text(d => d.desc);
+        
+        // Action arrows and labels
+        stages.slice(0, -1).forEach((stage, i) => {
+          const nextStage = stages[i + 1];
+          const arrowY = (stage.y + nextStage.y) / 2;
+          
+          // Arrow on timeline
+          svg.append('line')
+            .attr('x1', centerX)
+            .attr('y1', stage.y + 5)
+            .attr('x2', centerX)
+            .attr('y2', nextStage.y - 5)
+            .attr('stroke', '#0078d4')
+            .attr('stroke-width', 2)
+            .attr('marker-end', 'url(#roadmapArrow)')
+            .attr('opacity', 0)
+            .transition()
+            .duration(500)
+            .delay(i * 250 + 800)
+            .attr('opacity', 0.7);
+          
+          // Action label
+          svg.append('text')
+            .attr('x', centerX + 20)
+            .attr('y', arrowY)
+            .attr('dy', '0.35em')
+            .attr('font-size', '13px')
+            .attr('font-weight', '700')
+            .attr('fill', '#0078d4')
+            .attr('opacity', 0)
+            .text(stage.action)
+            .transition()
+            .duration(500)
+            .delay(i * 250 + 1000)
+            .attr('opacity', 1);
+        });
+      }
+      
+      // Initialize visualizations when page loads
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          createKnowledgeDeliveryChart();
+          createLearningJourneyChart();
+        }, 100);
+      });
+      
+      // Redraw on window resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          const chart1 = document.getElementById('knowledgeDeliveryChart');
+          const chart2 = document.getElementById('learningJourneyChart');
+          if (chart1) chart1.innerHTML = '';
+          if (chart2) chart2.innerHTML = '';
+          createKnowledgeDeliveryChart();
+          createLearningJourneyChart();
+        }, 300);
+      });
     </script>
   </body>
 </html>
