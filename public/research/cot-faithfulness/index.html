@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chain-of-Thought Faithfulness Explained</title>
+    <title>Chain-of-Thought Faithfulness - Observation Odyssey</title>
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
@@ -88,128 +90,15 @@
             box-shadow: var(--shadow-hover);
         }
 
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--card-bg);
-            border-bottom: 2px solid var(--border-color);
-            z-index: 999;
-            padding: 16px 24px;
-            box-shadow: var(--shadow);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        .header-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .header-links {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .header-link {
-            padding: 8px 16px;
-            background: var(--primary-blue);
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .header-link:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Footer */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card-bg);
-            border-top: 2px solid var(--border-color);
-            padding: 16px 24px;
-            z-index: 100;
-            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .footer-left {
-            flex: 1;
-        }
-
-        .footer-right {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .paper-citation {
-            background: var(--card-secondary);
-            padding: 8px 12px;
-            border-radius: 6px;
-            border-left: 3px solid var(--primary-blue);
-            font-size: 0.8rem;
-        }
-
-        .paper-link {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .paper-link:hover {
-            text-decoration: underline;
-            color: var(--accent-hover);
-        }
-
         /* Slide Navigation */
         .slides-container {
             width: 100%;
             height: 100vh;
             position: fixed;
-            top: 60px;
+            top: 0;
             left: 0;
             right: 0;
-            bottom: 60px;
+            bottom: 0;
             overflow: hidden;
         }
 
@@ -517,24 +406,13 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-content">
-            <div>
-                <div class="header-title">📚 CoT Faithfulness Explained</div>
-                <div class="header-subtitle">Understanding Chain-of-Thought Reasoning in AI Models</div>
-            </div>
-            <div class="header-links">
-                <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" class="header-link">📄 Read Full Paper</a>
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">
-                    <span id="themeIcon">🌙</span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Header Navigation -->
+    <div class="header-wrapper" id="header-placeholder"></div>
 
     <!-- Theme Toggle Button -->
-    <!-- Moved to header -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">
+        <span id="themeIcon">🌙</span>
+    </button>
 
     <!-- Navigation Arrows -->
     <div class="nav-arrow left" id="prevBtn" onclick="changeSlide(-1)">‹</div>
@@ -1472,21 +1350,34 @@
     </script>
 
     <!-- Footer -->
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="paper-citation">
-                    📖 <strong>Source:</strong> "Reasoning Models Don't Always Say What They Think" - Anthropic Alignment Science Team
-                </div>
-            </div>
-            <div class="footer-right">
-                <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" class="paper-link">
-                    Read the Full Paper ↗
-                </a>
-                <span>|</span>
-                <span>© 2026 Research Explainer</span>
-            </div>
-        </div>
-    </div>
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/theme.js"></script>
+    
+    <script>
+        // Override footer content with paper citation
+        document.addEventListener('DOMContentLoaded', function() {
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                footerPlaceholder.innerHTML = `
+                    <footer class="footer">
+                        <div class="footer-content">
+                            <div class="footer-left">
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                                    📖 <strong>Source:</strong> "Reasoning Models Don't Always Say What They Think" - Anthropic Alignment Science Team
+                                </div>
+                            </div>
+                            <div class="footer-right">
+                                <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">
+                                    Read the Full Paper ↗
+                                </a>
+                            </div>
+                        </div>
+                    </footer>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
