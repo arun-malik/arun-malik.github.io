@@ -1356,28 +1356,25 @@
     <script src="/_shared/theme.js"></script>
     
     <script>
-        // Override footer content with paper citation
-        document.addEventListener('DOMContentLoaded', function() {
-            const footerPlaceholder = document.getElementById('footer-placeholder');
-            if (footerPlaceholder) {
-                footerPlaceholder.innerHTML = `
-                    <footer class="footer">
-                        <div class="footer-content">
-                            <div class="footer-left">
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                                    📖 <strong>Source:</strong> "Reasoning Models Don't Always Say What They Think" - Anthropic Alignment Science Team
-                                </div>
-                            </div>
-                            <div class="footer-right">
-                                <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">
-                                    Read the Full Paper ↗
-                                </a>
-                            </div>
+        // Customize footer with paper citation after components load
+        setTimeout(function() {
+            const footerContent = document.querySelector('.footer-content');
+            if (footerContent) {
+                // Clear existing footer content
+                footerContent.innerHTML = `
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                            📖 <strong>Source:</strong> "Reasoning Models Don't Always Say What They Think" - Anthropic Alignment Science Team (Chen et al., 2025)
                         </div>
-                    </footer>
+                    </div>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <a href="https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf" target="_blank" style="color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                            📄 Read Full Paper ↗
+                        </a>
+                    </div>
                 `;
             }
-        });
+        }, 500);
     </script>
 </body>
 </html>
