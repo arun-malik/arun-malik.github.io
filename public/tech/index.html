@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tech Deep Dives · Observation Odyssey</title>
+    <meta name="description" content="Explore technology through research papers, concepts, articles, and in-depth analysis." />
+    <link rel="icon" href="/_shared/images/logos/OO.svg" type="image/svg+xml" />
+    <link rel="icon" href="/_shared/images/logos/OO.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/_shared/images/logos/OO.png" />
+    <link rel="stylesheet" href="/_shared/viki-styles.css" />
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="header-wrapper" id="header-placeholder"></div>
+
+    <div class="horizontal-scroll-container ai-page-scroll">
+      <main class="scroll-content">
+        <section class="ai-lesson ai-page" id="hub">
+          <div class="card-icon">🧠</div>
+          <h1 class="card-title" style="margin: 0 0 8px 0; font-size: 1.6rem;">Tech Deep Dives</h1>
+          <p class="section-text" style="margin-top: 0; color: var(--text-secondary);">
+            Explore technology concepts, research papers, and in-depth analysis of cutting-edge topics in AI, cloud, and systems.
+          </p>
+
+          <div class="card-section">
+            <h4 class="section-label">Categories</h4>
+            <div class="diagram" role="img" aria-label="Tech categories">
+              <div class="diagram-row">
+                <a href="./research-papers/" class="diagram-box" style="text-decoration: none; color: inherit; display: block; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                  <div class="diagram-title" style="font-size: 1.4rem; margin-bottom: 8px;">📄 Research Papers</div>
+                  <div class="diagram-sub" style="font-size: 0.95rem; color: var(--text-secondary);">Interactive explainers of important research</div>
+                </a>
+              </div>
+              <div class="diagram-row">
+                <a href="#concepts" class="diagram-box" style="text-decoration: none; color: inherit; display: block; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                  <div class="diagram-title" style="font-size: 1.4rem; margin-bottom: 8px;">💡 Concepts</div>
+                  <div class="diagram-sub" style="font-size: 0.95rem; color: var(--text-secondary);">Core concepts and explanations</div>
+                </a>
+                <a href="#articles" class="diagram-box" style="text-decoration: none; color: inherit; display: block; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                  <div class="diagram-title" style="font-size: 1.4rem; margin-bottom: 8px;">📚 Articles</div>
+                  <div class="diagram-sub" style="font-size: 0.95rem; color: var(--text-secondary);">In-depth technical articles</div>
+                </a>
+              </div>
+              <div class="diagram-row">
+                <a href="#blogs" class="diagram-box" style="text-decoration: none; color: inherit; display: block; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                  <div class="diagram-title" style="font-size: 1.4rem; margin-bottom: 8px;">✍️ Blog Posts</div>
+                  <div class="diagram-sub" style="font-size: 0.95rem; color: var(--text-secondary);">Thoughts and insights</div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-section">
+            <a href="../" class="nav-link" style="display: inline-block; border-bottom-color: transparent;">← Back to home</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="footer-wrapper" id="footer-placeholder"></div>
+
+    <script src="/_shared/components.js"></script>
+    <script src="/_shared/scroll-nav.js"></script>
+    <script src="/_shared/theme.js"></script>
+  </body>
+</html>
