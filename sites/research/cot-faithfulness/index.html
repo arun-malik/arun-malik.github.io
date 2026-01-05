@@ -1190,7 +1190,7 @@
             if (e.key === 'ArrowRight') changeSlide(1);
         });
 
-        // Mouse scroll navigation
+        // Mouse scroll navigation - only when at boundaries
         let lastScrollTime = 0;
         const scrollDebounce = 800; // ms between slide changes
         
@@ -1202,10 +1202,24 @@
                 return;
             }
             
-            // Only navigate if we're focused on the main slides container
-            const slidesContainer = document.querySelector('.slides-container');
-            if (!slidesContainer.contains(e.target)) {
-                return;
+            // Get the current active slide
+            const activeSlide = document.querySelector('.slide.active');
+            if (!activeSlide) return;
+            
+            // Check if the slide content is scrollable
+            const isScrollable = activeSlide.scrollHeight > activeSlide.clientHeight;
+            const atTop = activeSlide.scrollTop === 0;
+            const atBottom = activeSlide.scrollTop + activeSlide.clientHeight >= activeSlide.scrollHeight - 10;
+            
+            // Only use scroll for navigation if:
+            // 1. Content is not scrollable, OR
+            // 2. Content is scrollable but we're at the top/bottom
+            const shouldNavigate = !isScrollable || 
+                                  (e.deltaY > 0 && atBottom) || 
+                                  (e.deltaY < 0 && atTop);
+            
+            if (!shouldNavigate) {
+                return; // Allow normal scrolling
             }
             
             e.preventDefault();
