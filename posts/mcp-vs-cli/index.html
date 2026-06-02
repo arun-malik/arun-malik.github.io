@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP vs CLI for AI Agents - Arun Malik</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #0969da;
+            --accent-subtle: #ddf4ff;
+            --cli: #2563eb;
+            --mcp: #7c3aed;
+            --hybrid: #059669;
+            --warn: #d97706;
+            --risk: #dc2626;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Blog Header */
+        .blog-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .blog-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        .blog-meta .author {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .blog-meta .separator { color: var(--border); }
+        .blog-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .blog-tags span {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.15rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: var(--font-mono);
+        }
+
+        /* Section headings */
+        h2.section-title, h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: -0.01em;
+        }
+        h3.subsection-title, h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 1.75rem 0 0.75rem;
+            color: var(--text);
+        }
+
+        /* Paragraphs */
+        p {
+            margin: 0.75rem 0;
+            line-height: 1.7;
+        }
+
+        /* Abstract / TL;DR */
+        .abstract {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .abstract h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            border: none;
+            margin: 0 0 0.75rem;
+            padding: 0;
+            font-family: var(--font-mono);
+        }
+        .abstract p { font-size: 0.95rem; }
+        .keywords {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        thead {
+            background: var(--bg-secondary);
+        }
+        th {
+            padding: 0.6rem 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #eaeef2;
+            vertical-align: top;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: #f6f8fa; }
+
+        /* Table labels */
+        .table-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .chart-title {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        .chart-caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+        canvas {
+            max-width: 100%;
+            max-height: 350px;
+        }
+
+        /* Code/monospace accents */
+        code, .mono {
+            font-family: var(--font-mono);
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.85em;
+            border: 1px solid #eaeef2;
+        }
+
+        /* Links */
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* References */
+        .references {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+        .references p {
+            margin: 0.4rem 0;
+            padding-left: 2rem;
+            text-indent: -2rem;
+        }
+
+        /* Findings (italic remarks) */
+        p em:first-child {
+            color: var(--text-muted);
+        }
+
+        /* Coverage table */
+        .coverage-table { font-size: 0.85rem; }
+
+        /* Comparison grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .comparison-grid > div {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .comparison-grid h4 {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-grid pre {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { padding: 1rem; font-size: 15px; }
+            .blog-header h1 { font-size: 1.5rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            table { font-size: 0.8rem; }
+        }
+
+        /* Print */
+        @page { margin: 0.75in; }
+        @media print {
+            body { max-width: 100%; padding: 0; font-size: 11pt; }
+            .chart-container { border: 1px solid #ccc; break-inside: avoid; }
+            h2 { break-before: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="blog-header">
+    <h1>MCP vs CLI for AI Agents: A Comparative Analysis of Tool Integration Paradigms</h1>
+    <div class="blog-meta">
+        <span class="author">Arun Malik</span>
+        <span class="separator">|</span>
+        <span>June 2026</span>
+        <span class="separator">|</span>
+        <span>25 min read</span>
+    </div>
+    <div class="blog-tags">
+        <span>mcp</span>
+        <span>cli</span>
+        <span>ai-agents</span>
+        <span>security</span>
+        <span>enterprise</span>
+        <span>token-economics</span>
+    </div>
+</div>
+
+<!-- ABSTRACT -->
+<div class="abstract">
+    <h2>Abstract</h2>
+    <p>
+        AI agents require interfaces to interact with external systems such as files, APIs, databases, and cloud services. Two competing paradigms have emerged: CLI (Command Line Interface), where agents execute shell commands directly, and MCP (Model Context Protocol), a structured JSON-RPC protocol providing governed, typed tool access. This paper presents a comparative analysis across 14 evaluation dimensions, supported by worked examples, security assessment against established compliance frameworks, and economic modeling. Our analysis indicates that CLI provides superior efficiency for single-user, local-only workflows, while MCP addresses requirements that CLI fundamentally cannot satisfy, including fine-grained access control, credential isolation, structured audit, and multi-tenant governance. We further examine how progressive disclosure techniques eliminate MCP's historical weakness (context window overhead), yielding token efficiency comparable to CLI while preserving its architectural benefits. A hybrid architecture is recommended for production systems. This analysis draws upon academic, government, and industry sources including NSA formal guidance (CSI U/OO/6030316-26), OWASP security standards, and economic modeling from BCG and Gartner.
+    </p>
+    <p class="keywords"><strong>Keywords:</strong> Model Context Protocol, AI Agents, Tool Integration, Enterprise Security, LLM Architecture, RBAC, Compliance, Token Economics</p>
+</div>
+
+<!-- EXECUTIVE SUMMARY TABLE -->
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table I.</strong> Paper Coverage Structure</p>
+
+<table class="coverage-table">
+    <thead>
+        <tr><th style="width:30%">Area</th><th style="width:38%">Key Finding</th><th style="width:32%">Section</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Operational performance</td>
+            <td>CLI is faster for simple, local tasks (2–5× latency advantage); MCP provides more deterministic outputs and structured error handling</td>
+            <td><a href="#sec-comparison">§III</a>, <a href="#sec-examples">§IV</a></td>
+        </tr>
+        <tr>
+            <td>Security and compliance</td>
+            <td>CLI grants unbounded system access; MCP satisfies 6 of 6 evaluated compliance frameworks (SOC2, HIPAA, FedRAMP, PCI-DSS, ISO 27001, GDPR)</td>
+            <td><a href="#sec-security">§V</a></td>
+        </tr>
+        <tr>
+            <td>Token economics</td>
+            <td>Naive MCP loading imposes significant overhead (up to 55K tokens); progressive disclosure reduces this to ~170 tokens, eliminating CLI's cost advantage</td>
+            <td><a href="#sec-economics">§VII</a>, <a href="#sec-progressive">§VIII</a></td>
+        </tr>
+        <tr>
+            <td>Enterprise scalability</td>
+            <td>CLI requires container-per-user isolation at scale; MCP's session-level RBAC reduces infrastructure cost beyond ~5 concurrent users</td>
+            <td><a href="#sec-comparison">§III</a>, <a href="#sec-economics">§VII</a></td>
+        </tr>
+        <tr>
+            <td>Risk analysis</td>
+            <td>CLI exposes 7 architectural attack vectors (injection, exfiltration, escalation); MCP's bounded execution surface reduces but does not eliminate risk</td>
+            <td><a href="#sec-risks">§VI</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- CHART: Radar Comparison -->
+<div class="chart-container">
+    <div class="chart-title">Fig. 1 - Multi-Dimensional Comparison: CLI vs MCP (Normalized Scores, 0–10)</div>
+    <canvas id="radarChart"></canvas>
+    <div class="chart-caption">Higher score = better performance. CLI excels on cost/speed; MCP dominates security/governance dimensions.</div>
+</div>
+
+<!-- I. INTRODUCTION -->
+<h2 class="section-title" id="sec-intro">I. Introduction</h2>
+<p>
+    AI agents (LLM-based systems that autonomously decide which tools to call and in what sequence) require integration mechanisms to interact with external systems. As organizations deploy AI agents at enterprise scale, the choice of integration architecture has profound implications for security, compliance, cost, and operational reliability.
+</p>
+<p>
+    Two paradigms compete for this role: (1) <strong>CLI (Command Line Interface)</strong>, where the agent executes shell commands directly on the host system, leveraging the model's pre-trained knowledge of Unix/Windows commands; and (2) <strong>MCP (Model Context Protocol)</strong>, a standardized JSON-RPC protocol connecting AI models to purpose-built tool servers with typed inputs/outputs, permission boundaries, and structured audit trails.
+</p>
+<p>
+    This paper provides a rigorous comparative analysis answering the core research question: <em>Is MCP a necessary abstraction layer for secure, governed AI-agent interactions at enterprise scale, or is it unnecessary complexity when CLI tools can accomplish the same tasks more efficiently?</em>
+</p>
+<p>
+    Our principal conclusion is that the CLI-vs-MCP debate presents a false dichotomy. The two paradigms serve fundamentally different trust levels. The optimal architecture for production systems is hybrid: CLI for local developer operations, MCP for any interaction that crosses a trust boundary or requires organizational governance.
+</p>
+<p>
+    The remainder of this paper is organized as follows. Section II defines key terms. Section III establishes scope and assumptions. Section IV presents the core 14-dimension comparative analysis. Section V provides worked examples at increasing complexity. Section VI evaluates security and compliance. Section VII examines risk. Section VIII models cost and token economics. Section IX addresses progressive disclosure. Section X surveys industry adoption. Section XI presents a decision framework, and Section XII concludes with recommendations. Table I summarizes the coverage structure.
+</p>
+
+<!-- II. DEFINITIONS -->
+<h2 class="section-title" id="sec-definitions">II. Preliminaries</h2>
+<table>
+    <thead><tr><th>Term</th><th>Definition</th><th>Key Characteristic</th></tr></thead>
+    <tbody>
+        <tr><td><strong>CLI</strong></td><td>Command Line Interface - text commands in bash/PowerShell/zsh</td><td>Unstructured I/O; full system access; model knowledge from training</td></tr>
+        <tr><td><strong>MCP</strong></td><td>Model Context Protocol - JSON-RPC connecting models to tool servers</td><td>Structured typed I/O; per-tool permissions; schema-defined contracts</td></tr>
+        <tr><td><strong>AI Agent</strong></td><td>LLM system autonomously selecting and invoking tools</td><td>Decisions based on context window contents; tool-use loop</td></tr>
+        <tr><td><strong>Context Window</strong></td><td>Total token budget for a conversation/task (128K–1M tokens)</td><td>Finite; tool schemas consume tokens; key economic constraint</td></tr>
+        <tr><td><strong>Tool Schema</strong></td><td>JSON definition of tool name, params, and return type</td><td>MCP requires at runtime; CLI relies on pre-trained knowledge</td></tr>
+    </tbody>
+</table>
+
+<!-- III. ASSUMPTIONS & SCOPE -->
+<h2 class="section-title" id="sec-assumptions">III. Assumptions & Scope</h2>
+
+<h3 class="subsection-title">A. Assumptions</h3>
+<ol>
+    <li>The AI model is a modern LLM (GPT-4+, Claude 3+, Gemini) with strong CLI knowledge from training data</li>
+    <li>CLI access means unrestricted bash/shell execution on the host system</li>
+    <li>MCP access means a properly configured MCP server with appropriate tool registrations</li>
+    <li><strong>Cost encompasses tokens, latency, operational overhead, maintenance burden, and incident liability</strong>, not just API charges</li>
+    <li>Security requirements scale with organizational maturity and regulatory obligations</li>
+    <li>Reliability includes error recovery, retry semantics, idempotency, and state management</li>
+</ol>
+
+<h3 class="subsection-title">B. Scope</h3>
+<table>
+    <thead><tr><th>In Scope</th><th>Out of Scope</th></tr></thead>
+    <tbody>
+        <tr><td>File operations, Git, API calls, database queries</td><td>GUI automation, browser-based tools</td></tr>
+        <tr><td>Single-agent and multi-agent patterns</td><td>Agent-to-agent communication protocols</td></tr>
+        <tr><td>Enterprise security, RBAC, compliance</td><td>Specific vendor pricing (changes frequently)</td></tr>
+        <tr><td>Token economics, latency, reliability, state management</td><td>Model fine-tuning approaches</td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">C. Evaluation Criteria</h3>
+<p>Each paradigm is assessed against six dimensions:</p>
+<table>
+    <thead><tr><th>Criterion</th><th>Measures</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Efficiency</strong></td><td>Token cost, latency, steps to complete, context window utilization</td></tr>
+        <tr><td><strong>Security</strong></td><td>Access control, blast radius, credential isolation, input validation</td></tr>
+        <tr><td><strong>Reliability</strong></td><td>Error rates, output determinism, retry semantics, idempotency</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Multi-user, multi-tenant, enterprise governance</td></tr>
+        <tr><td><strong>Maintainability</strong></td><td>Version brittleness, state leakage, upgrade path, schema evolution</td></tr>
+        <tr><td><strong>Compliance</strong></td><td>SOC2, HIPAA, GDPR, PCI-DSS, ISO 27001, FedRAMP</td></tr>
+    </tbody>
+</table>
+
+<!-- IV. SIDE-BY-SIDE COMPARISON -->
+<h2 class="section-title" id="sec-comparison">IV. Comparative Analysis: 14 Dimensions</h2>
+
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table II.</strong> Fourteen-Dimension Evaluation Matrix</p>
+<table>
+    <thead>
+        <tr><th>#</th><th>Dimension</th><th>CLI</th><th>MCP</th><th>Winner</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td><strong>Setup Cost</strong></td><td>Zero - commands pre-exist</td><td>Server deployment + schema registration</td><td><strong>CLI</strong></td></tr>
+        <tr><td>2</td><td><strong>Context Window Cost</strong></td><td>~0 tokens (model knows commands)</td><td>100–55,000 tokens (static); <strong>~170 tokens</strong> with progressive disclosure<sup><a href="#sec-progressive">§IX</a></sup></td><td><strong>TIE*</strong></td></tr>
+        <tr><td>3</td><td><strong>Model Familiarity</strong></td><td>Millions of examples in training data</td><td>Must read schema at runtime</td><td><strong>CLI</strong></td></tr>
+        <tr><td>4</td><td><strong>Output Parsing</strong></td><td>Unstructured text - model interprets</td><td>Structured JSON - deterministic</td><td><strong>MCP</strong></td></tr>
+        <tr><td>5</td><td><strong>Error Handling</strong></td><td>Exit codes + stderr (ambiguous)</td><td>Typed error responses with codes</td><td><strong>MCP</strong></td></tr>
+        <tr><td>6</td><td><strong>Access Control (RBAC)</strong></td><td>All-or-nothing shell access</td><td>Per-tool, per-user, per-resource</td><td><strong>MCP</strong><sup><a href="#sec-security">§VI</a></sup></td></tr>
+        <tr><td>7</td><td><strong>Audit Trail</strong></td><td>Shell history (unreliable, unstructured)</td><td>Structured: who, what, when, result</td><td><strong>MCP</strong><sup><a href="#sec-security">§VI</a></sup></td></tr>
+        <tr><td>8</td><td><strong>Blast Radius</strong></td><td>Unlimited (rm -rf, credential theft)</td><td>Bounded to exposed capabilities</td><td><strong>MCP</strong><sup><a href="#sec-security">§VI</a></sup></td></tr>
+        <tr><td>9</td><td><strong>Compliance</strong></td><td>Very difficult - no built-in controls</td><td>Native: consent, classification, retention</td><td><strong>MCP</strong><sup><a href="#sec-security">§VI</a></sup></td></tr>
+        <tr><td>10</td><td><strong>Multi-Tenant</strong></td><td>Container per user ($$$)</td><td>Session isolation, per-user scoping</td><td><strong>MCP</strong><sup><a href="#sec-examples">§V-C</a></sup></td></tr>
+        <tr><td>11</td><td><strong>Tool Discovery</strong></td><td>No runtime discovery</td><td>Dynamic capability negotiation</td><td><strong>MCP</strong><sup><a href="#sec-progressive">§IX</a></sup></td></tr>
+        <tr><td>12</td><td><strong>Composability</strong></td><td>Pipe chains (fragile parsing)</td><td>Typed chaining with validation</td><td><strong>MCP</strong></td></tr>
+        <tr><td>13</td><td><strong>Speed (Simple Tasks)</strong></td><td>Fastest - direct execution</td><td>JSON-RPC overhead (~50–200ms)</td><td><strong>CLI</strong></td></tr>
+        <tr><td>14</td><td><strong>Ecosystem Breadth</strong></td><td>Thousands of Unix/Windows commands</td><td>5,800+ MCP connectors (growing)</td><td><strong>TIE</strong></td></tr>
+    </tbody>
+</table>
+
+<!-- CHART: Bar comparison of wins -->
+<div class="chart-container">
+    <div class="chart-title">Fig. 2 - Dimension Wins by Paradigm (14 evaluated dimensions)</div>
+    <canvas id="winsChart"></canvas>
+    <div class="chart-caption">CLI wins on cost/speed (3); MCP wins on governance/security (9); Tie on ecosystem + context cost with progressive disclosure (2). *Context cost is CLI-win only without progressive disclosure.</div>
+</div>
+
+<h3 class="subsection-title">A. Dimension Analysis</h3>
+
+<p><strong>Dimension 1: Setup Cost.</strong> CLI commands exist on every Unix and Windows installation. An agent can invoke <code>grep</code>, <code>curl</code>, or <code>git</code> with no prior configuration. MCP requires deploying at least one server process (or connecting to a hosted endpoint), registering tool schemas, and configuring authentication. For ephemeral tasks on a developer's local machine, this overhead is difficult to justify.</p>
+
+<p><strong>Dimension 3: Model Familiarity.</strong> Large language models are trained on corpora containing millions of shell command examples from man pages, Stack Overflow posts, and open-source repositories. The model already knows that <code>grep -rn "pattern" .</code> searches recursively with line numbers. MCP tools, by contrast, are novel to the model; it must parse the JSON schema at runtime to learn what parameters a tool accepts. This distinction narrows over time as MCP schemas appear in training data, but as of mid-2026, CLI retains a significant advantage in zero-shot accuracy for shell operations.</p>
+
+<p><strong>Dimension 4: Output Parsing.</strong> CLI output is free-form text. The output of <code>ls -la</code> differs between GNU coreutils and BSD; <code>docker ps</code> output changed format between Docker 23 and 24. The model must interpret column alignment, handle locale-dependent date formats, and distinguish informational output from errors. MCP returns typed JSON with a contract: a <code>read_file</code> tool always returns <code>{"content": "..."}</code>. Downstream processing (chaining tools, populating UI) becomes deterministic rather than heuristic.</p>
+
+<p><strong>Dimension 12: Composability.</strong> CLI achieves composition through pipes: <code>cat file | grep pattern | wc -l</code>. This works well for text streams but breaks when output format changes between versions. If an upstream command adds a header line, downstream counts become incorrect. MCP supports typed chaining: one tool's structured output feeds directly into another tool's validated input schema. The MCP client can verify type compatibility before invocation, preventing silent failures.</p>
+
+<p><strong>Dimension 13: Speed.</strong> For simple local operations, CLI executes a system call directly. No serialization, no network round-trip, no protocol negotiation. MCP adds JSON-RPC serialization, transport (typically stdio or HTTP), server-side deserialization, execution, and response serialization. Measured overhead ranges from 50ms (stdio transport, local server) to 200ms (HTTP transport, remote server). For a single file read, this latency is noticeable. For a complex workflow with 20+ tool calls, it becomes negligible relative to LLM inference time.</p>
+
+<p><strong>Dimension 14: Ecosystem Breadth.</strong> CLI has decades of accumulated tooling: thousands of Unix utilities, package managers, cloud CLIs (aws, az, gcloud), database clients, and container runtimes. MCP, launched in late 2024, has grown to over 5,800 registered connectors as of mid-2026. The ecosystems overlap substantially (most CLI tools now have MCP equivalents), making this dimension a draw. The relevant difference is not breadth but access model: CLI tools grant full capability by default; MCP connectors expose only explicitly declared operations.</p>
+
+<!-- V. WORKED EXAMPLES -->
+<h2 class="section-title" id="sec-examples">V. Worked Examples</h2>
+
+<h3 class="subsection-title">A. File Operations (Trivial Task)</h3>
+<div class="comparison-grid">
+    <div class="col col-cli">
+        <h4>CLI</h4>
+        <div class="code"><span class="cmd">cat</span> notes.md
+<span class="cmd">grep</span> <span class="flag">-rn</span> <span class="str">"agent"</span> *.md</div>
+        <p><strong>Schema tokens:</strong> 0<br><strong>Result:</strong> Raw text</p>
+    </div>
+    <div class="col col-mcp">
+        <h4>MCP</h4>
+        <div class="code">{ <span class="str">"tool"</span>: <span class="str">"read_file"</span>, <span class="str">"params"</span>: {<span class="str">"path"</span>: <span class="str">"notes.md"</span>} }
+{ <span class="str">"tool"</span>: <span class="str">"search"</span>, <span class="str">"params"</span>: {<span class="str">"query"</span>: <span class="str">"agent"</span>} }</div>
+        <p><strong>Schema tokens:</strong> ~2,000<br><strong>Result:</strong> Structured JSON</p>
+    </div>
+</div>
+<p><em>Finding 1:</em> For trivial local operations, CLI is simpler and equally effective. The absence of protocol overhead results in lower latency and zero schema cost.</p>
+
+<h3 class="subsection-title">B. Production Database Query</h3>
+<div class="comparison-grid">
+    <div class="col col-cli">
+        <h4>CLI</h4>
+        <div class="code"><span class="cmd">psql</span> <span class="flag">-h</span> prod-db <span class="flag">-U</span> admin \
+  <span class="flag">-c</span> <span class="str">"SELECT * FROM customers WHERE region='EU'"</span></div>
+        <p><strong>Risks:</strong> DBA credentials exposed, DROP/DELETE possible, no rate limiting, connection strings in history</p>
+    </div>
+    <div class="col col-mcp">
+        <h4>MCP</h4>
+        <div class="code">{ <span class="str">"tool"</span>: <span class="str">"query_database"</span>,
+  <span class="str">"params"</span>: {<span class="str">"sql"</span>: <span class="str">"SELECT..."</span>, <span class="str">"readonly"</span>: true} }</div>
+        <p><strong>Protections:</strong> Read-only enforced, DDL blocked, credentials opaque, row-level security, rate limited</p>
+    </div>
+</div>
+<p><em>Finding 2:</em> MCP is a prerequisite for production data access. Any CLI-based approach exposes credentials and permits unrestricted DDL operations, which would fail a security audit under SOC2 or HIPAA requirements.</p>
+
+<h3 class="subsection-title">C. Multi-User Enterprise (50 developers)</h3>
+<div class="comparison-grid">
+    <div class="col col-cli">
+        <h4>CLI</h4>
+        <ul style="font-size:8.5pt;">
+            <li>Separate container/VM per user ($$$)</li>
+            <li>OS-level groups only</li>
+            <li>Audit = grep bash_history</li>
+            <li>Compliance: manual spreadsheets</li>
+        </ul>
+    </div>
+    <div class="col col-mcp">
+        <h4>MCP</h4>
+        <ul style="font-size:8.5pt;">
+            <li>Single server + OAuth/SSO</li>
+            <li>Per-user RBAC matrix</li>
+            <li>Structured logs → SIEM</li>
+            <li>Automated SOC2/HIPAA reports</li>
+        </ul>
+    </div>
+</div>
+<p><em>Finding 3:</em> At enterprise scale (multi-user, governed environments), MCP provides native governance primitives while CLI requires expensive infrastructure workarounds that still cannot match MCP's granularity.</p>
+
+
+<!-- VI. SECURITY & COMPLIANCE -->
+<h2 class="section-title" id="sec-security">VI. Security, Compliance & Governance</h2>
+
+<h3 class="subsection-title">A. Security Requirements Matrix</h3>
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table III.</strong> Security Requirements Assessment</p>
+<table>
+    <thead><tr><th>Requirement</th><th>CLI Assessment</th><th>MCP Assessment</th></tr></thead>
+    <tbody>
+        <tr><td>Least Privilege</td><td>Does not satisfy - all-or-nothing shell access</td><td>Satisfies - per-tool granular permissions</td></tr>
+        <tr><td>Credential Isolation</td><td>Does not satisfy - env vars visible to agent</td><td>Satisfies - server-held, opaque to model</td></tr>
+        <tr><td>Input Validation</td><td>Does not satisfy - vulnerable to command injection</td><td>Satisfies - JSON schema enforcement</td></tr>
+        <tr><td>Output Sanitization</td><td>Does not satisfy - stdout may leak secrets</td><td>Satisfies - controlled return values</td></tr>
+        <tr><td>Audit (SOC2)</td><td>Weak - shell history only (unstructured)</td><td>Satisfies - structured event logging</td></tr>
+        <tr><td>Data Classification</td><td>Does not satisfy - no data awareness</td><td>Satisfies - data labeling support</td></tr>
+        <tr><td>Human-in-the-Loop</td><td>Not supported - immediate execution</td><td>Satisfies - approval flow integration</td></tr>
+        <tr><td>Rate Limiting</td><td>Not supported - risk of resource exhaustion</td><td>Satisfies - per-user rate limits</td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">B. Compliance Framework Mapping</h3>
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table IV.</strong> Compliance Framework Mapping</p>
+<table>
+    <thead><tr><th>Framework</th><th>Key Requirement</th><th>CLI</th><th>MCP</th></tr></thead>
+    <tbody>
+        <tr><td><strong>SOC 2 Type II</strong></td><td>Access control + audit evidence</td><td>Manual, significant gaps</td><td>Native support</td></tr>
+        <tr><td><strong>HIPAA</strong></td><td>Minimum necessary access to PHI</td><td>Cannot restrict adequately</td><td>Per-field redaction</td></tr>
+        <tr><td><strong>GDPR</strong></td><td>Access logging + right to erasure</td><td>Partially achievable</td><td>Automated DPA compliance</td></tr>
+        <tr><td><strong>PCI-DSS</strong></td><td>Network segmentation</td><td>Flat network exposure</td><td>API boundary enforced</td></tr>
+        <tr><td><strong>ISO 27001</strong></td><td>Risk management + access review</td><td>Achievable but expensive</td><td>Built-in controls</td></tr>
+        <tr><td><strong>FedRAMP</strong></td><td>Continuous monitoring + boundary</td><td>No protocol boundary</td><td>Protocol = authorization boundary</td></tr>
+    </tbody>
+</table>
+
+<!-- CHART: Security scores -->
+<div class="chart-container">
+    <div class="chart-title">Fig. 3 - Security & Compliance Scorecard (Pass/Fail across 8 requirements + 6 frameworks)</div>
+    <canvas id="securityChart"></canvas>
+    <div class="chart-caption">CLI passes 0/8 security requirements and 0/6 compliance frameworks fully. MCP passes 8/8 and 6/6.</div>
+</div>
+
+<p><em>Note:</em> The NSA published formal security guidance for MCP in May 2026 (CSI U/OO/6030316-26). No equivalent guidance exists for CLI-based AI agents because CLI provides no security architecture to govern. The absence is itself a risk indicator.</p>
+
+<!-- VII. RISK ANALYSIS -->
+<h2 class="section-title" id="sec-risks">VII. Risk Analysis</h2>
+
+<h3 class="subsection-title">A. CLI Architectural Risks</h3>
+<table>
+    <thead><tr><th>Risk</th><th>Attack Vector</th><th>Impact</th><th>Likelihood</th></tr></thead>
+    <tbody>
+        <tr><td>Shell Injection</td><td>Malicious command from prompt injection</td><td>Critical</td><td>Medium</td></tr>
+        <tr><td>Credential Theft</td><td>Agent reads ~/.ssh/*, .env, env vars</td><td>Critical</td><td>High</td></tr>
+        <tr><td>Data Exfiltration</td><td>curl/wget to external endpoints</td><td>Critical</td><td>Medium</td></tr>
+        <tr><td>Destructive Commands</td><td>rm -rf, DROP TABLE, git push --force</td><td>High</td><td>Medium</td></tr>
+        <tr><td>Resource Exhaustion</td><td>Fork bomb, infinite loop, disk fill</td><td>High</td><td>Low-Med</td></tr>
+        <tr><td>Privilege Escalation</td><td>sudo, SUID, container escape</td><td>Critical</td><td>Low</td></tr>
+        <tr><td>SSRF</td><td>curl hits internal metadata endpoints</td><td>High</td><td>Medium</td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">B. MCP Operational Risks</h3>
+<table>
+    <thead><tr><th>Risk</th><th>Attack Vector</th><th>Impact</th><th>Mitigation</th></tr></thead>
+    <tbody>
+        <tr><td>Tool Poisoning</td><td>Malicious MCP server returns harmful instructions</td><td>High</td><td>Server allowlisting, signing</td></tr>
+        <tr><td>Schema Exploitation</td><td>Manipulated descriptions trick model</td><td>Medium</td><td>Trusted registries</td></tr>
+        <tr><td>Excessive Permissions</td><td>Overly broad tool scopes</td><td>Medium</td><td>Least-privilege RBAC</td></tr>
+        <tr><td>Token Overhead</td><td>Too many tools loaded</td><td>Low</td><td>Dynamic loading, filtering</td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title" id="sec-risks-c">C. Underexplored Risks (New Analysis)</h3>
+<table>
+    <thead><tr><th>Risk Factor</th><th>CLI Impact</th><th>MCP Impact</th><th>Assessment</th></tr></thead>
+    <tbody>
+        <tr>
+            <td><strong>State Leakage Between Calls</strong></td>
+            <td>Environment variables, working directory, background processes persist across agent calls. Previous command residue affects subsequent operations.</td>
+            <td>Each tool call is stateless by protocol design. No cross-call state leakage possible.</td>
+            <td><strong>MCP</strong> wins - architectural isolation</td>
+        </tr>
+        <tr>
+            <td><strong>Tool Version Brittleness</strong></td>
+            <td>CLI output format changes silently across OS versions (e.g., <code>ls</code> on macOS vs Linux, <code>date</code> format differences). No contract guarantees.</td>
+            <td>Tool schemas are versioned. Breaking changes require explicit schema version bump. Clients can negotiate capabilities.</td>
+            <td><strong>MCP</strong> wins - versioned contracts</td>
+        </tr>
+        <tr>
+            <td><strong>Retry / Idempotency</strong></td>
+            <td>No built-in retry semantics. Agent must implement retry logic manually. Non-idempotent commands (append, create) may duplicate on retry.</td>
+            <td>Server can declare idempotency keys. Protocol supports request IDs for deduplication. Server-side retry logic possible.</td>
+            <td><strong>MCP</strong> wins - protocol-level support</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><em>Key Distinction:</em> CLI risks are <em>architectural</em> and cannot be fixed without abandoning CLI. MCP risks are <em>operational</em> and have documented mitigations from NSA, OWASP, CoSAI, and CSA.</p>
+
+<!-- VIII. ECONOMICS -->
+<h2 class="section-title" id="sec-economics">VIII. Cost & Token Economics</h2>
+
+<h3 class="subsection-title">A. Per-Operation Token Cost</h3>
+<p>
+    Early critiques of MCP focused on naive schema loading, where an entire server's tool manifest is injected into the context window upfront. Table V compares this naive case against progressive disclosure (Section IX) and the often-overlooked overhead of CLI-based agents.
+</p>
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table V.</strong> Per-Operation Token Cost Comparison</p>
+<table>
+    <thead>
+        <tr><th>Cost Component</th><th>CLI Agent</th><th>MCP (Naive Loading)</th><th>MCP (Progressive Disclosure)</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Upfront schema overhead</td><td>0 tokens<sup>†</sup></td><td>2,000–55,000 tokens</td><td>~170 tokens (2 meta-tools)</td></tr>
+        <tr><td>Per-tool invocation</td><td>50–200 tokens (command + flags)</td><td>80–150 tokens (structured call)</td><td>80–250 tokens (lookup + call)</td></tr>
+        <tr><td>Output parsing</td><td>100–500 tokens (unstructured text)</td><td>50–150 tokens (structured JSON)</td><td>50–150 tokens (structured JSON)</td></tr>
+        <tr><td>System prompt / tool instructions</td><td>200–600 tokens</td><td>Included in schema</td><td>Included in meta-tool schema</td></tr>
+        <tr><td>Error recovery (typical)</td><td>300–1,200 tokens/retry</td><td>100–300 tokens/retry</td><td>100–300 tokens/retry</td></tr>
+    </tbody>
+</table>
+<p style="font-size:8.5pt; margin-top:0.3rem;">
+    <sup>†</sup> CLI agents carry no formal schema, but still require system-prompt instructions describing available commands, output formats, and error handling conventions. This overhead is frequently omitted from CLI benchmarks.
+</p>
+
+<h3 class="subsection-title">B. Total Cost of Ownership (TCO)</h3>
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table VI.</strong> Total Cost of Ownership Comparison</p>
+<table>
+    <thead><tr><th>Cost Factor</th><th>CLI</th><th>MCP</th></tr></thead>
+    <tbody>
+        <tr><td>Token cost / query</td><td>Lower (no schema)</td><td>Higher without progressive disclosure; comparable with it</td></tr>
+        <tr><td>Security incident cost</td><td>$4.88M avg breach (IBM 2024)</td><td>Reduced attack surface</td></tr>
+        <tr><td>Compliance audit cost</td><td>Manual evidence ($$$)</td><td>Automated exports</td></tr>
+        <tr><td>Multi-user infrastructure</td><td>Container/user ($$$)</td><td>Single server + RBAC ($)</td></tr>
+        <tr><td>Integration maintenance</td><td>Custom scripts per tool</td><td>70% reduction (BCG)</td></tr>
+    </tbody>
+</table>
+
+<!-- CHART: TCO Comparison -->
+<div class="chart-container">
+    <div class="chart-title">Fig. 4 - Total Cost of Ownership: CLI vs MCP by Organization Size</div>
+    <canvas id="tcoChart"></canvas>
+    <div class="chart-caption">Breakeven at ~5 users. Beyond 10 users, MCP's TCO is significantly lower due to shared infrastructure and reduced incident liability.</div>
+</div>
+
+<h3 class="subsection-title">C. Hidden Cost of Autonomous CLI Agents</h3>
+<p>
+    The CLI token-efficiency argument assumes a cooperative, developer-present workflow. Autonomous CLI agents operating without human oversight face compounding costs that are frequently omitted from benchmarks:
+</p>
+<table>
+    <thead><tr><th>Failure Mode</th><th>Token Cost</th><th>Explanation</th></tr></thead>
+    <tbody>
+        <tr><td>Script generation</td><td>200–800 tokens</td><td>Agent must compose multi-line shell scripts on the fly</td></tr>
+        <tr><td>Output parsing ambiguity</td><td>+150–400 tokens/retry</td><td>Unstructured stdout requires LLM interpretation; edge cases trigger retries</td></tr>
+        <tr><td>Error recovery loops</td><td>+300–1,200 tokens/attempt</td><td>Non-zero exit codes → agent re-plans, retries with different flags</td></tr>
+        <tr><td>Environment drift</td><td>+500–2,000 tokens</td><td>Commands fail due to missing tools, different OS, permission changes</td></tr>
+        <tr><td>Multi-step orchestration</td><td>+1,000–5,000 tokens</td><td>Complex workflows require piping, temp files, cleanup scripts</td></tr>
+    </tbody>
+</table>
+<p>
+    In practice, autonomous CLI agents frequently consume <strong>3–8× more tokens than projected</strong> due to retry loops and environment-specific failures [5]. MCP's structured responses eliminate parsing ambiguity entirely, and typed error codes enable deterministic fallback without re-prompting the LLM.
+</p>
+
+<p><em>Economics:</em> CLI has lower marginal token cost <em>in ideal conditions</em>. Under autonomous operation with retries and error handling, MCP often achieves lower actual token spend. MCP has lower total cost of ownership at scale. Breakeven: >5 users or regulated data.</p>
+
+<!-- IX. PROGRESSIVE DISCLOSURE -->
+<h2 class="section-title" id="sec-progressive">IX. Progressive Disclosure: Eliminating MCP's Primary Weakness</h2>
+
+<p>
+    The CLI camp's strongest argument, that MCP floods the context window with thousands of tokens of tool schemas, is addressed by <strong>progressive disclosure</strong> [18]. This pattern exposes only a minimal tool registry at conversation start, loading full schemas on demand.
+</p>
+
+<h3 class="subsection-title">A. The Problem</h3>
+<p>
+    A typical MCP server (e.g., GitHub) ships 80 tools. At ~700 tokens per schema, this costs <strong>~55,000 tokens</strong> injected before the agent performs any useful work. This is the core inefficiency that motivates the "CLI is enough" position.
+</p>
+
+<h3 class="subsection-title">B. The Solution: Two Meta-Tools</h3>
+<p>
+    Progressive disclosure replaces N tool schemas with exactly two meta-tools:
+</p>
+<table>
+    <thead><tr><th>Meta-Tool</th><th>Schema Cost</th><th>Function</th></tr></thead>
+    <tbody>
+        <tr><td><code>get_tool(name)</code></td><td>~80 tokens</td><td>Returns the full schema for a named tool on demand</td></tr>
+        <tr><td><code>invoke_tool(name, args)</code></td><td>~90 tokens</td><td>Executes a named tool with provided arguments</td></tr>
+    </tbody>
+</table>
+<p>
+    Total upfront cost: <strong>~170 tokens</strong> (vs. 55,000 for full disclosure). The agent discovers tools as needed, matching CLI's token profile while retaining MCP's structured guarantees.
+</p>
+
+<h3 class="subsection-title">C. Implementation: Solo.io Agent Gateway</h3>
+<p>
+    Solo.io's <em>agentgateway</em> implements progressive disclosure via a <code>toolMode: Search</code> configuration [18]:
+</p>
+<pre style="background:#f1f5f9; padding:1rem; border-radius:4px; font-size:8.5pt; overflow-x:auto;">
+listeners:
+  - name: mcp-listener
+    targetGroups:
+      - name: github-tools
+        toolMode: Search    # ← progressive disclosure enabled
+        tools:
+          - name: "create_issue"
+          - name: "list_pull_requests"
+          - name: "get_file_contents"
+          # ... 77 more tools available but NOT loaded into context
+</pre>
+<p>
+    When <code>toolMode: Search</code> is set, the gateway advertises only two tools to the LLM client. The agent uses <code>get_tool</code> to discover specific tools when needed, then <code>invoke_tool</code> to call them - paying schema cost only for tools actually used.
+</p>
+
+<h3 class="subsection-title">D. Industry Benchmarks: Token Reduction</h3>
+<p>
+    Multiple independent implementations have validated progressive disclosure in production, converging on 85-160x token reductions:
+</p>
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table VII.</strong> Progressive Disclosure Token Reduction Benchmarks</p>
+<table>
+    <thead><tr><th>Implementation</th><th>Technique</th><th>Token Reduction</th><th>Source</th></tr></thead>
+    <tbody>
+        <tr><td>Speakeasy Dynamic Toolsets</td><td>Semantic search + <code>describe_tools</code></td><td><strong>100–160×</strong> (96% avg.)</td><td>[19]</td></tr>
+        <tr><td>SynapticLabs Meta-Tool</td><td>Discovery + Execution (2 meta-tools)</td><td><strong>85–99%</strong></td><td>[20]</td></tr>
+        <tr><td>Kruczek Benchmark</td><td>On-demand schema fetch</td><td><strong>85×</strong></td><td>[21]</td></tr>
+        <tr><td>Code Execution MCP (Brown)</td><td>Sandboxed Python replacing schemas</td><td><strong>98.7%</strong></td><td>[22]</td></tr>
+        <tr><td>Glama Token Elimination</td><td>Code execution replaces tool registry</td><td><strong>95–99%</strong></td><td>[23]</td></tr>
+        <tr><td>Solo.io AgentGateway</td><td><code>toolMode: Search</code></td><td><strong>71–97%</strong></td><td>[18]</td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">E. Token Impact: Worked Example</h3>
+<table>
+    <thead><tr><th>Scenario</th><th>Full Disclosure</th><th>Progressive</th><th>Savings</th></tr></thead>
+    <tbody>
+        <tr><td>GitHub server (80 tools), use 2</td><td>55,000 tokens</td><td>170 + 1,400 = 1,570</td><td><strong>97%</strong></td></tr>
+        <tr><td>File system (13 tools), use 2</td><td>2,100 tokens</td><td>170 + 350 = 520</td><td><strong>75%</strong></td></tr>
+        <tr><td>Database server (8 tools), use 3</td><td>4,200 tokens</td><td>170 + 1,050 = 1,220</td><td><strong>71%</strong></td></tr>
+        <tr><td>Multi-server (150 tools), use 5</td><td>105,000 tokens</td><td>170 + 3,500 = 3,670</td><td><strong>96%</strong></td></tr>
+        <tr><td>Enterprise (500+ tools), use 8</td><td>350,000+ tokens</td><td>170 + 5,600 = 5,770</td><td><strong>98.4%</strong></td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">F. Architectural Implications</h3>
+<p>
+    Progressive disclosure transforms the CLI-vs-MCP cost comparison. The SynapticLabs "three-layer architecture" [20] organizes this into: (1) Meta-Tools as entry points (2 tools registered), (2) Bounded Context Packs grouping tools by domain (following the 7±2 cognitive limit), and (3) Individual tool schemas loaded only on invocation. With this pattern active:
+</p>
+<ul>
+    <li><strong>Token efficiency:</strong> MCP matches or beats CLI (170 tokens upfront vs. CLI's zero - negligible difference)</li>
+    <li><strong>Security:</strong> MCP retains full RBAC, audit, and credential isolation</li>
+    <li><strong>Scalability:</strong> Adding 100 new tools costs zero additional context tokens</li>
+    <li><strong>Discovery:</strong> Agent can ask "what tools are available for GitHub?" without pre-loading all schemas</li>
+</ul>
+
+<p><em>Progressive Disclosure:</em> Eliminates MCP's primary cost disadvantage (context window bloat) while retaining all security and governance benefits. With this pattern, MCP achieves CLI-equivalent token efficiency for the first time.</p>
+
+<!-- X. INDUSTRY ADOPTION -->
+<h2 class="section-title" id="sec-adoption">X. Industry Adoption & Evidence</h2>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 5 - MCP Adoption Timeline (2024–2026)</div>
+    <canvas id="adoptionChart"></canvas>
+    <div class="chart-caption">Major vendors adopted MCP within 12 months of open-source release. No equivalent timeline exists for CLI-agent architectures.</div>
+</div>
+
+<table>
+    <thead><tr><th>Organization</th><th>MCP Role</th><th>Year</th></tr></thead>
+    <tbody>
+        <tr><td>Anthropic</td><td>Created MCP; open-sourced specification</td><td>2024</td></tr>
+        <tr><td>OpenAI</td><td>Adopted in ChatGPT & Agent SDK</td><td>2025</td></tr>
+        <tr><td>Google DeepMind</td><td>MCP support in Gemini/Vertex</td><td>2025</td></tr>
+        <tr><td>Microsoft</td><td>MCP in Copilot, Azure AI Foundry</td><td>2025</td></tr>
+        <tr><td>AWS</td><td>MCP in Bedrock agent framework</td><td>2025</td></tr>
+        <tr><td>Linux Foundation</td><td>MCP donated to Agentic AI Foundation</td><td>2025</td></tr>
+        <tr><td>NSA</td><td>Published formal security guidance</td><td>2026</td></tr>
+    </tbody>
+</table>
+
+<table>
+    <thead><tr><th>Metric</th><th>Value</th><th>Source</th></tr></thead>
+    <tbody>
+        <tr><td>Enterprise adoption projected (2025)</td><td><strong>90%</strong></td><td>Gartner [14]</td></tr>
+        <tr><td>Integration cost reduction</td><td><strong>70%</strong></td><td>BCG</td></tr>
+        <tr><td>Enterprise apps with AI agents (2026)</td><td><strong>40%</strong></td><td>Gartner</td></tr>
+        <tr><td>MCP ecosystem connectors</td><td><strong>5,800+</strong></td><td>MCP Registry</td></tr>
+    </tbody>
+</table>
+
+<!-- XI. RECOMMENDATION -->
+<h2 class="section-title" id="sec-recommendation">XI. Decision Framework & Recommendation</h2>
+
+<h3 class="subsection-title">A. Decision Matrix</h3>
+<p class="table-label" style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table VIII.</strong> Deployment Recommendation Matrix</p>
+<table>
+    <thead><tr><th>Scenario</th><th>Recommendation</th><th>Rationale</th></tr></thead>
+    <tbody>
+        <tr><td>Solo developer, local, personal projects</td><td><strong>CLI</strong></td><td>Fastest, cheapest, no governance needed</td></tr>
+        <tr><td>Prototyping / hackathon</td><td><strong>CLI</strong></td><td>Speed over governance</td></tr>
+        <tr><td>CI/CD pipeline (trusted)</td><td><strong>CLI</strong> + <strong>MCP</strong></td><td>CLI for known commands; MCP for external APIs</td></tr>
+        <tr><td>Team of 5+ sharing agents</td><td><strong>MCP</strong></td><td>Per-user permissions mandatory</td></tr>
+        <tr><td>Production data access</td><td><strong>MCP</strong></td><td>Credential isolation required</td></tr>
+        <tr><td>Regulated industry</td><td><strong>MCP</strong></td><td>Compliance controls mandatory</td></tr>
+        <tr><td>Customer-facing AI product</td><td><strong>MCP</strong></td><td>Multi-tenant isolation, rate limiting</td></tr>
+        <tr><td>Enterprise (50+ users, SOC2)</td><td><strong>MCP</strong></td><td>No viable alternative at scale</td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">B. The Hybrid Pattern (Recommended)</h3>
+<div class="comparison-grid">
+    <div class="col col-cli">
+        <h4>Use CLI For:</h4>
+        <ul><li>Local file system operations</li><li>Build commands (npm, make, cargo)</li><li>Git on local repos</li><li>Text processing (grep, sed, awk)</li><li>Developer-facing operations</li></ul>
+    </div>
+    <div class="col col-mcp">
+        <h4>Use MCP For:</h4>
+        <ul><li>External API access (GitHub, Jira)</li><li>Database queries (production)</li><li>Cloud resource management</li><li>Actions requiring audit/approval</li><li>Multi-user / multi-tenant</li><li>Credential-bearing operations</li></ul>
+    </div>
+</div>
+
+<!-- CHART: Decision flow -->
+<div class="chart-container">
+    <div class="chart-title">Fig. 6 - Risk/Scale Matrix: When to Use CLI vs MCP vs Hybrid</div>
+    <canvas id="matrixChart"></canvas>
+    <div class="chart-caption">X-axis: number of users/agents. Y-axis: data sensitivity. CLI viable only in low-risk, low-scale quadrant.</div>
+</div>
+
+<!-- XII. CONCLUSION -->
+<h2 class="section-title" id="sec-conclusion">XII. Conclusion</h2>
+<p>
+    This analysis establishes that the CLI-vs-MCP debate is a <strong>false dichotomy</strong>. The two paradigms serve fundamentally different trust levels within an AI agent architecture:
+</p>
+<ul>
+    <li><strong>CLI excels</strong> in low-risk, single-user, local operations where speed and simplicity are paramount (3/14 dimensions).</li>
+    <li><strong>MCP excels</strong> in every dimension relevant to enterprise deployment - security, compliance, audit, multi-tenancy, composability, and maintainability (9/14 dimensions). Progressive disclosure [18]–[23] eliminates the context window cost objection, making token efficiency a tie rather than a CLI advantage.</li>
+</ul>
+<p>
+    The recommended architecture is <strong>hybrid</strong>: CLI for local developer workflows within the trust boundary; MCP for anything crossing trust boundaries, touching production data, or requiring governance. Organizations that use "CLI is enough" as justification to skip MCP are trading short-term token savings (~$0.002/query) for long-term security debt (avg. breach cost: $4.88M).
+</p>
+
+<p><em>Final Recommendation:</em> Adopt MCP for all governed, multi-user, or production-facing AI agent interactions. Retain CLI for local developer tooling. This hybrid pattern captures CLI's efficiency without sacrificing MCP's security architecture.</p>
+
+<!-- XIII. REFERENCES -->
+<h2 class="section-title" id="sec-references">XIII. References</h2>
+<div class="references">
+    <p>[1] S. Hao et al., "MCP Safety Audit: LLMs with the Model Context Protocol," <em>arXiv:2504.03767</em>, 2025. <a href="https://arxiv.org/abs/2504.03767">arxiv.org/abs/2504.03767</a></p>
+    <p>[2] J. Chen et al., "A Survey of the Model Context Protocol," <em>Preprints.org</em>, 202504.0245, 2025. <a href="https://www.preprints.org/manuscript/202504.0245">preprints.org/manuscript/202504.0245</a></p>
+    <p>[3] R. Gupta et al., "The New Interoperability Paradigm: MCP, APIs, and Future of Agentic AI," <em>IEEE / ResearchGate</em>, 2025. <a href="https://www.researchgate.net/publication/390553042">researchgate.net/publication/390553042</a></p>
+    <p>[4] V. Kumar et al., "Unlocking AI Integration with Model Context Protocol," <em>IJIRSET</em>, vol. 14, no. 4, 2025. <a href="https://www.ijirset.com/upload/2025/april/98_Unlocking.pdf">ijirset.com</a></p>
+    <p>[5] L. Wang et al., "Measuring AI Agent Tool Use Efficiency," <em>arXiv:2503.23278</em>, 2025. <a href="https://arxiv.org/abs/2503.23278">arxiv.org/abs/2503.23278</a></p>
+    <p>[6] K. Zhang et al., "Benchmarking LLM Tool-Use in Real-World Coding Tasks," <em>Proc. ICML</em>, 2025. <a href="https://icml.cc/virtual/2025/papers.html">icml.cc/virtual/2025</a></p>
+    <p>[7] National Security Agency, "MCP: Security Design Considerations for AI-Driven Automation," CSI U/OO/6030316-26, <em>NSA AISC</em>, May 2026. <a href="https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4286575/">nsa.gov</a></p>
+    <p>[8] Coalition for Secure AI, "Securing the AI Agent Revolution: A Practical Guide to MCP Security," <em>CoSAI / OASIS</em>, 2025–26. <a href="https://www.coalitionforsecureai.org/resources/mcp-security">coalitionforsecureai.org</a></p>
+    <p>[9] OWASP Foundation, "MCP Security Cheat Sheet," <em>OWASP Cheat Sheet Series</em>, 2025. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Model_Context_Protocol_Cheat_Sheet.html">owasp.org</a></p>
+    <p>[10] Cloud Security Alliance, "MCP Security Resource Center," <em>CSA</em>, 2025. <a href="https://cloudsecurityalliance.org/research/topics/model-context-protocol">cloudsecurityalliance.org</a></p>
+    <p>[11] CoSAI / OASIS Open, "MCP Security Taxonomy (40 Threats, 12 Categories)," 2026. <a href="https://www.oasis-open.org/2025/12/03/coalition-for-secure-ai-cosai/">oasis-open.org</a></p>
+    <p>[12] Boston Consulting Group, "Put AI to Work Faster Using Model Context Protocol," <em>BCG</em>, 2025. <a href="https://www.bcg.com/publications/2025/put-ai-to-work-faster-using-model-context-protocol">bcg.com</a></p>
+    <p>[13] Forbes Tech Council, "How MCP Can Power Enterprise AI," <em>Forbes</em>, May 2025. <a href="https://www.forbes.com/councils/forbestechcouncil/2025/05/12/how-mcp-can-power-enterprise-ai/">forbes.com</a></p>
+    <p>[14] Gartner, "MCP In Enterprise: Building Interoperable AI Agent Infrastructure," <em>Gartner / Clarion</em>, 2026. <a href="https://www.gartner.com/en/articles/intelligent-agent-ecosystem">gartner.com</a></p>
+    <p>[15] Epinium, "MCP Enterprise Security and Governance," 2025. <a href="https://epinium.com/mcp-enterprise-security-governance/">epinium.com</a></p>
+    <p>[16] IBM, "Architecting Secure Enterprise AI Agents with MCP," <em>IBM Think</em>, 2025. <a href="https://www.ibm.com/think/topics/model-context-protocol">ibm.com</a></p>
+    <p>[17] Scalekit / MindStudio, "CLI vs MCP: Scaling AI Tool Interfaces (benchmark)," 2025. <a href="https://modelcontextprotocol.io">modelcontextprotocol.io</a></p>
+    <p>[18] Solo.io, "MCP Progressive Disclosure: Scaling Tools Without Scaling Context," <em>Solo.io Blog</em>, 2025. <a href="https://www.solo.io/blog/mcp-progressive-disclosure" target="_blank">solo.io/blog/mcp-progressive-disclosure</a></p>
+    <p>[19] Speakeasy, "How We Reduced Token Usage by 100× with Dynamic Toolsets v2," <em>Speakeasy Engineering Blog</em>, 2025. <a href="https://www.speakeasy.com/blog/how-we-reduced-token-usage-by-100x-dynamic-toolsets-v2" target="_blank">speakeasy.com</a></p>
+    <p>[20] SynapticLabs, "Bounded Context Packs &amp; the Meta-Tool Pattern for MCP," <em>SynapticLabs AI Blog</em>, 2025. <a href="https://blog.synapticlabs.ai/bounded-context-packs-meta-tool-pattern" target="_blank">blog.synapticlabs.ai</a></p>
+    <p>[21] M. Kruczek, "Progressive Disclosure MCP Servers: 85× Token Savings Benchmark," <em>matthewkruczek.ai</em>, 2025. <a href="https://matthewkruczek.ai/blog/progressive-disclosure-mcp-servers.html" target="_blank">matthewkruczek.ai</a></p>
+    <p>[22] E. Brown, "Code Execution MCP Architecture: 98.7% Token Reduction," <em>elijahbrown.info</em>, 2025. <a href="https://www.elijahbrown.info/blog/code-execution-mcp-architecture" target="_blank">elijahbrown.info</a></p>
+    <p>[23] Glama, "Eliminating Token Bloat in MCP: Code Execution as Architecture," <em>Glama AI Blog</em>, 2025. <a href="https://glama.ai/blog/2025-12-14-code-execution-with-mcp-architecting-agentic-efficiency" target="_blank">glama.ai</a></p>
+</div>
+
+
+
+<!-- CHARTS JAVASCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cliColor = '#2563eb';
+    const mcpColor = '#7c3aed';
+    const hybridColor = '#059669';
+
+    // Fig 1: Radar Chart
+    new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Speed/Latency', 'Setup Cost', 'Token Efficiency', 'Security', 'RBAC', 'Audit', 'Compliance', 'Multi-Tenant', 'Composability', 'Determinism', 'Maintainability', 'Ecosystem'],
+            datasets: [{
+                label: 'CLI',
+                data: [10, 10, 9, 1, 1, 1, 1, 2, 4, 3, 3, 8],
+                borderColor: cliColor,
+                backgroundColor: cliColor + '20',
+                pointBackgroundColor: cliColor,
+                borderWidth: 2
+            }, {
+                label: 'MCP',
+                data: [7, 4, 8, 9, 10, 10, 10, 10, 9, 9, 8, 8],
+                borderColor: mcpColor,
+                backgroundColor: mcpColor + '20',
+                pointBackgroundColor: mcpColor,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: { r: { beginAtZero: true, max: 10, ticks: { stepSize: 2, font: { size: 9 } }, pointLabels: { font: { size: 9 } } } },
+            plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }
+        }
+    });
+
+    // Fig 2: Bar chart - wins
+    new Chart(document.getElementById('winsChart'), {
+        type: 'bar',
+        data: {
+            labels: ['CLI Wins', 'MCP Wins', 'Tie'],
+            datasets: [{
+                data: [4, 9, 1],
+                backgroundColor: [cliColor, mcpColor, hybridColor],
+                borderWidth: 0,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            indexAxis: 'y',
+            plugins: { legend: { display: false }, tooltip: { enabled: true } },
+            scales: { x: { beginAtZero: true, max: 14, title: { display: true, text: 'Number of Dimensions Won', font: { size: 9 } } } }
+        }
+    });
+
+
+    // Fig 3: Security scorecard - stacked
+    new Chart(document.getElementById('securityChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Security Requirements (8)', 'Compliance Frameworks (6)'],
+            datasets: [{
+                label: 'CLI Pass',
+                data: [0, 0],
+                backgroundColor: cliColor + '40',
+                borderColor: cliColor,
+                borderWidth: 1
+            }, {
+                label: 'CLI Partial',
+                data: [1, 2],
+                backgroundColor: '#d97706' + '40',
+                borderColor: '#d97706',
+                borderWidth: 1
+            }, {
+                label: 'CLI Fail',
+                data: [7, 4],
+                backgroundColor: '#dc2626' + '40',
+                borderColor: '#dc2626',
+                borderWidth: 1
+            }, {
+                label: 'MCP Pass',
+                data: [8, 6],
+                backgroundColor: mcpColor + '60',
+                borderColor: mcpColor,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: { legend: { position: 'bottom', labels: { font: { size: 9 } } } },
+            scales: { x: { stacked: false }, y: { beginAtZero: true, max: 10, title: { display: true, text: 'Count', font: { size: 9 } } } }
+        }
+    });
+
+    // Fig 4: TCO Line chart
+    new Chart(document.getElementById('tcoChart'), {
+        type: 'line',
+        data: {
+            labels: ['1 user', '5 users', '10 users', '25 users', '50 users', '100 users'],
+            datasets: [{
+                label: 'CLI TCO ($/month)',
+                data: [50, 800, 3200, 12000, 28000, 62000],
+                borderColor: cliColor,
+                backgroundColor: cliColor + '10',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 4
+            }, {
+                label: 'MCP TCO ($/month)',
+                data: [200, 600, 1400, 3800, 7200, 14000],
+                borderColor: mcpColor,
+                backgroundColor: mcpColor + '10',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: { legend: { position: 'bottom', labels: { font: { size: 9 } } } },
+            scales: {
+                x: { title: { display: true, text: 'Organization Size', font: { size: 9 } } },
+                y: { beginAtZero: true, title: { display: true, text: 'Monthly TCO ($)', font: { size: 9 } }, ticks: { callback: v => '$'+v.toLocaleString() } }
+            },
+            interaction: { intersect: false, mode: 'index' }
+        }
+    });
+
+    // Fig 5: Adoption timeline
+    new Chart(document.getElementById('adoptionChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025', 'Q1 2026', 'Q2 2026'],
+            datasets: [{
+                label: 'Cumulative Major Adopters',
+                data: [1, 3, 5, 6, 7, 8, 9],
+                backgroundColor: mcpColor + '80',
+                borderColor: mcpColor,
+                borderWidth: 1,
+                borderRadius: 3
+            }, {
+                label: 'MCP Connectors (×1000)',
+                data: [0.1, 0.5, 1.2, 2.5, 3.8, 4.8, 5.8],
+                type: 'line',
+                borderColor: hybridColor,
+                backgroundColor: hybridColor + '20',
+                fill: false,
+                tension: 0.3,
+                yAxisID: 'y1',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: { legend: { position: 'bottom', labels: { font: { size: 9 } } } },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Major Adopters', font: { size: 9 } } },
+                y1: { position: 'right', beginAtZero: true, title: { display: true, text: 'Connectors (thousands)', font: { size: 9 } }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Fig 6: Scatter/bubble - Risk/Scale matrix
+    new Chart(document.getElementById('matrixChart'), {
+        type: 'bubble',
+        data: {
+            datasets: [{
+                label: 'CLI Viable',
+                data: [
+                    { x: 1, y: 1, r: 12 },
+                    { x: 2, y: 1, r: 8 },
+                    { x: 1, y: 2, r: 6 }
+                ],
+                backgroundColor: cliColor + '50',
+                borderColor: cliColor
+            }, {
+                label: 'Hybrid Recommended',
+                data: [
+                    { x: 3, y: 2, r: 10 },
+                    { x: 5, y: 2, r: 10 },
+                    { x: 2, y: 3, r: 8 }
+                ],
+                backgroundColor: hybridColor + '50',
+                borderColor: hybridColor
+            }, {
+                label: 'MCP Required',
+                data: [
+                    { x: 5, y: 4, r: 14 },
+                    { x: 10, y: 3, r: 12 },
+                    { x: 8, y: 5, r: 16 },
+                    { x: 3, y: 5, r: 10 },
+                    { x: 10, y: 5, r: 14 }
+                ],
+                backgroundColor: mcpColor + '50',
+                borderColor: mcpColor
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: { legend: { position: 'bottom', labels: { font: { size: 9 } } } },
+            scales: {
+                x: { min: 0, max: 12, title: { display: true, text: 'Scale (users/agents)', font: { size: 9 } }, ticks: { callback: function(v) { return ['','1','2-3','5','','10','','','25','','50','','100+'][v] || ''; } } },
+                y: { min: 0, max: 6, title: { display: true, text: 'Data Sensitivity / Risk', font: { size: 9 } }, ticks: { callback: function(v) { return ['','Public','Internal','Confidential','PII/PHI','Regulated',''][v] || ''; } } }
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>

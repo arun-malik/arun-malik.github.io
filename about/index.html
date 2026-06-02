@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About - Arun Malik</title>
+    <meta name="description" content="About Arun Malik. Software engineer at Microsoft working on AI agent infrastructure and distributed systems.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>A</text></svg>">
+    <style>
+        :root {
+            --bg: #ffffff; --bg-secondary: #f9fafb; --text: #111827;
+            --text-secondary: #6b7280; --accent: #2563eb; --border: #e5e7eb;
+            --max-width: 680px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9;
+            --text-secondary: #94a3b8; --accent: #60a5fa; --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; transition: background 0.3s, color 0.3s; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+        .site-nav { display: flex; align-items: center; justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .site-name:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active { color: var(--text); }
+        .theme-btn { background: none; border: none; cursor: pointer; font-size: 1.125rem; color: var(--text-secondary); padding: 0.25rem; }
+        .theme-btn:hover { color: var(--text); }
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
+        .about-content p { margin-bottom: 1.25rem; color: var(--text); font-size: 1rem; }
+        .about-content a { color: var(--accent); text-decoration: none; }
+        .about-content a:hover { text-decoration: underline; }
+        .about-content h2 { font-size: 1.125rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .about-content ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+        .about-content li { margin-bottom: 0.5rem; color: var(--text-secondary); }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 0.8125rem; color: var(--text-secondary); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="site-nav">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/about/" class="active">About</a>
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="about-content">
+            <h1>About</h1>
+            <p>I am a software engineer at Microsoft, working on AI agent infrastructure and network automation systems. My current focus is on how large language models interact with external tools and services at enterprise scale.</p>
+
+            <p>This site is where I publish research notes, technical deep dives, and analysis on topics I find interesting. Most of my writing sits at the intersection of AI systems engineering, distributed infrastructure, and developer tooling.</p>
+
+            <h2>Interests</h2>
+            <ul>
+                <li>AI agent architectures and tool-use protocols</li>
+                <li>Distributed systems and network automation</li>
+                <li>Developer experience and productivity tooling</li>
+                <li>Security and compliance in autonomous systems</li>
+            </ul>
+
+            <h2>Elsewhere</h2>
+            <p>Find me on <a href="https://github.com/arun-malik" target="_blank">GitHub</a> and <a href="https://linkedin.com/in/arunmalikdev" target="_blank">LinkedIn</a>.</p>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/arunmalikdev" target="_blank">LinkedIn</a>
+            </div>
+            <p>&copy; 2026 Arun Malik</p>
+        </footer>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+</body>
+</html>
