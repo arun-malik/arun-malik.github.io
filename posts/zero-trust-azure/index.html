@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zero Trust in Azure: Strategies for Securing Cloud Infrastructure - Arun Malik</title>
-    <meta name="description" content="Seven practical strategies for implementing Zero Trust security in Azure, covering NSGs, Private Links, Azure Policies, AVNM, and shift-left security practices.">
+    <title>Implementing Zero Trust Network Security in Azure at Scale - Arun Malik</title>
+    <meta name="description" content="A practitioner's guide to implementing Zero Trust network security across Azure infrastructure at enterprise scale, covering NSP, Private Link, AVNM, Service Tags, and defense-in-depth strategies.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>A</text></svg>">
     <style>
         :root {
@@ -17,6 +17,9 @@
             --border: #d0d7de;
             --accent: #2563eb;
             --accent-subtle: #ddf4ff;
+            --danger: #cf222e;
+            --success: #1a7f37;
+            --warning: #9a6700;
         }
         [data-theme="dark"] {
             --bg: #0d1117;
@@ -26,6 +29,9 @@
             --border: #30363d;
             --accent: #58a6ff;
             --accent-subtle: #1f2a38;
+            --danger: #f85149;
+            --success: #3fb950;
+            --warning: #d29922;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -40,15 +46,41 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Header */
-        .blog-header {
+        /* Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 2rem;
-            margin-bottom: 2.5rem;
         }
-        .blog-header h1 {
-            font-size: 1.875rem;
+        .site-name {
             font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 1.25rem; align-items: center; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .theme-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px;
+        }
+
+        /* Header */
+        .blog-header { margin-bottom: 2.5rem; }
+        .blog-header h1 {
+            font-size: 2rem;
             line-height: 1.3;
             margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
@@ -56,146 +88,186 @@
         .blog-meta {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
             color: var(--text-muted);
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             flex-wrap: wrap;
         }
-        .blog-meta .author { font-weight: 600; color: var(--text); }
-        .tag-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            background: var(--accent-subtle);
-            color: var(--accent);
-            padding: 0.25rem 0.625rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-decoration: none;
-        }
 
-        /* Nav */
-        .top-nav {
+        /* Keywords/Tags */
+        .keywords {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
         }
-        .top-nav a {
+        .keyword {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
         }
-        .top-nav a:hover { color: var(--accent); }
-        .top-nav .site-name { font-weight: 700; color: var(--text); font-size: 1rem; }
-        .top-nav .site-name:hover { color: var(--accent); }
-        .nav-right { display: flex; gap: 1.25rem; align-items: center; }
-        .theme-btn {
-            background: none; border: none; cursor: pointer;
-            color: var(--text-muted); font-size: 1.125rem; padding: 0.25rem;
-        }
-        .theme-btn:hover { color: var(--text); }
 
         /* Content */
-        .content h2 {
-            font-size: 1.375rem;
-            font-weight: 700;
-            margin-top: 2.5rem;
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.375rem;
+        .article-content h2 {
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--border);
         }
-        .content h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
+        .article-content h3 {
+            font-size: 1.2rem;
             margin-top: 2rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
-        .content p {
+        .article-content p {
             margin-bottom: 1rem;
         }
-        .content ul {
+        .article-content ul, .article-content ol {
             margin-bottom: 1rem;
             padding-left: 1.5rem;
         }
-        .content li {
-            margin-bottom: 0.5rem;
-        }
-        .content a {
+        .article-content li { margin-bottom: 0.4rem; }
+        .article-content a {
             color: var(--accent);
             text-decoration: none;
         }
-        .content a:hover { text-decoration: underline; }
-        .content code {
+        .article-content a:hover { text-decoration: underline; }
+        .article-content code {
             font-family: var(--font-mono);
-            font-size: 0.875rem;
+            font-size: 0.88em;
             background: var(--bg-secondary);
-            padding: 0.125rem 0.375rem;
-            border-radius: 3px;
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
             border: 1px solid var(--border);
         }
-        .content hr {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 2rem 0;
-        }
-        .content strong { font-weight: 600; }
-
-        /* Callout box */
-        .callout {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            border-radius: 6px;
-            padding: 1rem 1.25rem;
-            margin: 1.25rem 0;
-            font-size: 0.9375rem;
-        }
-        .callout strong { display: block; margin-bottom: 0.25rem; }
-
-        /* Links section */
-        .useful-links {
+        .article-content pre {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 1.25rem 1.5rem;
-            margin-top: 2rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.6;
         }
-        .useful-links h3 {
-            margin-top: 0;
-            margin-bottom: 0.75rem;
-            font-size: 1rem;
+        .article-content pre code {
+            background: none;
+            border: none;
+            padding: 0;
         }
-        .useful-links ul { margin-bottom: 0; }
+        .article-content strong { font-weight: 600; }
 
-        /* Footer */
+        /* Callout/Note boxes */
+        .callout {
+            background: var(--accent-subtle);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        .callout-warning {
+            background: color-mix(in srgb, var(--warning) 10%, var(--bg));
+            border-left-color: var(--warning);
+        }
+        .callout-success {
+            background: color-mix(in srgb, var(--success) 8%, var(--bg));
+            border-left-color: var(--success);
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .callout strong { display: block; margin-bottom: 0.3rem; }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+        td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        tr:last-child td { border-bottom: none; }
+
+        /* Figures / Diagrams */
+        .diagram {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .diagram-caption {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* References */
+        .references {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 { border-bottom: none; margin-top: 0; }
+        .references ol {
+            padding-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .references li { margin-bottom: 0.5rem; }
+
+        /* Post Footer */
         .post-footer {
             margin-top: 3rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
-            text-align: center;
         }
         .post-footer a {
-            color: var(--text-muted);
+            color: var(--accent);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
-        .post-footer a:hover { color: var(--accent); }
 
-        @media (max-width: 640px) {
-            body { padding: 1rem; }
-            .blog-header h1 { font-size: 1.5rem; }
+        /* Abstract */
+        .abstract {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
     <nav class="top-nav">
         <a href="/" class="site-name">Arun Malik</a>
-        <div class="nav-right">
+        <div class="nav-links">
             <a href="/posts/">Writing</a>
             <a href="/about/">About</a>
             <button class="theme-btn" id="themeToggle" title="Toggle theme">
@@ -205,138 +277,579 @@
         </div>
     </nav>
 
-    <header class="blog-header">
-        <h1>Zero Trust in Azure: Strategies for Securing Cloud Infrastructure</h1>
-        <div class="blog-meta">
-            <span class="author">Arun Malik</span>
-            <span>·</span>
-            <span>April 19, 2025</span>
-            <span>·</span>
-            <span>6 min read</span>
-            <span class="tag-badge">Security</span>
-            <span class="tag-badge">Azure</span>
-            <span class="tag-badge">Zero Trust</span>
-        </div>
-    </header>
+    <article>
+        <header class="blog-header">
+            <h1>Implementing Zero Trust Network Security in Azure at Scale</h1>
+            <div class="blog-meta">
+                <span>Arun Malik</span>
+                <span>&middot;</span>
+                <span>June 2025</span>
+                <span>&middot;</span>
+                <span>15 min read</span>
+            </div>
+        </header>
 
-    <article class="content">
-        <p>Securing cloud infrastructure requires assuming breach at every layer. A Zero Trust approach treats every request, connection, and identity as untrusted until continuously verified. In Azure, several strategies work together to enforce this model across your network, data plane, and development lifecycle.</p>
-
-        <p>Here are seven strategies I use to implement Zero Trust in production Azure environments.</p>
-
-        <h2>Key Strategies for Zero Trust in Azure</h2>
-
-        <h3>1. External Scanning to Test Exposed Endpoints</h3>
-
-        <p>Zero Trust starts with minimizing the attack surface. Use external scanning tools (such as Nmap) to periodically scan your environment for exposed endpoints. These scans identify services or applications unintentionally exposed to the public internet, allowing you to patch or mitigate vulnerabilities before exploitation.</p>
-
-        <div class="callout">
-            <strong>Tip:</strong> Automate external vulnerability scanning for continuous monitoring. Any accidental exposure should trigger an alert, not wait for a quarterly review.
+        <div class="keywords">
+            <span class="keyword">Zero Trust</span>
+            <span class="keyword">Azure Networking</span>
+            <span class="keyword">Network Security Perimeter</span>
+            <span class="keyword">Private Link</span>
+            <span class="keyword">AVNM</span>
+            <span class="keyword">Service Tags</span>
+            <span class="keyword">Defense in Depth</span>
         </div>
 
-        <p><a href="https://docs.microsoft.com/en-us/azure/security/fundamentals/azure-security-tools">Azure Security Tools Documentation</a></p>
+        <div class="abstract">
+            <p>Traditional perimeter-based security models assume that everything inside the corporate network boundary is trustworthy. That assumption has failed repeatedly in practice. Zero Trust inverts the model: trust nothing, verify everything, assume breach. This post describes how I implement Zero Trust network security across Azure infrastructure at enterprise scale, covering the full stack from Network Security Perimeter (NSP) for PaaS isolation through Private Link for data-plane protection, AVNM for centralized policy enforcement, and IP Address Management with Service Tags for precise traffic control. Each layer addresses a specific class of threats while maintaining operational simplicity at scale.</p>
+        </div>
 
-        <hr>
+        <div class="article-content">
 
-        <h3>2. Promote Private Links and Service Endpoints</h3>
+            <h2>The Problem with Perimeter Security</h2>
 
-        <p>A core tenet of Zero Trust is limiting communication to trusted, private networks. Azure Private Links and Service Endpoints allow services to connect securely within your virtual network, bypassing public internet exposure entirely.</p>
+            <p>For decades, network security followed a castle-and-moat architecture: a hardened perimeter (firewalls, DMZs, VPN gateways) protecting a trusted interior. If you were inside the perimeter, you had broad access. If you were outside, you did not. This model breaks down for three reasons that are now obvious but were once controversial:</p>
 
-        <ul>
-            <li>Use <strong>Azure Private Link</strong> for services like Azure Storage and SQL Database to route all data traffic over private endpoints.</li>
-            <li>Eliminate public endpoint exposure for any service that does not explicitly require it.</li>
-        </ul>
+            <p>First, cloud workloads have no meaningful perimeter. An Azure Storage account is accessible from any network by default. A SQL Database exposes a public endpoint. The interior/exterior distinction vanishes when your infrastructure spans dozens of regions and hundreds of subscriptions.</p>
 
-        <p><a href="https://docs.microsoft.com/en-us/azure/virtual-network/private-link-private-endpoint">Private Link Documentation</a></p>
+            <p>Second, lateral movement is the primary attack vector in modern breaches. Once an attacker compromises a single workload (phishing, supply chain, misconfiguration), they move laterally through the flat internal network. A perimeter-only model offers no resistance to this movement.</p>
 
-        <hr>
+            <p>Third, the blast radius of a compromised identity is unbounded in a perimeter model. A single set of leaked credentials can access every resource the network can reach.</p>
 
-        <h3>3. Secure Access with NSGs and Service Tags</h3>
+            <p>Zero Trust replaces implicit trust with explicit verification at every layer: identity, device, network, application, and data. In network security specifically, this means every flow must be explicitly authorized, every resource must be isolated by default, and every access decision must be logged and auditable.</p>
 
-        <p>Network Security Groups (NSGs) enforce access control at the network layer. Zero Trust mandates that access should be as restrictive as possible. Service Tags in NSGs allow you to define rules that apply to specific Azure services and regions, ensuring communication is limited to explicitly trusted services.</p>
+            <!-- Defense in Depth Diagram -->
+            <div class="diagram">
+                <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                    <!-- Outer layer -->
+                    <rect x="20" y="20" width="660" height="280" rx="16" fill="none" stroke="#cf222e" stroke-width="2" stroke-dasharray="6,3"/>
+                    <text x="350" y="50" text-anchor="middle" font-size="12" fill="#cf222e" font-weight="600">NETWORK SECURITY PERIMETER (NSP)</text>
 
-        <ul>
-            <li>Restrict traffic using Service Tags (<code>VirtualNetwork</code>, <code>AzureLoadBalancer</code>) rather than broad IP ranges.</li>
-            <li>Apply deny-all default rules and explicitly allow only required flows.</li>
-        </ul>
+                    <!-- Second layer -->
+                    <rect x="60" y="65" width="580" height="220" rx="12" fill="none" stroke="#d29922" stroke-width="2" stroke-dasharray="5,3"/>
+                    <text x="350" y="88" text-anchor="middle" font-size="12" fill="#d29922" font-weight="600">AZURE VIRTUAL NETWORK MANAGER (AVNM)</text>
 
-        <p><a href="https://docs.microsoft.com/en-us/azure/virtual-network/security-overview">Network Security Groups Documentation</a></p>
+                    <!-- Third layer -->
+                    <rect x="100" y="100" width="500" height="170" rx="10" fill="none" stroke="#2563eb" stroke-width="2"/>
+                    <text x="350" y="122" text-anchor="middle" font-size="12" fill="#2563eb" font-weight="600">NSG + SERVICE TAGS</text>
 
-        <hr>
+                    <!-- Inner resources -->
+                    <rect x="140" y="140" width="120" height="50" rx="6" fill="#ddf4ff" stroke="#2563eb" stroke-width="1.5"/>
+                    <text x="200" y="160" text-anchor="middle" font-size="11" fill="#1f2328">VM / Container</text>
+                    <text x="200" y="177" text-anchor="middle" font-size="10" fill="#656d76">Private Subnet</text>
 
-        <h3>4. Use Azure Policies for Default Policy Enforcement</h3>
+                    <rect x="290" y="140" width="120" height="50" rx="6" fill="#ddf4ff" stroke="#2563eb" stroke-width="1.5"/>
+                    <text x="350" y="160" text-anchor="middle" font-size="11" fill="#1f2328">Storage / KV</text>
+                    <text x="350" y="177" text-anchor="middle" font-size="10" fill="#656d76">Private Endpoint</text>
 
-        <p>Azure Policies provide organization-wide enforcement of security standards. Create policies that automatically detect configuration drift and apply corrective actions.</p>
+                    <rect x="440" y="140" width="120" height="50" rx="6" fill="#ddf4ff" stroke="#2563eb" stroke-width="1.5"/>
+                    <text x="500" y="160" text-anchor="middle" font-size="11" fill="#1f2328">SQL / Cosmos</text>
+                    <text x="500" y="177" text-anchor="middle" font-size="10" fill="#656d76">Private Endpoint</text>
 
-        <ul>
-            <li><strong>Network Change Detection:</strong> Ensure network changes are reviewed and approved before implementation.</li>
-            <li><strong>Default Denial in NSGs:</strong> Policies automatically apply deny rules at high priority, blocking unauthorized traffic by default.</li>
-            <li><strong>NSG Creation in Subnets:</strong> Automatically attach NSGs to subnets that lack one, ensuring all network traffic is monitored.</li>
-        </ul>
+                    <!-- Private Link connections -->
+                    <line x1="260" y1="165" x2="290" y2="165" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="410" y1="165" x2="440" y2="165" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <p><a href="https://docs.microsoft.com/en-us/azure/governance/policy/overview">Azure Policy Documentation</a></p>
+                    <!-- Azure Policy bar -->
+                    <rect x="140" y="210" width="420" height="40" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+                    <text x="350" y="235" text-anchor="middle" font-size="11" fill="#656d76">Azure Policy: Deny public access | Enforce encryption | Require NSG</text>
 
-        <hr>
+                    <!-- Arrow marker -->
+                    <defs>
+                        <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                            <path d="M0,0 L8,3 L0,6 Z" fill="#1a7f37"/>
+                        </marker>
+                    </defs>
+                </svg>
+                <div class="diagram-caption">Figure 1: Defense-in-depth layers for Zero Trust Azure networking. Each layer independently enforces access control, creating multiple barriers an attacker must overcome.</div>
+            </div>
 
-        <h3>5. Leverage Azure Virtual Network Manager (AVNM)</h3>
+            <h2>Layer 1: Network Security Perimeter (NSP)</h2>
 
-        <p>Azure Virtual Network Manager (AVNM) at the management group level enables centralized enforcement of network policies across all subscriptions and resource groups. This prevents teams from inadvertently bypassing security measures by overriding traffic rules at lower scope levels.</p>
+            <p>Network Security Perimeter is Azure's newest network security primitive. It creates a logical boundary around PaaS resources that are deployed outside your virtual networks. The core insight behind NSP: Private Link secures the data plane (how you connect to resources), but NSP secures the control plane (who can access resources and from where).</p>
 
-        <ul>
-            <li>Create default denial policies that restrict traffic to trusted endpoints.</li>
-            <li>Apply policies at the management group level so they cannot be overridden at subscription or resource group scope.</li>
-        </ul>
+            <h3>How NSP Works</h3>
 
-        <p><a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manager-overview">AVNM Documentation</a></p>
+            <p>When you create a Network Security Perimeter and associate PaaS resources with it in enforced mode, all public network access is denied by default. Resources within the same perimeter can communicate freely with each other (intra-perimeter traffic), but any traffic crossing the perimeter boundary requires an explicit access rule.</p>
 
-        <hr>
+            <p>This is the critical difference from traditional NSG-based security: NSP operates at the PaaS resource level, not the virtual network level. You can secure an Azure Storage account, Key Vault, or Azure AI Search instance without deploying it into a VNet or configuring Private Endpoints for every consumer.</p>
 
-        <h3>6. Regular Attestation and Ownership Reviews</h3>
+            <div class="callout">
+                <strong>Key Capability: Preventing Data Exfiltration</strong>
+                <p>NSP prevents a common attack pattern: a compromised workload writing sensitive data to an attacker-controlled storage account. Because the attacker's storage account is outside the perimeter, the write fails. Traditional NSGs cannot prevent this because they operate at the IP/port level, not the resource identity level.</p>
+            </div>
 
-        <p>Maintaining Zero Trust requires ongoing verification that resource ownership and access are current. Conduct regular attestation reviews where teams confirm ownership, usage, and security posture of the resources they manage.</p>
+            <h3>NSP Components</h3>
 
-        <ul>
-            <li>Verify that access policies still reflect current team responsibilities.</li>
-            <li>Remove stale permissions and orphaned resources that accumulate over time.</li>
-            <li>Hold teams accountable for continuous adherence to security baselines.</li>
-        </ul>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Purpose</th>
+                            <th>Scope</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Perimeter</strong></td>
+                            <td>Top-level logical boundary defining the trusted resource group</td>
+                            <td>Subscription / Resource Group</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Profile</strong></td>
+                            <td>Collection of access rules applied to associated resources</td>
+                            <td>Per-perimeter</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Access Rule</strong></td>
+                            <td>Inbound/outbound rules allowing traffic across the boundary</td>
+                            <td>Per-profile</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Resource Association</strong></td>
+                            <td>Binding a PaaS resource to a perimeter (with access mode)</td>
+                            <td>Per-resource</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diagnostic Settings</strong></td>
+                            <td>Access logs and metrics for audit and compliance</td>
+                            <td>Per-perimeter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <hr>
+            <h3>Access Modes: Transition vs. Enforced</h3>
 
-        <h3>7. Shift Left: Security Early in the Development Cycle</h3>
+            <p>NSP supports two access modes. In <strong>Transition mode</strong> (formerly called Learning mode), the perimeter logs all traffic that would be denied in enforced mode without actually blocking it. This gives you visibility into existing access patterns before cutting off traffic. In <strong>Enforced mode</strong>, all traffic except intra-perimeter and explicitly allowed flows is denied.</p>
 
-        <p>Security should be integrated from the beginning of the software development lifecycle, not bolted on at deployment. A Shift Left approach includes code scanning, vulnerability assessments, and automated security testing before code reaches production.</p>
+            <p>The recommended deployment pattern: associate resources in Transition mode, analyze access logs for 2-4 weeks, create access rules for legitimate traffic, then switch to Enforced mode. This avoids the outage risk of blocking traffic you did not know existed.</p>
 
-        <ul>
-            <li>Integrate security gates in CI/CD pipelines.</li>
-            <li>Run automated policy checks on infrastructure-as-code before deployment.</li>
-            <li>Identify potential threats earlier to reduce remediation cost and blast radius.</li>
-        </ul>
+            <div class="callout callout-warning">
+                <strong>Operational Note</strong>
+                <p>NSP is now generally available in all Azure public cloud regions and Azure Government regions. Private Endpoint traffic is allowed without explicit access rules when both the endpoint and the resource are within the same perimeter.</p>
+            </div>
 
-        <p><a href="https://docs.microsoft.com/en-us/azure/devops/security/shift-left">Shift Left in DevSecOps</a></p>
+            <h2>Layer 2: Private Endpoints and Private Link</h2>
 
-        <hr>
+            <p>If NSP secures the control plane, Private Link secures the data plane. A Private Endpoint creates a network interface inside your VNet with a private IP address that maps to a specific PaaS resource. Traffic between your workload and the resource traverses the Microsoft backbone network; it never touches the public internet.</p>
 
-        <h2>Conclusion</h2>
+            <h3>Why Private Endpoints Matter for Zero Trust</h3>
 
-        <p>Securing Azure infrastructure with Zero Trust requires automation, vigilant monitoring, and strict access control working together. External scanning, private endpoints, NSGs, Azure Policies, and AVNM form a layered defense. Ongoing attestation and shift-left practices ensure these controls remain effective as your environment evolves.</p>
+            <p>Consider a standard Azure Storage account. Without Private Endpoints, your application connects to <code>mystorageaccount.blob.core.windows.net</code> which resolves to a public IP. Even with firewall rules restricting access to your VNet, the traffic still transits a public endpoint. DNS poisoning, BGP hijacking, or a misconfigured firewall rule could expose this path.</p>
 
-        <p>Zero Trust is not a product you deploy. It is an operational discipline that strengthens every layer of your infrastructure over time.</p>
+            <p>With a Private Endpoint, the same FQDN resolves to <code>10.0.1.5</code> (a private IP in your VNet). The connection is entirely private. There is no public attack surface. If you then disable public access on the storage account, the resource becomes invisible to the internet entirely.</p>
 
-        <div class="useful-links">
-            <h3>References</h3>
+            <h3>Private Endpoint vs. Service Endpoint</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th>Private Endpoint</th>
+                            <th>Service Endpoint</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Traffic path</td>
+                            <td>Private IP in your VNet, over backbone</td>
+                            <td>Still uses public IP of the service</td>
+                        </tr>
+                        <tr>
+                            <td>DNS resolution</td>
+                            <td>Private IP (requires DNS zone)</td>
+                            <td>Public IP (unchanged)</td>
+                        </tr>
+                        <tr>
+                            <td>On-premises access</td>
+                            <td>Works over ExpressRoute / VPN</td>
+                            <td>VNet traffic only</td>
+                        </tr>
+                        <tr>
+                            <td>Data exfiltration protection</td>
+                            <td>Maps to a specific resource instance</td>
+                            <td>Allows access to any instance of the service type</td>
+                        </tr>
+                        <tr>
+                            <td>Cost</td>
+                            <td>Per-endpoint hourly + data processing</td>
+                            <td>Free</td>
+                        </tr>
+                        <tr>
+                            <td>Recommendation</td>
+                            <td><strong>Use for production workloads</strong></td>
+                            <td>Legacy; use for cost-sensitive dev/test</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-success">
+                <strong>Best Practice</strong>
+                <p>Deploy Private Endpoints for all PaaS resources in production. Combine with Azure Policy to deny creation of resources without Private Endpoints (<code>Microsoft.Network/privateEndpoints</code> audit/deny policy). Disable public access on the resource after Private Endpoint connectivity is confirmed.</p>
+            </div>
+
+            <h2>Layer 3: Network Security Groups and Service Tags</h2>
+
+            <p>Network Security Groups (NSGs) are the foundational traffic filter in Azure. They operate at Layer 4 (TCP/UDP), allowing you to define allow/deny rules based on source, destination, port, and protocol. In a Zero Trust model, NSGs enforce the principle of least privilege at the network layer: deny all traffic by default, then explicitly allow only the flows your application requires.</p>
+
+            <h3>Service Tags: Managed IP Prefix Groups</h3>
+
+            <p>Service Tags replace hardcoded IP addresses in NSG rules with dynamically managed IP prefix groups. Microsoft maintains these groups and updates them automatically as Azure service IP ranges change. This eliminates the operational burden of tracking and rotating IP addresses manually.</p>
+
+            <p>Consider a common scenario: your application needs to call Azure Key Vault. Without Service Tags, you would need to look up the current IP ranges for Key Vault in your region, create NSG rules with those IPs, and update them whenever Microsoft changes the ranges. With Service Tags, you write one rule: allow outbound to <code>AzureKeyVault.WestUS2</code>. Done.</p>
+
+            <h3>Critical Service Tags for Zero Trust</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service Tag</th>
+                            <th>Scope</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>VirtualNetwork</code></td>
+                            <td>VNet address space + peered VNets</td>
+                            <td>Intra-VNet communication</td>
+                        </tr>
+                        <tr>
+                            <td><code>AzureLoadBalancer</code></td>
+                            <td>Azure health probes</td>
+                            <td>Required for LB health checks</td>
+                        </tr>
+                        <tr>
+                            <td><code>Internet</code></td>
+                            <td>All public IPs outside Azure</td>
+                            <td>Deny inbound from Internet (default deny)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Storage.&lt;Region&gt;</code></td>
+                            <td>Azure Storage IPs in a region</td>
+                            <td>Allow access to regional storage</td>
+                        </tr>
+                        <tr>
+                            <td><code>Sql.&lt;Region&gt;</code></td>
+                            <td>Azure SQL IPs in a region</td>
+                            <td>Database connectivity</td>
+                        </tr>
+                        <tr>
+                            <td><code>AzureMonitor</code></td>
+                            <td>Log Analytics, App Insights endpoints</td>
+                            <td>Telemetry egress</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warning">
+                <strong>Service Tags Are Not Sufficient Alone</strong>
+                <p>Service Tags simplify IP-based ACLs but are not a complete security solution. A Service Tag for <code>Storage</code> includes all Azure Storage accounts, including attacker-controlled ones. Combine Service Tags with Private Endpoints (which pin to a specific resource instance) and NSP (which prevents cross-boundary access) for proper data exfiltration protection.</p>
+            </div>
+
+            <h3>IPAM and Custom Service Tags</h3>
+
+            <p>Azure IP Address Manager (IPAM) provides centralized IP address planning, allocation, and tracking across your Azure environment. For organizations operating at scale, IPAM solves the problem of IP address sprawl: overlapping address spaces, exhausted subnets, and inconsistent allocation across teams.</p>
+
+            <p>In the context of Zero Trust, IPAM enables you to create custom service tags based on your own IP address pools. This allows NSG rules that reference your internal service boundaries rather than relying solely on Microsoft-managed tags. For example, you can create a service tag for your "payment processing" subnet range and reference it across all NSGs in your environment, ensuring that only explicitly designated networks can reach payment infrastructure.</p>
+
+            <pre><code># Register a custom IP prefix for use as a service tag
+az network custom-ip prefix create \
+  --name PaymentServices \
+  --resource-group rg-networking \
+  --cidr 10.50.0.0/16 \
+  --zone 1
+
+# Use in NSG rules across your environment
+az network nsg rule create \
+  --nsg-name nsg-web-tier \
+  --name AllowToPayment \
+  --priority 200 \
+  --direction Outbound \
+  --access Allow \
+  --source-address-prefixes VirtualNetwork \
+  --destination-address-prefixes 10.50.0.0/16 \
+  --destination-port-ranges 443</code></pre>
+
+            <h2>Layer 4: Azure Virtual Network Manager (AVNM)</h2>
+
+            <p>Individual NSG rules work at the subnet or NIC level. They are managed by the team that owns the resource. This creates a fundamental governance problem: a team can modify or delete their NSG rules, bypassing security policies set by the platform team. Azure Virtual Network Manager solves this by introducing Security Admin Rules that operate at a higher precedence than NSG rules and cannot be overridden by resource owners.</p>
+
+            <h3>Security Admin Rules vs. NSG Rules</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Security Admin Rules (AVNM)</th>
+                            <th>NSG Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Evaluation order</td>
+                            <td>Evaluated first (higher priority)</td>
+                            <td>Evaluated after admin rules</td>
+                        </tr>
+                        <tr>
+                            <td>Override capability</td>
+                            <td>Cannot be overridden by resource owners</td>
+                            <td>Can be modified by anyone with NSG write permissions</td>
+                        </tr>
+                        <tr>
+                            <td>Scope</td>
+                            <td>Management group, subscription, or network group</td>
+                            <td>Subnet or NIC</td>
+                        </tr>
+                        <tr>
+                            <td>Actions</td>
+                            <td>Allow, Deny, Always Allow</td>
+                            <td>Allow, Deny</td>
+                        </tr>
+                        <tr>
+                            <td>Use case</td>
+                            <td>Platform-level guardrails</td>
+                            <td>Application-level access control</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- AVNM Traffic Flow Diagram -->
+            <div class="diagram">
+                <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                    <!-- Flow boxes -->
+                    <rect x="20" y="70" width="130" height="60" rx="8" fill="#ddf4ff" stroke="#2563eb" stroke-width="1.5"/>
+                    <text x="85" y="95" text-anchor="middle" font-size="11" fill="#1f2328" font-weight="600">Inbound Traffic</text>
+                    <text x="85" y="113" text-anchor="middle" font-size="10" fill="#656d76">Any source</text>
+
+                    <rect x="185" y="70" width="130" height="60" rx="8" fill="#fff3cd" stroke="#d29922" stroke-width="1.5"/>
+                    <text x="250" y="90" text-anchor="middle" font-size="11" fill="#1f2328" font-weight="600">AVNM Admin</text>
+                    <text x="250" y="106" text-anchor="middle" font-size="10" fill="#656d76">Rules (1st)</text>
+                    <text x="250" y="120" text-anchor="middle" font-size="10" fill="#cf222e">Cannot override</text>
+
+                    <rect x="350" y="70" width="130" height="60" rx="8" fill="#d4edda" stroke="#1a7f37" stroke-width="1.5"/>
+                    <text x="415" y="90" text-anchor="middle" font-size="11" fill="#1f2328" font-weight="600">NSG Rules</text>
+                    <text x="415" y="106" text-anchor="middle" font-size="10" fill="#656d76">(2nd)</text>
+                    <text x="415" y="120" text-anchor="middle" font-size="10" fill="#656d76">Team-managed</text>
+
+                    <rect x="515" y="70" width="130" height="60" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+                    <text x="580" y="95" text-anchor="middle" font-size="11" fill="#1f2328" font-weight="600">Application</text>
+                    <text x="580" y="113" text-anchor="middle" font-size="10" fill="#656d76">Workload</text>
+
+                    <!-- Arrows -->
+                    <line x1="150" y1="100" x2="185" y2="100" stroke="#656d76" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+                    <line x1="315" y1="100" x2="350" y2="100" stroke="#656d76" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+                    <line x1="480" y1="100" x2="515" y2="100" stroke="#656d76" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+                    <!-- Labels -->
+                    <text x="350" y="165" text-anchor="middle" font-size="12" fill="#656d76">Traffic evaluation order: AVNM Security Admin Rules → NSG Rules → Application</text>
+                    <text x="350" y="185" text-anchor="middle" font-size="11" fill="#cf222e">Platform teams set non-overridable guardrails; application teams add granular rules</text>
+
+                    <defs>
+                        <marker id="arrowGray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                            <path d="M0,0 L8,3 L0,6 Z" fill="#656d76"/>
+                        </marker>
+                    </defs>
+                </svg>
+                <div class="diagram-caption">Figure 2: Traffic evaluation order. AVNM Security Admin Rules evaluate before NSGs, providing non-overridable platform guardrails.</div>
+            </div>
+
+            <h3>Common AVNM Patterns</h3>
+
+            <p><strong>Block high-risk ports globally:</strong> Create an admin rule denying inbound SSH (22) and RDP (3389) from the Internet across all network groups. Individual teams cannot create NSG rules to allow these ports, even if they have full NSG write permissions.</p>
+
+            <p><strong>Enforce network segmentation:</strong> Block traffic between production and development network groups. This prevents accidental cross-environment communication even if VNet peering is misconfigured.</p>
+
+            <p><strong>Always Allow for exceptions:</strong> The "Always Allow" action permits traffic regardless of subsequent deny rules. Use this sparingly for infrastructure services that must remain reachable (Azure Monitor, Key Vault) even when other deny rules are in place.</p>
+
+            <h2>Layer 5: Azure Policy for Continuous Enforcement</h2>
+
+            <p>The previous layers define the security controls. Azure Policy ensures those controls remain in place. Without policy enforcement, security configurations degrade over time: someone disables a firewall rule for debugging, a new resource deploys without a Private Endpoint, an NSG gets deleted during a migration.</p>
+
+            <h3>Essential Zero Trust Policies</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Policy</th>
+                            <th>Effect</th>
+                            <th>What It Prevents</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Storage accounts should disable public access</td>
+                            <td>Deny</td>
+                            <td>Creating storage with public endpoints</td>
+                        </tr>
+                        <tr>
+                            <td>SQL servers should use Private Link</td>
+                            <td>Audit / Deny</td>
+                            <td>Databases accessible from the internet</td>
+                        </tr>
+                        <tr>
+                            <td>Subnets should have an NSG</td>
+                            <td>DeployIfNotExists</td>
+                            <td>Subnets without traffic filtering</td>
+                        </tr>
+                        <tr>
+                            <td>Network interfaces should not have public IPs</td>
+                            <td>Deny</td>
+                            <td>VMs with direct internet exposure</td>
+                        </tr>
+                        <tr>
+                            <td>VNet peering should only connect approved VNets</td>
+                            <td>Deny</td>
+                            <td>Unauthorized cross-boundary connectivity</td>
+                        </tr>
+                        <tr>
+                            <td>Key Vault should disable public access</td>
+                            <td>Deny</td>
+                            <td>Secrets accessible from untrusted networks</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>The <code>DeployIfNotExists</code> effect is particularly powerful for Zero Trust: rather than just blocking non-compliant resources, it automatically remediates them. If a subnet is created without an NSG, the policy creates and attaches a default-deny NSG automatically.</p>
+
+            <h2>Layer 6: External Scanning and Continuous Validation</h2>
+
+            <p>A Zero Trust posture is only as strong as your ability to verify it. External scanning validates that your controls work as intended by testing your infrastructure from an attacker's perspective. Internal configuration audits can miss gaps that external probing reveals.</p>
+
+            <h3>What to Scan</h3>
+
             <ul>
-                <li><a href="https://docs.microsoft.com/en-us/azure/security/fundamentals/">Azure Security Overview</a></li>
-                <li><a href="https://docs.microsoft.com/en-us/azure/network-security/">Azure Network Security</a></li>
-                <li><a href="https://docs.microsoft.com/en-us/azure/governance/policy/">Azure Policies Documentation</a></li>
-                <li><a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manager-overview">Azure Virtual Network Manager</a></li>
-                <li><a href="https://docs.microsoft.com/en-us/azure/virtual-network/private-link-private-endpoint">Azure Private Link Documentation</a></li>
+                <li><strong>Public endpoints:</strong> Identify any resources with public IPs or enabled public access that should be private.</li>
+                <li><strong>DNS exposure:</strong> Enumerate public DNS records for your domains and verify they resolve to Private Endpoints where expected.</li>
+                <li><strong>Certificate validity:</strong> Expired or misconfigured TLS certificates can force fallback to insecure connections.</li>
+                <li><strong>Open ports:</strong> Scan public-facing IPs for open ports that should not be exposed (SSH, RDP, database ports).</li>
             </ul>
+
+            <p>Integrate external scanning into your CI/CD pipeline. Before a deployment promotes to production, validate that no new public endpoints were introduced. After deployment, run a post-deployment scan to confirm the deployed state matches the expected state.</p>
+
+            <h2>Layer 7: Shift Left and Infrastructure as Code</h2>
+
+            <p>Security controls deployed reactively are always behind the threat. Shift Left means security validation happens at the earliest possible stage: during code review, in CI/CD pipelines, and before infrastructure changes reach production.</p>
+
+            <h3>IaC Security Validation Pipeline</h3>
+
+            <pre><code># Example: GitHub Actions step for Terraform security scanning
+- name: Run tfsec
+  uses: aquasecurity/tfsec-action@v1.0.0
+  with:
+    soft_fail: false
+
+# Azure Policy compliance check before deployment
+- name: Check Policy Compliance
+  run: |
+    az policy state trigger-scan --resource-group $RG
+    az policy state list --resource-group $RG \
+      --filter "complianceState eq 'NonCompliant'" \
+      --query "[].{policy:policyDefinitionName, resource:resourceId}"</code></pre>
+
+            <p>Security gates in the pipeline should check for:</p>
+
+            <ul>
+                <li>Resources deployed without Private Endpoints</li>
+                <li>NSGs with overly permissive rules (0.0.0.0/0 source on sensitive ports)</li>
+                <li>Subnets without attached NSGs</li>
+                <li>Storage accounts or databases with public access enabled</li>
+                <li>Secrets or connection strings hardcoded in templates</li>
+            </ul>
+
+            <h2>Layer 8: Attestation and Ownership Reviews</h2>
+
+            <p>Technical controls drift over time. Teams change, projects end, resources become orphaned, and permissions accumulate beyond what is needed. Regular attestation reviews verify that the security posture you built in layers 1-7 still reflects current reality.</p>
+
+            <h3>What to Attest</h3>
+
+            <ul>
+                <li><strong>Resource ownership:</strong> Every resource has a current owner who is accountable for its security posture.</li>
+                <li><strong>Access permissions:</strong> Every identity (user, service principal, managed identity) with network access has a current justification.</li>
+                <li><strong>NSG rules:</strong> Every allow rule in every NSG has a documented purpose and an owner who can explain why it exists.</li>
+                <li><strong>Exception rules:</strong> Every NSP access rule and AVNM "Always Allow" rule is reviewed quarterly and removed when no longer needed.</li>
+            </ul>
+
+            <p>Automate as much of this as possible. Azure Resource Graph queries can identify orphaned resources, unused permissions, and stale configurations. Build dashboards that surface compliance drift before it becomes a security incident.</p>
+
+            <h2>Putting It All Together</h2>
+
+            <p>Zero Trust network security in Azure is not a single product or a one-time configuration. It is a layered architecture where each layer addresses a specific threat vector, and the layers reinforce each other:</p>
+
+            <!-- Summary Diagram -->
+            <div class="diagram">
+                <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                    <!-- Layers stacked -->
+                    <rect x="50" y="10" width="600" height="32" rx="4" fill="#fce4ec" stroke="#cf222e" stroke-width="1"/>
+                    <text x="350" y="31" text-anchor="middle" font-size="12" fill="#1f2328">Layer 8: Attestation & Ownership Reviews (continuous governance)</text>
+
+                    <rect x="50" y="48" width="600" height="32" rx="4" fill="#fff3e0" stroke="#d29922" stroke-width="1"/>
+                    <text x="350" y="69" text-anchor="middle" font-size="12" fill="#1f2328">Layer 7: Shift Left / IaC Security (prevent before deploy)</text>
+
+                    <rect x="50" y="86" width="600" height="32" rx="4" fill="#e8f5e9" stroke="#1a7f37" stroke-width="1"/>
+                    <text x="350" y="107" text-anchor="middle" font-size="12" fill="#1f2328">Layer 6: External Scanning (validate from attacker's view)</text>
+
+                    <rect x="50" y="124" width="600" height="32" rx="4" fill="#e3f2fd" stroke="#2563eb" stroke-width="1"/>
+                    <text x="350" y="145" text-anchor="middle" font-size="12" fill="#1f2328">Layer 5: Azure Policy (continuous enforcement)</text>
+
+                    <rect x="50" y="162" width="600" height="32" rx="4" fill="#ede7f6" stroke="#7c3aed" stroke-width="1"/>
+                    <text x="350" y="183" text-anchor="middle" font-size="12" fill="#1f2328">Layer 4: AVNM Security Admin Rules (non-overridable guardrails)</text>
+
+                    <rect x="50" y="200" width="600" height="32" rx="4" fill="#e0f7fa" stroke="#0097a7" stroke-width="1"/>
+                    <text x="350" y="221" text-anchor="middle" font-size="12" fill="#1f2328">Layer 3: NSGs + Service Tags (network-level ACLs)</text>
+
+                    <rect x="50" y="238" width="600" height="32" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+                    <text x="350" y="259" text-anchor="middle" font-size="12" fill="#1f2328">Layer 2: Private Endpoints (data-plane isolation)</text>
+
+                    <rect x="50" y="276" width="600" height="32" rx="4" fill="#ffebee" stroke="#e53935" stroke-width="1"/>
+                    <text x="350" y="297" text-anchor="middle" font-size="12" fill="#1f2328">Layer 1: Network Security Perimeter (PaaS boundary control)</text>
+                </svg>
+                <div class="diagram-caption">Figure 3: The eight layers of Zero Trust network security. Each layer operates independently and reinforces the others.</div>
+            </div>
+
+            <div class="callout">
+                <strong>The Critical Insight</strong>
+                <p>No single layer is sufficient. An attacker who bypasses your NSG (layer 3) still faces Private Endpoint isolation (layer 2) and NSP boundaries (layer 1). A misconfigured AVNM rule (layer 4) is caught by Azure Policy (layer 5) and validated by external scanning (layer 6). The layers create redundancy through diversity.</p>
+            </div>
+
+            <h2>Operational Recommendations</h2>
+
+            <ol>
+                <li><strong>Start with visibility.</strong> Deploy NSP in Transition mode and Azure Policy in Audit mode before enforcing. Understand your current traffic patterns before restricting them.</li>
+                <li><strong>Automate everything.</strong> Manual security processes do not scale and they drift. Every control should be expressed as code, deployed through pipelines, and validated continuously.</li>
+                <li><strong>Measure compliance, not just configuration.</strong> A deployed NSG is not security. A validated, tested NSG that blocks the traffic it should block is security. Test your controls from the attacker's perspective.</li>
+                <li><strong>Plan for failure.</strong> Every security control will eventually be misconfigured, bypassed, or degraded. The layered approach ensures no single point of failure compromises your entire posture.</li>
+                <li><strong>Iterate continuously.</strong> Zero Trust is not a destination. New services, new attack vectors, and new Azure features require ongoing adaptation. Build review cycles into your operational rhythm.</li>
+            </ol>
+
         </div>
     </article>
 
+    <div class="references">
+        <h2>References</h2>
+        <ol>
+            <li>Microsoft. "What is a network security perimeter?" <a href="https://learn.microsoft.com/en-us/azure/private-link/network-security-perimeter-concepts">Azure Documentation</a>, 2026.</li>
+            <li>Microsoft. "What is Azure Private Link?" <a href="https://learn.microsoft.com/en-us/azure/private-link/private-link-overview">Azure Documentation</a>, 2025.</li>
+            <li>Microsoft. "Azure service tags overview." <a href="https://learn.microsoft.com/en-us/azure/virtual-network/service-tags-overview">Azure Documentation</a>, 2025.</li>
+            <li>Microsoft. "Security admin rules in Azure Virtual Network Manager." <a href="https://learn.microsoft.com/en-us/azure/virtual-network-manager/concept-security-admins">Azure Documentation</a>, 2026.</li>
+            <li>Microsoft. "Azure Policy overview." <a href="https://learn.microsoft.com/en-us/azure/governance/policy/overview">Azure Documentation</a>, 2025.</li>
+            <li>Microsoft. "Zero Trust deployment guide for Azure networking." <a href="https://learn.microsoft.com/en-us/security/zero-trust/azure-networking-overview">Microsoft Security</a>, 2025.</li>
+            <li>Rose, S., Borchert, O., Mitchell, S., Connelly, S. "Zero Trust Architecture." NIST Special Publication 800-207, 2020.</li>
+            <li>Kindervag, J. "Build Security Into Your Network's DNA: The Zero Trust Network Architecture." Forrester Research, 2010.</li>
+        </ol>
+    </div>
+
     <div class="post-footer">
-        <a href="/">← Back to home</a>
+        <a href="/">&larr; Back to home</a>
     </div>
 
     <script>
