@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Incident Resolution at Hyperscale - Arun Malik</title>
+    <meta name="description" content="An agentic AI architecture for autonomous incident resolution in large-scale network operations, achieving 90%+ resolution rates with safety guarantees.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>A</text></svg>">
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .blog-header h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .blog-meta .author { font-weight: 600; color: var(--text); }
+        .arxiv-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .arxiv-badge:hover { text-decoration: underline; }
+
+        /* Nav */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        .top-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; }
+        .top-nav a:hover { color: var(--accent); }
+        .site-name { font-weight: 700; color: var(--text); font-size: 1rem; }
+        .nav-links { display: flex; gap: 1.25rem; align-items: center; }
+        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 0.25rem; }
+
+        /* Content */
+        .article-content h2 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            letter-spacing: -0.01em;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 1.75rem 0 0.75rem;
+        }
+        .article-content p { margin-bottom: 1.25rem; }
+        .article-content ul, .article-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content strong { font-weight: 600; }
+
+        /* Figures */
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .figure img {
+            max-width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .figure figcaption {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.625rem 0.75rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        th { background: var(--bg-secondary); font-weight: 600; }
+
+        /* Abstract box */
+        .abstract {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+            border-radius: 0 6px 6px 0;
+        }
+        .abstract p { margin-bottom: 0; font-size: 0.9375rem; }
+
+        /* Keywords */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .keyword {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--accent);
+            background: var(--accent-subtle);
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+        footer a { color: var(--text-muted); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+
+        @media (max-width: 640px) {
+            .blog-header h1 { font-size: 1.5rem; }
+            body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="/" class="site-name">Arun Malik</a>
+        <div class="nav-links">
+            <a href="/posts/">Writing</a>
+            <a href="/about/">About</a>
+            <button class="theme-btn" id="themeToggle" title="Toggle theme">
+                <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <article>
+        <header class="blog-header">
+            <h1>Autonomous Incident Resolution at Hyperscale: An Agentic AI Architecture for Network Operations</h1>
+            <div class="blog-meta">
+                <span class="author">Arun Malik</span>
+                <span>·</span>
+                <span>June 2025</span>
+                <span>·</span>
+                <a href="https://arxiv.org/abs/2606.09122" target="_blank" class="arxiv-badge">📄 arXiv:2606.09122</a>
+            </div>
+        </header>
+
+        <div class="abstract">
+            <p>Cloud network infrastructure at hyperscale presents unique operational challenges where traditional human-driven incident response cannot keep pace with the volume, velocity, and complexity of failures. This paper presents an agentic AI architecture for autonomous incident resolution in large-scale network operations. Our system employs a multi-agent orchestration framework where specialized AI agents collaborate to detect, diagnose, and remediate network incidents without human intervention. The architecture achieves autonomous resolution rates exceeding 90% for common incident categories while maintaining safety guarantees through layered authorization and rollback mechanisms.</p>
+        </div>
+
+        <div class="keywords">
+            <span class="keyword">Autonomous Operations</span>
+            <span class="keyword">Agentic AI</span>
+            <span class="keyword">Network Incident Resolution</span>
+            <span class="keyword">Multi-Agent Systems</span>
+            <span class="keyword">Hyperscale Infrastructure</span>
+            <span class="keyword">AIOps</span>
+        </div>
+
+        <div class="article-content">
+            <h2>Introduction</h2>
+
+            <h3>The Operational Challenge at Hyperscale</h3>
+            <p>Modern cloud providers operate network infrastructure spanning millions of devices across hundreds of data centers worldwide. This infrastructure generates a continuous stream of operational incidents—hardware failures, software bugs, configuration drift, capacity exhaustion, and cascading failures triggered by complex interdependencies.</p>
+
+            <p>Traditional operations models rely on human engineers (often called on-call engineers or Site Reliability Engineers) to investigate and resolve these incidents. However, this approach faces fundamental scalability limitations:</p>
+
+            <ul>
+                <li><strong>Volume:</strong> The number of incidents grows linearly (or super-linearly) with infrastructure scale, while the engineering workforce cannot scale proportionally.</li>
+                <li><strong>Velocity:</strong> Network incidents can cascade within seconds, but human investigation and remediation cycles operate on timescales of minutes to hours.</li>
+                <li><strong>Complexity:</strong> Modern network architectures involve intricate dependencies between layers (physical, data link, network, transport, application), making root cause analysis a combinatorial challenge.</li>
+                <li><strong>Knowledge distribution:</strong> Operational expertise is often concentrated in a small number of senior engineers, creating knowledge bottlenecks and single points of failure.</li>
+            </ul>
+
+            <h3>From Automation to Autonomy</h3>
+            <p>The industry has progressed through several generations of operational tooling:</p>
+            <ol>
+                <li><strong>Manual operations:</strong> Engineers SSH into devices, run diagnostic commands, and apply remediations by hand.</li>
+                <li><strong>Scripted automation:</strong> Runbooks are codified into scripts that automate specific remediation steps, but still require human triggering.</li>
+                <li><strong>Rule-based automation:</strong> Event-driven systems apply predetermined actions when specific conditions match, limited to known failure modes.</li>
+                <li><strong>AI-assisted operations (AIOps):</strong> Machine learning models provide recommendations and anomaly detection, but humans remain in the loop.</li>
+                <li><strong>Autonomous operations:</strong> AI agents independently perceive the environment, reason about failures, plan remediation strategies, execute actions, and verify outcomes.</li>
+            </ol>
+            <p>This paper presents an architecture for the fifth generation: progressively autonomous incident resolution using agentic AI systems with built-in safety guarantees and human oversight mechanisms.</p>
+
+            <h3>Contributions</h3>
+            <ol>
+                <li>An end-to-end architecture for progressively autonomous incident resolution using multi-agent orchestration.</li>
+                <li>A skills-based tool architecture inspired by extensible agent runtimes (e.g., Model Context Protocol), enabling composable, governed operational capabilities.</li>
+                <li>A structured knowledge encoding methodology for converting tribal operational knowledge into machine-executable playbooks.</li>
+                <li>A progressive autonomy framework with automatic promotion and demotion mechanisms.</li>
+                <li>Production deployment experience and lessons learned from operating autonomous AI agents at hyperscale.</li>
+            </ol>
+
+            <h2>Architecture</h2>
+
+            <figure class="figure">
+                <img src="figures/architecture.png" alt="Four-Layer Architecture for Autonomous Incident Resolution">
+                <figcaption>Figure 1: Four-Layer Architecture for Autonomous Incident Resolution. The architecture separates concerns into orchestration, knowledge, safety, and infrastructure layers.</figcaption>
+            </figure>
+
+            <h3>Agent Decomposition</h3>
+            <p>The orchestration layer decomposes incident resolution into four specialized agent roles:</p>
+
+            <p><strong>Intake Agent</strong> — The system's entry point, responsible for receiving raw incident signals and preparing them for automated processing. It classifies the incident type, assesses priority, enriches context with topology and history, and determines whether the incident falls within autonomous resolution capability.</p>
+
+            <p><strong>Planning Agent</strong> — Receives enriched incident context and produces a structured remediation plan. It identifies the most likely root cause, selects appropriate remediation strategies, considers dependencies and ordering constraints, and generates a plan with explicit success criteria and abort conditions.</p>
+
+            <p><strong>Execution Agent</strong> — Translates the structured plan into concrete actions against the infrastructure. It acquires device locks and authorization tokens, executes diagnostics, applies remediation actions sequentially, handles partial failures, and records all actions for auditability.</p>
+
+            <p><strong>Verification Agent</strong> — Provides closed-loop assurance that the remediation was successful. It executes post-action health checks, compares device state against expected outcomes, monitors for regression, triggers rollback if verification fails, and updates the incident record with resolution evidence.</p>
+
+            <h3>Skills-Based Tool Architecture</h3>
+            <p>Each operational capability is encapsulated as a discrete, independently versioned skill with a well-defined interface. Inspired by extensible tool-use frameworks such as Model Context Protocol (MCP), each skill defines:</p>
+            <ul>
+                <li><strong>Interface contract:</strong> A typed schema describing inputs, outputs, and error conditions.</li>
+                <li><strong>Capability declaration:</strong> A machine-readable description used by the planning agent during tool selection.</li>
+                <li><strong>Permission requirements:</strong> Minimum authorization scope, enforced by the safety layer.</li>
+                <li><strong>Idempotency guarantees:</strong> Whether repeated invocation produces the same result.</li>
+            </ul>
+            <p>This architecture enables composability (agents chain multiple skills), extensibility (new capabilities added without modifying orchestration), and governance (each skill's blast radius is independently controlled).</p>
+
+            <h2>Safety Framework</h2>
+            <p>Operating AI agents autonomously on production infrastructure requires robust safety guarantees built on four principles:</p>
+            <ol>
+                <li><strong>Least privilege:</strong> Agents are granted only the minimum permissions required for their current task.</li>
+                <li><strong>Blast radius containment:</strong> No single agent action can affect more than a bounded number of devices or services.</li>
+                <li><strong>Reversibility:</strong> All actions must be reversible, with automated rollback mechanisms.</li>
+                <li><strong>Progressive trust:</strong> Agent authority increases incrementally based on demonstrated reliability.</li>
+            </ol>
+
+            <figure class="figure">
+                <img src="figures/fig-safety.png" alt="Safety Framework Effectiveness">
+                <figcaption>Figure 2: Safety Framework Effectiveness across key dimensions. The layered safety approach compared against a baseline single-layer authorization model.</figcaption>
+            </figure>
+
+            <h2>Progressive Autonomy</h2>
+            <p>Organizations rarely transition directly from manual to fully autonomous. The architecture supports a spectrum of autonomy levels:</p>
+
+            <table>
+                <thead>
+                    <tr><th>Level</th><th>Name</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>0</td><td>Advisory</td><td>Agent suggests actions; human executes</td></tr>
+                    <tr><td>1</td><td>Supervised</td><td>Agent executes with human pre-approval</td></tr>
+                    <tr><td>2</td><td>Monitored</td><td>Agent executes autonomously; human reviews post-hoc</td></tr>
+                    <tr><td>3</td><td>Autonomous</td><td>Agent executes without human involvement for approved categories</td></tr>
+                    <tr><td>4</td><td>Self-improving</td><td>Agent refines its own operational procedures based on outcomes</td></tr>
+                </tbody>
+            </table>
+
+            <p>Promotion between levels is based on quantifiable metrics: success rate, mean time to resolution, false positive rate, rollback frequency, and human override rate. The system includes automatic demotion via per-category and global circuit breakers.</p>
+
+            <figure class="figure">
+                <img src="figures/fig-autonomy-levels.png" alt="Incident Volume Distribution by Autonomy Level">
+                <figcaption>Figure 3: Incident Volume Distribution by Autonomy Level. As playbooks mature and gain trust, incidents progressively shift from human-supervised to fully autonomous resolution.</figcaption>
+            </figure>
+
+            <h2>Evaluation</h2>
+            <p>The architecture has been deployed in a production cloud network serving millions of customers across geographically distributed data centers.</p>
+
+            <h3>Resolution Effectiveness</h3>
+            <ul>
+                <li><strong>Autonomous resolution rate:</strong> Exceeding 90% for well-understood failure modes without human intervention.</li>
+                <li><strong>Resolution time improvement:</strong> Two orders of magnitude decrease—from hours to minutes.</li>
+                <li><strong>Accuracy:</strong> False positive remediation occurs in less than 5% of cases, with no customer-visible impact due to the safety framework.</li>
+            </ul>
+
+            <figure class="figure">
+                <img src="figures/fig-mttr.png" alt="Mean Time to Resolution Comparison">
+                <figcaption>Figure 4: Mean Time to Resolution (MTTR) Comparison. Autonomous resolution achieves two orders of magnitude improvement over traditional human-driven processes.</figcaption>
+            </figure>
+
+            <figure class="figure">
+                <img src="figures/fig-outcomes.png" alt="Incident Resolution Outcomes">
+                <figcaption>Figure 5: Incident Resolution Outcomes. Distribution of incidents resolved autonomously, with oversight, escalated, and safely rolled back.</figcaption>
+            </figure>
+
+            <h3>Safety Performance</h3>
+            <ul>
+                <li><strong>Zero critical incidents:</strong> The safety framework prevented all potentially harmful actions from reaching production.</li>
+                <li><strong>Rollback effectiveness:</strong> Automatic rollbacks recovered within defined time bounds in all cases.</li>
+                <li><strong>Blast radius compliance:</strong> No autonomous action exceeded its predicted blast radius boundaries.</li>
+            </ul>
+
+            <figure class="figure">
+                <img src="figures/fig-radar-capability.png" alt="Operational Capability Comparison">
+                <figcaption>Figure 6: Operational Capability Comparison across manual operations, rule-based automation, and the agentic AI architecture.</figcaption>
+            </figure>
+
+            <h2>Lessons Learned</h2>
+
+            <h3>LLM Reliability in Safety-Critical Contexts</h3>
+            <p>Large language models exhibit stochastic behavior at odds with determinism required for safety-critical operations. We address this through structured output enforcement, multi-model consensus for critical decisions, and deterministic verification of all LLM-generated plans before execution.</p>
+
+            <h3>The Importance of Observability</h3>
+            <p>Every decision by every agent is logged with full context. The system maintains causal links between observations, decisions, and outcomes, and generates human-readable explanations for each autonomous resolution suitable for engineering review.</p>
+
+            <h3>Handling Novel Failures</h3>
+            <p>Agents estimate confidence in diagnosis and remediation plans, escalating when confidence is low. Statistical methods identify incidents deviating from known patterns. When autonomous resolution isn't possible, the system still provides diagnostic enrichment to assist human operators.</p>
+
+            <h3>Organizational Change Management</h3>
+            <p>Trust building requires transparency and demonstrated reliability. The operational engineer role shifts from reactive incident response to system improvement and novel problem solving. Clear accountability frameworks must be defined for autonomous agent decisions.</p>
+
+            <h2>Conclusion</h2>
+            <p>This paper presented an agentic AI architecture for autonomous incident resolution in hyperscale network operations. The system demonstrates that multi-agent orchestration, combined with robust safety frameworks and progressive autonomy mechanisms, can achieve high autonomous resolution rates while maintaining safety guarantees required for critical infrastructure.</p>
+
+            <p>The transition from human-driven to autonomous operations is not merely a technology problem—it requires careful attention to knowledge management, organizational change, and trust building. We believe this architecture represents a significant step toward truly autonomous infrastructure operations.</p>
+
+            <p style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text-muted);">
+                📄 <strong>Full paper:</strong> <a href="https://arxiv.org/abs/2606.09122" target="_blank">arXiv:2606.09122</a> &nbsp;|&nbsp;
+                🔗 <strong>Companion paper:</strong> <a href="/posts/reactive-to-autonomous/">From Reactive to Autonomous: Evolution of AI Operations in Cloud Network Infrastructure</a>
+            </p>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+</body>
+</html>
