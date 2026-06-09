@@ -232,7 +232,7 @@
             <h2>Introduction</h2>
 
             <h3>The Operational Challenge at Hyperscale</h3>
-            <p>Modern cloud providers operate network infrastructure spanning millions of devices across hundreds of data centers worldwide. This infrastructure generates a continuous stream of operational incidents—hardware failures, software bugs, configuration drift, capacity exhaustion, and cascading failures triggered by complex interdependencies.</p>
+            <p>Modern cloud providers operate network infrastructure spanning millions of devices across hundreds of data centers worldwide. This infrastructure generates a continuous stream of operational incidents: hardware failures, software bugs, configuration drift, capacity exhaustion, and cascading failures triggered by complex interdependencies.</p>
 
             <p>Traditional operations models rely on human engineers (often called on-call engineers or Site Reliability Engineers) to investigate and resolve these incidents. However, this approach faces fundamental scalability limitations:</p>
 
@@ -273,13 +273,13 @@
             <h3>Agent Decomposition</h3>
             <p>The orchestration layer decomposes incident resolution into four specialized agent roles:</p>
 
-            <p><strong>Intake Agent</strong> — The system's entry point, responsible for receiving raw incident signals and preparing them for automated processing. It classifies the incident type, assesses priority, enriches context with topology and history, and determines whether the incident falls within autonomous resolution capability.</p>
+            <p><strong>Intake Agent:</strong> The system's entry point, responsible for receiving raw incident signals and preparing them for automated processing. It classifies the incident type, assesses priority, enriches context with topology and history, and determines whether the incident falls within autonomous resolution capability.</p>
 
-            <p><strong>Planning Agent</strong> — Receives enriched incident context and produces a structured remediation plan. It identifies the most likely root cause, selects appropriate remediation strategies, considers dependencies and ordering constraints, and generates a plan with explicit success criteria and abort conditions.</p>
+            <p><strong>Planning Agent:</strong> Receives enriched incident context and produces a structured remediation plan. It identifies the most likely root cause, selects appropriate remediation strategies, considers dependencies and ordering constraints, and generates a plan with explicit success criteria and abort conditions.</p>
 
-            <p><strong>Execution Agent</strong> — Translates the structured plan into concrete actions against the infrastructure. It acquires device locks and authorization tokens, executes diagnostics, applies remediation actions sequentially, handles partial failures, and records all actions for auditability.</p>
+            <p><strong>Execution Agent:</strong> Translates the structured plan into concrete actions against the infrastructure. It acquires device locks and authorization tokens, executes diagnostics, applies remediation actions sequentially, handles partial failures, and records all actions for auditability.</p>
 
-            <p><strong>Verification Agent</strong> — Provides closed-loop assurance that the remediation was successful. It executes post-action health checks, compares device state against expected outcomes, monitors for regression, triggers rollback if verification fails, and updates the incident record with resolution evidence.</p>
+            <p><strong>Verification Agent:</strong> Provides closed-loop assurance that the remediation was successful. It executes post-action health checks, compares device state against expected outcomes, monitors for regression, triggers rollback if verification fails, and updates the incident record with resolution evidence.</p>
 
             <h3>Skills-Based Tool Architecture</h3>
             <p>Each operational capability is encapsulated as a discrete, independently versioned skill with a well-defined interface. Inspired by extensible tool-use frameworks such as Model Context Protocol (MCP), each skill defines:</p>
@@ -334,7 +334,7 @@
             <h3>Resolution Effectiveness</h3>
             <ul>
                 <li><strong>Autonomous resolution rate:</strong> Exceeding 90% for well-understood failure modes without human intervention.</li>
-                <li><strong>Resolution time improvement:</strong> Two orders of magnitude decrease—from hours to minutes.</li>
+                <li><strong>Resolution time improvement:</strong> Two orders of magnitude decrease, from hours to minutes.</li>
                 <li><strong>Accuracy:</strong> False positive remediation occurs in less than 5% of cases, with no customer-visible impact due to the safety framework.</li>
             </ul>
 
@@ -377,7 +377,7 @@
             <h2>Conclusion</h2>
             <p>This paper presented an agentic AI architecture for autonomous incident resolution in hyperscale network operations. The system demonstrates that multi-agent orchestration, combined with robust safety frameworks and progressive autonomy mechanisms, can achieve high autonomous resolution rates while maintaining safety guarantees required for critical infrastructure.</p>
 
-            <p>The transition from human-driven to autonomous operations is not merely a technology problem—it requires careful attention to knowledge management, organizational change, and trust building. We believe this architecture represents a significant step toward truly autonomous infrastructure operations.</p>
+            <p>The transition from human-driven to autonomous operations is not merely a technology problem. It requires careful attention to knowledge management, organizational change, and trust building. We believe this architecture represents a significant step toward truly autonomous infrastructure operations.</p>
 
             <p style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text-muted);">
                 📄 <strong>Full paper:</strong> <a href="https://arxiv.org/abs/2606.09122" target="_blank">arXiv:2606.09122</a> &nbsp;|&nbsp;
