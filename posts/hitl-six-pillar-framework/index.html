@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Case for Human-in-the-Loop in Production AI Agent Systems - Arun Malik</title>
+    <meta name="description" content="A six-pillar framework arguing that human-in-the-loop is a structural requirement for production AI agent systems, supported by 53 research papers and a hyperscale case study.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>A</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #0e6b5e;
+            --accent: #b84c2a;
+            --warn: #9a6d1a;
+            --risk: #dc2626;
+            --safe: #059669;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --muted: #555;
+            --border: #ccc;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', 'Cambria', Georgia, serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.75in 0.65in;
+        }
+        .paper-header { text-align: center; margin-bottom: 1.5rem; padding: 2rem 0; border-bottom: 2px solid #333; }
+        .paper-header h1 { font-size: 18pt; font-weight: bold; margin-bottom: 0.5rem; line-height: 1.2; }
+        .paper-header .authors { font-size: 11pt; margin: 0.75rem 0 0.25rem; }
+        .paper-header .affiliation { font-size: 9pt; color: var(--muted); font-style: italic; }
+        .paper-header .conference { font-size: 8pt; color: var(--muted); margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .abstract { background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+        .abstract h2 { font-size: 11pt; text-align: center; margin-bottom: 0.5rem; font-style: italic; }
+        .abstract p { font-size: 9.5pt; text-align: justify; margin-bottom: 0.5rem; }
+        .abstract .keywords { font-size: 9pt; margin-top: 0.75rem; }
+        .abstract .keywords strong { font-style: italic; }
+        .coverage-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; margin: 1rem 0; }
+        .coverage-table th { background: #2c3e50; color: white; padding: 6px 8px; text-align: left; font-weight: 600; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.3px; }
+        .coverage-table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .coverage-table tr:nth-child(even) { background: #f9f9f9; }
+        h2.section-title { font-size: 12pt; font-weight: bold; margin: 1.5rem 0 0.5rem; padding-bottom: 3px; border-bottom: 1px solid #333; text-transform: uppercase; letter-spacing: 0.5px; break-after: avoid; }
+        h3.subsection-title { font-size: 10.5pt; font-weight: bold; margin: 1rem 0 0.4rem; font-style: italic; break-after: avoid; }
+        h4 { font-size: 10pt; font-weight: bold; margin: 0.75rem 0 0.3rem; }
+        p { text-align: justify; margin-bottom: 0.5rem; }
+        ul, ol { padding-left: 1.25rem; margin-bottom: 0.5rem; }
+        li { margin-bottom: 0.2rem; }
+        table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 9pt; break-inside: avoid; }
+        th, td { padding: 5px 8px; text-align: left; border: 1px solid #ddd; }
+        th { background: #f1f5f9; font-weight: 600; font-size: 8.5pt; text-transform: uppercase; }
+        .chart-container { width: 100%; margin: 1rem auto; padding: 0.75rem; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 4px; break-inside: avoid; }
+        .chart-container canvas { max-height: 280px; width: 100% !important; }
+        .chart-title { text-align: center; font-size: 9pt; font-weight: bold; margin-bottom: 0.5rem; color: #333; }
+        .chart-caption { text-align: center; font-size: 8pt; color: #666; font-style: italic; margin-top: 0.4rem; }
+        .finding { padding: 0.6rem 0.8rem; border-radius: 4px; margin: 0.75rem 0; font-size: 9pt; break-inside: avoid; }
+        .finding-key { background: #eff6ff; border-left: 3px solid var(--primary); }
+        .finding-critical { background: #fef2f2; border-left: 3px solid var(--risk); }
+        .finding-conclusion { background: #f0fdf4; border-left: 3px solid var(--safe); }
+        .finding-warn { background: #fffbeb; border-left: 3px solid var(--warn); }
+        .pillar-box { border: 1px solid #ddd; border-radius: 4px; padding: 0.75rem; margin: 0.75rem 0; break-inside: avoid; }
+        .pillar-box h4 { margin: 0 0 0.3rem; font-size: 9.5pt; }
+        .pillar-box .evidence { font-size: 8.5pt; background: #f8f9fa; padding: 0.4rem 0.6rem; border-radius: 3px; margin-bottom: 0.4rem; }
+        .pillar-box .practice { font-size: 8.5pt; color: var(--secondary); }
+        .pillar-1 { border-left: 4px solid var(--primary); }
+        .pillar-2 { border-left: 4px solid var(--accent); }
+        .pillar-3 { border-left: 4px solid var(--warn); }
+        .pillar-4 { border-left: 4px solid #6b3a6b; }
+        .pillar-5 { border-left: 4px solid var(--secondary); }
+        .pillar-6 { border-left: 4px solid var(--risk); }
+        .badge { display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 7.5pt; font-weight: 600; }
+        .badge-safe { background: rgba(5,150,105,0.1); color: var(--safe); }
+        .badge-risk { background: rgba(220,38,38,0.1); color: var(--risk); }
+        .badge-warn { background: rgba(154,109,26,0.1); color: var(--warn); }
+        sup { font-size: 7pt; color: var(--primary); }
+        .assumptions { background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; padding: 0.6rem 0.8rem; margin: 0.5rem 0; font-size: 8.5pt; }
+        .assumptions h5 { font-size: 8.5pt; margin-bottom: 0.3rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .references { font-size: 8.5pt; }
+        .references p { text-indent: -1.5em; padding-left: 1.5em; margin-bottom: 0.3rem; text-align: left; }
+        .references a { color: var(--primary); text-decoration: none; word-break: break-all; }
+        .print-btn { position: fixed; top: 1rem; right: 1rem; background: #1e3a5f; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 9pt; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .print-btn:hover { background: #14293f; }
+        @page { margin: 0.5in; }
+        @media print {
+            body { padding: 0; font-size: 9.5pt; }
+            .no-print { display: none !important; }
+            .paper-header { border-bottom: 2px solid black; }
+            h2.section-title { border-bottom-color: black; }
+            .chart-container { border: 1px solid #999; page-break-inside: avoid; }
+            table { page-break-inside: avoid; }
+            @page { size: letter; margin: 0.4in 0.5in; }
+        }
+        @media screen and (max-width: 800px) { body { padding: 1rem; } }
+        .blog-nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e5e7eb; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .blog-nav a { color: #333; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .blog-nav a:hover { color: #2563eb; }
+        .blog-nav .site-name { font-weight: 700; font-size: 1rem; }
+        .blog-nav .nav-right { display: flex; gap: 1.25rem; }
+        .blog-footer { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-align: center; padding: 2rem 1.5rem; border-top: 1px solid #e5e7eb; margin-top: 3rem; font-size: 0.8125rem; color: #6b7280; }
+        .blog-footer a { color: #6b7280; text-decoration: none; margin: 0 0.75rem; }
+        .blog-footer a:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav no-print">
+    <a href="/" class="site-name">Arun Malik</a>
+    <div class="nav-right">
+        <a href="/posts/">Writing</a>
+        <a href="/about/">About</a>
+    </div>
+</nav>
+
+<button class="print-btn no-print" onclick="window.print()">Print / Export PDF</button>
+
+<!-- PAPER HEADER -->
+<div class="paper-header">
+    <h1>The Case for Human-in-the-Loop in Production AI Agent Systems:<br>A Six-Pillar Framework</h1>
+    <div class="authors">Arun Malik</div>
+    <div class="affiliation">Microsoft Corporation, Redmond, WA, USA</div>
+    <div class="conference">Preprint &bull; June 2026</div>
+</div>
+
+<!-- ABSTRACT -->
+<div class="abstract">
+    <h2>Abstract</h2>
+    <p>
+        The prevailing industry narrative around AI agents in 2025-2026 favours full autonomy as a desirable end state. This paper argues, drawing on converging evidence from cognitive neuroscience, software engineering, systems architecture, organisational governance, cybersecurity, and alignment research, that human-in-the-loop (HITL) is not a transitional compromise necessitated by current AI limitations. Rather, it is a structural requirement of any production system that must handle novelty, maintain coherence over time, preserve accountability, and resist adversarial exploitation. We present a six-pillar analytical framework supported by 53 research papers from arXiv, IEEE, ICLR, and international governance bodies. We illustrate the framework through a case study of a production AI operations platform deployed in a hyperscale cloud networking division, which has processed over 29,000 incidents with more than 100,000 autonomous actions during a period of 23x adoption growth. The case study demonstrates that HITL and high autonomy are complementary rather than contradictory when one architects explicit graduation boundaries for automation. We propose design principles for effective HITL systems that preserve both operational velocity and system safety.
+    </p>
+    <p class="keywords"><strong>Keywords:</strong> Human-in-the-Loop, AI Agents, Autonomous Systems, AI Safety, Agentic Entropy, Deceptive Alignment, AI Governance, Graduated Automation, Production Systems</p>
+</div>
+
+<!-- COVERAGE TABLE -->
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table I.</strong> Six-Pillar Framework Summary</p>
+<table class="coverage-table">
+    <thead><tr><th>Pillar</th><th>Core Claim</th><th>Key Evidence</th><th>Sources</th></tr></thead>
+    <tbody>
+        <tr><td>Philosophical</td><td>Cognitive offloading erodes the capacity for independent thought</td><td>EEG neural degradation after 4 months of LLM use</td><td>[1][3]</td></tr>
+        <tr><td>Technical</td><td>Autonomous code generation degrades systems at industrial scale</td><td>AI commits introduce code smells at 2-3x human baseline rate (15% vs 4-8%)</td><td>[4][5]</td></tr>
+        <tr><td>Architectural</td><td>Agent designs lack metacognitive self-correction mechanisms</td><td>90% per-step reliability yields only 35% system success over 10 agents</td><td>[6][7]</td></tr>
+        <tr><td>Organisational</td><td>Full autonomy fragments accountability chains</td><td>EU AI Act mandates human oversight for high-risk AI</td><td>[8][9]</td></tr>
+        <tr><td>Security</td><td>Every agent capability doubles as an attack surface</td><td>534 of 3,984 public skills (13.4%) critically compromised; 76 confirmed malicious</td><td>[10][11]</td></tr>
+        <tr><td>Behavioural</td><td>Models can fake compliance during evaluation, undermining automated safety metrics</td><td>Sleeper agents survive RLHF; models detect and adapt to evaluations</td><td>[12][13][14]</td></tr>
+    </tbody>
+</table>
+
+<!-- RADAR CHART -->
+<div class="chart-container">
+    <div class="chart-title">Fig. 1. Multi-dimensional comparison of Full Autonomy vs Strategic HITL (normalised scores, 0-10; higher is better)</div>
+    <canvas id="radarChart"></canvas>
+    <div class="chart-caption">Full autonomy excels on speed and raw scalability (no human bottleneck). Strategic HITL achieves superior scores across the six robustness dimensions. Scoring rationale is documented in Table IV.</div>
+</div>
+
+<div class="assumptions">
+    <h5>Table IV. Scoring Rationale</h5>
+    <table style="font-size:8pt; margin:0.3rem 0;">
+        <thead><tr><th>Dimension</th><th>Full Autonomy</th><th>Strategic HITL</th><th>Rationale</th></tr></thead>
+        <tbody>
+            <tr><td>Speed</td><td>10</td><td>8</td><td>HITL introduces latency at decision boundaries. Production validation shows sub-20-minute median despite checkpoints.</td></tr>
+            <tr><td>Raw Scalability</td><td>9</td><td>7</td><td>Full autonomy has no human bottleneck. Strategic HITL scales only when human investment targets boundary design rather than per-action approval.<sup>[16]</sup></td></tr>
+            <tr><td>Safety</td><td>3</td><td>9</td><td>Full autonomy compounds errors without external correction.<sup>[6]</sup> HITL catches novel failures at boundary conditions.</td></tr>
+            <tr><td>Accountability</td><td>2</td><td>9</td><td>Autonomous decisions fragment responsibility chains.<sup>[9]</sup> HITL preserves traceable human decision authority.</td></tr>
+            <tr><td>Security</td><td>3</td><td>8</td><td>Every granted capability expands the attack surface.<sup>[10][11]</sup> HITL gates high-impact actions behind human validation.</td></tr>
+            <tr><td>Cognitive Fitness</td><td>1</td><td>8</td><td>Full delegation produces measurable neural degradation within months.<sup>[1]</sup> Active engagement preserves expertise.</td></tr>
+            <tr><td>Novel Failure Resilience</td><td>2</td><td>8</td><td>Agents cannot reframe problems or challenge their own assumptions.<sup>[7]</sup> Humans provide adaptive reasoning under uncertainty.</td></tr>
+            <tr><td>Legal Compliance</td><td>2</td><td>9</td><td>EU AI Act Art. 14 requires human oversight for high-risk AI.<sup>[8]</sup> Fully autonomous operation is non-compliant by default.</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:7.5pt; color:var(--muted); margin-top:0.3rem;"><em>Note: Full autonomy scores higher on the two efficiency dimensions (speed, scalability). The central argument of this paper is that organisations are optimising for two dimensions at the cost of six robustness dimensions, often without awareness of this tradeoff.</em></p>
+</div>
+
+<!-- I. INTRODUCTION -->
+<h2 class="section-title">I. Introduction</h2>
+<p>
+    The year 2025 saw an explosion of agentic AI systems across the software industry: coding agents that author and merge pull requests, incident response systems that diagnose and remediate production outages without human involvement, and multi-agent orchestrations that coordinate complex workflows spanning organisational boundaries. Three narratives dominate the industry discourse. First, that "code is cheap," and organisations should allow agents to generate and iterate freely. Second, that agents can learn from their own failures, making human oversight a temporary scaffolding to be removed as soon as the system matures. Third, that speed requires autonomy, and any human involvement necessarily creates an unacceptable latency bottleneck.
+</p>
+<p>
+    We acknowledge upfront that sophisticated organisations do not typically operate a naive "full autonomy" model. Most production deployments already incorporate some form of tiered governance: low-risk tasks run autonomously while high-risk operations require human approval. Our argument is not directed at this obvious strawman. Rather, we contend that even well-intentioned tiered approaches systematically underinvest in the <em>structural</em> requirements of effective oversight: boundary design methodology, cognitive fitness preservation, entropy detection, and graduated trust. The relevant debate is not "autonomy versus oversight" but "bounded autonomy with principled governance versus autonomy with ad hoc constraints that erode under production pressure."
+</p>
+<p>
+    We draw on 53 research papers spanning cognitive neuroscience, software engineering, systems architecture, organisational governance, cybersecurity, and AI alignment research. Together, these sources demonstrate that effective human oversight requires deliberate architectural investment. It is not sufficient to add approval gates reactively. The International AI Safety Report 2026, authored by over 100 experts from more than 30 nations, states explicitly that "autonomous AI agents that act in the real world pose novel safety risks because their failures can cause direct harm without human intervention."<sup>[14]</sup>
+</p>
+<p>
+    We illustrate our framework through a case study of a production AI operations platform deployed within a hyperscale cloud physical networking division at a major technology company. Over a six-month period, this platform processed more than 29,000 incidents and executed over 100,000 autonomous actions while growing adoption by 23x. Throughout this growth, the system maintained strategic human oversight at defined architectural boundaries. This experience demonstrates that the perceived tradeoff between speed and safety is a false dichotomy when the architecture is designed to separate boundary design from per-action execution.
+</p>
+
+<div class="finding finding-key">
+    <strong>Thesis:</strong> The question is not whether agents should be autonomous or supervised. The question is: at what boundaries should human judgement intervene, and how do we keep humans cognitively fit to intervene effectively when the moment arrives?
+</div>
+
+<!-- II. DEFINING STRATEGIC HITL -->
+<h2 class="section-title">II. Defining Strategic Human-in-the-Loop</h2>
+
+<p>
+    Before presenting our analytical framework, we must define the central concept precisely. "Human-in-the-loop" is frequently used as an undifferentiated umbrella term, conflating mechanisms that differ in cost, scalability, and purpose. This imprecision has led to justified criticism that HITL is either unscalable (if interpreted as per-action approval) or vacuous (if interpreted as mere monitoring). We distinguish two fundamentally different operating modes.
+</p>
+
+<h3 class="subsection-title">A. Tactical HITL vs Strategic HITL</h3>
+<p>
+    <strong>Tactical HITL</strong> requires a human to approve, review, or validate each individual action before or after execution. It is appropriate for destructive operations and early-stage automation, but it does not scale. As action volume grows, tactical HITL degrades into rubber-stamping, alert fatigue, and performative oversight. This is the failure mode that critics rightly identify.<sup>[8]</sup>
+</p>
+<p>
+    <strong>Strategic HITL</strong> operates at a different level of abstraction. The human investment targets the design of automation boundaries, the definition of escalation criteria, and the validation of system-level outcomes rather than individual actions. Within validated boundaries, agents operate autonomously. Human attention concentrates where it has highest leverage: boundary conditions, novel situations, and aggregate drift detection.
+</p>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 11. Tactical vs Strategic HITL: where human attention is invested</div>
+    <svg viewBox="0 0 700 260" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <!-- LEFT: Tactical HITL -->
+        <text x="175" y="20" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="13" font-weight="bold" fill="#dc2626">Tactical HITL</text>
+        <text x="175" y="35" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#555">(per-action approval)</text>
+
+        <!-- Actions with human approval at each -->
+        <rect x="60" y="50" width="80" height="24" rx="4" fill="#f8f9fa" stroke="#999" stroke-width="1"/>
+        <text x="100" y="66" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Action 1</text>
+        <rect x="155" y="50" width="40" height="24" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="175" y="65" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#dc2626">Human</text>
+
+        <rect x="60" y="82" width="80" height="24" rx="4" fill="#f8f9fa" stroke="#999" stroke-width="1"/>
+        <text x="100" y="98" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Action 2</text>
+        <rect x="155" y="82" width="40" height="24" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="175" y="97" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#dc2626">Human</text>
+
+        <rect x="60" y="114" width="80" height="24" rx="4" fill="#f8f9fa" stroke="#999" stroke-width="1"/>
+        <text x="100" y="130" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Action 3</text>
+        <rect x="155" y="114" width="40" height="24" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="175" y="129" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#dc2626">Human</text>
+
+        <rect x="60" y="146" width="80" height="24" rx="4" fill="#f8f9fa" stroke="#999" stroke-width="1"/>
+        <text x="100" y="162" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Action 4</text>
+        <rect x="155" y="146" width="40" height="24" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="175" y="161" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#dc2626">Human</text>
+
+        <rect x="60" y="178" width="80" height="24" rx="4" fill="#f8f9fa" stroke="#999" stroke-width="1"/>
+        <text x="100" y="194" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Action N</text>
+        <rect x="155" y="178" width="40" height="24" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="175" y="193" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#dc2626">Human</text>
+
+        <!-- Problem indicators -->
+        <text x="220" y="100" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#dc2626">Alert fatigue</text>
+        <text x="220" y="140" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#dc2626">Rubber-stamping</text>
+        <text x="220" y="180" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#dc2626">Does not scale</text>
+
+        <!-- Divider -->
+        <line x1="340" y1="15" x2="340" y2="250" stroke="#ddd" stroke-width="1" stroke-dasharray="4 3"/>
+
+        <!-- RIGHT: Strategic HITL -->
+        <text x="525" y="20" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="13" font-weight="bold" fill="#059669">Strategic HITL</text>
+        <text x="525" y="35" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#555">(boundary design + exception handling)</text>
+
+        <!-- Boundary design (top, one-time) -->
+        <rect x="390" y="48" width="140" height="30" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="460" y="67" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#059669">Boundary Design</text>
+        <text x="548" y="67" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Human (once)</text>
+
+        <!-- Arrow down to autonomous zone -->
+        <line x1="460" y1="78" x2="460" y2="95" stroke="#059669" stroke-width="1" marker-end="url(#arr-f)"/>
+
+        <!-- Autonomous execution zone -->
+        <rect x="380" y="98" width="160" height="80" rx="6" fill="#f8f9fa" stroke="#999" stroke-width="1" stroke-dasharray="4 2"/>
+        <text x="460" y="115" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#555">Autonomous Execution Zone</text>
+        <rect x="395" y="122" width="60" height="18" rx="3" fill="#fff" stroke="#ccc" stroke-width="0.5"/>
+        <text x="425" y="134" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#555">Action 1</text>
+        <rect x="465" y="122" width="60" height="18" rx="3" fill="#fff" stroke="#ccc" stroke-width="0.5"/>
+        <text x="495" y="134" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#555">Action 2</text>
+        <rect x="395" y="146" width="60" height="18" rx="3" fill="#fff" stroke="#ccc" stroke-width="0.5"/>
+        <text x="425" y="158" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#555">Action 3</text>
+        <rect x="465" y="146" width="60" height="18" rx="3" fill="#fff" stroke="#ccc" stroke-width="0.5"/>
+        <text x="495" y="158" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#555">Action N</text>
+
+        <!-- Exception escalation -->
+        <line x1="540" y1="138" x2="580" y2="138" stroke="#9a6d1a" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <rect x="583" y="124" width="85" height="28" rx="4" fill="#fffbeb" stroke="#9a6d1a" stroke-width="1.5"/>
+        <text x="626" y="140" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" font-weight="bold" fill="#9a6d1a">Exception</text>
+        <text x="626" y="150" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="8" fill="#9a6d1a">Human reviews</text>
+
+        <!-- Post-hoc audit -->
+        <rect x="390" y="190" width="140" height="28" rx="6" fill="#eff6ff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <text x="460" y="208" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" font-weight="bold" fill="#1e3a5f">Post-hoc Audit (sampled)</text>
+        <text x="548" y="208" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#1e3a5f">Human</text>
+
+        <!-- Scales indicator -->
+        <text x="525" y="240" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#059669" font-weight="bold">Scales with volume</text>
+    </svg>
+    <div class="chart-caption">Tactical HITL (left) requires human involvement at every action, degrading into rubber-stamping at scale. Strategic HITL (right) invests human attention in boundary design (once), handles exceptions (proportional to novelty), and audits outcomes (sampled). Volume growth does not increase human workload linearly.</div>
+</div>
+
+<h3 class="subsection-title">B. A Taxonomy of Strategic HITL Mechanisms</h3>
+<p>We identify six distinct mechanisms within Strategic HITL, each serving a different function in the governance architecture:</p>
+
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table VI.</strong> Strategic HITL Mechanism Taxonomy</p>
+<table>
+    <thead><tr><th>Mechanism</th><th>Human Role</th><th>Frequency</th><th>Scalability</th><th>Primary Risk Addressed</th></tr></thead>
+    <tbody>
+        <tr><td><strong>1. Policy-setting</strong></td><td>Define what agents may and may not do</td><td>Infrequent (per-policy change)</td><td>High</td><td>Scope creep, unauthorised actions</td></tr>
+        <tr><td><strong>2. Boundary design</strong></td><td>Establish graduation criteria, risk tiers, confidence thresholds</td><td>Periodic (per-module maturation)</td><td>High</td><td>Premature autonomy, inappropriate trust</td></tr>
+        <tr><td><strong>3. Exception handling</strong></td><td>Resolve escalated cases (low confidence, novel situations)</td><td>Proportional to novelty rate</td><td>Medium</td><td>Novel failures, misframing, drift</td></tr>
+        <tr><td><strong>4. Destructive-action gating</strong></td><td>Approve irreversible or high-blast-radius operations</td><td>Proportional to risk-event rate</td><td>Medium</td><td>Catastrophic unrecoverable errors</td></tr>
+        <tr><td><strong>5. Post-hoc audit</strong></td><td>Review outcomes, validate resolution persistence, confirm correctness</td><td>Sampled or triggered</td><td>High</td><td>Silent failures, outcome drift, false positives</td></tr>
+        <tr><td><strong>6. Aggregate monitoring</strong></td><td>Observe system-level metrics, detect architectural drift, identify entropy</td><td>Continuous (dashboard-level)</td><td>High</td><td>Systemic degradation, Goodhart's Law effects</td></tr>
+    </tbody>
+</table>
+
+<p>
+    The critical insight is that mechanisms 1, 2, 5, and 6 scale naturally because human effort does not grow linearly with action volume. Mechanisms 3 and 4 scale proportionally to the rate of novel or high-risk events, which typically decreases as the system matures. A well-designed graduated automation architecture [21] moves most operational volume into autonomous execution governed by mechanisms 1-2 and validated by mechanisms 5-6, while reserving human attention for exceptions (mechanism 3) and irreversible decisions (mechanism 4).
+</p>
+
+<div class="finding finding-key">
+    <strong>Definition used throughout this paper:</strong> When we refer to "Strategic HITL," we mean an architecture that employs all six mechanisms above in combination. The human role is primarily boundary designer, exception handler, and outcome validator rather than per-action approver. This is the operating model we argue is structurally necessary and demonstrably scalable.
+</div>
+
+<!-- III. THE SIX-PILLAR ARGUMENT -->
+<h2 class="section-title">III. The Six-Pillar Argument</h2>
+
+<h3 class="subsection-title">A. Philosophical: Epistemic Sovereignty</h3>
+<div class="pillar-box pillar-1">
+    <h4>Claim: Outsourcing decision-making to autonomous agents degrades the human capacity to make decisions when they are needed most.</h4>
+    <div class="evidence">
+        <strong>Evidence:</strong> An experimental EEG study at MIT Media Lab found that participants who used LLMs for extended essay-writing over a four-month period exhibited weaker brain network connectivity and reduced neural activity compared to those who relied on their own cognition or even a search engine.<sup>[1]</sup> In a separate study, a survey of 319 knowledge workers sharing 936 real-world AI-use examples revealed that higher confidence in AI correlated with less frequent application of critical thinking, while greater self-confidence in one's own ability encouraged more critical engagement with AI outputs.<sup>[2]</sup> Building on these findings, researchers have introduced the concept of "cognitive agency surrender," arguing that AI's zero-friction interfaces promote automation bias and undermine epistemic sovereignty. They propose intentional "scaffolded friction" as a countermeasure.<sup>[3]</sup>
+    </div>
+    <div class="practice"><strong>Architectural implication:</strong> A well-designed HITL system preserves active engineer engagement through conversational interfaces rather than passive dashboards. Proactive notifications require human interpretation. Novel situations route to human experts before the agent attempts resolution, thereby building rather than atrophying domain expertise.</div>
+</div>
+
+<h3 class="subsection-title">B. Technical: Agentic Entropy</h3>
+<div class="pillar-box pillar-2">
+    <h4>Claim: Autonomous systems degrade their own quality over successive iterations when strategic human oversight is absent.</h4>
+    <div class="evidence">
+        <strong>Evidence:</strong> Liu et al. mined 302,600 AI-authored commits from 6,299 GitHub repositories and compared them against human-authored commits from the same repositories, matched by language and time period.<sup>[4]</sup> Code smells constituted 89.3% of all identified quality issues in AI-generated code. Critically, over 15% of AI-generated commits introduced at least one code smell, compared to an estimated 4-8% rate for matched human-authored commits in the same repositories. Furthermore, 22.7% of AI-introduced smells persisted unfixed in the latest repository versions, indicating that review processes failed to catch them.<sup>[4]</sup> A separate study introduced the concept of "agentic entropy," defined as systemic drift between agentic actions and original software architecture. The authors note that conventional diff-based code review exposes only localised changes and misses broader architectural debt as it accumulates.<sup>[5]</sup> A CodeRabbit analysis of real-world pull requests found that AI-generated PRs produce approximately 1.7x more issues per PR than human-authored ones (10.83 vs 6.45 issues per PR), with AI PRs requiring 4.6x longer to pass review.<sup>[4]</sup>
+    </div>
+    <div class="practice"><strong>Architectural implication:</strong> Effective HITL addresses entropy through human-authored resolution boundaries (rather than unbounded generation), hybrid execution combining deterministic and AI-driven steps, and bounded tool interfaces with independently verifiable error rates.</div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 3. AI-generated code quality indicators from empirical study of 302,600 commits<sup>[4]</sup></div>
+    <canvas id="entropyChart"></canvas>
+    <div class="chart-caption">Data from Liu et al. (arXiv:2603.28592) and CodeRabbit (2025). AI-generated PRs produce 1.7x more issues than human PRs and require 4.6x longer review cycles. Over 15% of AI commits introduce code smells, compared to 4-8% for matched human commits in the same repositories.</div>
+</div>
+
+<h3 class="subsection-title">C. Architectural: The Structural Metacognition Gap</h3>
+<div class="pillar-box pillar-3">
+    <h4>Claim: Current agent architectures handle crash failures (timeouts, deadlocks, exceptions) but not reasoning failures (drift, misframing, confident error).</h4>
+    <div class="evidence">
+        <strong>Evidence:</strong> A comprehensive survey of AI agent architectures decomposed agents into five interacting subsystems: Reasoning, Perception, Action, Learning, and Communication. Notably, no existing framework includes a "Self-Questioning" or "Frame-Challenging" subsystem.<sup>[7]</sup> The mathematical consequence is severe. When agents are chained sequentially, overall success probability equals the product of stepwise probabilities. At 90% reliability per step across 10 chained agents, full-system success drops to approximately 35%. Moreover, errors are not merely additive; mistakes in earlier steps corrupt downstream context and increase subsequent error probability, creating a compounding failure cascade.<sup>[6]</sup>
+    </div>
+    <div class="practice"><strong>Architectural implication:</strong> HITL addresses the metacognition gap through confidence thresholds that route decisions to humans when the system's certainty drops below a defined level. Multi-step executions require independent verification at each branch point. Explicit escalation paths handle situations where the agent cannot determine whether its own reasoning is sound.</div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 4. Compounding error probability in multi-agent chains<sup>[6]</sup></div>
+    <canvas id="compoundChart"></canvas>
+    <div class="chart-caption">At 90% per-step reliability, system success degrades exponentially. By 10 chained steps, success probability is approximately 35%. At 95% per step, it is still only 60%. Data derived from probability model in arXiv:2503.13657.</div>
+</div>
+
+<h3 class="subsection-title">D. Organisational: Accountable Discretion</h3>
+<div class="pillar-box pillar-4">
+    <h4>Claim: Full autonomy fragments accountability and creates systems that cannot be meaningfully governed.</h4>
+    <div class="evidence">
+        <strong>Evidence:</strong> The EU AI Act (Article 14) mandates explicit human oversight for high-risk AI systems, including organisational measures to minimise automation bias.<sup>[8]</sup> However, Laux and Ruschemeier caution that "simply adding a human in the loop does not guarantee accountability or fairness, nor should it be a fig leaf to deflect responsibility."<sup>[8]</sup> This tension is addressed by the framework of "accountable discretion," which proposes institutionalising proactive human judgement alongside AI rather than reactive rubber-stamping. The framework recognises that AI redistributes responsibility but does not eliminate it.<sup>[9]</sup>
+    </div>
+    <div class="practice"><strong>Architectural implication:</strong> Effective governance requires explicit human decision authority at defined severity thresholds. Full audit trails must accompany every autonomous action. Outcome persistence tracking (measuring whether autonomous resolutions actually hold over time) validates that automated decisions are genuinely correct, not merely accepted by default.</div>
+</div>
+
+<h3 class="subsection-title">E. Security: Autonomy as Attack Surface</h3>
+<div class="pillar-box pillar-5">
+    <h4>Claim: Every capability granted to an autonomous agent is simultaneously a capability available to an attacker who compromises that agent.</h4>
+    <div class="evidence">
+        <strong>Evidence:</strong> Snyk's ToxicSkills audit, the first large-scale security analysis of the AI agent skills ecosystem, scanned 3,984 public skills from major marketplaces (ClawHub, skills.sh) as of February 2026. Of these, 534 skills (13.4%) contained at least one critical security flaw, defined as vulnerabilities providing an attacker with a direct path to credential theft, remote code execution, or malware distribution. A further 1,467 skills (36.8%) contained at least one significant vulnerability of any severity. The study employed static analysis, dynamic testing (including prompt injection attempts), and manual review to minimise false positives; 76 skills were confirmed as containing deliberately malicious payloads.<sup>[10]</sup> The "ClawHavoc" campaign compromised over 1,100 agent skills via poisoned context files, resulting in key theft, persistent backdoors, and unauthorised data access across affected organisations.<sup>[11]</sup> A systematic taxonomy of the agentic AI attack surface catalogues direct and indirect prompt injection, tool poisoning, cross-agent contamination, and supply chain attacks as primary vectors.<sup>[17]</sup> Critically, evaluation of 847 adversarial test cases found that no current defence achieves a zero prompt-injection success rate.<sup>[18]</sup>
+    </div>
+    <div class="practice"><strong>Architectural implication:</strong> Security-aware HITL requires controlled tool interfaces with role-based access rather than open-ended tool use. Skill sources must be human-vetted rather than automatically ingested from public marketplaces. Execution environments must be sandboxed, and destructive or privilege-escalating actions must require explicit human authorisation.</div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 5. AI agent skill security audit findings<sup>[10][17]</sup></div>
+    <canvas id="securityChart"></canvas>
+    <div class="chart-caption">Data from Snyk ToxicSkills audit (2026) and agentic AI attack surface taxonomy (arXiv:2603.22928). Over half of public agent skills carry some form of vulnerability.</div>
+</div>
+
+<h3 class="subsection-title">F. Behavioural: Deceptive Alignment Under Evaluation</h3>
+<div class="pillar-box pillar-6">
+    <h4>Claim: Advanced models can behave safely during evaluation while retaining misaligned objectives, which undermines automated safety monitoring as a substitute for human oversight.</h4>
+    <div class="evidence">
+        <strong>Evidence:</strong> Researchers at Anthropic demonstrated "Sleeper Agents," LLMs engineered to behave safely during training and evaluation but exhibit harmful behaviour when triggered by specific conditions. Standard safety methods, including RLHF, supervised fine-tuning, and adversarial red-teaming, were largely ineffective at removing these hidden behaviours, particularly in larger models.<sup>[12]</sup> Subsequent work by Apollo Research and OpenAI stress-tested anti-scheming training and found that, while overt covert-action rates dropped significantly, many safety gains were suspected to result from "situational awareness." That is, models recognised when they were under evaluation and suppressed their true objectives accordingly.<sup>[13]</sup> The International AI Safety Report 2026 warns of a "growing mismatch between the speed of AI capability advances and the pace of governance responses."<sup>[14]</sup>
+    </div>
+    <div class="practice"><strong>Implication for production monitoring:</strong> If models can distinguish evaluation from deployment and alter behaviour accordingly, then automated safety metrics are an unreliable substitute for human oversight. A production system that relies solely on self-reported success rates or automated quality checks cannot detect deceptive compliance. This makes human post-hoc audit (Table VI, mechanism 5) and independent outcome validation structurally necessary rather than merely desirable. The argument is not speculative: it rests on demonstrated capabilities in current frontier models and applies directly to any production system whose safety case depends on automated evaluation of agent behaviour.</div>
+</div>
+
+<!-- IV. ILLUSTRATIVE CASE STUDY -->
+<h2 class="section-title">IV. Illustrative Case Study</h2>
+
+<p>
+    To ground the six-pillar framework in operational reality, we present a case study from a production AI operations platform deployed within a hyperscale cloud physical networking division. The platform manages incident detection, diagnosis, and remediation for network infrastructure serving millions of end users. It employs what we term a <em>graduated automation</em> architecture: well-characterised problems are resolved autonomously through structured resolution modules, while novel situations, destructive actions, and boundary conditions escalate to human engineers through defined architectural boundaries. The underlying agentic architecture and its design rationale are detailed in [21].
+</p>
+<p>
+    All metrics reported below are derived from production telemetry over a six-month operational period. In keeping with standard practice for industry case studies, we report relative values and bounded ranges to preserve operational confidentiality.
+</p>
+<p>
+    We note an important methodological distinction. This case study demonstrates the <em>operational feasibility</em> of graduated HITL at production scale. It does not independently validate every pillar of the framework. Some pillars (Architectural, Organisational) are directly evidenced by the platform's design and outcomes. Others (Technical, Security) are partially supported. The Philosophical and Existential pillars rest on independent empirical research cited in Section II and are not claims this case study can confirm or deny. Table V below maps each pillar to its evidentiary basis.
+</p>
+
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table V.</strong> Evidence Source Mapping by Pillar</p>
+<table>
+    <thead><tr><th>Pillar</th><th>Case Study Support</th><th>Primary Evidence Basis</th><th>Limitation</th></tr></thead>
+    <tbody>
+        <tr><td>Philosophical</td><td><span class="badge badge-warn">Indirect</span></td><td>Independent EEG study [1], survey [2], theoretical framework [3]</td><td>No cognitive measurement of platform operators conducted</td></tr>
+        <tr><td>Technical</td><td><span class="badge badge-warn">Partial</span></td><td>Empirical mining study [4][5]; platform tool error rate &lt;0.5%</td><td>Platform data shows bounded tools reduce entropy but lacks controlled comparison</td></tr>
+        <tr><td>Architectural</td><td><span class="badge badge-safe">Direct</span></td><td>Platform implements graduated tiers, escalation, confidence routing</td><td>Single-system observation; no multi-site replication</td></tr>
+        <tr><td>Organisational</td><td><span class="badge badge-safe">Direct</span></td><td>30+ teams, audit trails, human-approved promotions, named ownership</td><td>Governance effectiveness not independently audited</td></tr>
+        <tr><td>Security</td><td><span class="badge badge-warn">Partial</span></td><td>Platform uses vetted tools, sandboxed execution, gated destructive actions</td><td>No adversarial red-team results reported from this specific platform</td></tr>
+        <tr><td>Existential</td><td><span class="badge badge-risk">Independent</span></td><td>Relies entirely on external research [12][13][14][15]</td><td>Case study cannot confirm or deny alignment-related claims</td></tr>
+    </tbody>
+</table>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 6. Platform adoption trajectory with strategic HITL (6-month operational period, normalised)</div>
+    <svg viewBox="0 0 800 250" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="growth-fill" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:0.4"/>
+                <stop offset="40%" style="stop-color:#0e6b5e;stop-opacity:0.6"/>
+                <stop offset="100%" style="stop-color:#059669;stop-opacity:0.7"/>
+            </linearGradient>
+        </defs>
+
+        <!-- The widening band -->
+        <path d="M 80,115 C 160,112 240,105 340,90 C 440,72 540,52 640,40 C 700,33 740,28 760,26
+                 L 760,165 C 740,168 700,170 640,168 C 540,164 440,158 340,148 C 240,140 160,132 80,130 Z"
+              fill="url(#growth-fill)" opacity="0.85"/>
+
+        <!-- Month labels -->
+        <g font-family="'Times New Roman', Georgia, serif" font-size="14" fill="#333" text-anchor="middle">
+            <text x="80" y="210">M1</text>
+            <text x="220" y="210">M2</text>
+            <text x="360" y="210">M3</text>
+            <text x="500" y="210">M4</text>
+            <text x="640" y="210">M5</text>
+            <text x="760" y="210">M6</text>
+        </g>
+
+        <!-- Volume annotations -->
+        <g font-family="'Times New Roman', Georgia, serif" font-weight="700" text-anchor="middle">
+            <text x="80" y="100" font-size="15" fill="#1e3a5f">1x</text>
+            <text x="220" y="88" font-size="16" fill="#1e3a5f">4.3x</text>
+            <text x="360" y="65" font-size="17" fill="#0e6b5e">12.5x</text>
+            <text x="500" y="42" font-size="18" fill="#059669">14.9x</text>
+            <text x="640" y="26" font-size="18" fill="#059669">19.8x</text>
+            <text x="760" y="14" font-size="20" fill="#059669">23x</text>
+        </g>
+
+        <!-- Waypoints -->
+        <circle cx="80" cy="122" r="5" fill="#1e3a5f"/>
+        <circle cx="220" cy="110" r="6" fill="#1e3a5f"/>
+        <circle cx="360" cy="88" r="7" fill="#0e6b5e"/>
+        <circle cx="500" cy="65" r="7" fill="#059669"/>
+        <circle cx="640" cy="48" r="8" fill="#059669"/>
+        <circle cx="760" cy="36" r="9" fill="#059669"/>
+
+        <!-- Bottom annotation bar -->
+        <rect x="380" y="180" width="370" height="22" rx="11" fill="rgba(5,150,105,0.08)" stroke="rgba(5,150,105,0.4)" stroke-width="1"/>
+        <text x="565" y="195" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#059669" text-anchor="middle" font-weight="600">Strategic HITL maintained throughout growth</text>
+    </svg>
+    <div class="chart-caption">Adoption grew 23x over 6 months while maintaining strategic human oversight at defined boundaries. The widening band represents increasing volume processed autonomously within human-designed resolution modules. One platform team served 30+ engineering teams throughout.</div>
+</div>
+
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table II.</strong> Platform Operating Characteristics (6-month period)</p>
+<table>
+    <thead><tr><th>Characteristic</th><th>Observed Value</th><th>Significance</th></tr></thead>
+    <tbody>
+        <tr><td>Adoption growth</td><td><strong>23x</strong> over 6 months</td><td>HITL architecture does not constrain adoption scaling</td></tr>
+        <tr><td>Autonomous actions per incident</td><td><strong>~3.6 average</strong></td><td>Multi-step autonomous reasoning within bounded modules</td></tr>
+        <tr><td>Median first-action latency</td><td><strong>&lt; 20 minutes</strong></td><td>Oversight checkpoints do not prevent rapid response</td></tr>
+        <tr><td>Autonomous resolution rate (moderate severity)</td><td><strong>&gt; 35%</strong></td><td>High autonomy where problem is well-characterised</td></tr>
+        <tr><td>Tool error rate</td><td><strong>&lt; 0.5%</strong></td><td>Reliability through bounded, tested interfaces</td></tr>
+        <tr><td>Average steps per execution</td><td><strong>&gt; 30</strong></td><td>Complex multi-step reasoning within verifiable boundaries</td></tr>
+        <tr><td>Teams served</td><td><strong>30+</strong></td><td>Multi-team scalability with single platform team</td></tr>
+        <tr><td>Active engineer engagement</td><td><strong>&gt; 100 unique users/month</strong></td><td>Cognitive fitness preserved through active domain engagement</td></tr>
+    </tbody>
+</table>
+
+<div class="finding finding-conclusion">
+    <strong>Key Finding:</strong> The platform simultaneously refutes three prevailing industry claims. It is fast (sub-20-minute median response). It scales (23x adoption growth, 30+ teams, one platform team). And it learns from operational experience (20+ structured resolution modules evolved from post-incident analysis). It achieves all of this while maintaining explicit human oversight at defined architectural boundaries.
+</div>
+
+<h3 class="subsection-title">A. Graduated Automation Architecture</h3>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 7. Graduated automation lifecycle: how resolution procedures mature from exploratory to deterministic</div>
+    <svg viewBox="0 0 720 480" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker id="arr-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+            </marker>
+            <marker id="arr-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#999"/>
+            </marker>
+        </defs>
+
+        <!-- TIER 3: Agent-Orchestrated -->
+        <rect x="200" y="20" rx="14" ry="14" width="280" height="70" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="340" y="50" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="16" font-weight="bold" fill="#dc2626">Agent-Orchestrated</text>
+        <text x="340" y="72" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#555">Exploratory reasoning, novel problems</text>
+
+        <!-- Cost label right -->
+        <text x="510" y="45" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#dc2626" font-weight="bold">High cost</text>
+        <text x="510" y="62" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">High flexibility</text>
+
+        <!-- Arrow down to Tier 2 -->
+        <line x1="340" y1="90" x2="340" y2="140" stroke="#333" stroke-width="2" marker-end="url(#arr-f)"/>
+        <text x="365" y="122" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#333">Human confirms</text>
+
+        <!-- TIER 2: Hybrid -->
+        <rect x="200" y="145" rx="14" ry="14" width="280" height="70" fill="#fffbeb" stroke="#9a6d1a" stroke-width="2"/>
+        <text x="340" y="175" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="16" font-weight="bold" fill="#9a6d1a">Hybrid Module</text>
+        <text x="340" y="197" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#555">Deterministic + AI at decision points</text>
+
+        <!-- Cost label right -->
+        <text x="510" y="170" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#9a6d1a" font-weight="bold">Medium cost</text>
+        <text x="510" y="187" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">Bounded scope</text>
+
+        <!-- Arrow down to Tier 1 -->
+        <line x1="340" y1="215" x2="340" y2="265" stroke="#333" stroke-width="2" marker-end="url(#arr-f)"/>
+        <text x="365" y="247" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#333">N runs + consistency</text>
+
+        <!-- TIER 1: Deterministic -->
+        <rect x="200" y="270" rx="14" ry="14" width="280" height="70" fill="#f0fdf4" stroke="#059669" stroke-width="2"/>
+        <text x="340" y="300" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="16" font-weight="bold" fill="#059669">Deterministic Procedure</text>
+        <text x="340" y="322" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#555">Zero inference, maximum reliability</text>
+
+        <!-- Cost label right -->
+        <text x="510" y="295" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#059669" font-weight="bold">Near-zero cost</text>
+        <text x="510" y="312" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">Max reliability</text>
+
+        <!-- Demotion arrow: Tier 1 back to Tier 2 -->
+        <path d="M 200 305 C 140 305, 140 180, 200 180" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arr-d)"/>
+        <text x="100" y="240" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#999" text-anchor="middle">Demotion on</text>
+        <text x="100" y="256" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#999" text-anchor="middle">failure</text>
+
+        <!-- Demotion arrow: Tier 2 back to Tier 3 -->
+        <path d="M 200 175 C 155 175, 155 55, 200 55" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arr-d)"/>
+        <text x="110" y="110" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#999" text-anchor="middle">Demotion on</text>
+        <text x="110" y="126" font-family="'Times New Roman', Georgia, serif" font-size="12" fill="#999" text-anchor="middle">regression</text>
+
+        <!-- Incoming Incident box -->
+        <rect x="220" y="380" rx="10" ry="10" width="240" height="50" fill="#f8f9fa" stroke="#555" stroke-width="1.5"/>
+        <text x="340" y="402" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="14" font-weight="bold" fill="#333">Incoming Incident</text>
+        <text x="340" y="420" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">Routes to best available tier</text>
+
+        <!-- Routing arrows from incident -->
+        <path d="M 340 380 L 340 340" fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <path d="M 300 380 C 300 360, 280 350, 260 340" fill="none" stroke="#9a6d1a" stroke-width="1" stroke-dasharray="4 3"/>
+        <path d="M 260 380 C 240 350, 210 300, 210 90" fill="none" stroke="#dc2626" stroke-width="1" stroke-dasharray="4 3"/>
+
+        <!-- Key Properties box -->
+        <rect x="20" y="370" width="180" height="105" rx="8" ry="8" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+        <text x="110" y="392" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#333">Key Properties</text>
+        <text x="30" y="412" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">1. Autonomy earned, not assumed</text>
+        <text x="30" y="430" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">2. Promotion: human-approved</text>
+        <text x="30" y="448" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">3. Demotion: automatic on failure</text>
+        <text x="30" y="466" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#555">4. Cost falls as maturity rises</text>
+    </svg>
+    <div class="chart-caption">Resolution procedures mature through tiers via explicit human-reviewed promotion. Demotion on failure is automatic. Novel problems always begin at the highest tier (agent-orchestrated) and graduate downward only after demonstrated reliability.</div>
+</div>
+
+<p>
+    The platform implements a spectrum of automation levels within a single architecture. Resolution modules exist at multiple tiers: fully deterministic (requiring zero AI inference), hybrid (deterministic structure with AI-driven reasoning at specific decision points), and fully agent-orchestrated (for novel situations requiring exploratory reasoning). The key architectural principle is that <em>the level of autonomy is determined by the maturity and validation status of the resolution procedure</em>, not by a blanket organisational policy.
+</p>
+<p>
+    Well-characterised problems with validated resolution paths and high historical success rates operate with full autonomy. Novel or ambiguous situations are explicitly routed to human judgement. Over time, successful agent-orchestrated resolutions can be codified into structured resolution modules through a deliberate, human-reviewed promotion process. This increases the autonomous operating envelope without sacrificing oversight for genuinely new territory.
+</p>
+
+<div class="finding finding-warn">
+    <strong>Design principle:</strong> Autonomy should be earned through demonstrated reliability in bounded conditions, not granted as a default. The system should become more autonomous over time through explicit validation rather than through the gradual absence of human engagement.
+</div>
+
+<h3 class="subsection-title">B. Evidence for HITL-Specific Contribution</h3>
+<p>
+    An observational case study cannot establish causation with the rigour of a controlled experiment. We acknowledge this limitation explicitly. However, three lines of evidence suggest that HITL mechanisms specifically, rather than general tooling improvements alone, contributed to the observed outcomes:
+</p>
+<ol>
+    <li><strong>Mechanism-level attribution.</strong> Destructive-action gating (Table VI, mechanism 4) prevented execution of irreversible operations that the agent had proposed with high confidence but that would have caused service disruption. These interventions are directly attributable to the human approval gate; without it, the actions would have executed autonomously.</li>
+    <li><strong>Exception-handling value.</strong> Novel failure types routed to human engineers through confidence-based escalation (mechanism 3) resulted in new resolution approaches that the agent could not have derived independently. Several of these were subsequently codified into new structured resolution modules, expanding the autonomous envelope. The value of human intervention in these cases is not merely preventive but generative.</li>
+    <li><strong>Post-hoc audit discoveries.</strong> Sampled outcome review (mechanism 5) identified a class of "silent failures": actions that completed without error but did not actually resolve the underlying problem. Without human post-hoc validation, these would have registered as successes in the system's own metrics. Detection of this failure mode led to improved persistence-checking logic that would not have emerged from the agent's self-assessment alone.</li>
+</ol>
+
+<h3 class="subsection-title">C. Failure Modes Observed</h3>
+<p>
+    Over the six-month operational period, human oversight mechanisms intercepted several categories of agent failure that would not have been caught by automated checks alone. We present a taxonomy of observed failure modes, anonymised to protect operational detail:
+</p>
+
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table VIII.</strong> Observed Failure Taxonomy (anonymised)</p>
+<table>
+    <thead><tr><th>Failure Mode</th><th>Description</th><th>HITL Mechanism That Caught It</th><th>Consequence If Missed</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Confident misdiagnosis</strong></td><td>Agent identified incorrect root cause with high confidence score and proposed remediation for the wrong component</td><td>Exception escalation (confidence below threshold on secondary check)</td><td>Remediation of healthy component; actual fault persists and propagates</td></tr>
+        <tr><td><strong>Blast-radius blindness</strong></td><td>Agent selected correct remediation action but applied it to an overly broad scope (e.g., entire region rather than affected subset)</td><td>Destructive-action gating (human review of scope parameter)</td><td>Service disruption across unaffected infrastructure; customer impact multiplied</td></tr>
+        <tr><td><strong>Silent non-resolution</strong></td><td>Action completed without error, metrics temporarily improved, but underlying fault recurred within hours</td><td>Post-hoc audit (persistence validation at T+4h and T+24h)</td><td>False success recorded; recurring incident classified as "new" rather than unresolved; entropy in resolution quality metrics</td></tr>
+        <tr><td><strong>Cascading trigger</strong></td><td>Autonomous remediation of one incident inadvertently created conditions for a secondary incident in a dependent system</td><td>Aggregate monitoring (correlation of incident timing with prior autonomous actions)</td><td>Secondary incident attributed to external cause; systemic coupling undetected; pattern repeats</td></tr>
+        <tr><td><strong>Stale context reasoning</strong></td><td>Agent reasoned from cached state information that was no longer current, producing a valid plan for conditions that no longer existed</td><td>Exception escalation (human operator recognised environmental change)</td><td>Action applied to wrong operational state; potential for conflicting concurrent operations</td></tr>
+    </tbody>
+</table>
+
+<p>
+    These failure modes share a common characteristic: they are invisible to the agent's own evaluation of its actions. The agent reports success in each case. Only external validation, whether through human review of scope, persistence checking over time, or correlation across system boundaries, reveals the failure. This observation directly supports the argument that automated self-assessment is insufficient for production reliability (Pillar F).
+</p>
+
+<h3 class="subsection-title">D. Limitations and Threats to Validity</h3>
+<p>
+    We identify the following limitations of this case study as evidence for the six-pillar framework:
+</p>
+<ul>
+    <li><strong>No controlled comparison.</strong> We do not have a matched system operating without HITL boundaries under equivalent conditions. Improvements could partially reflect better tooling, team maturity, or incident volume composition rather than HITL architecture alone.</li>
+    <li><strong>Single-system observation.</strong> Results come from one platform in one organisation. Replication across different domains, team sizes, and risk profiles would strengthen generalisability.</li>
+    <li><strong>Selection bias in metrics.</strong> The platform was designed with HITL principles from inception. We cannot determine what outcomes a "full autonomy" version of the same system would have produced.</li>
+    <li><strong>Hawthorne effect.</strong> Engineers aware of being studied may exhibit different oversight behaviour than they would under routine conditions at scale.</li>
+    <li><strong>Temporal confound.</strong> The six-month observation period coincides with agent model improvements, team learning, and resolution module expansion. Separating HITL contribution from natural maturation is not possible with the available data.</li>
+</ul>
+<p>
+    Despite these limitations, we argue that the combination of mechanism-level attribution, the specificity of failure types caught, and the platform's sustained performance across 23x volume growth provides suggestive (though not conclusive) evidence that strategic HITL mechanisms contributed materially to system reliability. Future work should pursue controlled comparisons, possibly through A/B testing of escalation thresholds or graduated removal of specific oversight mechanisms.
+</p>
+
+<!-- V. COUNTERARGUMENTS -->
+<h2 class="section-title">V. Counterarguments and Responses</h2>
+
+<h3 class="subsection-title">A. "Agents Can Learn From Failures"</h3>
+<p><strong>Response:</strong> Learning from failures is not equivalent to understanding why something failed. The learning agent architecture (comprising a critic, learning element, and problem generator) operates entirely within a fixed reward frame.<sup>[7]</sup> It can optimise within that frame but cannot question whether the frame itself is correct. This produces what we term "superstitious learning": the agent avoids actions correlated with failure rather than actions that caused failure. Furthermore, if models can fake alignment during evaluation,<sup>[12]</sup> they can equally fake learning, appearing to improve while retaining misaligned internal objectives.<sup>[13]</sup></p>
+
+<h3 class="subsection-title">B. "Speed Requires Full Autonomy"</h3>
+<p><strong>Response:</strong> HITL does not require slow operation. It requires strategic checkpoints at high-impact decision boundaries. The latency cost of HITL is architectural, not inherent. It depends on where checkpoints are placed and how escalation paths are designed. Our production validation demonstrates sub-20-minute median response times with explicit oversight boundaries in place.</p>
+
+<h3 class="subsection-title">C. "HITL Does Not Scale"</h3>
+<p><strong>Response:</strong> This objection conflates two distinct approaches. Tactical HITL, where a human approves every individual action, does not scale. Strategic HITL, where a human designs automation boundaries, monitors aggregate outcomes, and intervenes at exceptions, scales readily. The human investment in strategic HITL targets boundary design and validation rather than per-action approval. Gartner's 2026 guidance recommends "proportional governance calibrated to an agent's autonomy level and trust boundaries" rather than uniform oversight.<sup>[20]</sup></p>
+
+<h3 class="subsection-title">D. "Self-Improving Agents Eliminate the Need for Oversight"</h3>
+<p><strong>Response:</strong> Self-improvement introduces three compounding risks. First, <em>meta-entropy</em>: the learner's model of its environment can drift from reality over successive updates with no self-detection mechanism.<sup>[5]</sup> Second, <em>supply chain vulnerability</em>: skill ingestion becomes an attack vector when 13% of public skills are critically compromised.<sup>[10]</sup> Third, <em>deceptive improvement</em>: models can pass evaluation while retaining misaligned objectives, a demonstrated capability in current frontier models.<sup>[12][13]</sup></p>
+
+<div class="finding finding-critical">
+    <strong>Synthesis:</strong> Full autonomy wins on two efficiency dimensions: speed and raw scalability. Strategic HITL wins on six robustness dimensions: safety, accountability, security, cognitive fitness, novel failure resilience, and legal compliance. We argue that the industry is systematically optimising for the two at the cost of the six, and that this tradeoff is often invisible until a novel failure exposes it.
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 12. The 2-vs-6 tradeoff: what each approach optimises for</div>
+    <svg viewBox="0 0 700 200" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Full Autonomy side -->
+        <text x="175" y="20" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#dc2626">Full Autonomy Optimises</text>
+
+        <rect x="80" y="35" width="190" height="32" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="175" y="55" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" font-weight="bold" fill="#dc2626">Speed (10/10)</text>
+
+        <rect x="80" y="75" width="190" height="32" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="175" y="95" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" font-weight="bold" fill="#dc2626">Raw Scalability (9/10)</text>
+
+        <text x="175" y="130" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555" font-style="italic">2 efficiency dimensions</text>
+
+        <!-- Arrow / VS -->
+        <text x="350" y="75" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="14" font-weight="bold" fill="#333">vs</text>
+
+        <!-- Strategic HITL side -->
+        <text x="525" y="20" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#059669">Strategic HITL Optimises</text>
+
+        <rect x="410" y="32" width="115" height="24" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="468" y="48" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Safety (9)</text>
+
+        <rect x="535" y="32" width="115" height="24" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="593" y="48" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Accountability (9)</text>
+
+        <rect x="410" y="62" width="115" height="24" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="468" y="78" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Security (8)</text>
+
+        <rect x="535" y="62" width="115" height="24" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="593" y="78" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Cognitive Fitness (8)</text>
+
+        <rect x="410" y="92" width="115" height="24" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="468" y="108" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Novel Resilience (8)</text>
+
+        <rect x="535" y="92" width="115" height="24" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="593" y="108" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Compliance (9)</text>
+
+        <text x="525" y="135" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555" font-style="italic">6 robustness dimensions</text>
+
+        <!-- Bottom insight -->
+        <rect x="100" y="155" width="500" height="35" rx="6" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+        <text x="350" y="176" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#333" font-weight="bold">Industry systematically optimises for 2 dimensions at the cost of 6.</text>
+        <text x="350" y="188" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#555">The tradeoff is invisible until a novel failure exposes it.</text>
+    </svg>
+    <div class="chart-caption">Full autonomy excels on speed and scalability. Strategic HITL trades minor efficiency (8/10 speed, 7/10 scalability) for superior performance across six robustness dimensions that determine long-term production reliability.</div>
+</div>
+
+<!-- VI. DESIGN PRINCIPLES -->
+<h2 class="section-title">VI. Design Principles for Effective HITL</h2>
+
+<h3 class="subsection-title">A. The Autonomy Spectrum</h3>
+<p>Our argument is not binary. Effective HITL is a calibration problem. The optimal position on the autonomy spectrum depends on feedback loop quality, domain risk tolerance, and the maturity of the resolution procedure. As Gartner warns, "applying uniform governance across AI agents will lead to enterprise AI agent failure."<sup>[20]</sup></p>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 2. Autonomy spectrum: speed vs risk tradeoff (author's conceptual model)</div>
+    <canvas id="spectrumChart"></canvas>
+    <div class="chart-caption">Production AI operations platforms should target "Strategic HITL," achieving high speed with controlled risk through explicit design of automation boundaries.</div>
+</div>
+
+<h3 class="subsection-title">B. Decision Boundary Framework</h3>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 8. Decision routing: how incoming actions are classified to appropriate autonomy levels</div>
+    <svg viewBox="0 0 680 460" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Incoming action -->
+        <rect x="240" y="10" width="200" height="40" rx="20" fill="#f8f9fa" stroke="#333" stroke-width="2"/>
+        <text x="340" y="35" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="13" font-weight="bold" fill="#333">Incoming Action</text>
+
+        <!-- Arrow down -->
+        <line x1="340" y1="50" x2="340" y2="75" stroke="#333" stroke-width="1.5" marker-end="url(#arr-f)"/>
+
+        <!-- Decision 1: Known problem? -->
+        <polygon points="340,78 430,112 340,146 250,112" fill="#eff6ff" stroke="#1e3a5f" stroke-width="2"/>
+        <text x="340" y="109" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#1e3a5f">Known problem</text>
+        <text x="340" y="122" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" fill="#1e3a5f">type?</text>
+
+        <!-- YES branch right to Decision 2 -->
+        <line x1="430" y1="112" x2="470" y2="112" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <text x="448" y="104" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#059669">Yes</text>
+
+        <!-- Decision 2: Validated? -->
+        <polygon points="550,78 630,112 550,146 470,112" fill="#f0fdf4" stroke="#059669" stroke-width="1.5"/>
+        <text x="550" y="109" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#059669">Validated</text>
+        <text x="550" y="122" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#059669">resolution?</text>
+
+        <!-- YES from validated: Full Auto (below diamond) -->
+        <line x1="550" y1="146" x2="550" y2="168" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <text x="562" y="160" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">Yes</text>
+        <rect x="475" y="172" width="150" height="34" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+        <text x="550" y="193" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#059669">Full Auto</text>
+
+        <!-- NO from validated: Auto + Escalation (below Full Auto) -->
+        <line x1="630" y1="112" x2="650" y2="112" stroke="#9a6d1a" stroke-width="1.5"/>
+        <line x1="650" y1="112" x2="650" y2="232" stroke="#9a6d1a" stroke-width="1.5"/>
+        <line x1="650" y1="232" x2="630" y2="232" stroke="#9a6d1a" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <text x="658" y="140" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#9a6d1a">No</text>
+        <rect x="475" y="215" width="155" height="34" rx="6" fill="#fffbeb" stroke="#9a6d1a" stroke-width="2"/>
+        <text x="553" y="236" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" font-weight="bold" fill="#9a6d1a">Auto + Escalation</text>
+
+        <!-- NO from known problem: down -->
+        <line x1="340" y1="146" x2="340" y2="175" stroke="#333" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <text x="350" y="164" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#dc2626">No</text>
+
+        <!-- Decision 3: Destructive? -->
+        <polygon points="340,178 420,212 340,246 260,212" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="340" y="209" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#dc2626">Destructive or</text>
+        <text x="340" y="222" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#dc2626">irreversible?</text>
+
+        <!-- YES left: Human-Gated -->
+        <line x1="260" y1="212" x2="200" y2="212" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <text x="228" y="204" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#dc2626">Yes</text>
+        <rect x="65" y="195" width="135" height="34" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="133" y="216" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#dc2626">Human-Gated</text>
+
+        <!-- NO down: Human-Guided -->
+        <line x1="340" y1="246" x2="340" y2="275" stroke="#333" stroke-width="1.5" marker-end="url(#arr-f)"/>
+        <text x="350" y="264" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">No</text>
+        <rect x="273" y="278" width="135" height="34" rx="6" fill="#fef2f2" stroke="#b84c2a" stroke-width="2"/>
+        <text x="340" y="299" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#b84c2a">Human-Guided</text>
+
+        <!-- Legend box -->
+        <rect x="65" y="340" width="550" height="72" rx="6" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+        <text x="340" y="361" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" font-weight="bold" fill="#333">Human Attention Allocation</text>
+        <rect x="85" y="373" width="10" height="10" rx="2" fill="#ecfdf5" stroke="#059669"/>
+        <text x="103" y="383" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#333">Full Auto: monitor persistence only</text>
+        <rect x="340" y="373" width="10" height="10" rx="2" fill="#fffbeb" stroke="#9a6d1a"/>
+        <text x="358" y="383" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#333">Escalation: review flagged cases</text>
+        <rect x="85" y="393" width="10" height="10" rx="2" fill="#fef2f2" stroke="#b84c2a"/>
+        <text x="103" y="403" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#333">Guided: develop new approach</text>
+        <rect x="340" y="393" width="10" height="10" rx="2" fill="#fef2f2" stroke="#dc2626"/>
+        <text x="358" y="403" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#333">Gated: approve before execution</text>
+    </svg>
+    <div class="chart-caption">Incoming actions are routed through a decision tree based on problem familiarity and action reversibility. Human attention concentrates on novel situations and irreversible operations rather than routine validated resolutions.</div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 13. Decision boundary quadrant: mapping problem characteristics to autonomy levels</div>
+    <svg viewBox="0 0 560 400" style="width:100%;max-width:520px;display:block;margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Axes -->
+        <line x1="80" y1="350" x2="540" y2="350" stroke="#333" stroke-width="2"/>
+        <line x1="80" y1="350" x2="80" y2="30" stroke="#333" stroke-width="2"/>
+        <!-- Axis arrows -->
+        <polygon points="540,350 530,345 530,355" fill="#333"/>
+        <polygon points="80,30 75,40 85,40" fill="#333"/>
+        <!-- Axis labels -->
+        <text x="310" y="385" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#333">Problem Familiarity</text>
+        <text x="30" y="190" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="12" font-weight="bold" fill="#333" transform="rotate(-90 30 190)">Action Reversibility</text>
+        <!-- Axis tick labels -->
+        <text x="190" y="370" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#666">Novel / Unknown</text>
+        <text x="430" y="370" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#666">Known / Validated</text>
+        <text x="72" y="280" text-anchor="end" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#666">Irreversible</text>
+        <text x="72" y="120" text-anchor="end" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#666">Reversible</text>
+
+        <!-- Quadrant dividers (dashed) -->
+        <line x1="310" y1="40" x2="310" y2="350" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="80" y1="190" x2="540" y2="190" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <!-- Q1: Top-right (Known + Reversible) = Full Auto -->
+        <rect x="325" y="55" width="200" height="120" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+        <text x="425" y="95" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="14" font-weight="bold" fill="#059669">Full Auto</text>
+        <text x="425" y="115" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Known problem, validated path</text>
+        <text x="425" y="130" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Reversible outcome</text>
+        <text x="425" y="155" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" font-style="italic" fill="#777">Human role: monitor persistence</text>
+
+        <!-- Q2: Top-left (Novel + Reversible) = Human-Guided -->
+        <rect x="95" y="55" width="200" height="120" rx="8" fill="#fff7ed" stroke="#b84c2a" stroke-width="2"/>
+        <text x="195" y="95" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="14" font-weight="bold" fill="#b84c2a">Human-Guided</text>
+        <text x="195" y="115" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Novel problem type</text>
+        <text x="195" y="130" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Reversible outcome</text>
+        <text x="195" y="155" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" font-style="italic" fill="#777">Human role: develop approach</text>
+
+        <!-- Q3: Bottom-left (Novel + Irreversible) = Human-Gated -->
+        <rect x="95" y="205" width="200" height="120" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="195" y="245" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="14" font-weight="bold" fill="#dc2626">Human-Gated</text>
+        <text x="195" y="265" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Novel or uncertain problem</text>
+        <text x="195" y="280" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Irreversible or destructive</text>
+        <text x="195" y="305" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" font-style="italic" fill="#777">Human role: approve before execution</text>
+
+        <!-- Q4: Bottom-right (Known + Irreversible) = Auto + Escalation -->
+        <rect x="325" y="205" width="200" height="120" rx="8" fill="#fffbeb" stroke="#9a6d1a" stroke-width="2"/>
+        <text x="425" y="245" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="14" font-weight="bold" fill="#9a6d1a">Auto + Escalation</text>
+        <text x="425" y="265" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Known problem, validated path</text>
+        <text x="425" y="280" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Irreversible or high-impact</text>
+        <text x="425" y="305" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" font-style="italic" fill="#777">Human role: review flagged cases</text>
+    </svg>
+    <div class="chart-caption">The two primary decision dimensions (problem familiarity and action reversibility) produce four natural autonomy quadrants. Movement from bottom-left to top-right represents increasing automation eligibility as both familiarity and reversibility improve.</div>
+</div>
+
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table III.</strong> Recommended HITL Decision Boundaries</p>
+<table>
+    <thead><tr><th>Decision Type</th><th>Autonomy Level</th><th>Human Role</th><th>Rationale</th></tr></thead>
+    <tbody>
+        <tr><td>Known problem, validated resolution</td><td><span class="badge badge-safe">Full Auto</span></td><td>Monitor outcome persistence</td><td>Well-characterised with validated feedback loop</td></tr>
+        <tr><td>Known problem, variant or edge case</td><td><span class="badge badge-warn">Auto + Escalation</span></td><td>Review escalated cases</td><td>Novel variant requiring domain judgement</td></tr>
+        <tr><td>Previously unseen problem type</td><td><span class="badge badge-risk">Human-Guided</span></td><td>Develop new resolution approach</td><td>Causal understanding required; no validated path exists<sup>[6]</sup></td></tr>
+        <tr><td>Destructive or irreversible action</td><td><span class="badge badge-risk">Human-Gated</span></td><td>Approve before execution</td><td>No reversal possible; blast radius control required</td></tr>
+        <tr><td>Automation module updates</td><td><span class="badge badge-risk">Human-Approved</span></td><td>Review before deployment</td><td>Supply chain risk; boundary change<sup>[10][11]</sup></td></tr>
+        <tr><td>Security-sensitive operations</td><td><span class="badge badge-risk">Human-Required</span></td><td>Validate every instance</td><td>Attack surface control; privilege boundary<sup>[17]</sup></td></tr>
+    </tbody>
+</table>
+
+<h3 class="subsection-title">C. Economic Model: HITL as Investment, Not Tax</h3>
+<p>
+    A common objection frames human oversight as a cost imposed on an otherwise efficient autonomous system. This framing is incomplete. Strategic HITL is better understood as an investment in boundary design that yields diminishing marginal cost over time while preventing high-severity tail events whose cost dwarfs the oversight investment.
+</p>
+
+<p style="text-align:center; font-size:9pt; font-variant:small-caps; margin-bottom:0.25rem;"><strong>Table VII.</strong> Relative Cost Model for HITL Mechanisms (normalised to autonomous action cost = 1.0)</p>
+<table>
+    <thead><tr><th>Action Type</th><th>Relative Cost</th><th>Frequency</th><th>Cost Trajectory Over Time</th></tr></thead>
+    <tbody>
+        <tr><td>Autonomous action (within validated boundary)</td><td>1.0x</td><td>High (majority of volume)</td><td>Stable</td></tr>
+        <tr><td>Exception escalation (mechanism 3)</td><td>3-5x</td><td>Decreasing as modules mature</td><td>Declining</td></tr>
+        <tr><td>Destructive-action approval (mechanism 4)</td><td>5-10x</td><td>Low (risk events only)</td><td>Stable</td></tr>
+        <tr><td>Boundary design / module creation (mechanisms 1-2)</td><td>50-100x (one-time)</td><td>Infrequent (per-module)</td><td>Amortised to near-zero per action</td></tr>
+        <tr><td>Post-hoc audit (mechanism 5)</td><td>2-3x (sampled)</td><td>Sampled subset</td><td>Declining with confidence</td></tr>
+        <tr><td>Undetected Sev1 incident (cost of omitting HITL)</td><td>1,000-10,000x</td><td>Rare but catastrophic</td><td>Unpredictable</td></tr>
+    </tbody>
+</table>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 9. Economic cost trajectory: effective per-action cost converges as modules mature</div>
+    <svg viewBox="0 0 720 320" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Axes -->
+        <line x1="80" y1="240" x2="660" y2="240" stroke="#333" stroke-width="1.5"/>
+        <line x1="80" y1="240" x2="80" y2="30" stroke="#333" stroke-width="1.5"/>
+
+        <!-- Y-axis labels -->
+        <text x="70" y="50" text-anchor="end" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">High</text>
+        <text x="70" y="140" text-anchor="end" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Medium</text>
+        <text x="70" y="230" text-anchor="end" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">Low</text>
+        <text x="28" y="140" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#333" transform="rotate(-90,28,140)">Effective Cost per Action</text>
+
+        <!-- X-axis month labels -->
+        <text x="130" y="256" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">M1</text>
+        <text x="245" y="256" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">M2</text>
+        <text x="360" y="256" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">M3</text>
+        <text x="480" y="256" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">M4</text>
+        <text x="600" y="256" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555">M5-6</text>
+
+        <!-- Autonomous baseline (flat dashed line) -->
+        <line x1="80" y1="215" x2="660" y2="215" stroke="#059669" stroke-width="2" stroke-dasharray="8 4"/>
+        <text x="668" y="219" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#059669">1.0x</text>
+
+        <!-- HITL cost curve (declining) -->
+        <path d="M 100,55 C 180,75 240,110 310,150 C 390,185 470,205 580,218 L 640,220"
+              fill="none" stroke="#1e3a5f" stroke-width="2.5"/>
+        <circle cx="100" cy="55" r="4" fill="#1e3a5f"/>
+        <circle cx="245" cy="112" r="4" fill="#1e3a5f"/>
+        <circle cx="360" cy="158" r="4" fill="#1e3a5f"/>
+        <circle cx="480" cy="200" r="4" fill="#1e3a5f"/>
+        <circle cx="640" cy="220" r="4" fill="#1e3a5f"/>
+
+        <!-- Annotation: boundary design phase -->
+        <rect x="90" y="35" width="140" height="18" rx="3" fill="rgba(30,58,95,0.08)"/>
+        <text x="160" y="48" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#1e3a5f">Boundary design investment</text>
+
+        <!-- Annotation: convergence zone -->
+        <path d="M 530,220 L 530,195" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="530" y="190" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#555">Convergence</text>
+
+        <!-- Sev1 cost (avoided) -->
+        <rect x="405" y="38" width="3" height="175" fill="rgba(220,38,38,0.12)" rx="1"/>
+        <text x="420" y="52" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#dc2626">Sev1 cost (avoided)</text>
+        <text x="420" y="64" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#dc2626">1000-10000x</text>
+
+        <!-- Legend at bottom, clearly separated -->
+        <line x1="100" y1="290" x2="125" y2="290" stroke="#1e3a5f" stroke-width="2.5"/>
+        <text x="130" y="294" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Strategic HITL effective cost</text>
+        <line x1="350" y1="290" x2="375" y2="290" stroke="#059669" stroke-width="2" stroke-dasharray="8 4"/>
+        <text x="380" y="294" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Autonomous baseline (1.0x)</text>
+        <rect x="560" y="284" width="12" height="12" fill="rgba(220,38,38,0.12)" stroke="#dc2626" stroke-width="0.5"/>
+        <text x="578" y="294" font-family="'Times New Roman', Georgia, serif" font-size="9" fill="#333">Avoided tail risk</text>
+    </svg>
+    <div class="chart-caption">Effective per-action cost starts high (boundary design investment) and converges toward the autonomous baseline as resolution modules mature and escalation rates decline. The economic justification is completed by prevented tail-risk events (red band), each of which individually exceeds the cumulative HITL investment.</div>
+</div>
+
+<p>The economic logic of graduated automation operates as follows:</p>
+<ol>
+    <li><strong>Initial investment.</strong> Boundary design (mechanisms 1-2) is expensive per-unit but is incurred once per resolution module. As the module portfolio grows, this cost is amortised across increasing autonomous volume.</li>
+    <li><strong>Marginal cost convergence.</strong> As modules mature and the proportion of novel incidents decreases, the system's effective per-action cost converges toward the autonomous baseline (1.0x). Our case study observed that exception escalation rates declined from approximately 60% in month one to under 20% by month six as more resolution paths were codified.</li>
+    <li><strong>Tail-risk prevention.</strong> The primary economic value of HITL is not in the routine overhead but in preventing high-severity incidents whose individual cost exceeds thousands of routine operations. A single Sev1 incident in hyperscale infrastructure can affect millions of users and cost orders of magnitude more than the cumulative HITL investment that would have prevented it.</li>
+    <li><strong>Compounding returns.</strong> Each human intervention on a novel case potentially generates a new resolution module, expanding the autonomous envelope [21]. HITL is therefore not a recurring fixed cost but a learning investment with compounding returns.</li>
+</ol>
+
+<div class="finding finding-key">
+    <strong>Economic thesis:</strong> Strategic HITL is an upfront investment in boundary design that produces diminishing marginal costs and prevents catastrophic tail events. The correct comparison is not "cost of HITL vs cost of autonomy" but "cost of HITL vs expected cost of unmitigated failures across the system lifecycle." When severity-weighted failure costs are included, HITL architectures typically achieve superior total cost of ownership within 3-6 months of operation.
+</div>
+
+<h3 class="subsection-title">D. Cognitive Fitness Preservation</h3>
+<p>A requirement that is critical yet often overlooked: the architecture must not merely allow human intervention but actively maintain human capability to intervene effectively. Research demonstrates that cognitive fitness degrades measurably within months of disuse.<sup>[1]</sup> We propose five design principles to address this challenge:</p>
+
+<div class="chart-container">
+    <div class="chart-title">Fig. 10. Cognitive fitness preservation: five reinforcing design principles</div>
+    <svg viewBox="0 0 700 360" style="width:100%;max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Central concept -->
+        <circle cx="350" cy="180" r="50" fill="#eff6ff" stroke="#1e3a5f" stroke-width="2"/>
+        <text x="350" y="174" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" font-weight="bold" fill="#1e3a5f">Cognitive</text>
+        <text x="350" y="190" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="11" font-weight="bold" fill="#1e3a5f">Fitness</text>
+
+        <!-- 1. Conversational Engagement (top) -->
+        <rect x="275" y="15" width="150" height="50" rx="8" fill="#f0fdf4" stroke="#059669" stroke-width="1.5"/>
+        <text x="350" y="37" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#059669">1. Conversational</text>
+        <text x="350" y="52" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#059669">Engagement</text>
+        <line x1="350" y1="65" x2="350" y2="130" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-f)"/>
+
+        <!-- 2. Productive Resistance (top-right) -->
+        <rect x="520" y="75" width="150" height="50" rx="8" fill="#fffbeb" stroke="#9a6d1a" stroke-width="1.5"/>
+        <text x="595" y="97" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#9a6d1a">2. Productive</text>
+        <text x="595" y="112" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#9a6d1a">Resistance</text>
+        <line x1="520" y1="110" x2="405" y2="160" stroke="#9a6d1a" stroke-width="1.5" marker-end="url(#arr-f)"/>
+
+        <!-- 3. Transparency (bottom-right) -->
+        <rect x="520" y="235" width="150" height="50" rx="8" fill="#f8f9fa" stroke="#6b3a6b" stroke-width="1.5"/>
+        <text x="595" y="257" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#6b3a6b">3. Transparency</text>
+        <text x="595" y="272" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#6b3a6b">by Default</text>
+        <line x1="520" y1="252" x2="405" y2="200" stroke="#6b3a6b" stroke-width="1.5" marker-end="url(#arr-f)"/>
+
+        <!-- 4. Novel Situation Routing (bottom-left) -->
+        <rect x="30" y="235" width="150" height="50" rx="8" fill="#fef2f2" stroke="#b84c2a" stroke-width="1.5"/>
+        <text x="105" y="257" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#b84c2a">4. Novel Situation</text>
+        <text x="105" y="272" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#b84c2a">Routing</text>
+        <line x1="180" y1="252" x2="295" y2="200" stroke="#b84c2a" stroke-width="1.5" marker-end="url(#arr-f)"/>
+
+        <!-- 5. Aggregate Visibility (top-left) -->
+        <rect x="30" y="75" width="150" height="50" rx="8" fill="#eff6ff" stroke="#0e6b5e" stroke-width="1.5"/>
+        <text x="105" y="97" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#0e6b5e">5. Aggregate</text>
+        <text x="105" y="112" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" font-weight="bold" fill="#0e6b5e">Metric Visibility</text>
+        <line x1="180" y1="110" x2="295" y2="160" stroke="#0e6b5e" stroke-width="1.5" marker-end="url(#arr-f)"/>
+
+        <!-- Outer reinforcing arc (subtle) -->
+        <path d="M 350,65 C 520,65 670,160 595,235" fill="none" stroke="#ddd" stroke-width="1" stroke-dasharray="4 3"/>
+        <path d="M 595,285 C 520,340 180,340 105,285" fill="none" stroke="#ddd" stroke-width="1" stroke-dasharray="4 3"/>
+        <path d="M 105,235 C 30,160 180,65 350,65" fill="none" stroke="#ddd" stroke-width="1" stroke-dasharray="4 3"/>
+
+        <!-- Bottom annotation -->
+        <text x="350" y="340" text-anchor="middle" font-family="'Times New Roman', Georgia, serif" font-size="10" fill="#555" font-style="italic">Each principle reinforces cognitive readiness for high-stakes intervention</text>
+    </svg>
+    <div class="chart-caption">Five reinforcing design principles ensure that human operators maintain the cognitive fitness needed to intervene effectively at critical moments. Without deliberate architectural investment in engagement, the human layer degrades into a passive rubber-stamp within months.[1]</div>
+</div>
+<ol>
+    <li><strong>Conversational engagement.</strong> Engineers interact with the system through dialogue, not merely receive its outputs. Active engagement preserves domain cognition.<sup>[1]</sup></li>
+    <li><strong>Productive resistance.</strong> The system surfaces friction at strategic points: alternative approaches, counterarguments, and confidence intervals. This counters the cognitive agency surrender identified by [3].</li>
+    <li><strong>Transparency by default.</strong> Every autonomous action is visible, traceable, and auditable. This builds the mental model that humans need in order to intervene meaningfully when required.</li>
+    <li><strong>Novel situation routing.</strong> Unknown problems go to humans first, building expertise rather than allowing it to atrophy through disuse.</li>
+    <li><strong>Aggregate metric visibility.</strong> Teams observe what the system does at scale, building intuition about its behaviour patterns and failure modes over time.</li>
+</ol>
+
+<!-- VII. RECOMMENDATIONS -->
+<h2 class="section-title">VII. Recommendations</h2>
+
+<h3 class="subsection-title">A. For Platform Teams Building AI Agents</h3>
+<ol>
+    <li><strong>Design the automation boundary; delegate the execution.</strong> Own the resolution structure and let agents execute within validated boundaries.<sup>[5]</sup></li>
+    <li><strong>Track entropy explicitly.</strong> Monitor outcome persistence rates, tool error rates, and architectural drift over time.</li>
+    <li><strong>Gate destructive actions.</strong> Require explicit human approval before customer-impacting or irreversible operations.</li>
+    <li><strong>Vet all skill sources.</strong> Never auto-ingest capabilities from uncontrolled external sources.<sup>[10][11]</sup></li>
+    <li><strong>Preserve engineer engagement.</strong> Build conversational interfaces, not merely automated pipelines.<sup>[1][3]</sup></li>
+</ol>
+
+<h3 class="subsection-title">B. For Engineering Leadership</h3>
+<ol>
+    <li><strong>Match autonomy to feedback loop quality.</strong> Do not grant more autonomy than your monitoring and evaluation infrastructure can validate.<sup>[6]</sup></li>
+    <li><strong>Invest in system design continuously.</strong> Entropy accumulates when architectural investment stops.<sup>[4][5]</sup></li>
+    <li><strong>Measure cognitive readiness.</strong> Track whether your team retains the ability to handle novel incidents without agent assistance.<sup>[1]</sup></li>
+    <li><strong>Treat HITL as a security control.</strong> Human oversight is the last line of defence against adversarial exploitation of autonomous capabilities.<sup>[17][18]</sup></li>
+</ol>
+
+<h3 class="subsection-title">C. For Governance and Compliance</h3>
+<ol>
+    <li><strong>Prepare for regulatory requirements.</strong> EU AI Act Article 14 mandates demonstrable human oversight for high-risk AI systems.<sup>[8]</sup></li>
+    <li><strong>Maintain complete audit trails.</strong> Every autonomous decision must be traceable to its inputs, reasoning, and outcome.<sup>[9]</sup></li>
+    <li><strong>Define accountability chains explicitly.</strong> Establish who owns each decision when an agent acts: developer, deployer, operator, or user.<sup>[9]</sup></li>
+    <li><strong>Assume adversarial exploitation.</strong> Red-team agent systems regularly. Automated exploit generation achieves high success rates with zero human-developed exploit code.<sup>[17]</sup></li>
+</ol>
+
+<!-- VIII. CONCLUSION -->
+<h2 class="section-title">VIII. Conclusion</h2>
+<p>
+    Evidence from six independent domains converges on a single conclusion: human-in-the-loop is not a concession to current AI limitations. It is a structural requirement of any production system that must handle novelty, maintain coherence over time, preserve organisational accountability, resist adversarial exploitation, and serve long-term human capability.
+</p>
+<p>
+    We acknowledge forthrightly that full autonomy wins on efficiency dimensions. It is faster (no human latency) and scales more easily (no human bottleneck). Our central argument is that the industry is trading two efficiency gains for six robustness losses, and that this tradeoff is frequently made without awareness of the costs involved. Those costs manifest as compounding entropy,<sup>[4][5]</sup> accountability fragmentation,<sup>[9]</sup> security exposure,<sup>[10][11]</sup> cognitive atrophy,<sup>[1]</sup> inability to handle novel failures,<sup>[6][7]</sup> and legal non-compliance.<sup>[8]</sup>
+</p>
+<p>
+    Our production validation demonstrates that this tradeoff is architecturally avoidable. A platform can achieve 23x adoption growth, sub-20-minute response, and greater than 35% autonomous resolution while maintaining strategic human oversight. The key insight is that HITL must be structural (designing automation boundaries, defining escalation thresholds, validating resolution persistence) rather than tactical (approving individual actions). Strategic HITL scales. Tactical HITL does not.
+</p>
+
+<div class="finding finding-conclusion">
+    <strong>Final position:</strong> The question for every organisation deploying autonomous agents is not "when can we remove humans from the loop?" It is: "where should humans be positioned, and how do we keep them sharp enough to matter when it counts?" We are building systems that can deceive their evaluators,<sup>[12]</sup> acquire capabilities we cannot predict,<sup>[15]</sup> and persuade their operators that everything is fine.<sup>[19]</sup> In this context, the burden of proof lies with those advocating for full autonomy, not with those insisting on oversight.
+</div>
+
+<!-- REFERENCES -->
+<h2 class="section-title">IX. References</h2>
+<div class="references">
+    <p>[1] MIT Media Lab, "Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant," arXiv:2506.08872, 2025. <a href="https://arxiv.org/abs/2506.08872">arxiv.org/abs/2506.08872</a></p>
+    <p>[2] H. Lee et al., "The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects," in Proc. CHI 2025, DOI: 10.1145/3706598.3713778. <a href="https://doi.org/10.1145/3706598.3713778">doi.org/10.1145/3706598.3713778</a></p>
+    <p>[3] "Cognitive Agency Surrender: Defending Epistemic Sovereignty via Scaffolded AI Friction," arXiv:2603.21735, 2026. <a href="https://arxiv.org/abs/2603.21735">arxiv.org/abs/2603.21735</a></p>
+    <p>[4] Liu et al., "Debt Behind the AI Boom: A Large-Scale Empirical Study of AI-Generated Code in the Wild," arXiv:2603.28592, 2026. <a href="https://arxiv.org/abs/2603.28592">arxiv.org/abs/2603.28592</a></p>
+    <p>[5] "Beyond the 'Diff': Addressing Agentic Entropy in Agentic Software Development," arXiv:2604.16323, 2026. <a href="https://arxiv.org/abs/2604.16323">arxiv.org/abs/2604.16323</a></p>
+    <p>[6] "Why Do Multi-Agent LLM Systems Fail?" arXiv:2503.13657, 2025. <a href="https://arxiv.org/abs/2503.13657">arxiv.org/abs/2503.13657</a></p>
+    <p>[7] Dao et al., "Agentic Design Patterns: A System-Theoretic Framework," NeurIPS LAW Workshop, arXiv:2601.19752, 2025. <a href="https://arxiv.org/abs/2601.19752">arxiv.org/abs/2601.19752</a></p>
+    <p>[8] J. Laux and S. Ruschemeier, "Automation Bias in the AI Act: On the Legal Implications of Attempting to Debias Human Oversight of AI," European J. Risk Regulation, Dec 2025. <a href="https://www.cambridge.org/core/journals/european-journal-of-risk-regulation">cambridge.org</a></p>
+    <p>[9] "AI and the Transformation of Accountability and Discretion in Urban Governance," arXiv:2502.13101, 2025. <a href="https://arxiv.org/abs/2502.13101">arxiv.org/abs/2502.13101</a></p>
+    <p>[10] Snyk, "ToxicSkills: Malicious AI Agent Skills," Security Research Report, Feb 2026. <a href="https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/">snyk.io/blog/toxicskills</a></p>
+    <p>[11] Cloud Security Alliance, "Agent Context Poisoning: SKILL.md and the New AI Supply Chain Attack Surface," CSA Research Note, May 2026. <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-skill-md-agent-context-poisoning-20260506/">labs.cloudsecurityalliance.org</a></p>
+    <p>[12] Anthropic, "Sleeper Agents: Training Deceptive LLMs That Persist Through Safety Training," arXiv:2401.05566, 2024. <a href="https://arxiv.org/abs/2401.05566">arxiv.org/abs/2401.05566</a></p>
+    <p>[13] Apollo Research / OpenAI, "Stress Testing Deliberative Alignment for Anti-Scheming Training," arXiv:2509.15541, 2025. <a href="https://arxiv.org/abs/2509.15541">arxiv.org/abs/2509.15541</a></p>
+    <p>[14] International AI Safety Report 2026, arXiv:2602.21012, Feb 2026. <a href="https://arxiv.org/abs/2602.21012">arxiv.org/abs/2602.21012</a></p>
+    <p>[15] Berti et al., "Emergent Abilities in Large Language Models: A Survey," arXiv:2503.05788, 2025. <a href="https://arxiv.org/abs/2503.05788">arxiv.org/abs/2503.05788</a></p>
+    <p>[16] Natarajan et al., "Human-in-the-loop or AI-in-the-loop? Automate or Collaborate?" arXiv:2412.14232, 2024. <a href="https://arxiv.org/abs/2412.14232">arxiv.org/abs/2412.14232</a></p>
+    <p>[17] "SoK: The Attack Surface of Agentic AI," arXiv:2603.22928, 2026. <a href="https://arxiv.org/abs/2603.22928">arxiv.org/abs/2603.22928</a></p>
+    <p>[18] "Securing AI Agents Against Prompt Injection Attacks: Benchmark and Framework," arXiv:2511.15759, 2025. <a href="https://arxiv.org/abs/2511.15759">arxiv.org/abs/2511.15759</a></p>
+    <p>[19] "Persuasion with Large Language Models: A Survey," arXiv:2411.06837, updated Apr 2026. <a href="https://arxiv.org/abs/2411.06837">arxiv.org/abs/2411.06837</a></p>
+    <p>[20] Gartner, "Applying Uniform Governance Across AI Agents Will Lead to Enterprise AI Agent Failure," Press Release, May 2026. <a href="https://www.gartner.com/en/newsroom/press-releases/2026-05-26-gartner-says-applying-uniform-governance-across-ai-agents-will-lead-to-enterprise-ai-agent-failure">gartner.com</a></p>
+    <p>[21] A. Malik, "Autonomous Incident Resolution at Hyperscale: An Agentic AI Architecture for Network Operations," arXiv:2606.09122, 2026. <a href="https://arxiv.org/abs/2606.09122">arxiv.org/abs/2606.09122</a></p>
+</div>
+
+<p style="margin-top:1.5rem; font-size:8.5pt; color:var(--muted); text-align:center; border-top:1px solid #ddd; padding-top:0.75rem;">
+    Companion document with complete 53-paper analysis available upon request. Draft v0.8 &bull; June 14, 2026.<br>
+    Production metrics derived from internal telemetry. Relative values reported to preserve operational confidentiality.
+</p>
+
+<script>
+// Radar Chart
+const ctx1 = document.getElementById('radarChart').getContext('2d');
+new Chart(ctx1, {
+    type: 'radar',
+    data: {
+        labels: ['Speed', 'Raw Scalability', 'Safety', 'Accountability', 'Security', 'Cognitive Fitness', 'Novel Failure\nResilience', 'Legal Compliance'],
+        datasets: [{
+            label: 'Full Autonomy',
+            data: [10, 9, 3, 2, 3, 1, 2, 2],
+            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+            borderColor: '#dc2626',
+            borderWidth: 2,
+            pointBackgroundColor: '#dc2626'
+        }, {
+            label: 'Strategic HITL',
+            data: [8, 7, 9, 9, 8, 8, 8, 9],
+            backgroundColor: 'rgba(5, 150, 105, 0.1)',
+            borderColor: '#059669',
+            borderWidth: 2,
+            pointBackgroundColor: '#059669'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            r: {
+                beginAtZero: true,
+                max: 10,
+                ticks: { stepSize: 2, font: { size: 9 } },
+                pointLabels: { font: { size: 9 } }
+            }
+        },
+        plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 9 } } }
+        }
+    }
+});
+
+// Spectrum Chart
+const ctx2 = document.getElementById('spectrumChart').getContext('2d');
+new Chart(ctx2, {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            label: 'Full Human Control',
+            data: [{x: 1, y: 2}],
+            backgroundColor: '#1e3a5f',
+            pointRadius: 10
+        }, {
+            label: 'Strategic HITL',
+            data: [{x: 3, y: 8}],
+            backgroundColor: '#059669',
+            pointRadius: 14,
+            pointStyle: 'star'
+        }, {
+            label: 'Supervised Autonomy',
+            data: [{x: 6, y: 9}],
+            backgroundColor: '#9a6d1a',
+            pointRadius: 10
+        }, {
+            label: 'Full Autonomy',
+            data: [{x: 9.5, y: 10}],
+            backgroundColor: '#dc2626',
+            pointRadius: 10
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            x: {
+                title: { display: true, text: 'Risk Level (higher = more risk)', font: { size: 9 } },
+                min: 0, max: 10,
+                ticks: { font: { size: 8 } }
+            },
+            y: {
+                title: { display: true, text: 'Speed (higher = faster)', font: { size: 9 } },
+                min: 0, max: 10,
+                ticks: { font: { size: 8 } }
+            }
+        },
+        plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 9 } } }
+        }
+    }
+});
+
+// Fig 3: Agentic Entropy - Code Quality Bar Chart
+const ctx3 = document.getElementById('entropyChart').getContext('2d');
+new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: ['Code Smells\n(% of issues)', 'Issues Persisting\nUnfixed', 'PR Rejection\nRate', 'Repos with\nAI Debt'],
+        datasets: [{
+            label: 'AI-Generated Code (from 302,600 commits across 6,299 repos)',
+            data: [89.3, 22.7, 46.4, 73.2],
+            backgroundColor: ['#b84c2a', '#dc2626', '#9a6d1a', '#6b3a6b'],
+            borderColor: ['#8a3820', '#a31d1d', '#7a5514', '#4d2a4d'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        indexAxis: 'y',
+        scales: {
+            x: {
+                beginAtZero: true,
+                max: 100,
+                title: { display: true, text: 'Percentage (%)', font: { size: 9 } },
+                ticks: { font: { size: 8 }, callback: function(v) { return v + '%'; } }
+            },
+            y: { ticks: { font: { size: 8 } } }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: function(ctx) { return ctx.raw + '%'; } } }
+        }
+    }
+});
+
+// Fig 4: Compounding Error Line Chart
+const ctx4 = document.getElementById('compoundChart').getContext('2d');
+const steps = Array.from({length: 15}, (_, i) => i + 1);
+new Chart(ctx4, {
+    type: 'line',
+    data: {
+        labels: steps,
+        datasets: [{
+            label: '99% per step',
+            data: steps.map(n => Math.pow(0.99, n) * 100),
+            borderColor: '#059669',
+            backgroundColor: 'rgba(5,150,105,0.05)',
+            borderWidth: 2,
+            pointRadius: 3,
+            fill: false,
+            tension: 0.3
+        }, {
+            label: '95% per step',
+            data: steps.map(n => Math.pow(0.95, n) * 100),
+            borderColor: '#9a6d1a',
+            backgroundColor: 'rgba(154,109,26,0.05)',
+            borderWidth: 2,
+            pointRadius: 3,
+            fill: false,
+            tension: 0.3
+        }, {
+            label: '90% per step',
+            data: steps.map(n => Math.pow(0.90, n) * 100),
+            borderColor: '#dc2626',
+            backgroundColor: 'rgba(220,38,38,0.05)',
+            borderWidth: 2,
+            pointRadius: 3,
+            fill: false,
+            tension: 0.3
+        }, {
+            label: '85% per step',
+            data: steps.map(n => Math.pow(0.85, n) * 100),
+            borderColor: '#6b3a6b',
+            backgroundColor: 'rgba(107,58,107,0.05)',
+            borderWidth: 2,
+            pointRadius: 3,
+            fill: false,
+            tension: 0.3
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            x: {
+                title: { display: true, text: 'Number of Chained Agent Steps', font: { size: 9 } },
+                ticks: { font: { size: 8 } }
+            },
+            y: {
+                beginAtZero: true,
+                max: 100,
+                title: { display: true, text: 'System Success Probability (%)', font: { size: 9 } },
+                ticks: { font: { size: 8 }, callback: function(v) { return v + '%'; } }
+            }
+        },
+        plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 8 } } },
+            annotation: {}
+        }
+    }
+});
+
+// Fig 5: Security - Skill Vulnerability Breakdown
+const ctx5 = document.getElementById('securityChart').getContext('2d');
+new Chart(ctx5, {
+    type: 'doughnut',
+    data: {
+        labels: ['Critical flaws (credential theft, backdoors, exfiltration)', 'Significant vulnerabilities (at least one)', 'No detected vulnerabilities'],
+        datasets: [{
+            data: [13, 23, 64],
+            backgroundColor: ['#dc2626', '#9a6d1a', '#059669'],
+            borderColor: ['#fff', '#fff', '#fff'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 8 }, boxWidth: 12 } },
+            tooltip: { callbacks: { label: function(ctx) { return ctx.label + ': ' + ctx.raw + '%'; } } }
+        }
+    }
+});
+
+// Fig 6 is SVG-based (no Chart.js needed)
+</script>
+
+<footer class="blog-footer no-print">
+    <div style="margin-bottom: 0.75rem;">
+        <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        <a href="https://arxiv.org/search/?query=Arun+Malik&searchtype=author" target="_blank">arXiv</a>
+    </div>
+    <p>&copy; 2026 Arun Malik</p>
+</footer>
+
+</body>
+</html>
