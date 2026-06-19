@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Series - Arun Malik</title>
+    <meta name="description" content="Blog series by Arun Malik on AI agents, production systems, and software architecture.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>A</text></svg>">
+    <style>
+        :root {
+            --bg: #ffffff; --bg-secondary: #f9fafb; --text: #111827;
+            --text-secondary: #6b7280; --accent: #2563eb; --border: #e5e7eb;
+            --max-width: 680px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', Menlo, monospace;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9;
+            --text-secondary: #94a3b8; --accent: #60a5fa; --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; transition: background 0.3s, color 0.3s; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+        .site-nav { display: flex; align-items: center; justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .site-name:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active { color: var(--text); }
+        .theme-btn { background: none; border: none; cursor: pointer; font-size: 1.125rem; color: var(--text-secondary); padding: 0.25rem; }
+        .theme-btn:hover { color: var(--text); }
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.025em; }
+        .page-desc { color: var(--text-secondary); font-size: 1rem; margin-bottom: 2.5rem; }
+        .series-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .series-card:hover { border-color: var(--accent); background: var(--bg-secondary); }
+        .series-card-link { text-decoration: none; display: block; }
+        .series-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+        .series-card-title { font-size: 1.125rem; font-weight: 600; color: var(--text); }
+        .series-card-status {
+            font-size: 0.6875rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.04em; padding: 0.2rem 0.6rem; border-radius: 4px;
+        }
+        .status-in-progress { color: #059669; background: #d1fae5; }
+        .status-research { color: #d97706; background: #fef3c7; }
+        [data-theme="dark"] .status-in-progress { color: #34d399; background: #064e3b; }
+        [data-theme="dark"] .status-research { color: #fbbf24; background: #78350f; }
+        .series-card-desc { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+        .series-card-meta { font-size: 0.8125rem; color: var(--text-secondary); font-family: var(--font-mono); }
+        .series-card-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+        .series-tag {
+            font-size: 0.6875rem; font-weight: 500;
+            color: var(--text-secondary); background: var(--bg-secondary);
+            border: 1px solid var(--border); padding: 0.125rem 0.5rem; border-radius: 3px;
+        }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 0.8125rem; color: var(--text-secondary); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+    </style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="site-nav">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active">Series</a>
+                    <a href="/about/">About</a>
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Series</h1>
+            <p class="page-desc">Long-form, multi-part explorations of AI systems, production engineering, and software architecture.</p>
+
+            <div id="series-list">
+                <a href="/series/strategic-hitl/" class="series-card-link">
+                    <div class="series-card">
+                        <div class="series-card-header">
+                            <h2 class="series-card-title">Strategic HITL for Production AI Agents</h2>
+                            <span class="series-card-status status-in-progress">In Progress</span>
+                        </div>
+                        <p class="series-card-desc">A 13-part series exploring why Human-in-the-Loop is a structural requirement for production AI systems, backed by 53 research papers and a hyperscale case study.</p>
+                        <span class="series-card-meta">13 parts</span>
+                        <div class="series-card-tags">
+                            <span class="series-tag">ai-agents</span>
+                            <span class="series-tag">hitl</span>
+                            <span class="series-tag">production</span>
+                            <span class="series-tag">governance</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/series/ai-amplifier/" class="series-card-link">
+                    <div class="series-card">
+                        <div class="series-card-header">
+                            <h2 class="series-card-title">AI as Human Amplifier vs Replacement</h2>
+                            <span class="series-card-status status-research">Research</span>
+                        </div>
+                        <p class="series-card-desc">Exploring AI as a tool that amplifies human capability rather than replacing it. A framework for building AI systems that make people better at their jobs.</p>
+                        <span class="series-card-meta">Coming soon</span>
+                        <div class="series-card-tags">
+                            <span class="series-tag">ai-agents</span>
+                            <span class="series-tag">human-augmentation</span>
+                            <span class="series-tag">philosophy</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/series/progressive-crystallization/" class="series-card-link">
+                    <div class="series-card">
+                        <div class="series-card-header">
+                            <h2 class="series-card-title">Progressive Crystallization</h2>
+                            <span class="series-card-status status-research">Research</span>
+                        </div>
+                        <p class="series-card-desc">A 10-part series on converting AI agent workflows into deterministic, zero-cost automation through incremental formalization.</p>
+                        <span class="series-card-meta">Coming soon</span>
+                        <div class="series-card-tags">
+                            <span class="series-tag">automation</span>
+                            <span class="series-tag">ai-agents</span>
+                            <span class="series-tag">optimization</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+            </div>
+            <p>&copy; 2026 Arun Malik</p>
+        </footer>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+</body>
+</html>
