@@ -158,6 +158,25 @@ const SERIES_DATA = [
     status: "research",
     tags: ["automation", "ai-agents", "optimization"],
     posts: []
+  },
+  {
+    id: "cloud-security",
+    title: "Cloud Security",
+    description: "Practical strategies and architectural patterns for securing cloud infrastructure, from Zero Trust to AI-aware access control.",
+    status: "in-progress",
+    tags: ["security", "azure", "cloud", "zero-trust"],
+    posts: [
+      {
+        slug: "zero-trust-azure",
+        url: "/posts/zero-trust-azure/",
+        title: "Zero Trust in Azure: Strategies for Securing Cloud Infrastructure",
+        date: "2026-04-19",
+        excerpt: "Seven practical strategies for implementing Zero Trust security in Azure, covering NSGs, Private Links, Azure Policies, AVNM, and shift-left practices.",
+        tags: ["security", "azure", "zero-trust"],
+        references: [],
+        published: true
+      }
+    ]
   }
 ];
 
@@ -179,15 +198,6 @@ const STANDALONE_POSTS = [
     date: "2026-06-14",
     excerpt: "Drawing on 53 research papers, this paper argues that HITL is a structural requirement of any production AI system.",
     tags: ["hitl", "research", "governance"],
-    references: []
-  },
-  {
-    slug: "zero-trust-azure",
-    url: "/posts/zero-trust-azure/",
-    title: "Zero Trust in Azure: Strategies for Securing Cloud Infrastructure",
-    date: "2026-04-19",
-    excerpt: "Seven practical strategies for implementing Zero Trust security in Azure.",
-    tags: ["security", "azure", "zero-trust"],
     references: []
   },
   {
