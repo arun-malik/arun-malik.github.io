@@ -135,6 +135,8 @@
                     <label class="form-label" for="message">Message</label>
                     <textarea class="form-textarea" id="message" name="message" placeholder="Your message..." required></textarea>
                 </div>
+                <!-- hCaptcha (free, privacy-friendly) -->
+                <div class="h-captcha" data-captcha="true"></div>
                 <button class="form-submit" type="submit">Send Message</button>
                 <p class="form-note" id="formNote" style="display:none; margin-top:1rem; font-size:0.875rem; color:var(--text-secondary);"></p>
             </form>
@@ -152,6 +154,9 @@
             <p>&copy; 2026 Arun Malik</p>
         </footer>
     </div>
+
+    <!-- hCaptcha (free, privacy-friendly - works with Web3Forms natively) -->
+    <script src="https://web3forms.com/client/script.js" async defer></script>
 
     <script>
         const toggle = document.getElementById('themeToggle');
