@@ -1,5 +1,7 @@
 _*.txt
 # Test artifacts
 .playwright-mcp/
-*.png
+/*.png
 
+node_modules/
+package-lock.json
