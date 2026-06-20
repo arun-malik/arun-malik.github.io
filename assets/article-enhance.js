@@ -5,8 +5,11 @@
   'use strict';
 
   // Only run on pages with article content
-  const article = document.querySelector('.article-content') || document.querySelector('article');
+  const article = document.querySelector('.article-content') || document.querySelector('article') || document.querySelector('body');
   if (!article) return;
+
+  // Determine if this is a content page (has headings indicating long-form content)
+  const hasContent = article.querySelectorAll('h2').length >= 2;
 
   // --- Reading Progress Bar ---
   function createProgressBar() {
@@ -276,7 +279,7 @@
   function createListenButton() {
     if (!('speechSynthesis' in window)) return;
 
-    const meta = document.querySelector('.article-meta');
+    const meta = document.querySelector('.article-meta') || document.querySelector('.authors') || document.querySelector('h1');
     if (!meta) return;
 
     const container = document.createElement('div');
@@ -303,10 +306,10 @@
     let utterance = null;
 
     function getArticleText() {
-      const content = article.querySelector('.article-content') || article;
+      const content = document.querySelector('.article-content') || article;
       // Get text, skip code blocks and reference lists for cleaner audio
       const clone = content.cloneNode(true);
-      clone.querySelectorAll('pre, code, .references, table').forEach(el => el.remove());
+      clone.querySelectorAll('pre, code, .references, .ref-list, table, .blog-nav, .blog-footer, nav, header, footer, script, style').forEach(el => el.remove());
       return clone.textContent.replace(/\s+/g, ' ').trim();
     }
 
@@ -366,6 +369,7 @@
 
   // Initialize
   function init() {
+    if (!hasContent) return;
     injectStyles();
     createProgressBar();
     createTOC();
