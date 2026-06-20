@@ -1,57 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <rect width="1200" height="630" fill="#0f172a"/>
-<!-- Abstract background: flowing curves and geometry -->
-<g fill="none" stroke="#0891b2" stroke-width="1" opacity="0.15">
-  <ellipse cx="600" cy="315" rx="400" ry="200" transform="rotate(10 600 315)"/>
-  <ellipse cx="600" cy="315" rx="350" ry="170" transform="rotate(-15 600 315)"/>
-  <ellipse cx="600" cy="315" rx="500" ry="250" transform="rotate(5 600 315)"/>
-  <ellipse cx="600" cy="315" rx="300" ry="140" transform="rotate(-25 600 315)"/>
+<!-- Abstract background texture -->
+<g fill="none" stroke="#164e63" stroke-width="0.5" opacity="0.3">
+  <ellipse cx="600" cy="315" rx="500" ry="280" transform="rotate(8 600 315)"/>
+  <ellipse cx="600" cy="315" rx="450" ry="250" transform="rotate(-12 600 315)"/>
+  <ellipse cx="600" cy="315" rx="400" ry="220" transform="rotate(20 600 315)"/>
 </g>
-<!-- Abstract scattered dots (like data particles) -->
-<g fill="#0891b2" opacity="0.2">
-  <circle cx="150" cy="120" r="3"/><circle cx="280" cy="80" r="2"/><circle cx="420" cy="150" r="4"/>
-  <circle cx="100" cy="400" r="3"/><circle cx="350" cy="520" r="2"/><circle cx="500" cy="560" r="3"/>
-  <circle cx="750" cy="90" r="2"/><circle cx="900" cy="130" r="3"/><circle cx="1050" cy="80" r="4"/>
-  <circle cx="800" cy="530" r="3"/><circle cx="1000" cy="500" r="2"/><circle cx="1100" cy="550" r="3"/>
-  <circle cx="200" cy="250" r="2"/><circle cx="1000" cy="250" r="2"/>
+<!-- Stream A (cyan): flowing from upper-left toward center-right -->
+<g fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.6">
+  <path d="M80,150 Q250,130 400,200 Q550,270 700,290 Q800,300 900,310"/>
+  <path d="M120,190 Q280,180 420,240 Q560,300 700,320 Q800,330 880,330"/>
+  <path d="M60,110 Q220,80 380,160 Q530,240 680,260 Q780,270 900,290"/>
 </g>
-<!-- Abstract: flowing connection paths -->
-<g fill="none" stroke="#0891b2" stroke-width="1.5" opacity="0.25">
-  <path d="M0,200 Q200,150 400,220 T800,180 T1200,250"/>
-  <path d="M0,430 Q200,480 400,410 T800,460 T1200,380"/>
+<!-- Stream B (purple): flowing from lower-left toward center-right -->
+<g fill="none" stroke="#8b5cf6" stroke-width="2.5" opacity="0.6">
+  <path d="M80,480 Q250,500 400,430 Q550,360 700,340 Q800,330 900,320"/>
+  <path d="M120,440 Q280,450 420,390 Q560,330 700,320 Q800,315 880,315"/>
+  <path d="M60,520 Q220,550 380,470 Q530,390 680,370 Q780,350 900,340"/>
 </g>
-<!-- CLI path (top) - more abstract, integrated -->
-<g fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.6">
-  <path d="M250,220 L380,220" stroke-dasharray="12,6"/>
-  <rect x="390" y="200" width="140" height="40" rx="6"/>
-  <path d="M540,220 L670,220" stroke-dasharray="12,6"/>
-  <rect x="680" y="200" width="140" height="40" rx="6"/>
-  <path d="M830,220 L920,280"/>
+<!-- Convergence zone: where streams merge into unified flow -->
+<g fill="none" stroke="#e2e8f0" stroke-width="1.5" opacity="0.4">
+  <circle cx="920" cy="315" r="60"/>
+  <circle cx="920" cy="315" r="40"/>
+  <circle cx="920" cy="315" r="20"/>
 </g>
-<!-- MCP path (bottom) - more abstract, integrated -->
-<g fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.6">
-  <path d="M250,410 L380,410" stroke-dasharray="12,6"/>
-  <rect x="390" y="390" width="140" height="40" rx="6"/>
-  <path d="M540,410 L670,410" stroke-dasharray="12,6"/>
-  <rect x="680" y="390" width="140" height="40" rx="6"/>
-  <path d="M830,410 L920,350"/>
+<!-- Unified output flowing right -->
+<g fill="none" stroke="#e2e8f0" stroke-width="2" opacity="0.5">
+  <path d="M980,315 Q1050,310 1120,300"/>
+  <path d="M980,320 Q1050,325 1120,330"/>
 </g>
-<!-- Convergence point (abstract orb) -->
-<g opacity="0.7">
-  <circle cx="960" cy="315" r="50" fill="none" stroke="#e2e8f0" stroke-width="2"/>
-  <circle cx="960" cy="315" r="35" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
-  <circle cx="960" cy="315" r="8" fill="#e2e8f0" opacity="0.6"/>
+<!-- Scattered energy particles -->
+<g fill="#06b6d4" opacity="0.3">
+  <circle cx="200" cy="100" r="3"/><circle cx="350" cy="170" r="2"/><circle cx="500" cy="230" r="3"/>
+  <circle cx="150" cy="160" r="2"/><circle cx="450" cy="190" r="2"/>
 </g>
-<!-- Small labels inside boxes (subtle) -->
-<g font-family="monospace" font-size="11" opacity="0.5">
-  <text x="430" y="225" fill="#67e8f9">$ cmd</text>
-  <text x="720" y="225" fill="#67e8f9">pipe</text>
-  <text x="425" y="415" fill="#c4b5fd">tools</text>
-  <text x="720" y="415" fill="#c4b5fd">JSON</text>
+<g fill="#8b5cf6" opacity="0.3">
+  <circle cx="200" cy="530" r="3"/><circle cx="350" cy="460" r="2"/><circle cx="500" cy="400" r="3"/>
+  <circle cx="150" cy="470" r="2"/><circle cx="450" cy="440" r="2"/>
 </g>
-<!-- Abstract: large faded geometric shapes -->
-<g fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.1">
-  <polygon points="100,100 200,50 300,100 300,200 200,250 100,200"/>
-  <polygon points="950,500 1050,450 1150,500 1150,600 1050,650 950,600"/>
+<g fill="#e2e8f0" opacity="0.2">
+  <circle cx="950" cy="280" r="2"/><circle cx="1000" cy="350" r="2"/>
+  <circle cx="1060" cy="300" r="3"/><circle cx="1100" cy="340" r="2"/>
+</g>
+<!-- Subtle geometric accents -->
+<g fill="none" stroke="#0e7490" stroke-width="0.8" opacity="0.15">
+  <polygon points="50,50 120,30 140,90 80,110"/>
+  <polygon points="1080,540 1140,520 1160,580 1100,590"/>
 </g>
 </svg>
