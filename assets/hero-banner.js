@@ -66,7 +66,9 @@
     var insertPoint = document.querySelector('header') ||
                       document.querySelector('nav.blog-nav') ||
                       document.querySelector('nav.nav-bar') ||
-                      document.querySelector('nav');
+                      document.querySelector('nav') ||
+                      document.querySelector('.blog-header') ||
+                      document.querySelector('h1');
 
     if (insertPoint) {
       insertPoint.after(hero);
