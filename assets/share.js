@@ -6,8 +6,10 @@
   'use strict';
 
   function createShareButton() {
-    // Find insertion point: after .article-meta, .listen-container, .authors, h1, or .bio
-    const insertAfter = document.querySelector('.listen-container') ||
+    // Insert into listen-container if it exists (puts Share next to Listen)
+    // Otherwise create own container after meta/authors/h1/bio
+    const listenContainer = document.querySelector('.listen-container');
+    const insertAfter = listenContainer ||
                         document.querySelector('.article-meta') ||
                         document.querySelector('.authors') ||
                         document.querySelector('.bio') ||
@@ -47,8 +49,13 @@
         </a>
       </div>
     `;
-
-    insertAfter.after(container);
+
+    // If listen container exists, append share button inside it (inline)
+    if (listenContainer) {
+      listenContainer.appendChild(container);
+    } else {
+      insertAfter.after(container);
+    }
 
     const btn = document.getElementById('shareBtn');
     const dropdown = document.getElementById('shareDropdown');
@@ -91,7 +98,9 @@
       .share-container {
         position: relative;
         display: inline-block;
-        margin-bottom: 1.5rem;
+      }
+      .listen-container .share-container {
+        margin-bottom: 0;
       }
       .share-btn {
         display: inline-flex;
