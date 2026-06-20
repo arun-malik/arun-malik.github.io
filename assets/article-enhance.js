@@ -178,6 +178,33 @@
         margin-top: 0.5rem;
         text-align: center;
       }
+      /* Listen button */
+      .listen-container {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .listen-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--bg-secondary, #f9fafb);
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 6px;
+        padding: 0.5rem 0.875rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        font-family: inherit;
+        color: var(--text-secondary, #6b7280);
+        cursor: pointer;
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .listen-btn:hover {
+        border-color: var(--accent, #2563eb);
+        color: var(--accent, #2563eb);
+      }
+      .listen-btn svg { flex-shrink: 0; }
     `;
     document.head.appendChild(style);
   }
@@ -245,6 +272,98 @@
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
+  // --- Listen to Article (Text-to-Speech) ---
+  function createListenButton() {
+    if (!('speechSynthesis' in window)) return;
+
+    const meta = document.querySelector('.article-meta');
+    if (!meta) return;
+
+    const container = document.createElement('div');
+    container.className = 'listen-container';
+    container.innerHTML = `
+      <button class="listen-btn" id="listenBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        <span>Listen to this article</span>
+      </button>
+      <button class="listen-btn listen-pause" id="listenPause" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        <span>Pause</span>
+      </button>
+      <button class="listen-btn listen-stop" id="listenStop" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+        <span>Stop</span>
+      </button>
+    `;
+    meta.after(container);
+
+    const btnListen = document.getElementById('listenBtn');
+    const btnPause = document.getElementById('listenPause');
+    const btnStop = document.getElementById('listenStop');
+    let utterance = null;
+
+    function getArticleText() {
+      const content = article.querySelector('.article-content') || article;
+      // Get text, skip code blocks and reference lists for cleaner audio
+      const clone = content.cloneNode(true);
+      clone.querySelectorAll('pre, code, .references, table').forEach(el => el.remove());
+      return clone.textContent.replace(/\s+/g, ' ').trim();
+    }
+
+    function startSpeaking() {
+      const text = getArticleText();
+      utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+
+      // Try to pick a good English voice
+      const voices = speechSynthesis.getVoices();
+      const preferred = voices.find(v => v.name.includes('Microsoft') && v.lang.startsWith('en')) ||
+                        voices.find(v => v.lang.startsWith('en-') && v.localService) ||
+                        voices.find(v => v.lang.startsWith('en'));
+      if (preferred) utterance.voice = preferred;
+
+      utterance.onend = () => showPlayState();
+      utterance.onerror = () => showPlayState();
+
+      speechSynthesis.speak(utterance);
+      showSpeakingState();
+    }
+
+    function showPlayState() {
+      btnListen.style.display = '';
+      btnPause.style.display = 'none';
+      btnStop.style.display = 'none';
+    }
+
+    function showSpeakingState() {
+      btnListen.style.display = 'none';
+      btnPause.style.display = '';
+      btnPause.querySelector('span').textContent = 'Pause';
+      btnStop.style.display = '';
+    }
+
+    btnListen.addEventListener('click', () => {
+      speechSynthesis.cancel();
+      startSpeaking();
+    });
+
+    btnPause.addEventListener('click', () => {
+      if (speechSynthesis.paused) {
+        speechSynthesis.resume();
+        btnPause.querySelector('span').textContent = 'Pause';
+      } else {
+        speechSynthesis.pause();
+        btnPause.querySelector('span').textContent = 'Resume';
+      }
+    });
+
+    btnStop.addEventListener('click', () => {
+      speechSynthesis.cancel();
+      showPlayState();
+    });
+  }
+
   // Initialize
   function init() {
     injectStyles();
@@ -253,6 +372,7 @@
     createBackToTop();
     addCopyButtons();
     loadHighlightJS();
+    createListenButton();
   }
 
   if (document.readyState === 'loading') {
