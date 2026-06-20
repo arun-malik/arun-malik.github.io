@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Arun Malik</title>
+  <subtitle>Engineering notes on AI agents, distributed systems, and software architecture.</subtitle>
+  <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
+  <link href="https://blog.arunmalik.dev/"/>
+  <id>https://blog.arunmalik.dev/</id>
+  <updated>2026-06-19T00:00:00Z</updated>
+  <author>
+    <name>Arun Malik</name>
+  </author>
+
+  <entry>
+    <title>Why Human-in-the-Loop is Not Optional for Production AI Agents</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/00-why-not-optional/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/00-why-not-optional/</id>
+    <updated>2026-07-01T00:00:00Z</updated>
+    <summary>The six-pillar argument for why HITL is not a transitional compromise but a structural requirement of any production AI system.</summary>
+    <category term="Series"/>
+    <category term="HITL"/>
+  </entry>
+
+  <entry>
+    <title>Decentralized Granular Access Control for Agentic AI Systems in Critical Infrastructure</title>
+    <link href="https://blog.arunmalik.dev/posts/decentralized-access-control/"/>
+    <id>https://blog.arunmalik.dev/posts/decentralized-access-control/</id>
+    <updated>2026-06-14T00:00:00Z</updated>
+    <summary>A decentralized, multi-layered access control architecture for agentic AI in critical cloud infrastructure.</summary>
+    <category term="Paper"/>
+    <category term="Security"/>
+  </entry>
+
+  <entry>
+    <title>The Case for Human-in-the-Loop in Production AI Agent Systems: A Six-Pillar Framework</title>
+    <link href="https://blog.arunmalik.dev/posts/hitl-six-pillar-framework/"/>
+    <id>https://blog.arunmalik.dev/posts/hitl-six-pillar-framework/</id>
+    <updated>2026-06-14T00:00:00Z</updated>
+    <summary>Drawing on 53 research papers, this paper argues that HITL is a structural requirement of any production AI system.</summary>
+    <category term="Paper"/>
+    <category term="HITL"/>
+  </entry>
+
+  <entry>
+    <title>From Reactive to Autonomous: Evolution of AI Operations in Cloud Network Infrastructure</title>
+    <link href="https://blog.arunmalik.dev/posts/reactive-to-autonomous/"/>
+    <id>https://blog.arunmalik.dev/posts/reactive-to-autonomous/</id>
+    <updated>2026-06-14T00:00:00Z</updated>
+    <summary>A five-generation maturity model tracing the evolution from manual troubleshooting to fully autonomous incident resolution.</summary>
+    <category term="Paper"/>
+    <category term="AI Ops"/>
+  </entry>
+
+  <entry>
+    <title>Autonomous Incident Resolution at Hyperscale: An Agentic AI Architecture for Network Operations</title>
+    <link href="https://blog.arunmalik.dev/posts/autonomous-incident-resolution/"/>
+    <id>https://blog.arunmalik.dev/posts/autonomous-incident-resolution/</id>
+    <updated>2026-06-12T00:00:00Z</updated>
+    <summary>A multi-agent orchestration framework for autonomous network incident resolution with safety guarantees at cloud scale.</summary>
+    <category term="Paper"/>
+    <category term="AI Agents"/>
+  </entry>
+
+  <entry>
+    <title>MCP vs CLI: A Comparative Analysis of AI Agent Tooling Interfaces</title>
+    <link href="https://blog.arunmalik.dev/posts/mcp-vs-cli/"/>
+    <id>https://blog.arunmalik.dev/posts/mcp-vs-cli/</id>
+    <updated>2026-06-01T00:00:00Z</updated>
+    <summary>CLI and MCP are not competing standards. They are complementary transport layers. Evaluates both across 14 dimensions.</summary>
+    <category term="Research"/>
+    <category term="Tooling"/>
+  </entry>
+
+  <entry>
+    <title>Zero Trust in Azure: Strategies for Securing Cloud Infrastructure</title>
+    <link href="https://blog.arunmalik.dev/posts/zero-trust-azure/"/>
+    <id>https://blog.arunmalik.dev/posts/zero-trust-azure/</id>
+    <updated>2026-04-19T00:00:00Z</updated>
+    <summary>Seven practical strategies for implementing Zero Trust security in Azure, covering NSGs, Private Links, Azure Policies, AVNM, and shift-left practices.</summary>
+    <category term="Series"/>
+    <category term="Security"/>
+  </entry>
+</feed>

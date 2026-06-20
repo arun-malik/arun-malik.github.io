@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <rect x="0" y="0" width="6" height="630" fill="#2563eb"/>
+  <text x="80" y="280" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="52" font-weight="700" fill="#f1f5f9">Arun Malik</text>
+  <text x="80" y="340" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="24" fill="#94a3b8">Engineering notes on AI agents, distributed systems,</text>
+  <text x="80" y="375" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="24" fill="#94a3b8">and software architecture.</text>
+  <text x="80" y="560" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="18" fill="#64748b">blog.arunmalik.dev</text>
+</svg>
