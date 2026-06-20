@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- Six pillars -->
+<g fill="none" stroke="#8b5cf6" stroke-width="3" opacity="0.7">
+  <rect x="280" y="250" width="40" height="250" rx="4"/>
+  <rect x="400" y="250" width="40" height="250" rx="4"/>
+  <rect x="520" y="250" width="40" height="250" rx="4"/>
+  <rect x="640" y="250" width="40" height="250" rx="4"/>
+  <rect x="760" y="250" width="40" height="250" rx="4"/>
+  <rect x="880" y="250" width="40" height="250" rx="4"/>
+</g>
+<!-- Top beam (the framework) -->
+<rect x="260" y="220" width="680" height="30" rx="6" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+<!-- Foundation -->
+<rect x="260" y="500" width="680" height="15" rx="4" fill="#8b5cf6" opacity="0.3"/>
+<!-- Human icon (left) -->
+<g fill="none" stroke="#c4b5fd" stroke-width="2" transform="translate(150,280)">
+  <circle cx="20" cy="15" r="12"/><path d="M5,55 Q5,35 20,35 Q35,35 35,55"/>
+</g>
+<!-- AI icon (right) -->
+<g fill="none" stroke="#c4b5fd" stroke-width="2" transform="translate(960,280)">
+  <rect x="5" y="5" width="30" height="30" rx="6"/><circle cx="20" cy="20" r="8"/>
+  <line x1="20" y1="12" x2="20" y2="28"/><line x1="12" y1="20" x2="28" y2="20"/>
+</g>
+<!-- Connecting arch -->
+<path d="M180,300 Q600,100 1010,300" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.4" stroke-dasharray="6,4"/>
+<!-- Pillar labels (subtle dots) -->
+<g fill="#a78bfa" opacity="0.5">
+  <circle cx="300" cy="240" r="4"/><circle cx="420" cy="240" r="4"/><circle cx="540" cy="240" r="4"/>
+  <circle cx="660" cy="240" r="4"/><circle cx="780" cy="240" r="4"/><circle cx="900" cy="240" r="4"/>
+</g>
+</svg>

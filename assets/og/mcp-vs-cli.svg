@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- CLI path (top) -->
+<g fill="none" stroke="#0891b2" stroke-width="2.5" opacity="0.7">
+  <rect x="150" y="150" width="120" height="60" rx="6"/>
+  <path d="M270,180 L400,180"/>
+  <rect x="400" y="150" width="120" height="60" rx="6"/>
+  <path d="M520,180 L650,180"/>
+  <rect x="650" y="150" width="120" height="60" rx="6"/>
+</g>
+<!-- MCP path (bottom) -->
+<g fill="none" stroke="#7c3aed" stroke-width="2.5" opacity="0.7">
+  <rect x="150" y="420" width="120" height="60" rx="6"/>
+  <path d="M270,450 L400,450"/>
+  <rect x="400" y="420" width="120" height="60" rx="6"/>
+  <path d="M520,450 L650,450"/>
+  <rect x="650" y="420" width="120" height="60" rx="6"/>
+</g>
+<!-- Labels -->
+<g font-family="monospace" font-size="14" fill="#67e8f9" opacity="0.8">
+  <text x="185" y="185">$ cmd</text><text x="435" y="185">pipe</text><text x="680" y="185">stdout</text>
+</g>
+<g font-family="monospace" font-size="14" fill="#c4b5fd" opacity="0.8">
+  <text x="175" y="455">tools</text><text x="425" y="455">JSON</text><text x="670" y="455">result</text>
+</g>
+<!-- Merge point (both converge to agent) -->
+<path d="M770,180 Q900,180 950,280" fill="none" stroke="#0891b2" stroke-width="2" opacity="0.5"/>
+<path d="M770,450 Q900,450 950,350" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.5"/>
+<!-- Agent (convergence) -->
+<circle cx="1000" cy="315" r="45" fill="none" stroke="#e2e8f0" stroke-width="2" opacity="0.7"/>
+<text x="978" y="320" font-family="sans-serif" font-size="16" fill="#e2e8f0" opacity="0.8">Agent</text>
+<!-- Complementary symbol -->
+<g fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.4">
+  <path d="M1000,270 L1000,360" stroke-dasharray="3,3"/>
+</g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<g fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.6">
+  <circle cx="600" cy="315" r="80"/><circle cx="600" cy="315" r="140"/><circle cx="600" cy="315" r="200"/><circle cx="600" cy="315" r="260"/>
+</g>
+<!-- Distributed key nodes -->
+<g fill="#3b82f6" opacity="0.8">
+  <rect x="575" y="290" width="50" height="50" rx="8"/>
+  <rect x="420" y="200" width="35" height="35" rx="6"/><rect x="740" y="200" width="35" height="35" rx="6"/>
+  <rect x="420" y="400" width="35" height="35" rx="6"/><rect x="740" y="400" width="35" height="35" rx="6"/>
+  <rect x="340" y="295" width="30" height="30" rx="5"/><rect x="830" y="295" width="30" height="30" rx="5"/>
+  <rect x="500" y="110" width="28" height="28" rx="5"/><rect x="670" y="110" width="28" height="28" rx="5"/>
+  <rect x="500" y="490" width="28" height="28" rx="5"/><rect x="670" y="490" width="28" height="28" rx="5"/>
+</g>
+<!-- Lock icon center -->
+<g fill="none" stroke="#60a5fa" stroke-width="3">
+  <rect x="588" y="305" width="24" height="20" rx="3"/>
+  <path d="M594,305 L594,295 A6,6 0 0,1 606,295 L606,305"/>
+</g>
+<!-- Connection lines -->
+<g stroke="#3b82f6" stroke-width="1" opacity="0.3">
+  <line x1="600" y1="315" x2="437" y2="217"/><line x1="600" y1="315" x2="757" y2="217"/>
+  <line x1="600" y1="315" x2="437" y2="417"/><line x1="600" y1="315" x2="757" y2="417"/>
+  <line x1="600" y1="315" x2="355" y2="310"/><line x1="600" y1="315" x2="845" y2="310"/>
+</g>
+</svg>
