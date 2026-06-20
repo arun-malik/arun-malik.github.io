@@ -25,15 +25,18 @@
 
     // Find the first nav element - this is ALWAYS the site nav bar
     var nav = document.querySelector('nav');
-    if (!nav) return;
 
-    // If nav is inside a <header> wrapper, insert after the header
-    var wrapper = nav.parentElement;
-    if (wrapper && wrapper.tagName === 'HEADER') {
-      wrapper.insertAdjacentElement('afterend', hero);
+    if (nav) {
+      // If nav is inside a <header> wrapper, insert after the header
+      var wrapper = nav.parentElement;
+      if (wrapper && wrapper.tagName === 'HEADER') {
+        wrapper.insertAdjacentElement('afterend', hero);
+      } else {
+        nav.insertAdjacentElement('afterend', hero);
+      }
     } else {
-      // Nav is a direct child of body or a container - insert after nav
-      nav.insertAdjacentElement('afterend', hero);
+      // No nav exists (some paper pages) - insert at top of body
+      document.body.insertAdjacentElement('afterbegin', hero);
     }
   }
 
