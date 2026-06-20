@@ -112,13 +112,8 @@
             <h1>Get in Touch</h1>
             <p class="page-desc">Have a question about AI agents, distributed systems, or want to discuss collaboration? Send me a message and I will get back to you.</p>
 
-            <!-- 
-                SETUP: Replace YOUR_FORMSPREE_ID below with your Formspree form ID.
-                1. Go to https://formspree.io and sign up (free, 50 submissions/month)
-                2. Create a new form, copy the form ID (e.g., "xpwzagkr")
-                3. Replace YOUR_FORMSPREE_ID in the action URL below
-            -->
-            <form class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+            <!-- Contact form - submits via mailto (no external service needed) -->
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label class="form-label" for="name">Name</label>
                     <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
@@ -136,6 +131,7 @@
                     <textarea class="form-textarea" id="message" name="message" placeholder="Your message..." required></textarea>
                 </div>
                 <button class="form-submit" type="submit">Send Message</button>
+                <p class="form-note" id="formNote" style="display:none; margin-top:1rem; font-size:0.875rem; color:var(--text-secondary);"></p>
             </form>
 
             <div class="alt-contact">
@@ -168,6 +164,59 @@
         toggle.addEventListener('click', () => {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             setTheme(!isDark);
+        });
+
+        // Contact form submission via Web3Forms (free, no account needed)
+        // GET YOUR ACCESS KEY: Go to https://web3forms.com, enter your email,
+        // and paste the key you receive below.
+        const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY_HERE';
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const note = document.getElementById('formNote');
+            const btn = this.querySelector('.form-submit');
+
+            // Check if access key is configured
+            if (WEB3FORMS_KEY === 'YOUR_ACCESS_KEY_HERE') {
+                // Fallback: open mailto if Web3Forms not configured
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value || 'Contact from blog';
+                const message = document.getElementById('message').value;
+                const body = `From: ${name} (${email})\n\n${message}`;
+                window.location.href = `mailto:arunma@microsoft.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                return;
+            }
+
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            formData.append('access_key', WEB3FORMS_KEY);
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.success) {
+                    note.textContent = 'Message sent successfully. I will get back to you soon.';
+                    note.style.display = 'block';
+                    note.style.color = '#059669';
+                    this.reset();
+                } else {
+                    note.textContent = 'Something went wrong. Please try again or reach out on LinkedIn.';
+                    note.style.display = 'block';
+                    note.style.color = '#dc2626';
+                }
+            } catch (err) {
+                note.textContent = 'Network error. Please try again or reach out on LinkedIn.';
+                note.style.display = 'block';
+                note.style.color = '#dc2626';
+            }
+            btn.textContent = 'Send Message';
+            btn.disabled = false;
         });
     </script>
 </body>
