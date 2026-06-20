@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- Human figure (small, left) -->
+<g fill="none" stroke="#a78bfa" stroke-width="2.5" opacity="0.7" transform="translate(300,250)">
+  <circle cx="30" cy="20" r="18"/>
+  <path d="M10,75 Q10,50 30,50 Q50,50 50,75"/>
+</g>
+<!-- Amplification waves radiating right -->
+<g fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.3">
+  <path d="M400,315 Q500,250 600,315 Q500,380 400,315"/>
+  <path d="M450,315 Q600,220 750,315 Q600,410 450,315"/>
+  <path d="M500,315 Q700,190 900,315 Q700,440 500,315"/>
+</g>
+<!-- Amplified human (larger, right) -->
+<g fill="none" stroke="#c4b5fd" stroke-width="3" opacity="0.9" transform="translate(800,200)">
+  <circle cx="50" cy="35" r="30"/>
+  <path d="M15,120 Q15,80 50,80 Q85,80 85,120"/>
+</g>
+<!-- Arrow showing amplification -->
+<g fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.5">
+  <path d="M380,315 L780,315" stroke-dasharray="8,4"/>
+  <polygon points="780,310 795,315 780,320" fill="#a78bfa" opacity="0.5"/>
+</g>
+<!-- Sparkle effects around amplified figure -->
+<g fill="#ddd6fe" opacity="0.4">
+  <circle cx="770" cy="230" r="3"/><circle cx="920" cy="200" r="3"/>
+  <circle cx="940" cy="350" r="3"/><circle cx="760" cy="380" r="3"/>
+</g>
+</svg>

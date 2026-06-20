@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- Fluid/stochastic (left) - wavy lines -->
+<g fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.4">
+  <path d="M150,250 Q200,230 250,260 Q300,290 350,260 Q400,230 450,270"/>
+  <path d="M150,315 Q200,295 250,325 Q300,355 350,325 Q400,295 450,335"/>
+  <path d="M150,380 Q200,360 250,390 Q300,420 350,390 Q400,360 450,400"/>
+</g>
+<!-- Transition arrow -->
+<g fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.5">
+  <path d="M500,315 L700,315" stroke-dasharray="6,4"/>
+  <polygon points="700,310 715,315 700,320" fill="#fbbf24" opacity="0.5"/>
+</g>
+<!-- Crystal/deterministic (right) - sharp geometric shapes -->
+<g fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.7">
+  <polygon points="850,250 900,220 950,250 950,310 900,340 850,310"/>
+  <polygon points="800,310 850,280 900,310 900,370 850,400 800,370"/>
+  <polygon points="900,310 950,280 1000,310 1000,370 950,400 900,370"/>
+</g>
+<!-- Filled facets showing solidification -->
+<g fill="#f59e0b" opacity="0.15">
+  <polygon points="850,250 900,220 950,250 950,310 900,340 850,310"/>
+</g>
+<g fill="#fbbf24" opacity="0.2">
+  <polygon points="900,310 950,280 1000,310 1000,370 950,400 900,370"/>
+</g>
+<!-- Cost arrow going down -->
+<g fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.5">
+  <path d="M900,430 L900,530"/>
+  <polygon points="895,530 900,545 905,530" fill="#34d399" opacity="0.5"/>
+  <text x="870" y="565" font-family="sans-serif" font-size="12" fill="#34d399" opacity="0.5">$0</text>
+</g>
+</svg>
