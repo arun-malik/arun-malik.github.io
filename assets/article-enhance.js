@@ -144,8 +144,105 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       }
+      /* Code block copy button */
+      .code-wrapper {
+        position: relative;
+      }
+      .code-copy-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--bg, #fff);
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 4px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+        font-family: var(--font, sans-serif);
+        color: var(--text-secondary, #6b7280);
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .code-wrapper:hover .code-copy-btn { opacity: 1; }
+      .code-copy-btn:hover { color: var(--accent, #2563eb); border-color: var(--accent, #2563eb); }
+      .code-copy-btn.copied { color: #059669; border-color: #059669; }
+      /* Figure captions */
+      .article-content figure {
+        margin: 1.5rem 0;
+      }
+      .article-content figcaption,
+      .article-content .figure-caption {
+        font-size: 0.8125rem;
+        color: var(--text-secondary, #6b7280);
+        font-style: italic;
+        margin-top: 0.5rem;
+        text-align: center;
+      }
     `;
     document.head.appendChild(style);
+  }
+
+  // --- Code Copy Buttons ---
+  function addCopyButtons() {
+    const codeBlocks = article.querySelectorAll('pre');
+    codeBlocks.forEach(pre => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-wrapper';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const btn = document.createElement('button');
+      btn.className = 'code-copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        const code = pre.querySelector('code') || pre;
+        navigator.clipboard.writeText(code.textContent).then(() => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      });
+      wrapper.appendChild(btn);
+    });
+  }
+
+  // --- Syntax Highlighting (lightweight, using highlight.js CDN) ---
+  function loadHighlightJS() {
+    const codeBlocks = article.querySelectorAll('pre code');
+    if (codeBlocks.length === 0) return;
+
+    // Load highlight.js CSS
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    link.href = isDark
+      ? 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css'
+      : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
+    link.id = 'hljs-theme';
+    document.head.appendChild(link);
+
+    // Load highlight.js script
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js';
+    script.onload = () => {
+      codeBlocks.forEach(block => hljs.highlightElement(block));
+    };
+    document.head.appendChild(script);
+
+    // Switch theme on dark mode toggle
+    const observer = new MutationObserver(() => {
+      const theme = document.getElementById('hljs-theme');
+      if (theme) {
+        const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        theme.href = dark
+          ? 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css'
+          : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
   // Initialize
@@ -154,6 +251,8 @@
     createProgressBar();
     createTOC();
     createBackToTop();
+    addCopyButtons();
+    loadHighlightJS();
   }
 
   if (document.readyState === 'loading') {
