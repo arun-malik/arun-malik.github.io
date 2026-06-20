@@ -36,6 +36,9 @@
       '</div>'
     ].join('');
 
+    // Reset body padding-top so header position is consistent
+    document.body.style.paddingTop = '0';
+
     document.body.insertAdjacentHTML('afterbegin', headerHTML);
 
     // Initialize theme toggle
