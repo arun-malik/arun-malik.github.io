@@ -1,56 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <rect width="1200" height="630" fill="#0f172a"/>
-<!-- Radiating arcs from center-left (person as origin of ideas) -->
-<g fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.25">
-  <path d="M350,315 Q500,150 750,180"/>
-  <path d="M350,315 Q550,200 800,240"/>
-  <path d="M350,315 Q600,280 850,300"/>
-  <path d="M350,315 Q600,350 850,340"/>
-  <path d="M350,315 Q550,430 800,400"/>
-  <path d="M350,315 Q500,480 750,460"/>
+<!-- Golden ratio spiral (Fibonacci) -->
+<g fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.5">
+  <path d="M600,315 A89,89 0 0,1 511,315"/>
+  <path d="M511,315 A55,55 0 0,1 511,260"/>
+  <path d="M511,260 A34,34 0 0,1 545,260"/>
+  <path d="M545,260 A21,21 0 0,1 545,281"/>
+  <path d="M545,281 A13,13 0 0,1 532,281"/>
+  <path d="M532,281 A8,8 0 0,1 532,273"/>
 </g>
-<!-- Central presence (abstract, not a person icon) -->
-<g fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.6">
-  <circle cx="350" cy="315" r="40"/>
-  <circle cx="350" cy="315" r="25"/>
-  <circle cx="350" cy="315" r="10" fill="#60a5fa" opacity="0.4"/>
+<!-- Larger golden spiral -->
+<g fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.3">
+  <path d="M600,315 A144,144 0 0,1 456,315"/>
+  <path d="M456,315 A89,89 0 0,1 456,226"/>
+  <path d="M456,226 A55,55 0 0,1 511,226"/>
+  <path d="M511,226 A34,34 0 0,1 511,260"/>
 </g>
-<!-- Knowledge nodes (areas of expertise expanding outward) -->
-<g fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.5">
-  <circle cx="750" cy="180" r="22"/>
-  <circle cx="830" cy="260" r="18"/>
-  <circle cx="870" cy="340" r="20"/>
-  <circle cx="820" cy="420" r="16"/>
-  <circle cx="730" cy="470" r="19"/>
-  <circle cx="650" cy="140" r="14"/>
-  <circle cx="920" cy="290" r="12"/>
+<!-- Geometric polygon mesh (low-poly triangulation) -->
+<g fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.35">
+  <!-- Central mesh -->
+  <polygon points="600,315 680,250 750,310"/>
+  <polygon points="680,250 750,310 800,220"/>
+  <polygon points="750,310 800,220 870,290"/>
+  <polygon points="800,220 870,290 900,180"/>
+  <polygon points="870,290 900,180 970,250"/>
+  <polygon points="900,180 970,250 980,150"/>
+  <polygon points="970,250 980,150 1050,210"/>
+  <!-- Lower mesh -->
+  <polygon points="600,315 680,380 750,310"/>
+  <polygon points="680,380 750,310 800,400"/>
+  <polygon points="750,310 800,400 870,290"/>
+  <polygon points="800,400 870,290 880,430"/>
+  <polygon points="870,290 880,430 970,350"/>
+  <polygon points="880,430 970,350 960,470"/>
+  <!-- Left mesh -->
+  <polygon points="600,315 511,260 530,180"/>
+  <polygon points="600,315 511,260 480,340"/>
+  <polygon points="511,260 480,340 400,290"/>
+  <polygon points="480,340 400,290 380,400"/>
+  <polygon points="400,290 380,400 310,330"/>
+  <polygon points="380,400 310,330 280,430"/>
+  <polygon points="310,330 280,430 220,370"/>
+  <polygon points="511,260 530,180 450,190"/>
+  <polygon points="530,180 450,190 470,120"/>
 </g>
-<!-- Subtle node fills -->
-<g fill="#2563eb" opacity="0.15">
-  <circle cx="750" cy="180" r="22"/>
-  <circle cx="870" cy="340" r="20"/>
-  <circle cx="730" cy="470" r="19"/>
+<!-- Subtle fills on select triangles (depth effect) -->
+<g fill="#2563eb" opacity="0.08">
+  <polygon points="680,250 750,310 800,220"/>
+  <polygon points="800,400 870,290 880,430"/>
+  <polygon points="511,260 480,340 400,290"/>
+  <polygon points="970,250 980,150 1050,210"/>
+  <polygon points="310,330 280,430 220,370"/>
 </g>
-<!-- Inter-node connections (knowledge web) -->
-<g fill="none" stroke="#1d4ed8" stroke-width="0.8" opacity="0.2">
-  <line x1="750" y1="180" x2="830" y2="260"/>
-  <line x1="830" y1="260" x2="870" y2="340"/>
-  <line x1="870" y1="340" x2="820" y2="420"/>
-  <line x1="820" y1="420" x2="730" y2="470"/>
-  <line x1="750" y1="180" x2="650" y2="140"/>
-  <line x1="830" y1="260" x2="920" y2="290"/>
-  <line x1="870" y1="340" x2="920" y2="290"/>
+<g fill="#60a5fa" opacity="0.05">
+  <polygon points="600,315 680,380 750,310"/>
+  <polygon points="870,290 900,180 970,250"/>
+  <polygon points="600,315 511,260 530,180"/>
+  <polygon points="380,400 310,330 280,430"/>
 </g>
-<!-- Scattered particles (ideas in motion) -->
-<g fill="#60a5fa" opacity="0.2">
-  <circle cx="450" cy="200" r="2"/><circle cx="500" cy="250" r="3"/><circle cx="550" cy="180" r="2"/>
-  <circle cx="480" cy="400" r="2"/><circle cx="530" cy="450" r="3"/><circle cx="600" cy="380" r="2"/>
-  <circle cx="680" cy="300" r="2"/><circle cx="950" cy="200" r="2"/><circle cx="1000" cy="400" r="3"/>
-  <circle cx="200" cy="200" r="2"/><circle cx="180" cy="400" r="2"/><circle cx="250" cy="500" r="3"/>
+<!-- Vertex dots at key intersections -->
+<g fill="#93c5fd" opacity="0.4">
+  <circle cx="600" cy="315" r="4"/>
+  <circle cx="680" cy="250" r="3"/><circle cx="750" cy="310" r="3"/>
+  <circle cx="800" cy="220" r="3"/><circle cx="870" cy="290" r="3"/>
+  <circle cx="900" cy="180" r="2.5"/><circle cx="970" cy="250" r="2.5"/>
+  <circle cx="980" cy="150" r="2"/><circle cx="1050" cy="210" r="2"/>
+  <circle cx="680" cy="380" r="3"/><circle cx="800" cy="400" r="3"/>
+  <circle cx="880" cy="430" r="2.5"/><circle cx="970" cy="350" r="2.5"/>
+  <circle cx="960" cy="470" r="2"/>
+  <circle cx="511" cy="260" r="3.5"/><circle cx="480" cy="340" r="3"/>
+  <circle cx="400" cy="290" r="3"/><circle cx="380" cy="400" r="2.5"/>
+  <circle cx="310" cy="330" r="2.5"/><circle cx="280" cy="430" r="2"/>
+  <circle cx="220" cy="370" r="2"/>
+  <circle cx="530" cy="180" r="2.5"/><circle cx="450" cy="190" r="2"/>
+  <circle cx="470" cy="120" r="2"/>
+  <circle cx="532" cy="273" r="2"/>
 </g>
-<!-- Large faded orbital rings -->
-<g fill="none" stroke="#1e40af" stroke-width="0.6" opacity="0.12">
-  <ellipse cx="600" cy="315" rx="550" ry="290" transform="rotate(5 600 315)"/>
-  <ellipse cx="600" cy="315" rx="480" ry="250" transform="rotate(-8 600 315)"/>
+<!-- Golden ratio rectangles (very subtle) -->
+<g fill="none" stroke="#1d4ed8" stroke-width="0.5" opacity="0.15">
+  <rect x="456" y="226" width="144" height="89" rx="1"/>
+  <rect x="456" y="260" width="89" height="55" rx="1"/>
+  <rect x="511" y="260" width="55" height="34" rx="1"/>
+  <rect x="511" y="260" width="34" height="21" rx="1"/>
 </g>
 </svg>
