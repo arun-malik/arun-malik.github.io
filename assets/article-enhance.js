@@ -279,7 +279,7 @@
   function createListenButton() {
     if (!('speechSynthesis' in window)) return;
 
-    const meta = document.querySelector('.article-meta') || document.querySelector('.authors') || document.querySelector('h1');
+    const meta = document.querySelector('.post-hero-banner') || document.querySelector('.article-meta') || document.querySelector('.authors') || document.querySelector('.blog-header') || document.querySelector('h1');
     if (!meta) return;
 
     const container = document.createElement('div');
