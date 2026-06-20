@@ -1,145 +1,90 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<rect width="1200" height="630" fill="#fafafa"/>
+<rect width="1200" height="630" fill="#0f172a"/>
 
-<!-- Dense geometric mesh filling entire canvas -->
-<!-- Row 1 (top) -->
-<polygon points="0,0 120,0 60,70" fill="#f5f5f5" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="120,0 60,70 180,70" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="120,0 240,0 180,70" fill="#f0f0f0" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="240,0 180,70 300,70" fill="#e0e0e0" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="240,0 360,0 300,70" fill="#ececec" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="360,0 300,70 420,70" fill="#e5e5e5" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="360,0 480,0 420,70" fill="#f2f2f2" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="480,0 420,70 540,70" fill="#ddd" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="480,0 600,0 540,70" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="600,0 540,70 660,70" fill="#f0f0f0" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="600,0 720,0 660,70" fill="#e3e3e3" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="720,0 660,70 780,70" fill="#eee" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="720,0 840,0 780,70" fill="#e0e0e0" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="840,0 780,70 900,70" fill="#ebebeb" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="840,0 960,0 900,70" fill="#f5f5f5" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="960,0 900,70 1020,70" fill="#e6e6e6" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="960,0 1080,0 1020,70" fill="#ededed" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="1080,0 1020,70 1140,70" fill="#e0e0e0" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="1080,0 1200,0 1140,70" fill="#f0f0f0" stroke="#d0d0d0" stroke-width="0.5"/>
-<polygon points="1200,0 1140,70 1200,70" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="0.5"/>
-
-<!-- Row 2-8: dense mesh continuing -->
-<polygon points="0,70 60,70 0,140" fill="#e5e5e5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="60,70 0,140 120,140" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="60,70 180,70 120,140" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="180,70 120,140 240,140" fill="#d5d5d5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="180,70 300,70 240,140" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="300,70 240,140 360,140" fill="#ccc" stroke="#bbb" stroke-width="0.5"/>
-<polygon points="300,70 420,70 360,140" fill="#d8d8d8" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="420,70 360,140 480,140" fill="#e2e2e2" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="420,70 540,70 480,140" fill="#d0d0d0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="540,70 480,140 600,140" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="540,70 660,70 600,140" fill="#e5e5e5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="660,70 600,140 720,140" fill="#d3d3d3" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="660,70 780,70 720,140" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="780,70 720,140 840,140" fill="#d8d8d8" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="780,70 900,70 840,140" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="900,70 840,140 960,140" fill="#d0d0d0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="900,70 1020,70 960,140" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="1020,70 960,140 1080,140" fill="#e5e5e5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="1020,70 1140,70 1080,140" fill="#d5d5d5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="1140,70 1080,140 1200,140" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="1140,70 1200,70 1200,140" fill="#d8d8d8" stroke="#ccc" stroke-width="0.5"/>
-
-<!-- Mountain silhouettes (darker triangles rising from mesh) -->
-<!-- Center mountain -->
-<polygon points="400,350 600,100 800,350" fill="#888" stroke="#777" stroke-width="0.5"/>
-<polygon points="600,100 700,225 800,350" fill="#999" stroke="#777" stroke-width="0.5"/>
-<polygon points="400,350 500,225 600,100" fill="#777" stroke="#666" stroke-width="0.5"/>
-<polygon points="500,225 600,100 550,160" fill="#8a8a8a" stroke="#777" stroke-width="0.5"/>
-<polygon points="600,100 650,160 700,225" fill="#aaa" stroke="#888" stroke-width="0.5"/>
-<polygon points="580,120 600,100 620,120" fill="#bbb" stroke="#aaa" stroke-width="0.5"/>
-
-<!-- Left mountain -->
-<polygon points="100,350 250,180 400,350" fill="#9a9a9a" stroke="#888" stroke-width="0.5"/>
-<polygon points="100,350 175,265 250,180" fill="#888" stroke="#777" stroke-width="0.5"/>
-<polygon points="250,180 325,265 400,350" fill="#aaa" stroke="#888" stroke-width="0.5"/>
-
-<!-- Right mountain -->
-<polygon points="750,350 950,200 1150,350" fill="#8e8e8e" stroke="#777" stroke-width="0.5"/>
-<polygon points="750,350 850,275 950,200" fill="#7e7e7e" stroke="#666" stroke-width="0.5"/>
-<polygon points="950,200 1050,275 1150,350" fill="#a0a0a0" stroke="#888" stroke-width="0.5"/>
-
-<!-- Geometric Wolf (left foreground) -->
-<g transform="translate(200,340)">
-  <polygon points="0,40 15,10 35,5 55,10 65,28 60,45 40,52 20,52" fill="#555" stroke="#333" stroke-width="0.8"/>
-  <polygon points="15,10 35,5 25,28" fill="#666"/>
-  <polygon points="35,5 55,10 45,28" fill="#777"/>
-  <polygon points="0,40 15,10 8,28" fill="#444"/>
-  <polygon points="55,10 65,28 50,30" fill="#888"/>
-  <polygon points="20,52 40,52 30,35" fill="#555"/>
-  <!-- Head -->
-  <polygon points="60,22 73,10 82,14 80,28 70,30" fill="#666" stroke="#333" stroke-width="0.8"/>
-  <polygon points="73,10 77,12 75,20" fill="#777"/>
-  <!-- Ears -->
-  <polygon points="70,12 66,0 76,6" fill="#555"/>
-  <polygon points="76,6 73,-2 80,10" fill="#666"/>
-  <!-- Eye -->
-  <circle cx="75" cy="18" r="2" fill="#fff"/><circle cx="75" cy="18" r="1" fill="#111"/>
-  <!-- Legs -->
-  <polygon points="14,50 18,65 22,50" fill="#444"/>
-  <polygon points="28,52 32,67 36,52" fill="#555"/>
-  <polygon points="44,52 48,67 52,48" fill="#555"/>
-  <polygon points="56,42 60,62 64,40" fill="#666"/>
-  <!-- Tail -->
-  <polygon points="0,40 -10,28 -4,22 6,32" fill="#444"/>
+<!-- Golden spiral (large, elegant) -->
+<g fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.5">
+  <path d="M600,315 A144,144 0 0,1 456,315"/>
+  <path d="M456,315 A89,89 0 0,1 456,226"/>
+  <path d="M456,226 A55,55 0 0,1 511,226"/>
+  <path d="M511,226 A34,34 0 0,1 511,260"/>
+  <path d="M511,260 A21,21 0 0,1 490,260"/>
+  <path d="M490,260 A13,13 0 0,1 490,247"/>
+</g>
+<!-- Larger outer spiral -->
+<g fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.3">
+  <path d="M600,315 A233,233 0 0,1 367,315"/>
+  <path d="M367,315 A144,144 0 0,1 367,171"/>
+  <path d="M367,171 A89,89 0 0,1 456,171"/>
+  <path d="M456,171 A55,55 0 0,1 456,226"/>
 </g>
 
-<!-- Geometric Bear (right foreground) -->
-<g transform="translate(820,330)">
-  <polygon points="12,45 28,18 48,8 72,8 88,18 98,40 92,60 72,68 38,68 18,60" fill="#666" stroke="#333" stroke-width="0.8"/>
-  <polygon points="28,18 48,8 38,30" fill="#777"/>
-  <polygon points="48,8 72,8 58,30" fill="#888"/>
-  <polygon points="72,8 88,18 78,32" fill="#999"/>
-  <polygon points="88,18 98,40 82,38" fill="#888"/>
-  <polygon points="12,45 28,18 22,35" fill="#555"/>
-  <polygon points="38,68 72,68 58,48" fill="#666"/>
-  <!-- Head -->
-  <polygon points="12,40 2,28 -2,18 2,8 14,14 20,26" fill="#777" stroke="#333" stroke-width="0.8"/>
-  <polygon points="2,8 8,12 5,22" fill="#888"/>
-  <!-- Ears -->
-  <polygon points="2,8 -4,-2 8,3" fill="#666"/>
-  <polygon points="10,5 6,-4 16,6" fill="#777"/>
-  <!-- Snout -->
-  <polygon points="0,26 -6,28 -4,34 2,32" fill="#999"/>
-  <circle cx="-2" cy="30" r="2.5" fill="#333"/>
-  <!-- Eye -->
-  <circle cx="7" cy="16" r="2.5" fill="#fff"/><circle cx="7" cy="16" r="1.2" fill="#111"/>
-  <!-- Legs -->
-  <polygon points="30,66 34,85 38,66" fill="#555"/>
-  <polygon points="46,68 50,87 54,68" fill="#666"/>
-  <polygon points="64,68 68,87 72,66" fill="#666"/>
-  <polygon points="80,60 84,82 88,58" fill="#777"/>
+<!-- Concentric circles radiating from golden point -->
+<g fill="none" stroke="#60a5fa" stroke-width="0.8" opacity="0.2">
+  <circle cx="500" cy="260" r="50"/>
+  <circle cx="500" cy="260" r="100"/>
+  <circle cx="500" cy="260" r="160"/>
+  <circle cx="500" cy="260" r="230"/>
+  <circle cx="500" cy="260" r="310"/>
 </g>
 
-<!-- Continue mesh below mountains (ground area) -->
-<polygon points="0,350 60,350 30,420" fill="#d5d5d5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="60,350 120,350 90,420" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="0,420 90,420 45,490" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="90,420 180,420 135,490" fill="#d8d8d8" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="800,350 900,350 850,420" fill="#d5d5d5" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="900,350 1000,350 950,420" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="1000,350 1100,350 1050,420" fill="#d0d0d0" stroke="#ccc" stroke-width="0.5"/>
-<polygon points="1100,350 1200,350 1150,420" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+<!-- Radiating lines from center (like a compass or sun) -->
+<g stroke="#3b82f6" stroke-width="0.6" opacity="0.15">
+  <line x1="500" y1="260" x2="900" y2="100"/>
+  <line x1="500" y1="260" x2="1000" y2="200"/>
+  <line x1="500" y1="260" x2="1050" y2="315"/>
+  <line x1="500" y1="260" x2="1000" y2="430"/>
+  <line x1="500" y1="260" x2="900" y2="520"/>
+  <line x1="500" y1="260" x2="750" y2="580"/>
+  <line x1="500" y1="260" x2="200" y2="50"/>
+  <line x1="500" y1="260" x2="100" y2="200"/>
+  <line x1="500" y1="260" x2="50" y2="350"/>
+  <line x1="500" y1="260" x2="150" y2="530"/>
+  <line x1="500" y1="260" x2="350" y2="600"/>
+</g>
 
-<!-- Bottom fill -->
-<rect x="0" y="490" width="1200" height="140" fill="#eee"/>
-<polygon points="0,490 200,490 100,560" fill="#e5e5e5" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="200,490 400,490 300,560" fill="#e0e0e0" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="400,490 600,490 500,560" fill="#e8e8e8" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="600,490 800,490 700,560" fill="#e2e2e2" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="800,490 1000,490 900,560" fill="#e5e5e5" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="1000,490 1200,490 1100,560" fill="#e0e0e0" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="0,560 200,560 100,630" fill="#eee" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="200,560 400,560 300,630" fill="#e8e8e8" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="400,560 600,560 500,630" fill="#f0f0f0" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="600,560 800,560 700,630" fill="#e5e5e5" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="800,560 1000,560 900,630" fill="#eee" stroke="#ddd" stroke-width="0.5"/>
-<polygon points="1000,560 1200,560 1100,630" fill="#e8e8e8" stroke="#ddd" stroke-width="0.5"/>
+<!-- Floating geometric shapes (scattered, like ideas) -->
+<g fill="none" stroke="#60a5fa" stroke-width="1.2" opacity="0.35">
+  <polygon points="850,150 880,130 910,150 910,180 880,200 850,180"/>
+  <polygon points="950,350 975,335 1000,350 1000,375 975,390 950,375"/>
+  <polygon points="150,450 172,438 194,450 194,472 172,484 150,472"/>
+  <rect x="1000" y="450" width="35" height="35" rx="4" transform="rotate(15 1017 467)"/>
+  <circle cx="800" cy="480" r="18"/>
+  <rect x="100" y="130" width="30" height="30" rx="3" transform="rotate(-10 115 145)"/>
+</g>
+
+<!-- Subtle fills on some shapes -->
+<g fill="#2563eb" opacity="0.08">
+  <polygon points="850,150 880,130 910,150 910,180 880,200 850,180"/>
+  <circle cx="800" cy="480" r="18"/>
+  <polygon points="150,450 172,438 194,450 194,472 172,484 150,472"/>
+</g>
+
+<!-- Dots at intersections (nodes of knowledge) -->
+<g fill="#60a5fa" opacity="0.5">
+  <circle cx="500" cy="260" r="5"/>
+  <circle cx="600" cy="315" r="3"/>
+  <circle cx="456" cy="315" r="3"/>
+  <circle cx="456" cy="226" r="3"/>
+  <circle cx="511" cy="226" r="2.5"/>
+  <circle cx="511" cy="260" r="2"/>
+  <circle cx="367" cy="315" r="2.5"/>
+  <circle cx="367" cy="171" r="2"/>
+  <circle cx="456" cy="171" r="2"/>
+</g>
+
+<!-- More scattered particles -->
+<g fill="#93c5fd" opacity="0.3">
+  <circle cx="700" cy="200" r="2"/><circle cx="780" cy="280" r="1.5"/>
+  <circle cx="650" cy="400" r="2"/><circle cx="900" cy="250" r="1.5"/>
+  <circle cx="1100" cy="150" r="2"/><circle cx="1050" cy="500" r="1.5"/>
+  <circle cx="300" cy="100" r="1.5"/><circle cx="200" cy="300" r="2"/>
+  <circle cx="350" cy="500" r="1.5"/><circle cx="750" cy="550" r="2"/>
+  <circle cx="1000" cy="100" r="1.5"/><circle cx="550" cy="500" r="2"/>
+</g>
+
+<!-- Subtle flowing curves (elegance) -->
+<g fill="none" stroke="#1d4ed8" stroke-width="1" opacity="0.12">
+  <path d="M0,500 Q300,450 600,480 T1200,420"/>
+  <path d="M0,150 Q400,100 700,160 T1200,120"/>
+</g>
 </svg>
