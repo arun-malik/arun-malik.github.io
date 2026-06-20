@@ -1,6 +1,5 @@
-// Hero Header Background
-// Adds the post's OG image as a subtle background banner at the top of article pages.
-// Reads the og:image meta tag to determine which image to use.
+// Hero Banner - consistent placement across all page types
+// Always inserts immediately after the navigation bar (regardless of page structure)
 
 (function() {
   'use strict';
@@ -15,21 +14,68 @@
     // Create hero banner
     var hero = document.createElement('div');
     hero.className = 'post-hero-banner';
-    hero.style.cssText = 'width:100%;height:200px;background:url(' + imageUrl + ') center/cover no-repeat;margin-bottom:2rem;border-radius:8px;opacity:0.85;';
 
-    // Insert after header or at top of main
-    var main = document.querySelector('main');
-    var header = document.querySelector('header');
-    if (main && main.firstChild) {
-      main.insertBefore(hero, main.firstChild);
-    } else if (header) {
-      header.after(hero);
+    // Find the navigation element (handles all page layouts)
+    var nav = document.querySelector('header') ||
+              document.querySelector('nav.blog-nav') ||
+              document.querySelector('nav.nav-bar') ||
+              document.querySelector('nav.site-nav') ||
+              document.querySelector('nav');
+
+    if (!nav) return;
+
+    // Insert banner immediately after nav/header
+    nav.after(hero);
+  }
+
+  // Inject consistent styles
+  function injectStyles() {
+    var style = document.createElement('style');
+    style.id = 'hero-banner-styles';
+    style.textContent = [
+      '.post-hero-banner {',
+      '  width: 100%;',
+      '  max-width: 900px;',
+      '  height: 180px;',
+      '  margin: 1.5rem auto 2rem;',
+      '  border-radius: 10px;',
+      '  opacity: 0.9;',
+      '  background: var(--hero-bg, url(' + (document.querySelector('meta[property="og:image"]') || {}).content + ')) center/cover no-repeat;',
+      '}',
+      '@media (max-width: 640px) { .post-hero-banner { height: 120px; border-radius: 0; margin: 0 0 1.5rem; } }'
+    ].join('');
+    document.head.appendChild(style);
+  }
+
+  function run() {
+    var ogImage = document.querySelector('meta[property="og:image"]');
+    if (!ogImage) return;
+    var imageUrl = ogImage.getAttribute('content');
+    if (!imageUrl || imageUrl.includes('og-default')) return;
+
+    // Inject styles
+    var style = document.createElement('style');
+    style.textContent = '.post-hero-banner{width:100%;max-width:900px;height:180px;margin:1.5rem auto 2rem;border-radius:10px;opacity:0.9;background:url(' + imageUrl + ') center/cover no-repeat}@media(max-width:640px){.post-hero-banner{height:120px;border-radius:0;margin:0 0 1.5rem}}';
+    document.head.appendChild(style);
+
+    // Create banner element
+    var hero = document.createElement('div');
+    hero.className = 'post-hero-banner';
+
+    // Find nav (handles all page structures consistently)
+    var insertPoint = document.querySelector('header') ||
+                      document.querySelector('nav.blog-nav') ||
+                      document.querySelector('nav.nav-bar') ||
+                      document.querySelector('nav');
+
+    if (insertPoint) {
+      insertPoint.after(hero);
     }
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', run);
   } else {
-    init();
+    run();
   }
 })();
