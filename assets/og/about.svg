@@ -1,146 +1,170 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<rect width="1200" height="630" fill="#0f172a"/>
+<rect width="1200" height="630" fill="#0c1445"/>
 
-<!-- Sky: subtle gradient feel with layered triangles -->
-<g fill="#1e293b" opacity="0.5">
-  <polygon points="0,300 200,100 400,300"/>
-  <polygon points="300,300 500,50 700,300"/>
-  <polygon points="600,300 850,80 1050,300"/>
-  <polygon points="900,300 1100,150 1200,300"/>
+<!-- Sky gradient -->
+<polygon points="0,0 1200,0 1200,250 0,350" fill="#1a237e" opacity="0.6"/>
+<polygon points="0,0 1200,0 1200,150 0,200" fill="#0d47a1" opacity="0.4"/>
+
+<!-- Clouds (geometric) -->
+<g opacity="0.25">
+  <polygon points="100,80 150,60 200,70 220,85 180,95 120,90" fill="#4fc3f7"/>
+  <polygon points="800,50 860,30 930,45 950,60 900,70 830,65" fill="#4fc3f7"/>
 </g>
 
-<!-- Mountains: layered geometric peaks -->
-<!-- Far mountains (subtle) -->
-<g fill="none" stroke="#334155" stroke-width="1.5" opacity="0.4">
-  <polygon points="0,400 150,200 300,400"/>
-  <polygon points="200,400 400,180 600,400"/>
-  <polygon points="500,400 700,150 900,400"/>
-  <polygon points="800,400 1000,190 1200,400"/>
-</g>
-<g fill="#1e293b" opacity="0.3">
-  <polygon points="0,400 150,200 300,400"/>
-  <polygon points="500,400 700,150 900,400"/>
-</g>
+<!-- Far mountains (blue/purple) -->
+<polygon points="0,380 120,220 250,380" fill="#1a237e"/>
+<polygon points="120,220 185,300 250,380" fill="#283593"/>
+<polygon points="0,380 120,220 60,300" fill="#0d47a1"/>
+<polygon points="180,380 350,200 520,380" fill="#1565c0"/>
+<polygon points="350,200 435,290 520,380" fill="#1976d2"/>
+<polygon points="180,380 350,200 265,290" fill="#0d47a1"/>
+<polygon points="900,380 1050,230 1200,380" fill="#1a237e"/>
+<polygon points="1050,230 1125,305 1200,380" fill="#283593"/>
+<polygon points="900,380 1050,230 975,305" fill="#0d47a1"/>
 
-<!-- Near mountains (more detail, low-poly facets) -->
-<g fill="none" stroke="#475569" stroke-width="1" opacity="0.6">
-  <!-- Left mountain -->
-  <polygon points="50,450 200,220 350,450"/>
-  <polygon points="200,220 275,335 350,450"/>
-  <polygon points="200,220 125,335 50,450"/>
-  <line x1="200" y1="220" x2="200" y2="450"/>
-  <!-- Center mountain (tallest) -->
-  <polygon points="350,450 550,130 750,450"/>
-  <polygon points="550,130 650,290 750,450"/>
-  <polygon points="550,130 450,290 350,450"/>
-  <line x1="550" y1="130" x2="550" y2="450"/>
-  <line x1="550" y1="130" x2="450" y2="290"/>
-  <line x1="550" y1="130" x2="650" y2="290"/>
-  <line x1="450" y1="290" x2="550" y2="450"/>
-  <line x1="650" y1="290" x2="550" y2="450"/>
-  <!-- Right mountain -->
-  <polygon points="700,450 900,200 1100,450"/>
-  <polygon points="900,200 1000,325 1100,450"/>
-  <polygon points="900,200 800,325 700,450"/>
-  <line x1="900" y1="200" x2="900" y2="450"/>
-</g>
+<!-- Main mountain (center, vibrant purple-orange) -->
+<polygon points="350,450 550,100 750,450" fill="none"/>
+<!-- Left face facets -->
+<polygon points="350,450 450,275 550,100" fill="#4a148c"/>
+<polygon points="350,450 400,360 450,275" fill="#6a1b9a"/>
+<polygon points="400,360 450,275 425,320" fill="#7b1fa2"/>
+<polygon points="450,275 500,190 550,100" fill="#8e24aa"/>
+<polygon points="450,275 475,230 500,190" fill="#9c27b0"/>
+<!-- Right face facets (warmer, sunset lit) -->
+<polygon points="550,100 650,275 750,450" fill="#e65100"/>
+<polygon points="650,275 700,360 750,450" fill="#bf360c"/>
+<polygon points="550,100 600,190 650,275" fill="#f4511e"/>
+<polygon points="600,190 625,230 650,275" fill="#ff6e40"/>
+<polygon points="550,100 575,150 600,190" fill="#ff9100"/>
+<!-- Peak glow -->
+<polygon points="530,120 550,100 570,120 550,140" fill="#ffab40" opacity="0.8"/>
+<polygon points="540,110 550,100 560,110" fill="#ffd740" opacity="0.9"/>
+<!-- Center ridge -->
+<polygon points="450,275 550,100 550,450" fill="#7c4dff" opacity="0.3"/>
+<polygon points="550,100 650,275 550,450" fill="#ff6e40" opacity="0.2"/>
 
-<!-- Mountain facet fills (depth) -->
-<g fill="#2563eb" opacity="0.06">
-  <polygon points="550,130 650,290 750,450"/>
-  <polygon points="200,220 275,335 350,450"/>
-  <polygon points="900,200 1000,325 1100,450"/>
-</g>
-<g fill="#3b82f6" opacity="0.04">
-  <polygon points="550,130 450,290 350,450"/>
-  <polygon points="200,220 125,335 50,450"/>
-  <polygon points="900,200 800,325 700,450"/>
-</g>
+<!-- Left mountain (blue-teal) -->
+<polygon points="30,450 180,250 330,450" fill="none"/>
+<polygon points="30,450 105,350 180,250" fill="#006064"/>
+<polygon points="105,350 180,250 140,300" fill="#00838f"/>
+<polygon points="180,250 255,350 330,450" fill="#0097a7"/>
+<polygon points="255,350 290,400 330,450" fill="#00acc1"/>
+<polygon points="180,250 220,300 255,350" fill="#00bcd4"/>
+<polygon points="160,270 180,250 200,270" fill="#4dd0e1" opacity="0.8"/>
 
-<!-- Snow caps (small triangles at peaks) -->
-<g fill="#94a3b8" opacity="0.15">
-  <polygon points="550,130 520,180 580,180"/>
-  <polygon points="900,200 880,230 920,230"/>
-  <polygon points="200,220 185,248 215,248"/>
-</g>
+<!-- Right mountain (pink-purple) -->
+<polygon points="720,450 900,220 1080,450" fill="none"/>
+<polygon points="720,450 810,335 900,220" fill="#880e4f"/>
+<polygon points="810,335 855,280 900,220" fill="#ad1457"/>
+<polygon points="900,220 990,335 1080,450" fill="#c2185b"/>
+<polygon points="990,335 1035,390 1080,450" fill="#d81b60"/>
+<polygon points="900,220 945,280 990,335" fill="#e91e63"/>
+<polygon points="880,240 900,220 920,240" fill="#f48fb1" opacity="0.8"/>
 
-<!-- Ground plane -->
-<line x1="0" y1="450" x2="1200" y2="450" stroke="#475569" stroke-width="1" opacity="0.3"/>
+<!-- Lake/water -->
+<polygon points="200,450 500,450 450,500 250,500" fill="#0288d1" opacity="0.5"/>
+<polygon points="250,500 450,500 400,530 300,530" fill="#0277bd" opacity="0.4"/>
+<polygon points="500,450 700,450 650,500 450,500" fill="#01579b" opacity="0.45"/>
+<!-- Water reflections -->
+<line x1="300" y1="475" x2="400" y2="475" stroke="#4fc3f7" stroke-width="1" opacity="0.3"/>
+<line x1="350" y1="490" x2="420" y2="490" stroke="#4fc3f7" stroke-width="0.5" opacity="0.2"/>
 
-<!-- Wolf (geometric, left side) - facing right -->
-<g fill="none" stroke="#60a5fa" stroke-width="1.2" opacity="0.7" transform="translate(180,440)">
+<!-- Wolf (geometric, colorful low-poly, on left rock) -->
+<g transform="translate(120,385)">
   <!-- Body -->
-  <polygon points="0,30 15,0 30,-5 50,0 60,15 55,35 40,40 20,40 5,38"/>
+  <polygon points="0,35 20,10 40,5 60,10 70,25 65,40 45,48 25,48" fill="#00695c" stroke="#004d40" stroke-width="0.5"/>
+  <polygon points="20,10 40,5 30,25" fill="#00897b"/>
+  <polygon points="40,5 60,10 50,25" fill="#26a69a"/>
+  <polygon points="0,35 20,10 10,25" fill="#004d40"/>
+  <polygon points="60,10 70,25 55,30" fill="#80cbc4"/>
+  <polygon points="25,48 45,48 35,30" fill="#00796b"/>
   <!-- Head -->
-  <polygon points="55,15 65,5 72,0 80,5 78,15 70,20 60,18"/>
+  <polygon points="65,20 78,8 88,12 85,25 75,28" fill="#e65100"/>
+  <polygon points="78,8 83,10 80,18" fill="#ff8f00"/>
+  <polygon points="83,10 88,12 85,20" fill="#f57c00"/>
   <!-- Ears -->
-  <polygon points="65,5 62,-5 68,-2"/>
-  <polygon points="72,0 70,-8 76,-3"/>
+  <polygon points="75,10 70,0 80,5" fill="#bf360c"/>
+  <polygon points="80,5 78,0 85,8" fill="#e65100"/>
+  <!-- Eye -->
+  <circle cx="80" cy="16" r="2" fill="#fff"/>
+  <circle cx="80" cy="16" r="1" fill="#1a1a1a"/>
   <!-- Legs -->
-  <line x1="15" y1="38" x2="12" y2="55"/>
-  <line x1="25" y1="40" x2="23" y2="55"/>
-  <line x1="40" y1="40" x2="42" y2="55"/>
-  <line x1="50" y1="35" x2="52" y2="55"/>
+  <polygon points="18,45 22,60 26,45" fill="#004d40"/>
+  <polygon points="32,48 35,62 38,48" fill="#00695c"/>
+  <polygon points="48,48 51,62 54,45" fill="#00695c"/>
+  <polygon points="58,40 62,58 66,38" fill="#00897b"/>
   <!-- Tail -->
-  <path d="M0,30 Q-10,20 -5,10"/>
-  <!-- Eye -->
-  <circle cx="72" cy="10" r="1.5" fill="#60a5fa"/>
+  <polygon points="0,35 -8,22 -3,18 5,28" fill="#004d40"/>
 </g>
 
-<!-- Bear (geometric, right side) - facing left -->
-<g fill="none" stroke="#60a5fa" stroke-width="1.2" opacity="0.7" transform="translate(880,430)">
-  <!-- Body (stockier than wolf) -->
-  <polygon points="80,35 70,10 55,0 35,0 20,10 10,30 15,50 30,55 60,55 75,50"/>
+<!-- Bear (geometric, colorful low-poly, on right rock) -->
+<g transform="translate(870,375)">
+  <!-- Body -->
+  <polygon points="10,40 25,15 45,5 70,5 85,15 95,35 90,55 70,62 35,62 15,55" fill="#4a148c" stroke="#311b92" stroke-width="0.5"/>
+  <polygon points="25,15 45,5 35,25" fill="#6a1b9a"/>
+  <polygon points="45,5 70,5 55,25" fill="#7b1fa2"/>
+  <polygon points="70,5 85,15 75,30" fill="#9c27b0"/>
+  <polygon points="85,15 95,35 80,35" fill="#ab47bc"/>
+  <polygon points="10,40 25,15 20,30" fill="#4a148c"/>
+  <polygon points="35,62 70,62 55,45" fill="#6a1b9a"/>
   <!-- Head -->
-  <polygon points="15,30 5,20 0,10 5,0 15,5 20,15"/>
+  <polygon points="10,35 0,25 -5,15 0,5 12,10 18,22" fill="#e91e63"/>
+  <polygon points="0,5 6,8 3,18" fill="#f06292"/>
+  <polygon points="6,8 12,10 10,18" fill="#ec407a"/>
   <!-- Ears -->
-  <polygon points="5,0 0,-8 8,-3"/>
-  <polygon points="12,2 8,-6 16,-2"/>
+  <polygon points="0,5 -5,-3 5,0" fill="#c2185b"/>
+  <polygon points="8,3 5,-5 14,5" fill="#d81b60"/>
   <!-- Snout -->
-  <polygon points="5,20 -3,22 -2,28 5,27"/>
-  <!-- Legs -->
-  <line x1="30" y1="55" x2="28" y2="75"/>
-  <line x1="40" y1="55" x2="38" y2="75"/>
-  <line x1="55" y1="55" x2="57" y2="75"/>
-  <line x1="65" y1="50" x2="67" y2="75"/>
+  <polygon points="-2,22 -8,25 -6,30 0,28" fill="#f48fb1"/>
+  <circle cx="-4" cy="26" r="2" fill="#880e4f"/>
   <!-- Eye -->
-  <circle cx="10" cy="12" r="2" fill="#60a5fa"/>
+  <circle cx="5" cy="14" r="2.5" fill="#fff"/>
+  <circle cx="5" cy="14" r="1.2" fill="#1a1a1a"/>
+  <!-- Legs -->
+  <polygon points="28,60 32,78 36,60" fill="#4a148c"/>
+  <polygon points="42,62 46,80 50,62" fill="#6a1b9a"/>
+  <polygon points="62,62 66,80 70,60" fill="#6a1b9a"/>
+  <polygon points="78,55 82,78 86,52" fill="#7b1fa2"/>
 </g>
 
-<!-- Trees (geometric, scattered) -->
-<g fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.4">
-  <!-- Tree 1 -->
-  <polygon points="430,450 440,420 450,450"/>
-  <polygon points="432,430 440,405 448,430"/>
-  <line x1="440" y1="450" x2="440" y2="465"/>
-  <!-- Tree 2 -->
-  <polygon points="470,450 478,425 486,450"/>
-  <polygon points="472,435 478,415 484,435"/>
-  <line x1="478" y1="450" x2="478" y2="462"/>
-  <!-- Tree 3 -->
-  <polygon points="130,450 138,428 146,450"/>
-  <polygon points="132,438 138,418 144,438"/>
-  <line x1="138" y1="450" x2="138" y2="460"/>
-  <!-- Tree 4 -->
-  <polygon points="1020,450 1030,420 1040,450"/>
-  <polygon points="1022,430 1030,405 1038,430"/>
-  <line x1="1030" y1="450" x2="1030" y2="465"/>
+<!-- Trees (colorful geometric) -->
+<g>
+  <polygon points="440,450 450,415 460,450" fill="#1b5e20"/>
+  <polygon points="442,430 450,400 458,430" fill="#2e7d32"/>
+  <polygon points="444,415 450,390 456,415" fill="#43a047"/>
+  <line x1="450" y1="450" x2="450" y2="465" stroke="#3e2723" stroke-width="2"/>
+</g>
+<g>
+  <polygon points="480,450 488,420 496,450" fill="#1b5e20"/>
+  <polygon points="482,432 488,408 494,432" fill="#388e3c"/>
+  <line x1="488" y1="450" x2="488" y2="462" stroke="#3e2723" stroke-width="2"/>
+</g>
+<g>
+  <polygon points="760,450 770,418 780,450" fill="#1b5e20"/>
+  <polygon points="762,432 770,405 778,432" fill="#2e7d32"/>
+  <polygon points="764,418 770,395 776,418" fill="#66bb6a"/>
+  <line x1="770" y1="450" x2="770" y2="465" stroke="#3e2723" stroke-width="2"/>
 </g>
 
-<!-- Stars/dots in sky -->
-<g fill="#94a3b8" opacity="0.3">
-  <circle cx="100" cy="80" r="1.5"/><circle cx="250" cy="50" r="1"/>
-  <circle cx="400" cy="90" r="1.5"/><circle cx="600" cy="60" r="1"/>
-  <circle cx="750" cy="40" r="1.5"/><circle cx="950" cy="70" r="1"/>
-  <circle cx="1100" cy="50" r="1.5"/><circle cx="300" cy="120" r="1"/>
-  <circle cx="800" cy="100" r="1"/><circle cx="1050" cy="120" r="1.5"/>
+<!-- Ground line -->
+<line x1="0" y1="450" x2="1200" y2="450" stroke="#1a237e" stroke-width="1" opacity="0.5"/>
+
+<!-- Foreground rocks (geometric) -->
+<polygon points="0,500 80,450 160,480 120,530 0,530" fill="#1a1a2e" opacity="0.6"/>
+<polygon points="1050,460 1120,450 1200,470 1200,530 1080,530" fill="#1a1a2e" opacity="0.5"/>
+
+<!-- Stars -->
+<g fill="#e8eaf6" opacity="0.6">
+  <circle cx="100" cy="50" r="2"/><circle cx="300" cy="30" r="1.5"/>
+  <circle cx="500" cy="60" r="1"/><circle cx="700" cy="25" r="2"/>
+  <circle cx="850" cy="55" r="1.5"/><circle cx="1000" cy="40" r="1"/>
+  <circle cx="1100" cy="70" r="1.5"/><circle cx="200" cy="90" r="1"/>
+  <circle cx="950" cy="80" r="1"/><circle cx="400" cy="100" r="1.5"/>
+  <circle cx="600" cy="45" r="1.5"/><circle cx="1150" cy="30" r="1"/>
 </g>
 
 <!-- Moon -->
-<g fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.3">
-  <circle cx="1050" cy="100" r="25"/>
-</g>
-<g fill="#94a3b8" opacity="0.08">
-  <circle cx="1050" cy="100" r="25"/>
-</g>
+<circle cx="1050" cy="80" r="28" fill="#fdd835" opacity="0.2"/>
+<circle cx="1050" cy="80" r="22" fill="#ffee58" opacity="0.15"/>
+<circle cx="1050" cy="80" r="15" fill="#fff9c4" opacity="0.2"/>
 </svg>
