@@ -112,8 +112,13 @@
             <h1>Get in Touch</h1>
             <p class="page-desc">Have a question about AI agents, distributed systems, or want to discuss collaboration? Send me a message and I will get back to you.</p>
 
-            <!-- Contact form - submits via mailto (no external service needed) -->
+            <!-- Contact form with spam protection -->
             <form class="contact-form" id="contactForm">
+                <!-- Web3Forms botcheck (invisible to users, catches automated bots) -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+                <!-- Honeypot field (hidden - bots fill it, humans never see it) -->
+                <input type="text" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+
                 <div class="form-group">
                     <label class="form-label" for="name">Name</label>
                     <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
@@ -166,15 +171,25 @@
             setTheme(!isDark);
         });
 
-        // Contact form submission via Web3Forms (free, no account needed)
-        // GET YOUR ACCESS KEY: Go to https://web3forms.com, enter your email,
-        // and paste the key you receive below.
+        // Contact form submission via Web3Forms (free, unlimited)
         const WEB3FORMS_KEY = '5866be8c-60ae-451a-aad1-7f1127e358dc';
+
+        // Rate limiting: max 1 submission per 60 seconds
+        let lastSubmit = 0;
 
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const note = document.getElementById('formNote');
             const btn = this.querySelector('.form-submit');
+
+            // Client-side rate limit
+            const now = Date.now();
+            if (now - lastSubmit < 60000) {
+                note.textContent = 'Please wait a moment before sending another message.';
+                note.style.display = 'block';
+                note.style.color = '#d97706';
+                return;
+            }
 
             // Check if access key is configured
             if (WEB3FORMS_KEY === 'YOUR_ACCESS_KEY_HERE') {
@@ -201,6 +216,7 @@
                 });
                 const result = await response.json();
                 if (result.success) {
+                    lastSubmit = Date.now();
                     note.textContent = 'Message sent successfully. I will get back to you soon.';
                     note.style.display = 'block';
                     note.style.color = '#059669';
