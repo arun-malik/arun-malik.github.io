@@ -376,7 +376,6 @@
     createBackToTop();
     addCopyButtons();
     loadHighlightJS();
-    createListenButton();
   }
 
   if (document.readyState === 'loading') {
