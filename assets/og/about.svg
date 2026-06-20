@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- Radiating arcs from center-left (person as origin of ideas) -->
+<g fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.25">
+  <path d="M350,315 Q500,150 750,180"/>
+  <path d="M350,315 Q550,200 800,240"/>
+  <path d="M350,315 Q600,280 850,300"/>
+  <path d="M350,315 Q600,350 850,340"/>
+  <path d="M350,315 Q550,430 800,400"/>
+  <path d="M350,315 Q500,480 750,460"/>
+</g>
+<!-- Central presence (abstract, not a person icon) -->
+<g fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.6">
+  <circle cx="350" cy="315" r="40"/>
+  <circle cx="350" cy="315" r="25"/>
+  <circle cx="350" cy="315" r="10" fill="#60a5fa" opacity="0.4"/>
+</g>
+<!-- Knowledge nodes (areas of expertise expanding outward) -->
+<g fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.5">
+  <circle cx="750" cy="180" r="22"/>
+  <circle cx="830" cy="260" r="18"/>
+  <circle cx="870" cy="340" r="20"/>
+  <circle cx="820" cy="420" r="16"/>
+  <circle cx="730" cy="470" r="19"/>
+  <circle cx="650" cy="140" r="14"/>
+  <circle cx="920" cy="290" r="12"/>
+</g>
+<!-- Subtle node fills -->
+<g fill="#2563eb" opacity="0.15">
+  <circle cx="750" cy="180" r="22"/>
+  <circle cx="870" cy="340" r="20"/>
+  <circle cx="730" cy="470" r="19"/>
+</g>
+<!-- Inter-node connections (knowledge web) -->
+<g fill="none" stroke="#1d4ed8" stroke-width="0.8" opacity="0.2">
+  <line x1="750" y1="180" x2="830" y2="260"/>
+  <line x1="830" y1="260" x2="870" y2="340"/>
+  <line x1="870" y1="340" x2="820" y2="420"/>
+  <line x1="820" y1="420" x2="730" y2="470"/>
+  <line x1="750" y1="180" x2="650" y2="140"/>
+  <line x1="830" y1="260" x2="920" y2="290"/>
+  <line x1="870" y1="340" x2="920" y2="290"/>
+</g>
+<!-- Scattered particles (ideas in motion) -->
+<g fill="#60a5fa" opacity="0.2">
+  <circle cx="450" cy="200" r="2"/><circle cx="500" cy="250" r="3"/><circle cx="550" cy="180" r="2"/>
+  <circle cx="480" cy="400" r="2"/><circle cx="530" cy="450" r="3"/><circle cx="600" cy="380" r="2"/>
+  <circle cx="680" cy="300" r="2"/><circle cx="950" cy="200" r="2"/><circle cx="1000" cy="400" r="3"/>
+  <circle cx="200" cy="200" r="2"/><circle cx="180" cy="400" r="2"/><circle cx="250" cy="500" r="3"/>
+</g>
+<!-- Large faded orbital rings -->
+<g fill="none" stroke="#1e40af" stroke-width="0.6" opacity="0.12">
+  <ellipse cx="600" cy="315" rx="550" ry="290" transform="rotate(5 600 315)"/>
+  <ellipse cx="600" cy="315" rx="480" ry="250" transform="rotate(-8 600 315)"/>
+</g>
+</svg>
