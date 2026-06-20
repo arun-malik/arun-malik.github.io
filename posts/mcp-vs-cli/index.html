@@ -46,6 +46,32 @@
             padding: 2rem 1.5rem;
         }
 
+        /* Blog Nav */
+        .blog-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-sans);
+        }
+        .blog-nav .site-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .blog-nav .site-name:hover { color: var(--accent); }
+        .blog-nav .nav-right { display: flex; gap: 1.25rem; }
+        .blog-nav .nav-right a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .blog-nav .nav-right a:hover { color: var(--text); }
+
         /* Blog Header */
         .blog-header {
             border-bottom: 1px solid var(--border);
@@ -298,6 +324,16 @@
     </script>
 </head>
 <body>
+
+<nav class="blog-nav">
+    <a href="/" class="site-name">Arun Malik</a>
+    <div class="nav-right">
+        <a href="/posts/">Writing</a>
+        <a href="/series/">Series</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+    </div>
+</nav>
 
 <div class="blog-header">
     <h1>MCP vs CLI for AI Agents: A Comparative Analysis of Tool Integration Paradigms</h1>
