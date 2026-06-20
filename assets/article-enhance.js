@@ -37,7 +37,7 @@
     const tocContainer = document.getElementById('article-toc');
     if (!tocContainer) return;
 
-    let html = '<details class="article-toc-details" open>';
+    let html = '<details class="article-toc-details">';
     html += '<summary>Table of Contents</summary>';
     html += '<nav class="article-toc-nav"><ol>';
 
