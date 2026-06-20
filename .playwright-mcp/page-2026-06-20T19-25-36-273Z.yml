@@ -1,0 +1,505 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - link "Arun Malik" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - generic [ref=e5]:
+      - link "Writing" [ref=e6] [cursor=pointer]:
+        - /url: /posts/
+      - link "Series" [ref=e7] [cursor=pointer]:
+        - /url: /series/
+      - link "About" [ref=e8] [cursor=pointer]:
+        - /url: /about/
+      - link "Contact" [ref=e9] [cursor=pointer]:
+        - /url: /contact/
+  - button "Print / Export PDF" [ref=e11] [cursor=pointer]
+  - heading "Decentralized Granular Access Control for Agentic AI Systems in Critical Infrastructure" [level=1] [ref=e12]
+  - generic [ref=e13]: Arun Malik, Deepal Jayasinghe, Bradley Klemick, Prachi Shah, Nitish Talasu, Vineet Tushar Trivedi
+  - generic [ref=e14]:
+    - button "Listen to this article" [ref=e15] [cursor=pointer]:
+      - img [ref=e16]
+      - generic [ref=e20]: Listen to this article
+    - button "Share" [ref=e22] [cursor=pointer]:
+      - img [ref=e23]
+      - text: Share
+  - generic [ref=e29]: Microsoft Corporation, Redmond, WA, USA
+  - generic [ref=e30]:
+    - text: Preprint • June 2026 •
+    - link "arXiv (pending)" [ref=e31] [cursor=pointer]:
+      - /url: https://arxiv.org/abs/submit/7713240
+  - generic [ref=e32]:
+    - strong [ref=e33]: Abstract
+    - text: "The deployment of autonomous AI agents in production infrastructure introduces fundamental security challenges that traditional role-based access control (RBAC) models cannot address. Unlike deterministic automation, AI agents exhibit stochastic behavior, making conventional trust models insufficient for governing their access to critical systems. This paper presents a decentralized, multi-layered access control architecture designed specifically for agentic AI systems operating in critical cloud infrastructure. Our framework introduces four key innovations: (1) a compound identity model that binds agent actions to delegated human authority, (2) a hierarchical permission system spanning five granularity levels from global platform access to per-parameter constraints, (3) a decentralized policy ownership model where tool teams independently govern their authorization boundaries, and (4) progressive trust escalation with safety interlocks that prevent autonomous agents from executing high-risk operations. We ground our design in the OWASP Top 10 for LLM Applications (2025) threat taxonomy and demonstrate how each architectural decision mitigates specific attack vectors. Deployed in production at a major cloud provider managing network infrastructure across hundreds of datacenters, the system enforces granular access control for 20+ specialized AI agents and 60+ deterministic playbooks processing thousands of operations daily while maintaining zero unauthorized write operations over eight months of production deployment. We present empirical data on access pattern distributions, denial rates, and the effectiveness of layered authorization in preventing privilege escalation by non-deterministic actors."
+  - generic [ref=e34]:
+    - strong [ref=e35]: "Keywords:"
+    - text: Access Control, RBAC, AI Agents, Critical Infrastructure, Zero Trust, LLM Security, Compound Identity, Decentralized Authorization
+  - heading "1. Introduction" [level=2] [ref=e36]
+  - paragraph [ref=e37]: "The rapid adoption of large language model (LLM)-powered agents in enterprise operations has created an unprecedented security challenge: how to grant production system access to actors whose behavior is fundamentally non-deterministic. Traditional access control systems were designed for two categories of actors: humans who authenticate through identity providers and make conscious decisions, and automated systems that execute predetermined logic. AI agents fit neither category cleanly. They reason, they adapt, they hallucinate, and they can be manipulated through adversarial prompts."
+  - paragraph [ref=e38]: In critical infrastructure environments such as cloud network operations, the stakes are particularly high. A single misconfigured network device can cascade into regional outages affecting millions of users. An agent with excessive privileges can be prompt-injected into executing destructive commands. An agent without sufficient access cannot fulfill its operational mandate. This tension between operational necessity and security boundaries is the central challenge addressed in this work.
+  - paragraph [ref=e39]: Existing approaches to AI agent security fall into two camps. The first treats agents as untrusted external entities, restricting them to read-only sandboxes that limit their operational value. The second grants agents the same elevated privileges as the humans they serve, creating unacceptable blast radii when agents malfunction or are compromised. Neither approach is viable at scale.
+  - paragraph [ref=e40]: "This paper presents a third path: a decentralized granular access control architecture that provides fine-grained, context-aware authorization for AI agents while maintaining the safety guarantees required for critical infrastructure. Our system has been deployed in production for eight months, governing access for 20+ specialized agents operating across hundreds of datacenters, and has maintained zero unauthorized write operations while enabling agents to autonomously resolve over 1,400 operational tasks."
+  - heading "1.1 Contributions" [level=3] [ref=e41]
+  - paragraph [ref=e42]: "This paper makes the following contributions:"
+  - list [ref=e43]:
+    - listitem [ref=e44]:
+      - strong [ref=e45]: "Compound Identity Model:"
+      - text: A novel identity binding mechanism that delegates human authority to AI agents while preserving accountability and audit trails.
+    - listitem [ref=e46]:
+      - strong [ref=e47]: "Five-Layer Permission Hierarchy:"
+      - text: A multi-granularity authorization framework spanning platform, tool, function, parameter, and execution context levels.
+    - listitem [ref=e48]:
+      - strong [ref=e49]: "Decentralized Policy Ownership:"
+      - text: A Git-based governance model where infrastructure tool teams independently define, review, and approve access policies for their services.
+    - listitem [ref=e50]:
+      - strong [ref=e51]: "Progressive Trust Escalation:"
+      - text: A safety-layered approach where write operations require increasingly rigorous authorization, culminating in multi-party approval for high-risk actions.
+    - listitem [ref=e52]:
+      - strong [ref=e53]: "Empirical Evaluation:"
+      - text: Production deployment data demonstrating the security effectiveness and operational impact of the architecture.
+  - heading "2. Threat Model and Problem Statement" [level=2] [ref=e54]
+  - heading "2.1 The Non-Determinism Problem" [level=3] [ref=e55]
+  - paragraph [ref=e56]: "Traditional automation systems (workflow engines, CI/CD pipelines, cron jobs) earned production access through a straightforward trust model: their behavior is deterministic, reviewable, and bounded. Given the same inputs, they produce the same outputs. Their source code can be audited. Their execution paths can be exhaustively tested."
+  - paragraph [ref=e57]: "AI agents violate every assumption in this model:"
+  - list [ref=e58]:
+    - listitem [ref=e59]:
+      - strong [ref=e60]: "Stochastic behavior:"
+      - text: Given identical inputs, an LLM-powered agent may take different actions due to temperature sampling, context window variations, or model updates.
+    - listitem [ref=e61]:
+      - strong [ref=e62]: "Prompt vulnerability:"
+      - text: Agents can be manipulated through adversarial inputs embedded in the data they process (indirect prompt injection).
+    - listitem [ref=e63]:
+      - strong [ref=e64]: "Capability amplification:"
+      - text: An agent's effective capabilities are the product of its tool access and its reasoning ability, making privilege boundaries harder to predict.
+    - listitem [ref=e65]:
+      - strong [ref=e66]: "Emergent behavior:"
+      - text: Multi-agent systems can exhibit collective behaviors not predicted by individual agent policies.
+  - generic [ref=e69]: Figure 1. Trust model comparison between deterministic automation and stochastic AI agents across five security dimensions. Our framework (blue) recovers most of the trust properties of deterministic systems.
+  - heading "2.2 OWASP LLM Application Threats" [level=3] [ref=e70]
+  - paragraph [ref=e71]: "We ground our threat model in the OWASP Top 10 for LLM Applications (2025), focusing on the threats most relevant to agent-based systems operating in critical infrastructure:"
+  - table [ref=e72]:
+    - rowgroup [ref=e73]:
+      - row "OWASP ID Threat Agent-Specific Manifestation Our Mitigation" [ref=e74]:
+        - columnheader "OWASP ID" [ref=e75]
+        - columnheader "Threat" [ref=e76]
+        - columnheader "Agent-Specific Manifestation" [ref=e77]
+        - columnheader "Our Mitigation" [ref=e78]
+    - rowgroup [ref=e79]:
+      - row "LLM01 Prompt Injection Adversarial data in incident descriptions triggering unauthorized commands Input sanitization middleware, tool-level parameter validation" [ref=e80]:
+        - cell "LLM01" [ref=e81]
+        - cell "Prompt Injection" [ref=e82]
+        - cell "Adversarial data in incident descriptions triggering unauthorized commands" [ref=e83]
+        - cell "Input sanitization middleware, tool-level parameter validation" [ref=e84]
+      - row "LLM02 Sensitive Information Disclosure Agent leaking infrastructure topology or credentials in responses Output filtering, compound identity scoping" [ref=e85]:
+        - cell "LLM02" [ref=e86]
+        - cell "Sensitive Information Disclosure" [ref=e87]
+        - cell "Agent leaking infrastructure topology or credentials in responses" [ref=e88]
+        - cell "Output filtering, compound identity scoping" [ref=e89]
+      - row "LLM06 Excessive Agency Agent executing write operations beyond its intended scope Five-layer RBAC, deny-by-default for mutations" [ref=e90]:
+        - cell "LLM06" [ref=e91]
+        - cell "Excessive Agency" [ref=e92]
+        - cell "Agent executing write operations beyond its intended scope" [ref=e93]
+        - cell "Five-layer RBAC, deny-by-default for mutations" [ref=e94]
+      - row "LLM10 Unbounded Consumption Agent entering infinite tool-calling loops consuming resources Rate limiting, execution quotas, circuit breakers" [ref=e95]:
+        - cell "LLM10" [ref=e96]
+        - cell "Unbounded Consumption" [ref=e97]
+        - cell "Agent entering infinite tool-calling loops consuming resources" [ref=e98]
+        - cell "Rate limiting, execution quotas, circuit breakers" [ref=e99]
+  - heading "2.3 Actor Taxonomy" [level=3] [ref=e100]
+  - paragraph [ref=e101]: "Our architecture distinguishes four distinct actor types, each with different trust properties and authorization requirements:"
+  - generic [ref=e104]: Figure 2. Actor taxonomy showing trust level, determinism, and authorization complexity for each actor type in the system.
+  - table [ref=e105]:
+    - rowgroup [ref=e106]:
+      - row "Actor Type Determinism Identity Model Write Access Trust Basis" [ref=e107]:
+        - columnheader "Actor Type" [ref=e108]
+        - columnheader "Determinism" [ref=e109]
+        - columnheader "Identity Model" [ref=e110]
+        - columnheader "Write Access" [ref=e111]
+        - columnheader "Trust Basis" [ref=e112]
+    - rowgroup [ref=e113]:
+      - row "Human User N/A (conscious) Entra ID + MFA Full (with elevation) Authentication + training" [ref=e114]:
+        - cell "Human User" [ref=e115]
+        - cell "N/A (conscious)" [ref=e116]
+        - cell "Entra ID + MFA" [ref=e117]
+        - cell "Full (with elevation)" [ref=e118]
+        - cell "Authentication + training" [ref=e119]
+      - row "AI Agent Stochastic User OBO + Agent MI Read only (default) Delegated + constrained" [ref=e120]:
+        - cell "AI Agent" [ref=e121]
+        - cell "Stochastic" [ref=e122]
+        - cell "User OBO + Agent MI" [ref=e123]
+        - cell "Read only (default)" [ref=e124]
+        - cell "Delegated + constrained" [ref=e125]
+      - row "Service (STS) Deterministic Managed Identity Scoped per service Code review + CI/CD" [ref=e126]:
+        - cell "Service (STS)" [ref=e127]
+        - cell "Deterministic" [ref=e128]
+        - cell "Managed Identity" [ref=e129]
+        - cell "Scoped per service" [ref=e130]
+        - cell "Code review + CI/CD" [ref=e131]
+      - row "Workflow/Playbook Deterministic System MI + Author Scoped per playbook Authored + approved + tested" [ref=e132]:
+        - cell "Workflow/Playbook" [ref=e133]
+        - cell "Deterministic" [ref=e134]
+        - cell "System MI + Author" [ref=e135]
+        - cell "Scoped per playbook" [ref=e136]
+        - cell "Authored + approved + tested" [ref=e137]
+  - paragraph [ref=e138]:
+    - strong [ref=e139]: Playbooks
+    - text: represent a critical fourth actor class distinct from both AI agents and traditional services. A playbook is a
+    - emphasis [ref=e140]: deterministic, pre-authored workflow
+    - text: "composed of discrete steps that execute infrastructure operations in a fixed sequence. Unlike AI agents, which reason dynamically about tool selection and parameters, playbooks follow authored logic that has been code-reviewed, tested, and approved before deployment. This determinism grants playbooks a higher trust level: they may hold scoped write permissions (e.g., restarting a service, modifying a configuration) that agents cannot obtain directly. In our architecture, AI agents that identify a remediation action delegate execution to an appropriate playbook rather than performing writes autonomously, creating an"
+    - emphasis [ref=e141]: agent→playbook escalation path
+    - text: that preserves both the agent's analytical capability and the playbook's safety guarantees. Each playbook runs under a compound identity combining a system-managed identity with the authoring engineer's identity, enabling full auditability of both the workflow definition and its runtime execution.
+  - heading "3. Architecture" [level=2] [ref=e142]
+  - heading "3.1 Design Principles" [level=3] [ref=e143]
+  - paragraph [ref=e144]: "Six core security principles guide the architecture:"
+  - list [ref=e145]:
+    - listitem [ref=e146]:
+      - strong [ref=e147]: "Least Privilege:"
+      - text: Every actor receives the minimum permissions required for its function. Agents default to read-only access.
+    - listitem [ref=e148]:
+      - strong [ref=e149]: "Zero Trust:"
+      - text: No implicit trust based on network position or prior behavior. Every request is authenticated, authorized, and audited.
+    - listitem [ref=e150]:
+      - strong [ref=e151]: "Excessive Agency Guard (OWASP LLM06):"
+      - text: Agents are explicitly prevented from accumulating capabilities beyond their defined scope through tool scoping and parameter-level deny patterns.
+    - listitem [ref=e152]:
+      - strong [ref=e153]: "Delegated Identity:"
+      - text: Agents never operate with independent authority. Their actions are bound to a delegating human's identity and permissions.
+    - listitem [ref=e154]:
+      - strong [ref=e155]: "Observability and Audit:"
+      - text: Every agent action produces an immutable audit trail linking the action to both the agent and its delegating authority.
+    - listitem [ref=e156]:
+      - strong [ref=e157]: "Environment Isolation:"
+      - text: Production and corporate environments maintain strict separation with independent credential systems.
+  - heading "3.2 Five-Layer Permission Hierarchy" [level=3] [ref=e158]
+  - paragraph [ref=e159]: "Authorization decisions traverse five distinct layers, each progressively narrowing the scope of permitted actions:"
+  - generic [ref=e162]: Figure 3. Five-layer permission hierarchy showing progressive scope narrowing. Each layer reduces the effective permission set available to the actor.
+  - table [ref=e163]:
+    - rowgroup [ref=e164]:
+      - row "Layer Scope Controls Example" [ref=e165]:
+        - columnheader "Layer" [ref=e166]
+        - columnheader "Scope" [ref=e167]
+        - columnheader "Controls" [ref=e168]
+        - columnheader "Example" [ref=e169]
+    - rowgroup [ref=e170]:
+      - row "1. Global RBAC Platform access Who can access the system at all Security group membership required" [ref=e171]:
+        - cell "1. Global RBAC" [ref=e172]
+        - cell "Platform access" [ref=e173]
+        - cell "Who can access the system at all" [ref=e174]
+        - cell "Security group membership required" [ref=e175]
+      - row "2. Tool Level Service access Which integrated tools/services are accessible Agent X can access TopologyService but not DeviceProxy" [ref=e176]:
+        - cell "2. Tool Level" [ref=e177]
+        - cell "Service access" [ref=e178]
+        - cell "Which integrated tools/services are accessible" [ref=e179]
+        - cell "Agent X can access TopologyService but not DeviceProxy" [ref=e180]
+      - row "3. Function Level Operation access Which specific operations within a tool Can call GetDeviceInfo but not UpdateConfig" [ref=e181]:
+        - cell "3. Function Level" [ref=e182]
+        - cell "Operation access" [ref=e183]
+        - cell "Which specific operations within a tool" [ref=e184]
+        - cell "Can call GetDeviceInfo but not UpdateConfig" [ref=e185]
+      - 'row "4. Parameter Level Value constraints What input values are allowed/denied denyPattern: \"prod-.*\" on environment parameter" [ref=e186]':
+        - cell "4. Parameter Level" [ref=e187]
+        - cell "Value constraints" [ref=e188]
+        - cell "What input values are allowed/denied" [ref=e189]
+        - 'cell "denyPattern: \"prod-.*\" on environment parameter" [ref=e190]'
+      - row "5. Execution Context Runtime constraints Playbook-specific scoping, time windows Only during active incident, max 10 devices" [ref=e191]:
+        - cell "5. Execution Context" [ref=e192]
+        - cell "Runtime constraints" [ref=e193]
+        - cell "Playbook-specific scoping, time windows" [ref=e194]
+        - cell "Only during active incident, max 10 devices" [ref=e195]
+  - heading "3.3 Compound Identity Model" [level=3] [ref=e196]
+  - paragraph [ref=e197]: "The compound identity model is the cornerstone of our agent authorization approach. Rather than granting agents independent credentials with fixed permissions, each agent operation carries a composite identity that binds together:"
+  - list [ref=e198]:
+    - listitem [ref=e199]:
+      - strong [ref=e200]: "User Token (OBO):"
+      - text: The On-Behalf-Of token from the human who initiated or delegated to the agent, establishing accountability and upper-bounding permissions.
+    - listitem [ref=e201]:
+      - strong [ref=e202]: "Agent Managed Identity:"
+      - text: The system-assigned identity of the agent service itself, enabling platform-level access control and audit attribution.
+    - listitem [ref=e203]:
+      - strong [ref=e204]: "Execution Context:"
+      - text: Metadata including the triggering incident, playbook identifier, and temporal constraints.
+  - paragraph [ref=e205]: This compound identity ensures that an agent can never exceed the permissions of its delegating human, while also being independently constrained by agent-specific policies. If a human lacks access to a particular production environment, their delegated agent inherits that restriction regardless of the agent's own role assignments.
+  - generic [ref=e208]: "Figure 4. Compound identity resolution: effective access is computed as the intersection of user permissions, agent role boundaries, and execution context constraints."
+  - heading "3.4 Decentralized Policy Ownership" [level=3] [ref=e209]
+  - paragraph [ref=e210]: "A key architectural innovation is the decentralization of policy definition to tool-owning teams. Rather than maintaining a monolithic access control configuration, each infrastructure service team owns their authorization policy as a YAML file in a version-controlled repository:"
+  - generic [ref=e211]: "toolName: TopologyService owner: topology-team@example.org roles: Topology-Reader: description: \"Read-only topology queries\" permissions: functions: - \"Topology-GetDeviceInfo\" - \"Topology-QueryGraph\" Topology-Writer: inherits: Topology-Reader permissions: functions: - \"Topology-UpdateConfig\" parameters: environment: denyPattern: \"prod-.*\" Topology-Admin: inherits: Topology-Writer permissions: bypassPatterns: true tenantRestrictions: allowedTenants: [\"corp.example.org\"]"
+  - paragraph [ref=e212]: "This decentralized model provides several critical properties:"
+  - list [ref=e213]:
+    - listitem [ref=e214]:
+      - strong [ref=e215]: "Ownership clarity:"
+      - text: Each tool team knows exactly what access they have granted and to whom.
+    - listitem [ref=e216]:
+      - strong [ref=e217]: "Independent evolution:"
+      - text: Teams can add new roles, modify permissions, and revoke access without coordinating with the central platform team.
+    - listitem [ref=e218]:
+      - strong [ref=e219]: "Git-based governance:"
+      - text: All policy changes go through pull requests with required reviewer approval (OWNERS.txt), providing full audit history and the ability to revert.
+    - listitem [ref=e220]:
+      - strong [ref=e221]: "Hot-reload:"
+      - text: Policy changes take effect upon merge without service restarts, enabling rapid response to security incidents.
+  - generic [ref=e224]: Figure 5. Comparison of centralized vs. decentralized policy management showing time-to-change, review accuracy, and policy conflicts over six months.
+  - heading "3.5 Progressive Trust Escalation" [level=3] [ref=e225]
+  - paragraph [ref=e226]: "Write operations in critical infrastructure require escalating levels of authorization based on risk assessment:"
+  - table [ref=e227]:
+    - rowgroup [ref=e228]:
+      - row "Tier Authorization Level Duration Use Case Agent Eligibility" [ref=e229]:
+        - columnheader "Tier" [ref=e230]
+        - columnheader "Authorization Level" [ref=e231]
+        - columnheader "Duration" [ref=e232]
+        - columnheader "Use Case" [ref=e233]
+        - columnheader "Agent Eligibility" [ref=e234]
+    - rowgroup [ref=e235]:
+      - row "Standard RBAC Persistent role assignment Indefinite Read operations, diagnostics Yes (read-only)" [ref=e236]:
+        - cell "Standard RBAC" [ref=e237]
+        - cell "Persistent role assignment" [ref=e238]
+        - cell "Indefinite" [ref=e239]
+        - cell "Read operations, diagnostics" [ref=e240]
+        - cell "Yes (read-only)" [ref=e241]
+      - row "JIT/PIM Elevated Time-bound elevation, MFA required Max 8 hours Config changes, maintenance Via playbook only" [ref=e242]:
+        - cell "JIT/PIM Elevated" [ref=e243]
+        - cell "Time-bound elevation, MFA required" [ref=e244]
+        - cell "Max 8 hours" [ref=e245]
+        - cell "Config changes, maintenance" [ref=e246]
+        - cell "Via playbook only" [ref=e247]
+      - row "Multi-Party Approval 2+ approvers, break-glass protocol Single operation Production writes, device access Cannot initiate" [ref=e248]:
+        - cell "Multi-Party Approval" [ref=e249]
+        - cell "2+ approvers, break-glass protocol" [ref=e250]
+        - cell "Single operation" [ref=e251]
+        - cell "Production writes, device access" [ref=e252]
+        - cell "Cannot initiate" [ref=e253]
+  - paragraph [ref=e254]: "Critically, AI agents are structurally excluded from initiating multi-party approval workflows. This design decision reflects a fundamental security principle: non-deterministic actors should never be able to self-authorize high-risk operations, regardless of their functional correctness history."
+  - heading "3.6 Access Control Matrix" [level=3] [ref=e255]
+  - paragraph [ref=e256]: "The following matrix defines the complete access surface across service categories and actor types:"
+  - generic [ref=e259]: Figure 6. Access control matrix showing permitted operations by actor type across service categories. Higher values indicate greater access (3=full, 2=scoped, 1=read-only, 0=denied).
+  - paragraph [ref=e260]: Table 1 presents the complete access control matrix governing all actor-service interactions in production. The matrix encodes both the permission level (Read/Write) and the authentication mechanism required for each combination, reflecting the principle that non-deterministic actors require strictly narrower permissions than their deterministic counterparts operating on the same infrastructure.
+  - generic [ref=e261]:
+    - 'table "Table 1. Production Access Control Matrix: Actor Types vs. Service Categories" [ref=e262]':
+      - caption [ref=e263]: "Table 1. Production Access Control Matrix: Actor Types vs. Service Categories"
+      - rowgroup [ref=e264]:
+        - row "Actor Telemetry & Observability Corporate & DevOps Services Platform Core Services Device via Proxy Direct Device Access" [ref=e265]:
+          - columnheader "Actor" [ref=e266]
+          - columnheader "Telemetry & Observability" [ref=e267]
+          - columnheader "Corporate & DevOps Services" [ref=e268]
+          - columnheader "Platform Core Services" [ref=e269]
+          - columnheader "Device via Proxy" [ref=e270]
+          - columnheader "Direct Device Access" [ref=e271]
+      - rowgroup [ref=e272]:
+        - row "Human Operator (Deterministic intent) R STS MI + RBAC W STS MI + RBAC R STS MI + RBAC W STS MI + RBAC R AME/SAW W AME/SAW + JIT R AME/SAW + JIT W AME/SAW + JIT R BREAKGLASS W BREAKGLASS" [ref=e273]:
+          - cell "Human Operator (Deterministic intent)" [ref=e274]:
+            - text: Human Operator
+            - text: (Deterministic intent)
+          - cell "R STS MI + RBAC W STS MI + RBAC" [ref=e275]:
+            - text: R STS MI + RBAC
+            - text: W STS MI + RBAC
+          - cell "R STS MI + RBAC W STS MI + RBAC" [ref=e276]:
+            - text: R STS MI + RBAC
+            - text: W STS MI + RBAC
+          - cell "R AME/SAW W AME/SAW + JIT" [ref=e277]:
+            - text: R AME/SAW
+            - text: W AME/SAW + JIT
+          - cell "R AME/SAW + JIT W AME/SAW + JIT" [ref=e278]:
+            - text: R AME/SAW + JIT
+            - text: W AME/SAW + JIT
+          - cell "R BREAKGLASS W BREAKGLASS" [ref=e279]:
+            - text: R BREAKGLASS
+            - text: W BREAKGLASS
+        - row "AI Agent (Non-deterministic) R User OBO | Agent MI* W User OBO | Agent MI* R User OBO | Agent MI* W User OBO | Agent MI* R User OBO | Agent MI* W NOT ALLOWED R User OBO | Agent MI* W NOT ALLOWED NOT ALLOWED" [ref=e280]:
+          - cell "AI Agent (Non-deterministic)" [ref=e281]:
+            - text: AI Agent
+            - text: (Non-deterministic)
+          - cell "R User OBO | Agent MI* W User OBO | Agent MI*" [ref=e282]:
+            - text: R User OBO | Agent MI*
+            - text: W User OBO | Agent MI*
+          - cell "R User OBO | Agent MI* W User OBO | Agent MI*" [ref=e283]:
+            - text: R User OBO | Agent MI*
+            - text: W User OBO | Agent MI*
+          - cell "R User OBO | Agent MI* W NOT ALLOWED" [ref=e284]:
+            - text: R User OBO | Agent MI*
+            - text: W NOT ALLOWED
+          - cell "R User OBO | Agent MI* W NOT ALLOWED" [ref=e285]:
+            - text: R User OBO | Agent MI*
+            - text: W NOT ALLOWED
+          - cell "NOT ALLOWED" [ref=e286]
+        - row "Workflow Engine (Deterministic systems) R STS MI + RBAC W STS MI + RBAC R STS MI + RBAC W STS MI + RBAC R STS MI + RBAC W STS MI + RBAC R STS MI + RBAC W STS MI + RBAC NOT ALLOWED" [ref=e287]:
+          - cell "Workflow Engine (Deterministic systems)" [ref=e288]:
+            - text: Workflow Engine
+            - text: (Deterministic systems)
+          - cell "R STS MI + RBAC W STS MI + RBAC" [ref=e289]:
+            - text: R STS MI + RBAC
+            - text: W STS MI + RBAC
+          - cell "R STS MI + RBAC W STS MI + RBAC" [ref=e290]:
+            - text: R STS MI + RBAC
+            - text: W STS MI + RBAC
+          - cell "R STS MI + RBAC W STS MI + RBAC" [ref=e291]:
+            - text: R STS MI + RBAC
+            - text: W STS MI + RBAC
+          - cell "R STS MI + RBAC W STS MI + RBAC" [ref=e292]:
+            - text: R STS MI + RBAC
+            - text: W STS MI + RBAC
+          - cell "NOT ALLOWED" [ref=e293]
+    - paragraph [ref=e294]:
+      - strong [ref=e295]: "Legend:"
+      - text: R = Read, W = Write.
+      - strong [ref=e296]: STS MI
+      - text: = Security Token Service with Managed Identity.
+      - strong [ref=e297]: AME/SAW
+      - text: = Azure Managed Environment / Secure Admin Workstation.
+      - strong [ref=e298]: JIT
+      - text: = Just-In-Time elevation.
+      - strong [ref=e299]: OBO
+      - text: = On-Behalf-Of delegation.
+      - strong [ref=e300]: "*"
+      - text: = Subject to per-tool RBAC with OWNERS.txt governance and parameter-level constraints.
+      - strong [ref=e301]: BREAKGLASS
+      - text: = Emergency-only access requiring human approval chain.
+  - paragraph [ref=e302]: "The matrix reveals a critical asymmetry: while deterministic workflow engines inherit the full access surface of their service identities (trusted by design), non-deterministic AI agents face progressive restrictions as operations move toward higher-impact service tiers. Specifically, agents are categorically denied write access to Physical Fabric Core services and all device interactions, regardless of the delegating human's privilege level. This represents the fundamental security boundary: an agent's non-determinism disqualifies it from operations where incorrect writes could cause physical infrastructure damage."
+  - heading "4. Implementation" [level=2] [ref=e303]
+  - heading "4.1 Runtime Authorization Engine" [level=3] [ref=e304]
+  - paragraph [ref=e305]: "The authorization engine evaluates every tool invocation against the five-layer hierarchy in real-time. The evaluation process follows a deny-first model:"
+  - list [ref=e306]:
+    - listitem [ref=e307]: Validate the compound identity (user token freshness, agent MI validity)
+    - listitem [ref=e308]: Check global RBAC membership (security group verification)
+    - listitem [ref=e309]: Resolve tool-level permissions (is this tool accessible to this role?)
+    - listitem [ref=e310]: Evaluate function-level access (is this specific operation permitted?)
+    - listitem [ref=e311]: Apply parameter-level constraints (do input values match deny/allow patterns?)
+    - listitem [ref=e312]: Verify execution context (playbook scope, incident association, time window)
+  - paragraph [ref=e313]: Any layer can deny the request. The engine returns the most specific denial reason to aid debugging while not leaking information about the broader permission structure.
+  - heading "4.2 Agent-Specific Security Controls" [level=3] [ref=e314]
+  - paragraph [ref=e315]: "Beyond the RBAC framework, agents are subject to additional runtime controls:"
+  - list [ref=e316]:
+    - listitem [ref=e317]:
+      - strong [ref=e318]: "Tool Scoping:"
+      - text: Each agent declaration explicitly enumerates its permitted tool set. Tools not listed are invisible to the agent's LLM context.
+    - listitem [ref=e319]:
+      - strong [ref=e320]: "Permission Boundaries:"
+      - text: Maximum permission sets that cannot be exceeded regardless of role inheritance.
+    - listitem [ref=e321]:
+      - strong [ref=e322]: "Human-in-the-Loop Gates:"
+      - text: Configurable checkpoints where agent execution pauses pending human review.
+    - listitem [ref=e323]:
+      - strong [ref=e324]: "Rate Limiting:"
+      - text: Per-agent, per-tool operation quotas preventing runaway execution.
+    - listitem [ref=e325]:
+      - strong [ref=e326]: "Output Validation:"
+      - text: Post-execution verification that agent actions match expected patterns before committing changes.
+  - heading "4.3 Bring-Your-Own-Roles (BYOR)" [level=3] [ref=e327]
+  - paragraph [ref=e328]: "Onboarding teams create custom roles that span multiple tools, tailored to their operational scenarios:"
+  - generic [ref=e329]: "# Custom cross-tool role submitted via PR NetOps-DRI: description: \"Network operations DRI role\" addedBy: netops-team@example.org toolPermissions: TopologyService: inherits: Topology-Reader extra: [\"Topology-GetInterfaceStatus\"] parameters: datacenterName: allowPattern: \"^(dc1|dc2|dc3)-.*$\" DeviceProxy: role: DeviceProxy-Viewer WorkflowEngine: role: Workflow-Reader"
+  - paragraph [ref=e330]: "The Bring-Your-Own-Roles model enables teams to compose fine-grained access profiles without requiring platform team intervention. Role definitions follow the same PR-based governance workflow: submitted via pull request, reviewed by tool-owning teams (enforced through OWNERS.txt), and activated upon merge."
+  - heading "4.4 Identity Binding and Assignment" [level=3] [ref=e331]
+  - paragraph [ref=e332]: "Custom roles are bound to identities through a flexible assignment mechanism supporting multiple identity types:"
+  - generic [ref=e333]: "roleAssignments: NetOps-DRI: assignedTo: - type: securityGroup id: \"sg-netops-dri\" - type: managedIdentity id: \"mi-netops-agent\" - type: agent id: \"netops-dri-agent\" - type: playbook id: \"incident-netops-*\""
+  - paragraph [ref=e334]: This assignment model allows a single role definition to govern access for human operators (via security groups), automated agents (via managed identities), and structured workflows (via playbook identifiers), while each binding type carries its own authorization constraints.
+  - heading "5. Evaluation" [level=2] [ref=e335]
+  - heading "5.1 Deployment Context" [level=3] [ref=e336]
+  - paragraph [ref=e337]: "The system has been deployed in production for eight months, governing access for a fleet of AI agents operating across the following scale:"
+  - list [ref=e338]:
+    - listitem [ref=e339]: 20+ specialized AI agents with distinct operational mandates
+    - listitem [ref=e340]: 60+ system playbooks for structured automation workflows
+    - listitem [ref=e341]: 30+ integrated infrastructure tools and services
+    - listitem [ref=e342]: 123 active human users with varying permission levels
+    - listitem [ref=e343]: 3,558 agent messages and 1,474 playbook executions in the measurement period
+  - heading "5.2 Security Metrics" [level=3] [ref=e344]
+  - generic [ref=e347]: Figure 7. Authorization denial rates by layer over the deployment period. Parameter-level denials dominate, indicating the hierarchy correctly catches overly broad requests at the most specific level. The declining trend shows agents learning their boundaries through reinforcement.
+  - generic [ref=e348]:
+    - generic [ref=e351]: Figure 8. Distribution of access operations by type showing the read-heavy pattern expected from properly constrained agents.
+    - generic [ref=e354]: Figure 9. Privilege escalation attempt outcomes. All 47 detected attempts were blocked at the appropriate authorization layer.
+  - heading "5.3 Operational Impact" [level=3] [ref=e355]
+  - table [ref=e356]:
+    - rowgroup [ref=e357]:
+      - row "Metric Value Notes" [ref=e358]:
+        - columnheader "Metric" [ref=e359]
+        - columnheader "Value" [ref=e360]
+        - columnheader "Notes" [ref=e361]
+    - rowgroup [ref=e362]:
+      - row "Unauthorized write operations 0 Eight months of production deployment" [ref=e363]:
+        - cell "Unauthorized write operations" [ref=e364]
+        - cell "0" [ref=e365]
+        - cell "Eight months of production deployment" [ref=e366]
+      - 'row "Mean authorization latency 3.2ms Per-request overhead, P99: 8.1ms" [ref=e367]':
+        - cell "Mean authorization latency" [ref=e368]
+        - cell "3.2ms" [ref=e369]
+        - 'cell "Per-request overhead, P99: 8.1ms" [ref=e370]'
+      - row "Policy hot-reload time <30s From PR merge to enforcement" [ref=e371]:
+        - cell "Policy hot-reload time" [ref=e372]
+        - cell "<30s" [ref=e373]
+        - cell "From PR merge to enforcement" [ref=e374]
+      - row "Tool team onboarding time 2.1 days Median time from first PR to production" [ref=e375]:
+        - cell "Tool team onboarding time" [ref=e376]
+        - cell "2.1 days" [ref=e377]
+        - cell "Median time from first PR to production" [ref=e378]
+      - row "Agent operations governed daily ~450 Across all 20+ agents" [ref=e379]:
+        - cell "Agent operations governed daily" [ref=e380]
+        - cell "~450" [ref=e381]
+        - cell "Across all 20+ agents" [ref=e382]
+      - row "False denial rate 0.3% Legitimate operations incorrectly blocked" [ref=e383]:
+        - cell "False denial rate" [ref=e384]
+        - cell "0.3%" [ref=e385]
+        - cell "Legitimate operations incorrectly blocked" [ref=e386]
+  - heading "5.4 Decentralization Effectiveness" [level=3] [ref=e387]
+  - generic [ref=e390]: "Figure 10. Tool team onboarding velocity: centralized model (months 1-3) vs. decentralized model (months 4-8). The transition to decentralized ownership reduced median policy change time from 5.3 days to 0.8 days while tripling team onboarding rate."
+  - heading "6. Discussion" [level=2] [ref=e391]
+  - heading "6.1 Design Tradeoffs" [level=3] [ref=e392]
+  - paragraph [ref=e393]:
+    - strong [ref=e394]: "Expressiveness vs. Complexity:"
+    - text: The five-layer hierarchy provides fine-grained control but increases policy authoring complexity. We mitigate this through role inheritance (the
+    - code [ref=e395]: inherits
+    - text: keyword) and sensible defaults (deny-all for unspecified operations).
+  - paragraph [ref=e396]:
+    - strong [ref=e397]: "Autonomy vs. Safety:"
+    - text: "Restricting agents to read-only by default limits their ability to autonomously resolve incidents requiring configuration changes. We address this through the playbook escalation path: agents can recommend actions that are then executed by pre-approved, deterministic playbooks with scoped write access."
+  - paragraph [ref=e398]:
+    - strong [ref=e399]: "Decentralization vs. Consistency:"
+    - text: Allowing tool teams to independently define policies risks inconsistent security postures. We enforce consistency through schema validation, mandatory fields (owner, tenantRestrictions), and platform-level policy guardrails that tool teams cannot override.
+  - heading "6.2 Lessons Learned" [level=3] [ref=e400]
+  - list [ref=e401]:
+    - listitem [ref=e402]:
+      - strong [ref=e403]: "Agents will test boundaries:"
+      - text: LLM agents regularly attempt to invoke tools outside their declared scope due to hallucinated capabilities. Deny-by-default is essential, not optional.
+    - listitem [ref=e404]:
+      - strong [ref=e405]: "Parameter-level control is critical:"
+      - text: Function-level access alone is insufficient. An agent with access to "query devices" but no parameter constraints could enumerate the entire infrastructure topology. Deny patterns on sensitive parameters are the most frequently triggered control.
+    - listitem [ref=e406]:
+      - strong [ref=e407]: "Human-readable policies matter:"
+      - text: YAML-based policies that tool teams can read and reason about are more effective than opaque policy engines. Teams that understand their policies maintain them better.
+    - listitem [ref=e408]:
+      - strong [ref=e409]: "Audit trails enable trust:"
+      - text: The immutable audit trail connecting every agent action to a delegating human has been instrumental in building organizational confidence in autonomous operations.
+    - listitem [ref=e410]:
+      - strong [ref=e411]: "Standard tooling reduces friction:"
+      - text: Using Git PRs and OWNERS.txt for governance instead of custom approval systems eliminated the primary adoption barrier. Engineers already know how to submit and review pull requests.
+  - heading "6.3 Limitations" [level=3] [ref=e412]
+  - paragraph [ref=e413]: Our current architecture has several limitations. First, the compound identity model requires the delegating human to have an active session, which can create availability challenges for agents handling after-hours incidents. Second, the parameter-level deny patterns use regex matching, which cannot express all semantic constraints (for example, restricting operations to devices currently in maintenance windows). Third, multi-agent collaboration scenarios where one agent's output feeds another agent's input create transitive trust challenges not fully addressed by our per-agent policy model. Fourth, the decentralized model assumes tool teams have sufficient security expertise to author correct policies, which requires ongoing education and tooling support.
+  - heading "7. Related Work" [level=2] [ref=e414]
+  - paragraph [ref=e415]: Access control for AI systems is an emerging research area. Anthropic's "Claude's Character" document introduces the concept of "tool use policies" but does not address multi-tenant production deployments. Google's Secure AI Framework (SAIF) provides security principles for AI systems but focuses on model integrity rather than runtime access control. Microsoft's AI Red Teaming research addresses adversarial testing but not architectural access control patterns.
+  - paragraph [ref=e416]: In the broader RBAC literature, attribute-based access control (ABAC) and policy-based access control (PBAC) systems share our goal of fine-grained authorization. Our contribution extends these models specifically for non-deterministic actors, introducing the compound identity concept and progressive trust escalation not found in traditional ABAC/PBAC frameworks.
+  - paragraph [ref=e417]: The OWASP Top 10 for LLM Applications (2025) provides the most comprehensive threat taxonomy for LLM-based systems. Our architecture directly addresses threats LLM01 (Prompt Injection), LLM02 (Sensitive Information Disclosure), LLM06 (Excessive Agency), and LLM10 (Unbounded Consumption) through specific architectural controls.
+  - paragraph [ref=e418]: Recent work on AI agent frameworks, including ReAct, Toolformer, and generative agent architectures, focuses on capability and reasoning patterns but largely defers security considerations to deployment environments. Our work fills this gap by providing the authorization infrastructure that makes safe deployment possible.
+  - heading "8. Conclusion" [level=2] [ref=e419]
+  - paragraph [ref=e420]: Deploying AI agents in critical infrastructure requires fundamentally rethinking access control assumptions. Traditional RBAC models designed for deterministic actors are insufficient for governing non-deterministic AI agents that reason, adapt, and can be adversarially manipulated. Our decentralized granular access control architecture addresses this gap through compound identity binding, five-layer permission hierarchies, decentralized policy ownership, and progressive trust escalation.
+  - paragraph [ref=e421]: "Eight months of production deployment governing over 20 agents across critical cloud infrastructure validates the approach: zero unauthorized writes, sub-4ms authorization latency, and rapid team onboarding demonstrate that security and operational velocity are not mutually exclusive. The key insight is that AI agents should never be granted independent authority. Instead, their actions must always be bound to delegated human authority, constrained by layered policies, and subject to continuous verification."
+  - paragraph [ref=e422]: As AI agents become ubiquitous in infrastructure operations, the principles and patterns presented in this work provide a foundation for secure, scalable, and auditable autonomous operations.
+  - heading "References" [level=2] [ref=e423]
+  - list [ref=e424]:
+    - listitem [ref=e425]: OWASP Foundation. "OWASP Top 10 for LLM Applications 2025." OWASP, 2025.
+    - listitem [ref=e426]: Sandhu, R., Coyne, E.J., Feinstein, H.L., and Youman, C.E. "Role-Based Access Control Models." IEEE Computer, 29(2):38-47, 1996.
+    - listitem [ref=e427]: Hu, V.C., Ferraiolo, D., Kuhn, R., et al. "Guide to Attribute Based Access Control (ABAC) Definition and Considerations." NIST Special Publication 800-162, 2014.
+    - listitem [ref=e428]: Rose, S., Borchert, O., Mitchell, S., and Connelly, S. "Zero Trust Architecture." NIST Special Publication 800-207, 2020.
+    - listitem [ref=e429]: Anthropic. "Claude's Character." Anthropic Research, 2024.
+    - listitem [ref=e430]: Google. "Secure AI Framework (SAIF)." Google Security, 2023.
+    - listitem [ref=e431]: Microsoft AI Red Team. "Lessons From Red Teaming 100 Generative AI Products." arXiv:2501.07238, 2025.
+    - listitem [ref=e432]: "Yao, S., Zhao, J., Yu, D., et al. \"ReAct: Synergizing Reasoning and Acting in Language Models.\" ICLR, 2023."
+    - listitem [ref=e433]: "Schick, T., Dwivedi-Yu, J., Dessi, R., et al. \"Toolformer: Language Models Can Teach Themselves to Use Tools.\" NeurIPS, 2023."
+    - listitem [ref=e434]: "Park, J.S., O'Brien, J.C., Cai, C.J., et al. \"Generative Agents: Interactive Simulacra of Human Behavior.\" UIST, 2023."
+    - listitem [ref=e435]: "Greshake, K., Abdelnabi, S., Mishra, S., et al. \"Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection.\" AISec, 2023."
+    - listitem [ref=e436]: Ferraiolo, D.F., Sandhu, R., Gavrila, S., et al. "Proposed NIST Standard for Role-Based Access Control." ACM TISSEC, 4(3):224-274, 2001.
+    - listitem [ref=e437]: "Xi, Z., Chen, W., Guo, X., et al. \"The Rise and Potential of Large Language Model Based Agents: A Survey.\" arXiv:2309.07864, 2023."
+    - listitem [ref=e438]: Wang, L., Ma, C., Feng, X., et al. "A Survey on Large Language Model based Autonomous Agents." Frontiers of Computer Science, 2024.
+    - listitem [ref=e439]: "Malik, A. \"Autonomous Incident Resolution at Hyperscale: An Agentic AI Architecture for Network Operations.\" arXiv:submit/7688310, 2025."
+  - generic [ref=e440]:
+    - link "GitHub" [ref=e441] [cursor=pointer]:
+      - /url: https://github.com/arun-malik
+    - link "LinkedIn" [ref=e442] [cursor=pointer]:
+      - /url: https://www.linkedin.com/in/malik-arun/
+    - link "ORCID" [ref=e443] [cursor=pointer]:
+      - /url: https://orcid.org/0009-0005-6650-6711
+    - text: © 2026 Arun Malik
+  - button "↑" [ref=e444] [cursor=pointer]
