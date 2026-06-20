@@ -153,9 +153,6 @@
   }
 
   function init() {
-    // Only add share to pages with substantial content (2+ headings)
-    const headings = document.querySelectorAll('h2');
-    if (headings.length < 2) return;
     injectStyles();
     createShareButton();
   }
