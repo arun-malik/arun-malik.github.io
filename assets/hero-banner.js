@@ -1,51 +1,9 @@
-// Hero Banner - consistent placement across all page types
-// Always inserts immediately after the navigation bar (regardless of page structure)
+// Hero Banner - consistent placement on ALL pages
+// Rule: Always insert after the first <nav> element (the site navigation)
+// Every page has a top nav as its first <nav> element.
 
 (function() {
   'use strict';
-
-  function init() {
-    var ogImage = document.querySelector('meta[property="og:image"]');
-    if (!ogImage) return;
-
-    var imageUrl = ogImage.getAttribute('content');
-    if (!imageUrl || imageUrl.includes('og-default')) return;
-
-    // Create hero banner
-    var hero = document.createElement('div');
-    hero.className = 'post-hero-banner';
-
-    // Find the navigation element (handles all page layouts)
-    var nav = document.querySelector('header') ||
-              document.querySelector('nav.blog-nav') ||
-              document.querySelector('nav.nav-bar') ||
-              document.querySelector('nav.site-nav') ||
-              document.querySelector('nav');
-
-    if (!nav) return;
-
-    // Insert banner immediately after nav/header
-    nav.after(hero);
-  }
-
-  // Inject consistent styles
-  function injectStyles() {
-    var style = document.createElement('style');
-    style.id = 'hero-banner-styles';
-    style.textContent = [
-      '.post-hero-banner {',
-      '  width: 100%;',
-      '  max-width: 900px;',
-      '  height: 180px;',
-      '  margin: 1.5rem auto 2rem;',
-      '  border-radius: 10px;',
-      '  opacity: 0.9;',
-      '  background: var(--hero-bg, url(' + (document.querySelector('meta[property="og:image"]') || {}).content + ')) center/cover no-repeat;',
-      '}',
-      '@media (max-width: 640px) { .post-hero-banner { height: 120px; border-radius: 0; margin: 0 0 1.5rem; } }'
-    ].join('');
-    document.head.appendChild(style);
-  }
 
   function run() {
     var ogImage = document.querySelector('meta[property="og:image"]');
@@ -55,23 +13,24 @@
 
     // Inject styles
     var style = document.createElement('style');
-    style.textContent = '.post-hero-banner{width:100%;max-width:900px;height:180px;margin:1.5rem auto 2rem;border-radius:10px;opacity:0.9;background:url(' + imageUrl + ') center/cover no-repeat}@media(max-width:640px){.post-hero-banner{height:120px;border-radius:0;margin:0 0 1.5rem}}';
+    style.textContent = '.post-hero-banner{display:block;width:100%;max-width:900px;height:180px;margin:1.5rem auto;border-radius:10px;background:url(' + imageUrl + ') center/cover no-repeat;opacity:0.9}@media(max-width:640px){.post-hero-banner{height:120px;border-radius:0;margin:0 auto 1.5rem}}';
     document.head.appendChild(style);
 
-    // Create banner element
+    // Create banner
     var hero = document.createElement('div');
     hero.className = 'post-hero-banner';
 
-    // Find nav (handles all page structures consistently)
-    var insertPoint = document.querySelector('header') ||
-                      document.querySelector('nav.blog-nav') ||
-                      document.querySelector('nav.nav-bar') ||
-                      document.querySelector('nav') ||
-                      document.querySelector('.blog-header') ||
-                      document.querySelector('h1');
+    // Find the first nav element - this is ALWAYS the site nav bar
+    var nav = document.querySelector('nav');
+    if (!nav) return;
 
-    if (insertPoint) {
-      insertPoint.after(hero);
+    // If nav is inside a <header> wrapper, insert after the header
+    var wrapper = nav.parentElement;
+    if (wrapper && wrapper.tagName === 'HEADER') {
+      wrapper.insertAdjacentElement('afterend', hero);
+    } else {
+      // Nav is a direct child of body or a container - insert after nav
+      nav.insertAdjacentElement('afterend', hero);
     }
   }
 
