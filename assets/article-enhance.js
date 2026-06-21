@@ -429,44 +429,51 @@
 
   // --- Collapsible References ---
   function makeReferencesCollapsible() {
-    // Find references sections (various formats across pages)
-    var refSections = article.querySelectorAll('.references, .ref-list');
-    var refHeadings = article.querySelectorAll('h2');
-
-    // Also find h2 "References" and wrap its content
-    refHeadings.forEach(function(h) {
-      if (!/^references$/i.test(h.textContent.trim())) return;
-      // Collect all siblings after this h2 until next h2 or end
-      var elements = [];
-      var sibling = h.nextElementSibling;
-      while (sibling && sibling.tagName !== 'H2') {
-        elements.push(sibling);
-        sibling = sibling.nextElementSibling;
-      }
-      if (elements.length === 0) return;
-
-      var details = document.createElement('details');
-      details.className = 'references-collapsible';
-      var summary = document.createElement('summary');
-      summary.textContent = 'References (' + (elements.length) + ')';
-      details.appendChild(summary);
-
-      h.replaceWith(details);
-      elements.forEach(function(el) { details.appendChild(el); });
-    });
-
-    // Wrap existing .references divs
-    refSections.forEach(function(sec) {
+    // Strategy: find any references section and wrap in <details>
+    // Handles: .references div, .ref-list, or standalone h2 "References"
+    
+    // First: handle .references or .ref-list containers
+    var refContainers = article.querySelectorAll('.references, .ref-list');
+    refContainers.forEach(function(sec) {
       if (sec.closest('details')) return; // already wrapped
-      var items = sec.querySelectorAll('li, p');
+      var items = sec.querySelectorAll('li');
+      var count = items.length || '...';
+      
       var details = document.createElement('details');
       details.className = 'references-collapsible';
       var summary = document.createElement('summary');
-      summary.textContent = 'References (' + items.length + ')';
+      summary.textContent = 'References (' + count + ')';
       details.appendChild(summary);
       sec.parentNode.insertBefore(details, sec);
+      // Remove the h2 inside if exists
+      var innerH2 = sec.querySelector('h2');
+      if (innerH2) innerH2.remove();
       details.appendChild(sec);
+      sec.style.marginTop = '0.75rem';
     });
+
+    // If no containers found, look for a standalone h2 "References"
+    if (refContainers.length === 0) {
+      var headings = article.querySelectorAll('h2');
+      headings.forEach(function(h) {
+        if (!/^references$/i.test(h.textContent.trim())) return;
+        var elements = [];
+        var sibling = h.nextElementSibling;
+        while (sibling && sibling.tagName !== 'H2') {
+          elements.push(sibling);
+          sibling = sibling.nextElementSibling;
+        }
+        if (elements.length === 0) return;
+
+        var details = document.createElement('details');
+        details.className = 'references-collapsible';
+        var summary = document.createElement('summary');
+        summary.textContent = 'References';
+        details.appendChild(summary);
+        h.replaceWith(details);
+        elements.forEach(function(el) { details.appendChild(el); });
+      });
+    }
   }
 
   // --- Footnote Popovers ---
