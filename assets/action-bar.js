@@ -34,8 +34,10 @@
       '.share-popup.open{display:block}',
       '.share-popup a{display:flex;align-items:center;gap:.6rem;padding:.625rem 1rem;font-size:.8125rem;color:var(--text,#111827);text-decoration:none;cursor:pointer;transition:background .1s;font-family:-apple-system,sans-serif}',
       '.share-popup a:hover{background:var(--bg-secondary,#f9fafb)}',
-      // Hide old meta/date/time elements immediately to prevent flash
+      // Hide old meta/date/time/tags elements immediately to prevent flash
       '.blog-meta{display:none!important}',
+      '.blog-tags{display:none!important}',
+      '.keywords{display:none!important}',
       '.article-meta .article-date{display:none!important}',
       '.article-meta .reading-time{display:none!important}'
     ].join('');
