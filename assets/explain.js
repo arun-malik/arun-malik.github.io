@@ -17,10 +17,7 @@
     var actionRow = document.querySelector('.action-row');
     if (!actionRow) return;
 
-    // Check WebGPU support - hide feature on unsupported devices
-    if (!navigator.gpu) return;
-
-    // Show button (handle GPU errors gracefully at model load time)
+    // Always show - uses transformers.js (WASM/CPU, works on all devices)
     showExplainButton(actionRow);
   }
 
@@ -37,13 +34,11 @@
     picker.className = 'explain-picker';
     picker.innerHTML = [
       '<div class="explain-picker-title">Explain at My Level</div>',
-      '<div class="explain-picker-desc">Powered by a lightweight AI model (SmolLM 135M) running privately in your browser. No data leaves your device. Results may be approximate due to model size limitations.</div>',
+      '<div class="explain-picker-desc">Powered by Qwen2.5-0.5B running privately in your browser via CPU. No GPU needed. No data leaves your device. May take 15-30 seconds to respond.</div>',
       '<button data-level="beginner">Beginner</button>',
       '<button data-level="technical">Technical</button>',
       '<button data-level="leadership">Leadership</button>',
       '<button data-level="nontechnical">Non-Technical</button>',
-      '<div class="explain-picker-divider"></div>',
-      '<button data-level="summary" class="explain-summary-btn">Summarize entire article</button>',
     ].join('');
     picker.style.display = 'none';
     btn.parentElement.style.position = 'relative';
@@ -72,18 +67,6 @@
         CURRENT_LEVEL = this.getAttribute('data-level');
         picker.style.display = 'none';
 
-        // "Summarize entire article" - immediate, no selection needed
-        if (CURRENT_LEVEL === 'summary') {
-          var content = document.querySelector('.article-content') || document.querySelector('article') || document.body;
-          var clone = content.cloneNode(true);
-          clone.querySelectorAll('pre, code, script, style, nav, header, footer, .page-toolbar, .post-hero-banner, .breadcrumb-bar, table').forEach(function(el) { el.remove(); });
-          var fullText = clone.textContent.replace(/\s+/g, ' ').trim();
-          if (fullText.length > 3000) fullText = fullText.substring(0, 3000) + '...';
-          CURRENT_LEVEL = 'technical'; // Use technical level for summary
-          explainContent(fullText, true);
-          return;
-        }
-
         EXPLAIN_MODE = true;
         SELECTED_TEXTS = [];
         btn.classList.add('active');
@@ -99,12 +82,20 @@
       if (document.querySelector('.explain-selection-bar')) return;
       var bar = document.createElement('div');
       bar.className = 'explain-selection-bar';
-      bar.innerHTML = '<span class="selection-count">0 selected</span><button class="selection-explain-btn">Explain Selected</button><button class="selection-clear-btn">Clear</button><button class="selection-exit-btn">Exit</button>';
+      bar.innerHTML = '<span class="selection-count">0 selected</span><button class="selection-explain-btn">Explain Selected</button><button class="selection-summary-btn">Summarize Article</button><button class="selection-clear-btn">Clear</button><button class="selection-exit-btn">Exit</button>';
       document.body.appendChild(bar);
 
       bar.querySelector('.selection-explain-btn').addEventListener('click', function() {
         if (SELECTED_TEXTS.length === 0) { showToast('Click at least one section first'); return; }
         explainContent(SELECTED_TEXTS.join('\n\n'));
+      });
+      bar.querySelector('.selection-summary-btn').addEventListener('click', function() {
+        var content = document.querySelector('.article-content') || document.querySelector('article') || document.body;
+        var clone = content.cloneNode(true);
+        clone.querySelectorAll('pre, code, script, style, nav, header, footer, .page-toolbar, .post-hero-banner, table').forEach(function(el) { el.remove(); });
+        var fullText = clone.textContent.replace(/\s+/g, ' ').trim();
+        if (fullText.length > 3000) fullText = fullText.substring(0, 3000) + '...';
+        explainContent(fullText, true);
       });
       bar.querySelector('.selection-clear-btn').addEventListener('click', function() {
         SELECTED_TEXTS = [];
@@ -210,42 +201,39 @@
 
     if (!MODEL_LOADED) {
       try {
-        content.innerHTML = '<div class="explain-loading">Loading AI model (~300MB, one-time download)...</div>';
-        var webllm = await import('https://esm.run/@mlc-ai/web-llm');
-        ENGINE = await webllm.CreateMLCEngine('SmolLM2-135M-Instruct-q4f16_1-MLC', {
-          initProgressCallback: function(progress) {
-            content.innerHTML = '<div class="explain-loading">' + progress.text + '</div>';
+        content.innerHTML = '<div class="explain-loading">Loading AI model (~100MB, runs on CPU, one-time download)...</div>';
+        var transformers = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3');
+        ENGINE = await transformers.pipeline('text-generation', 'onnx-community/Qwen2.5-0.5B-Instruct', {
+          dtype: 'q4',
+          device: 'wasm',
+          progress_callback: function(progress) {
+            if (progress.status === 'downloading') {
+              var pct = progress.progress ? Math.round(progress.progress) + '%' : '';
+              content.innerHTML = '<div class="explain-loading">Downloading model... ' + pct + '</div>';
+            } else if (progress.status === 'loading') {
+              content.innerHTML = '<div class="explain-loading">Loading model into memory...</div>';
+            }
           }
         });
         MODEL_LOADED = true;
       } catch (err) {
-        content.innerHTML = '<div class="explain-error">Could not load AI model.<br><br><small>This feature requires a browser with WebGPU support and a compatible GPU. Try Chrome or Edge on a desktop/laptop with a dedicated GPU.<br><br>Error: ' + (err.message || err) + '</small></div>';
+        content.innerHTML = '<div class="explain-error">Could not load AI model.<br><br><small>Error: ' + (err.message || err) + '</small></div>';
         return;
       }
     }
 
-    content.innerHTML = '<div class="explain-loading">Thinking...</div>';
+    content.innerHTML = '<div class="explain-loading">Thinking (may take 15-30 seconds)...</div>';
 
     try {
-      var messages = [
-        { role: 'system', content: isSummary ? 'Summarize the following article in 5-7 concise bullet points. Focus on the key arguments, evidence, and practical takeaways.' : levelPrompt[CURRENT_LEVEL] },
-        { role: 'user', content: (isSummary ? 'Summarize this article:\n\n' : 'Explain this:\n\n') + text }
-      ];
+      var systemPrompt = isSummary ? 'Summarize in 5-7 bullet points. Focus on key arguments and takeaways.' : levelPrompt[CURRENT_LEVEL];
+      var prompt = '<|im_start|>system\n' + systemPrompt + '<|im_end|>\n<|im_start|>user\n' + (isSummary ? 'Summarize:\n\n' : 'Explain:\n\n') + text + '<|im_end|>\n<|im_start|>assistant\n';
 
-      var response = await ENGINE.chat.completions.create({
-        messages: messages,
-        max_tokens: 500,
-        temperature: 0.7,
-        stream: true
-      });
-
-      content.innerHTML = '';
-      for await (var chunk of response) {
-        var delta = chunk.choices[0].delta.content || '';
-        content.innerHTML += delta.replace(/\n/g, '<br>');
-      }
+      var output = await ENGINE(prompt, { max_new_tokens: 300, temperature: 0.7, do_sample: true });
+      var result = output[0].generated_text;
+      var assistantPart = result.split('<|im_start|>assistant\n').pop().split('<|im_end|>')[0];
+      content.innerHTML = assistantPart.replace(/\n/g, '<br>');
     } catch (err) {
-      content.innerHTML = '<div class="explain-error">Error generating explanation: ' + err.message + '</div>';
+      content.innerHTML = '<div class="explain-error">Error: ' + (err.message || err) + '</div>';
     }
   }
 
@@ -279,6 +267,8 @@
       '.selection-count{color:var(--text-secondary,#6b7280);min-width:70px}',
       '.selection-explain-btn{background:var(--accent,#2563eb);color:#fff;border:none;border-radius:5px;padding:0.375rem 0.75rem;font-size:0.8125rem;cursor:pointer;font-family:inherit;font-weight:500}',
       '.selection-explain-btn:hover{opacity:0.9}',
+      '.selection-summary-btn{background:none;border:1px solid var(--accent,#2563eb);color:var(--accent,#2563eb);border-radius:5px;padding:0.375rem 0.75rem;font-size:0.8125rem;cursor:pointer;font-family:inherit;font-weight:500}',
+      '.selection-summary-btn:hover{background:color-mix(in srgb, var(--accent) 8%, transparent)}',
       '.selection-clear-btn,.selection-exit-btn{background:none;border:1px solid var(--border,#e5e7eb);border-radius:5px;padding:0.375rem 0.6rem;font-size:0.75rem;cursor:pointer;color:var(--text-secondary,#6b7280);font-family:inherit}',
       '.selection-clear-btn:hover,.selection-exit-btn:hover{border-color:var(--text-secondary,#6b7280)}',
       '.explain-panel{position:fixed;bottom:1.5rem;right:1.5rem;width:380px;max-height:60vh;background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:10000;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,sans-serif}',
