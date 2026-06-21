@@ -41,7 +41,7 @@
       '.article-meta .article-date{display:none!important}',
       '.article-meta .reading-time{display:none!important}',
       // Print stylesheet
-      '@media print{.page-toolbar,.post-hero-banner,.action-row,.breadcrumb-bar,#back-to-top,#reading-progress,.site-header-wrapper,header,nav,footer,.giscus,.explain-selection-bar,.search-btn{display:none!important}body{max-width:100%!important;padding:1rem!important;font-size:11pt}a{color:inherit!important;text-decoration:underline}.references-collapsible{border:none;padding:0}.references-collapsible[open] summary{display:none}}'
+      '@media print{.page-toolbar,.action-row,.breadcrumb-bar,#back-to-top,#reading-progress,.search-btn,.giscus{display:none!important}body{max-width:100%!important;padding:1rem!important;font-size:11pt;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}a{color:inherit!important;text-decoration:underline}.references-collapsible{border:none;padding:0}.references-collapsible[open] summary{display:none}.post-hero-banner{height:180px!important;margin:1rem auto!important}}'
     ].join('');
     document.head.appendChild(style);
 
