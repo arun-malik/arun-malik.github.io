@@ -1,0 +1,14 @@
+{
+  "name": "Arun Malik",
+  "short_name": "Arun Malik",
+  "description": "Engineering notes on AI agents, distributed systems, and software architecture.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon-48.png", "sizes": "48x48", "type": "image/png" }
+  ]
+}
