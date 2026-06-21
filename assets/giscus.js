@@ -32,9 +32,9 @@
     var script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
     script.setAttribute('data-repo', 'arun-malik/arun-malik.github.io');
-    script.setAttribute('data-repo-id', '');  // Will be auto-detected by Giscus
-    script.setAttribute('data-category', 'General');
-    script.setAttribute('data-category-id', '');  // Will be auto-detected
+    script.setAttribute('data-repo-id', 'R_kgDOOcKxag');
+    script.setAttribute('data-category', 'Announcements');
+    script.setAttribute('data-category-id', 'DIC_kwDOOcKxas4C_k1P');
     script.setAttribute('data-mapping', 'pathname');
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
