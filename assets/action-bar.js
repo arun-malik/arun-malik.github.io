@@ -33,7 +33,11 @@
       '.share-popup{display:none;position:absolute;top:calc(100% + .5rem);left:0;background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:160px;z-index:100;overflow:hidden}',
       '.share-popup.open{display:block}',
       '.share-popup a{display:flex;align-items:center;gap:.6rem;padding:.625rem 1rem;font-size:.8125rem;color:var(--text,#111827);text-decoration:none;cursor:pointer;transition:background .1s;font-family:-apple-system,sans-serif}',
-      '.share-popup a:hover{background:var(--bg-secondary,#f9fafb)}'
+      '.share-popup a:hover{background:var(--bg-secondary,#f9fafb)}',
+      // Hide old meta/date/time elements immediately to prevent flash
+      '.blog-meta{display:none!important}',
+      '.article-meta .article-date{display:none!important}',
+      '.article-meta .reading-time{display:none!important}'
     ].join('');
     document.head.appendChild(style);
 
@@ -80,16 +84,13 @@
     row.appendChild(shareWrap);
     setupShare(shareBtn, popup, shareWrap, pageTitle, pageUrl);
 
-    // Date published pill
-    var dateEl = document.querySelector('.article-date, .post-date, .blog-meta span:first-child');
-    var dateText = dateEl ? dateEl.textContent.trim() : null;
-    if (dateText && /\d{4}/.test(dateText)) {
+    // Date published pill - find date by looking for year pattern in meta elements
+    var dateText = findDate();
+    if (dateText) {
       var dateBadge = document.createElement('span');
       dateBadge.className = 'reading-badge';
       dateBadge.textContent = dateText;
       row.appendChild(dateBadge);
-      // Remove original date from content to avoid duplication
-      if (dateEl) dateEl.style.display = 'none';
     }
 
     // Reading time pill (always show, calculated fresh)
@@ -101,9 +102,9 @@
       row.appendChild(badge);
     }
 
-    // Hide old reading time / date elements in page content
-    document.querySelectorAll('.reading-time, .blog-meta').forEach(function(el) {
-      if (el.textContent.match(/min\s*read/i)) el.style.display = 'none';
+    // Hide old reading time / date / meta elements in page content
+    document.querySelectorAll('.blog-meta, .article-meta .article-date, .article-meta .reading-time').forEach(function(el) {
+      el.style.display = 'none';
     });
 
     toolbar.appendChild(row);
@@ -175,6 +176,27 @@
     clone.querySelectorAll('pre, code, script, style, nav, header, footer, .action-row, .page-toolbar, .post-hero-banner, .breadcrumb-bar').forEach(function(el) { el.remove(); });
     var words = clone.textContent.replace(/\s+/g, ' ').trim().split(' ').length;
     return Math.max(1, Math.round(words / 200));
+  }
+
+  function findDate() {
+    // Try explicit date elements first
+    var dateEl = document.querySelector('.article-date, .post-date');
+    if (dateEl) return dateEl.textContent.trim();
+
+    // Search through blog-meta spans for one containing a year
+    var metaSpans = document.querySelectorAll('.blog-meta span');
+    for (var i = 0; i < metaSpans.length; i++) {
+      var text = metaSpans[i].textContent.trim();
+      if (/\b20\d{2}\b/.test(text) && !/min\s*read/i.test(text)) {
+        return text;
+      }
+    }
+
+    // Try meta tag
+    var pubTime = document.querySelector('meta[property="article:published_time"]');
+    if (pubTime) return pubTime.content.split('T')[0];
+
+    return null;
   }
 
   function setupListen(listenBtn, pauseBtn, stopBtn) {
