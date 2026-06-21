@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "sharp": "^0.35.2"
+  },
+  "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.84"
   }
 }
