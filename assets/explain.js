@@ -40,11 +40,13 @@
     picker.className = 'explain-picker';
     picker.innerHTML = [
       '<div class="explain-picker-title">Explain at My Level</div>',
-      '<div class="explain-picker-desc">Select your perspective. Then click any section or highlight text to get it re-explained by an AI running privately in your browser.</div>',
+      '<div class="explain-picker-desc">Powered by a lightweight AI model (SmolLM 135M) running privately in your browser. No data leaves your device. Results may be approximate due to model size limitations.</div>',
       '<button data-level="beginner">Beginner</button>',
       '<button data-level="technical">Technical</button>',
       '<button data-level="leadership">Leadership</button>',
       '<button data-level="nontechnical">Non-Technical</button>',
+      '<div class="explain-picker-divider"></div>',
+      '<button data-level="summary" class="explain-summary-btn">Summarize entire article</button>',
     ].join('');
     picker.style.display = 'none';
     btn.parentElement.style.position = 'relative';
@@ -71,9 +73,22 @@
       levelBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         CURRENT_LEVEL = this.getAttribute('data-level');
+        picker.style.display = 'none';
+
+        // "Summarize entire article" - immediate, no selection needed
+        if (CURRENT_LEVEL === 'summary') {
+          var content = document.querySelector('.article-content') || document.querySelector('article') || document.body;
+          var clone = content.cloneNode(true);
+          clone.querySelectorAll('pre, code, script, style, nav, header, footer, .page-toolbar, .post-hero-banner, .breadcrumb-bar, table').forEach(function(el) { el.remove(); });
+          var fullText = clone.textContent.replace(/\s+/g, ' ').trim();
+          if (fullText.length > 3000) fullText = fullText.substring(0, 3000) + '...';
+          CURRENT_LEVEL = 'technical'; // Use technical level for summary
+          explainContent(fullText, true);
+          return;
+        }
+
         EXPLAIN_MODE = true;
         SELECTED_TEXTS = [];
-        picker.style.display = 'none';
         btn.classList.add('active');
         btn.textContent = 'Explaining as ' + levelLabel(CURRENT_LEVEL);
         document.body.classList.add('explain-mode');
@@ -180,7 +195,7 @@
     document.querySelectorAll('.explain-selected').forEach(function(el) { el.classList.remove('explain-selected'); });
   }
 
-  async function explainContent(text) {
+  async function explainContent(text, isSummary) {
     var panel = document.querySelector('.explain-panel');
     var content = panel.querySelector('.explain-content');
     panel.style.display = 'block';
@@ -216,8 +231,8 @@
 
     try {
       var messages = [
-        { role: 'system', content: levelPrompt[CURRENT_LEVEL] },
-        { role: 'user', content: 'Explain this:\n\n' + text }
+        { role: 'system', content: isSummary ? 'Summarize the following article in 5-7 concise bullet points. Focus on the key arguments, evidence, and practical takeaways.' : levelPrompt[CURRENT_LEVEL] },
+        { role: 'user', content: (isSummary ? 'Summarize this article:\n\n' : 'Explain this:\n\n') + text }
       ];
 
       var response = await ENGINE.chat.completions.create({
@@ -259,6 +274,8 @@
       '.explain-picker-desc{font-size:0.75rem;color:var(--text-secondary,#6b7280);padding:0.25rem 0.5rem 0.5rem;line-height:1.4;border-bottom:1px solid var(--border,#e5e7eb);margin-bottom:0.375rem}',
       '.explain-picker button{display:block;width:100%;text-align:left;padding:0.5rem 0.75rem;border:none;background:none;font-size:0.8125rem;color:var(--text,#111827);cursor:pointer;border-radius:4px;font-family:-apple-system,sans-serif}',
       '.explain-picker button:hover{background:var(--bg-secondary,#f9fafb);color:var(--accent,#2563eb)}',
+      '.explain-picker-divider{height:1px;background:var(--border,#e5e7eb);margin:0.375rem 0}',
+      '.explain-summary-btn{font-style:italic;opacity:0.85}',
       '.explain-mode p:hover,.explain-mode li:hover,.explain-mode blockquote:hover,.explain-mode h2:hover,.explain-mode h3:hover{outline:2px dashed var(--accent,#2563eb);outline-offset:4px;border-radius:4px;cursor:pointer}',
       '.explain-selected{outline:2px solid var(--accent,#2563eb)!important;outline-offset:4px;border-radius:4px;background:color-mix(in srgb, var(--accent,#2563eb) 6%, transparent)}',
       '.explain-selection-bar{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:0.5rem 1rem;display:flex;gap:0.75rem;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:9999;font-family:-apple-system,sans-serif;font-size:0.8125rem}',
