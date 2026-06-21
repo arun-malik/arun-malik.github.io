@@ -45,8 +45,9 @@
       .then(function(r) { return r.text(); })
       .then(function(svgText) {
         hero.innerHTML = makeThemeAware(svgText);
-        // Re-apply on theme change
+        // Re-apply on theme change (only if not owned by dynamic art)
         var observer = new MutationObserver(function() {
+          if (hero.getAttribute('data-dynamic')) return;
           hero.innerHTML = makeThemeAware(svgText);
         });
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });

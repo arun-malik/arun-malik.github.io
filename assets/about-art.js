@@ -8,6 +8,9 @@
     var hero = document.querySelector('.post-hero-banner');
     if (!hero) return;
 
+    // Mark banner as owned by dynamic art (prevents hero-banner.js from overwriting)
+    hero.setAttribute('data-dynamic', 'true');
+
     // Replace static SVG content with canvas
     hero.innerHTML = '';
     var canvas = document.createElement('canvas');
