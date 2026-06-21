@@ -17,20 +17,20 @@
 
     var btn = document.createElement('button');
     btn.className = 'ab-btn explain-trigger';
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Explain';
-    btn.title = 'Explain any section at your level';
+    btn.textContent = 'Explain';
+    btn.title = 'Re-explain any section at your level using a private AI model running in your browser';
     actionRow.appendChild(btn);
 
     // Level picker dropdown
     var picker = document.createElement('div');
     picker.className = 'explain-picker';
     picker.innerHTML = [
-      '<div class="explain-picker-title">Explain as...</div>',
-      '<button data-level="beginner">🌱 Beginner</button>',
-      '<button data-level="technical">⚙️ Technical</button>',
-      '<button data-level="leadership">📊 Leadership</button>',
-      '<button data-level="nontechnical">💡 Non-Technical</button>',
-      '<div class="explain-picker-hint">Then click any section or select text</div>'
+      '<div class="explain-picker-title">Explain at My Level</div>',
+      '<div class="explain-picker-desc">Select your perspective. Then click any section or highlight text to get it re-explained by an AI running privately in your browser.</div>',
+      '<button data-level="beginner">Beginner</button>',
+      '<button data-level="technical">Technical</button>',
+      '<button data-level="leadership">Leadership</button>',
+      '<button data-level="nontechnical">Non-Technical</button>',
     ].join('');
     picker.style.display = 'none';
     btn.parentElement.style.position = 'relative';
@@ -60,7 +60,7 @@
         EXPLAIN_MODE = true;
         picker.style.display = 'none';
         btn.classList.add('active');
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Explaining as ' + levelLabel(CURRENT_LEVEL);
+        btn.textContent = 'Explaining as ' + levelLabel(CURRENT_LEVEL);
         document.body.classList.add('explain-mode');
         showToast('Click any section or select text to explain');
       });
@@ -112,7 +112,8 @@
     CURRENT_LEVEL = null;
     document.body.classList.remove('explain-mode');
     btn.classList.remove('active');
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Explain';
+    btn.textContent = 'Explain';
+    btn.title = 'Re-explain any section at your level using a private AI model running in your browser';
   }
 
   async function explainContent(text) {
@@ -189,11 +190,11 @@
     var style = document.createElement('style');
     style.textContent = [
       '.explain-trigger.active{border-color:var(--accent,#2563eb);color:var(--accent,#2563eb);background:color-mix(in srgb, var(--accent) 8%, transparent)}',
-      '.explain-picker{position:absolute;top:calc(100% + .5rem);left:0;background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:0.5rem;z-index:200;min-width:180px}',
-      '.explain-picker-title{font-size:0.75rem;font-weight:600;color:var(--text-secondary,#6b7280);padding:0.25rem 0.5rem;text-transform:uppercase;letter-spacing:0.04em}',
+      '.explain-picker{position:absolute;top:calc(100% + .5rem);left:0;background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:0.75rem;z-index:200;min-width:240px}',
+      '.explain-picker-title{font-size:0.875rem;font-weight:600;color:var(--text,#111827);padding:0.25rem 0.5rem}',
+      '.explain-picker-desc{font-size:0.75rem;color:var(--text-secondary,#6b7280);padding:0.25rem 0.5rem 0.5rem;line-height:1.4;border-bottom:1px solid var(--border,#e5e7eb);margin-bottom:0.375rem}',
       '.explain-picker button{display:block;width:100%;text-align:left;padding:0.5rem 0.75rem;border:none;background:none;font-size:0.8125rem;color:var(--text,#111827);cursor:pointer;border-radius:4px;font-family:-apple-system,sans-serif}',
       '.explain-picker button:hover{background:var(--bg-secondary,#f9fafb);color:var(--accent,#2563eb)}',
-      '.explain-picker-hint{font-size:0.7rem;color:var(--text-secondary,#6b7280);padding:0.5rem 0.5rem 0.25rem;border-top:1px solid var(--border,#e5e7eb);margin-top:0.25rem}',
       '.explain-mode p:hover,.explain-mode li:hover,.explain-mode blockquote:hover,.explain-mode h2:hover,.explain-mode h3:hover{outline:2px solid var(--accent,#2563eb);outline-offset:4px;border-radius:4px;cursor:pointer}',
       '.explain-panel{position:fixed;bottom:1.5rem;right:1.5rem;width:380px;max-height:60vh;background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:10000;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,sans-serif}',
       '.explain-panel-header{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1rem;border-bottom:1px solid var(--border,#e5e7eb);font-size:0.8125rem;font-weight:600;color:var(--text,#111827)}',
