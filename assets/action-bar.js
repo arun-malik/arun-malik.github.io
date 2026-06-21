@@ -192,6 +192,16 @@
       }
     }
 
+    // Search through any element with "Preprint" or date-like text
+    var candidates = document.querySelectorAll('.conference, [style*="text-align:center"]');
+    for (var i = 0; i < candidates.length; i++) {
+      var text = candidates[i].textContent;
+      var match = text.match(/((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+20\d{2})/);
+      if (match) return match[1];
+      match = text.match(/(20\d{2}-\d{2}-\d{2})/);
+      if (match) return match[1];
+    }
+
     // Try meta tag
     var pubTime = document.querySelector('meta[property="article:published_time"]');
     if (pubTime) return pubTime.content.split('T')[0];
