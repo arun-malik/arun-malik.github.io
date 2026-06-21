@@ -20,11 +20,8 @@
     // Check WebGPU support - hide feature on unsupported devices
     if (!navigator.gpu) return;
 
-    // Verify GPU adapter is actually available (async check)
-    navigator.gpu.requestAdapter().then(function(adapter) {
-      if (!adapter) return;
-      showExplainButton(actionRow);
-    }).catch(function() {});
+    // Show button (handle GPU errors gracefully at model load time)
+    showExplainButton(actionRow);
   }
 
   function showExplainButton(actionRow) {
