@@ -31,12 +31,12 @@
       return;
     }
 
-    // Show a subtle "Continue reading" prompt
+    // Show a "Continue reading" prompt at top center
     var prompt = document.createElement('div');
-    prompt.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:0.625rem 1rem;font-size:0.8125rem;font-family:-apple-system,sans-serif;color:var(--text-secondary,#6b7280);box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:1000;display:flex;align-items:center;gap:0.75rem;cursor:pointer;transition:opacity 0.3s';
+    prompt.style.cssText = 'position:fixed;top:1.5rem;left:50%;transform:translateX(-50%);background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:0.625rem 1rem;font-size:0.8125rem;font-family:-apple-system,sans-serif;color:var(--text-secondary,#6b7280);box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:1000;display:flex;align-items:center;gap:0.75rem;transition:opacity 0.3s';
     prompt.innerHTML = 'Continue where you left off (' + data.percent + '%)' +
       '<button style="background:var(--accent,#2563eb);color:#fff;border:none;border-radius:4px;padding:0.25rem 0.6rem;font-size:0.75rem;cursor:pointer;font-family:inherit">Resume</button>' +
-      '<button style="background:none;border:none;color:var(--text-secondary,#6b7280);cursor:pointer;font-size:1rem;padding:0 0.25rem">&times;</button>';
+      '<button style="background:none;border:1px solid var(--border,#e5e7eb);border-radius:4px;padding:0.25rem 0.6rem;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text-secondary,#6b7280)">Skip</button>';
 
     document.body.appendChild(prompt);
 
@@ -47,7 +47,6 @@
 
     prompt.querySelector('button:last-child').addEventListener('click', function() {
       prompt.remove();
-      localStorage.removeItem(key);
     });
 
     // Auto-dismiss after 8 seconds
