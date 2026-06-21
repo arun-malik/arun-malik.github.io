@@ -429,13 +429,10 @@
 
   // --- Collapsible References ---
   function makeReferencesCollapsible() {
-    // Strategy: find any references section and wrap in <details>
-    // Handles: .references div, .ref-list, or standalone h2 "References"
-    
-    // First: handle .references or .ref-list containers
-    var refContainers = article.querySelectorAll('.references, .ref-list');
+    // Search the whole document (references may be outside article element)
+    var refContainers = document.querySelectorAll('.references, .ref-list');
     refContainers.forEach(function(sec) {
-      if (sec.closest('details')) return; // already wrapped
+      if (sec.closest('details')) return;
       var items = sec.querySelectorAll('li');
       var count = items.length || '...';
       
@@ -445,16 +442,14 @@
       summary.textContent = 'References (' + count + ')';
       details.appendChild(summary);
       sec.parentNode.insertBefore(details, sec);
-      // Remove the h2 inside if exists
       var innerH2 = sec.querySelector('h2');
       if (innerH2) innerH2.remove();
       details.appendChild(sec);
       sec.style.marginTop = '0.75rem';
     });
 
-    // If no containers found, look for a standalone h2 "References"
     if (refContainers.length === 0) {
-      var headings = article.querySelectorAll('h2');
+      var headings = document.querySelectorAll('h2');
       headings.forEach(function(h) {
         if (!/^references$/i.test(h.textContent.trim())) return;
         var elements = [];
