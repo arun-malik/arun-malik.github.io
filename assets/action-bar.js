@@ -84,12 +84,12 @@
     row.appendChild(shareWrap);
     setupShare(shareBtn, popup, shareWrap, pageTitle, pageUrl);
 
-    // Date published pill - find date by looking for year pattern in meta elements
+    // Date published pill - find date and format consistently
     var dateText = findDate();
     if (dateText) {
       var dateBadge = document.createElement('span');
       dateBadge.className = 'reading-badge';
-      dateBadge.textContent = dateText;
+      dateBadge.textContent = formatDate(dateText);
       row.appendChild(dateBadge);
     }
 
@@ -207,6 +207,35 @@
     if (pubTime) return pubTime.content.split('T')[0];
 
     return null;
+  }
+
+  function formatDate(dateStr) {
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var shortMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // Handle "2026-06-14" format
+    var isoMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (isoMatch) {
+      var m = parseInt(isoMatch[2], 10) - 1;
+      return shortMonths[m] + ' ' + parseInt(isoMatch[3], 10) + ', ' + isoMatch[1];
+    }
+
+    // Handle "June 2026" format - already good but normalize
+    var monthYear = dateStr.match(/^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})$/);
+    if (monthYear) {
+      var idx = months.indexOf(monthYear[1]);
+      return shortMonths[idx] + ' ' + monthYear[2];
+    }
+
+    // Handle "2026-06-14" embedded in longer string
+    var embedded = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (embedded) {
+      var m2 = parseInt(embedded[2], 10) - 1;
+      return shortMonths[m2] + ' ' + parseInt(embedded[3], 10) + ', ' + embedded[1];
+    }
+
+    // Already formatted or unknown - return as-is
+    return dateStr;
   }
 
   function setupListen(listenBtn, pauseBtn, stopBtn) {
