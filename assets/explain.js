@@ -18,10 +18,16 @@
     if (!actionRow) return;
 
     // Check WebGPU support - hide feature on unsupported devices
-    if (!navigator.gpu) {
-      // Don't show button at all on unsupported browsers
-      return;
-    }
+    if (!navigator.gpu) return;
+
+    // Verify GPU adapter is actually available (async check)
+    navigator.gpu.requestAdapter().then(function(adapter) {
+      if (!adapter) return;
+      showExplainButton(actionRow);
+    }).catch(function() {});
+  }
+
+  function showExplainButton(actionRow) {
 
     var btn = document.createElement('button');
     btn.className = 'ab-btn explain-trigger';
@@ -192,16 +198,16 @@
 
     if (!MODEL_LOADED) {
       try {
-        content.innerHTML = '<div class="explain-loading">Downloading AI model (one-time, ~2GB)...<br><small>This enables private, offline explanations.</small></div>';
+        content.innerHTML = '<div class="explain-loading">Loading AI model (~300MB, one-time download)...</div>';
         var webllm = await import('https://esm.run/@mlc-ai/web-llm');
-        ENGINE = await webllm.CreateMLCEngine('Phi-3.5-mini-instruct-q4f16_1-MLC', {
+        ENGINE = await webllm.CreateMLCEngine('SmolLM2-135M-Instruct-q4f16_1-MLC', {
           initProgressCallback: function(progress) {
             content.innerHTML = '<div class="explain-loading">' + progress.text + '</div>';
           }
         });
         MODEL_LOADED = true;
       } catch (err) {
-        content.innerHTML = '<div class="explain-error">Could not load AI model. Your browser may not support WebGPU.<br><small>' + err.message + '</small></div>';
+        content.innerHTML = '<div class="explain-error">Could not load AI model.<br><br><small>This feature requires a browser with WebGPU support and a compatible GPU. Try Chrome or Edge on a desktop/laptop with a dedicated GPU.<br><br>Error: ' + (err.message || err) + '</small></div>';
         return;
       }
     }
