@@ -39,7 +39,9 @@
       '.blog-tags{display:none!important}',
       '.keywords{display:none!important}',
       '.article-meta .article-date{display:none!important}',
-      '.article-meta .reading-time{display:none!important}'
+      '.article-meta .reading-time{display:none!important}',
+      // Print stylesheet
+      '@media print{.page-toolbar,.post-hero-banner,.action-row,.breadcrumb-bar,#back-to-top,#reading-progress,.site-header-wrapper,header,nav,footer,.giscus,.explain-selection-bar,.search-btn{display:none!important}body{max-width:100%!important;padding:1rem!important;font-size:11pt}a{color:inherit!important;text-decoration:underline}.references-collapsible{border:none;padding:0}.references-collapsible[open] summary{display:none}}'
     ].join('');
     document.head.appendChild(style);
 
@@ -85,6 +87,11 @@
     shareWrap.appendChild(popup);
     row.appendChild(shareWrap);
     setupShare(shareBtn, popup, shareWrap, pageTitle, pageUrl);
+
+    // Print button
+    var printBtn = createButton('print', 'Print');
+    printBtn.addEventListener('click', function() { window.print(); });
+    row.appendChild(printBtn);
 
     // Date published pill - find date and format consistently
     var dateText = findDate();

@@ -208,6 +208,66 @@
         color: var(--accent, #2563eb);
       }
       .listen-btn svg { flex-shrink: 0; }
+      /* Collapsible references */
+      .references-collapsible {
+        margin-top: 2rem;
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+      }
+      .references-collapsible summary {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text, #111827);
+        cursor: pointer;
+        user-select: none;
+      }
+      .references-collapsible summary:hover { color: var(--accent, #2563eb); }
+      /* Footnote tooltips */
+      .footnote-tooltip {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-secondary, #1e293b);
+        color: var(--text, #f1f5f9);
+        border: 1px solid var(--border, #334155);
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.75rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 90vw;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 1000;
+        pointer-events: none;
+        font-weight: normal;
+        font-style: normal;
+        text-align: left;
+      }
+      sup:hover .footnote-tooltip,
+      .footnote-ref:hover .footnote-tooltip { display: block; }
+      /* Link preview tooltip */
+      .link-preview-tooltip {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 0;
+        background: var(--bg, #fff);
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        width: 280px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        z-index: 1000;
+        pointer-events: none;
+        color: var(--text, #111827);
+        font-weight: normal;
+      }
+      a:hover .link-preview-tooltip { display: block; }
     `;
     document.head.appendChild(style);
   }
@@ -367,6 +427,125 @@
     });
   }
 
+  // --- Collapsible References ---
+  function makeReferencesCollapsible() {
+    // Find references sections (various formats across pages)
+    var refSections = article.querySelectorAll('.references, .ref-list');
+    var refHeadings = article.querySelectorAll('h2');
+
+    // Also find h2 "References" and wrap its content
+    refHeadings.forEach(function(h) {
+      if (!/^references$/i.test(h.textContent.trim())) return;
+      // Collect all siblings after this h2 until next h2 or end
+      var elements = [];
+      var sibling = h.nextElementSibling;
+      while (sibling && sibling.tagName !== 'H2') {
+        elements.push(sibling);
+        sibling = sibling.nextElementSibling;
+      }
+      if (elements.length === 0) return;
+
+      var details = document.createElement('details');
+      details.className = 'references-collapsible';
+      var summary = document.createElement('summary');
+      summary.textContent = 'References (' + (elements.length) + ')';
+      details.appendChild(summary);
+
+      h.replaceWith(details);
+      elements.forEach(function(el) { details.appendChild(el); });
+    });
+
+    // Wrap existing .references divs
+    refSections.forEach(function(sec) {
+      if (sec.closest('details')) return; // already wrapped
+      var items = sec.querySelectorAll('li, p');
+      var details = document.createElement('details');
+      details.className = 'references-collapsible';
+      var summary = document.createElement('summary');
+      summary.textContent = 'References (' + items.length + ')';
+      details.appendChild(summary);
+      sec.parentNode.insertBefore(details, sec);
+      details.appendChild(sec);
+    });
+  }
+
+  // --- Footnote Popovers ---
+  function createFootnotePopovers() {
+    // Find superscript references like [1], [2], <sup>[1]</sup> etc.
+    var sups = article.querySelectorAll('sup');
+    var refItems = article.querySelectorAll('.ref-list li, .references li, ol.references li');
+
+    sups.forEach(function(sup) {
+      var text = sup.textContent.trim();
+      var match = text.match(/\[?(\d+)\]?/);
+      if (!match) return;
+
+      var refNum = parseInt(match[1], 10);
+      var refEl = refItems[refNum - 1];
+      if (!refEl) return;
+
+      var refText = refEl.textContent.trim().substring(0, 200);
+      sup.style.cursor = 'pointer';
+      sup.style.position = 'relative';
+      sup.setAttribute('data-ref', refText);
+
+      // Create tooltip
+      var tooltip = document.createElement('span');
+      tooltip.className = 'footnote-tooltip';
+      tooltip.textContent = refText;
+      sup.appendChild(tooltip);
+    });
+
+    // Also handle inline [1] style references
+    var walker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+    var textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+    textNodes.forEach(function(node) {
+      if (node.parentElement.closest('pre, code, .footnote-tooltip, sup, a')) return;
+      var text = node.textContent;
+      if (!/\[\d+\]/.test(text)) return;
+
+      var span = document.createElement('span');
+      span.innerHTML = text.replace(/\[(\d+)\]/g, function(match, num) {
+        var idx = parseInt(num, 10) - 1;
+        var refEl = refItems[idx];
+        var refText = refEl ? refEl.textContent.trim().substring(0, 200) : '';
+        if (!refText) return match;
+        return '<sup class="footnote-ref" style="cursor:pointer;position:relative;color:var(--accent,#2563eb)">' + match + '<span class="footnote-tooltip">' + refText + '</span></sup>';
+      });
+      node.parentNode.replaceChild(span, node);
+    });
+  }
+
+  // --- Link Previews (internal links) ---
+  function createLinkPreviews() {
+    if (typeof SERIES_DATA === 'undefined' && typeof STANDALONE_POSTS === 'undefined') return;
+
+    var allPosts = [];
+    if (typeof SERIES_DATA !== 'undefined') {
+      SERIES_DATA.forEach(function(s) {
+        s.posts.forEach(function(p) { allPosts.push(p); });
+      });
+    }
+    if (typeof STANDALONE_POSTS !== 'undefined') {
+      STANDALONE_POSTS.forEach(function(p) { allPosts.push(p); });
+    }
+
+    var links = article.querySelectorAll('a[href^="/"]');
+    links.forEach(function(link) {
+      var href = link.getAttribute('href');
+      var post = allPosts.find(function(p) { return p.url === href; });
+      if (!post) return;
+
+      link.style.position = 'relative';
+      var preview = document.createElement('span');
+      preview.className = 'link-preview-tooltip';
+      preview.innerHTML = '<strong>' + post.title + '</strong><br><span style="opacity:0.7">' + (post.excerpt || '').substring(0, 120) + '</span>';
+      link.appendChild(preview);
+    });
+  }
+
   // Initialize
   function init() {
     if (!hasContent) return;
@@ -376,6 +555,9 @@
     createBackToTop();
     addCopyButtons();
     loadHighlightJS();
+    makeReferencesCollapsible();
+    createFootnotePopovers();
+    createLinkPreviews();
   }
 
   if (document.readyState === 'loading') {
