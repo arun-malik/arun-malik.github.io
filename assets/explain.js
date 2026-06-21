@@ -11,9 +11,17 @@
   var EXPLAIN_MODE = false;
 
   // Add explain button to action bar
+  var SELECTED_TEXTS = [];
+
   function init() {
     var actionRow = document.querySelector('.action-row');
     if (!actionRow) return;
+
+    // Check WebGPU support - hide feature on unsupported devices
+    if (!navigator.gpu) {
+      // Don't show button at all on unsupported browsers
+      return;
+    }
 
     var btn = document.createElement('button');
     btn.className = 'ab-btn explain-trigger';
@@ -58,23 +66,68 @@
         e.stopPropagation();
         CURRENT_LEVEL = this.getAttribute('data-level');
         EXPLAIN_MODE = true;
+        SELECTED_TEXTS = [];
         picker.style.display = 'none';
         btn.classList.add('active');
         btn.textContent = 'Explaining as ' + levelLabel(CURRENT_LEVEL);
         document.body.classList.add('explain-mode');
-        showToast('Click any section or select text to explain');
+        showSelectionBar();
+        showToast('Click sections to select them, then press "Explain Selected"');
       });
     });
 
-    // Event: click on content in explain mode
+    // Selection bar (shows count + explain button)
+    function showSelectionBar() {
+      if (document.querySelector('.explain-selection-bar')) return;
+      var bar = document.createElement('div');
+      bar.className = 'explain-selection-bar';
+      bar.innerHTML = '<span class="selection-count">0 selected</span><button class="selection-explain-btn">Explain Selected</button><button class="selection-clear-btn">Clear</button><button class="selection-exit-btn">Exit</button>';
+      document.body.appendChild(bar);
+
+      bar.querySelector('.selection-explain-btn').addEventListener('click', function() {
+        if (SELECTED_TEXTS.length === 0) { showToast('Click at least one section first'); return; }
+        explainContent(SELECTED_TEXTS.join('\n\n'));
+      });
+      bar.querySelector('.selection-clear-btn').addEventListener('click', function() {
+        SELECTED_TEXTS = [];
+        document.querySelectorAll('.explain-selected').forEach(function(el) { el.classList.remove('explain-selected'); });
+        updateSelectionCount();
+      });
+      bar.querySelector('.selection-exit-btn').addEventListener('click', function() {
+        exitExplainMode(btn);
+      });
+    }
+
+    function updateSelectionCount() {
+      var count = document.querySelector('.selection-count');
+      if (count) count.textContent = SELECTED_TEXTS.length + ' selected';
+    }
+
+    function removeSelectionBar() {
+      var bar = document.querySelector('.explain-selection-bar');
+      if (bar) bar.remove();
+      document.querySelectorAll('.explain-selected').forEach(function(el) { el.classList.remove('explain-selected'); });
+    }
+
+    // Event: click on content in explain mode (multi-select)
     document.addEventListener('click', function(e) {
       if (!EXPLAIN_MODE) return;
-      if (e.target.closest('.explain-panel, .explain-picker, .explain-trigger, .action-row')) return;
+      if (e.target.closest('.explain-panel, .explain-picker, .explain-trigger, .action-row, .explain-selection-bar')) return;
 
       var target = e.target.closest('p, li, blockquote, h2, h3, td, .abstract, figcaption');
       if (target) {
         e.preventDefault();
-        explainContent(target.textContent.trim());
+        if (target.classList.contains('explain-selected')) {
+          // Deselect
+          target.classList.remove('explain-selected');
+          var text = target.textContent.trim();
+          SELECTED_TEXTS = SELECTED_TEXTS.filter(function(t) { return t !== text; });
+        } else {
+          // Select
+          target.classList.add('explain-selected');
+          SELECTED_TEXTS.push(target.textContent.trim());
+        }
+        updateSelectionCount();
       }
     });
 
@@ -110,10 +163,15 @@
   function exitExplainMode(btn) {
     EXPLAIN_MODE = false;
     CURRENT_LEVEL = null;
+    SELECTED_TEXTS = [];
     document.body.classList.remove('explain-mode');
     btn.classList.remove('active');
     btn.textContent = 'Explain';
     btn.title = 'Re-explain any section at your level using a private AI model running in your browser';
+    // Clean up
+    var bar = document.querySelector('.explain-selection-bar');
+    if (bar) bar.remove();
+    document.querySelectorAll('.explain-selected').forEach(function(el) { el.classList.remove('explain-selected'); });
   }
 
   async function explainContent(text) {
@@ -195,7 +253,14 @@
       '.explain-picker-desc{font-size:0.75rem;color:var(--text-secondary,#6b7280);padding:0.25rem 0.5rem 0.5rem;line-height:1.4;border-bottom:1px solid var(--border,#e5e7eb);margin-bottom:0.375rem}',
       '.explain-picker button{display:block;width:100%;text-align:left;padding:0.5rem 0.75rem;border:none;background:none;font-size:0.8125rem;color:var(--text,#111827);cursor:pointer;border-radius:4px;font-family:-apple-system,sans-serif}',
       '.explain-picker button:hover{background:var(--bg-secondary,#f9fafb);color:var(--accent,#2563eb)}',
-      '.explain-mode p:hover,.explain-mode li:hover,.explain-mode blockquote:hover,.explain-mode h2:hover,.explain-mode h3:hover{outline:2px solid var(--accent,#2563eb);outline-offset:4px;border-radius:4px;cursor:pointer}',
+      '.explain-mode p:hover,.explain-mode li:hover,.explain-mode blockquote:hover,.explain-mode h2:hover,.explain-mode h3:hover{outline:2px dashed var(--accent,#2563eb);outline-offset:4px;border-radius:4px;cursor:pointer}',
+      '.explain-selected{outline:2px solid var(--accent,#2563eb)!important;outline-offset:4px;border-radius:4px;background:color-mix(in srgb, var(--accent,#2563eb) 6%, transparent)}',
+      '.explain-selection-bar{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:0.5rem 1rem;display:flex;gap:0.75rem;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:9999;font-family:-apple-system,sans-serif;font-size:0.8125rem}',
+      '.selection-count{color:var(--text-secondary,#6b7280);min-width:70px}',
+      '.selection-explain-btn{background:var(--accent,#2563eb);color:#fff;border:none;border-radius:5px;padding:0.375rem 0.75rem;font-size:0.8125rem;cursor:pointer;font-family:inherit;font-weight:500}',
+      '.selection-explain-btn:hover{opacity:0.9}',
+      '.selection-clear-btn,.selection-exit-btn{background:none;border:1px solid var(--border,#e5e7eb);border-radius:5px;padding:0.375rem 0.6rem;font-size:0.75rem;cursor:pointer;color:var(--text-secondary,#6b7280);font-family:inherit}',
+      '.selection-clear-btn:hover,.selection-exit-btn:hover{border-color:var(--text-secondary,#6b7280)}',
       '.explain-panel{position:fixed;bottom:1.5rem;right:1.5rem;width:380px;max-height:60vh;background:var(--bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:10000;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,sans-serif}',
       '.explain-panel-header{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1rem;border-bottom:1px solid var(--border,#e5e7eb);font-size:0.8125rem;font-weight:600;color:var(--text,#111827)}',
       '.explain-panel-header button{background:none;border:none;font-size:1.25rem;cursor:pointer;color:var(--text-secondary,#6b7280);padding:0 0.25rem}',
