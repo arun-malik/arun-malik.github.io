@@ -80,7 +80,19 @@
     row.appendChild(shareWrap);
     setupShare(shareBtn, popup, shareWrap, pageTitle, pageUrl);
 
-    // Reading time badge
+    // Date published pill
+    var dateEl = document.querySelector('.article-date, .post-date, .blog-meta span:first-child');
+    var dateText = dateEl ? dateEl.textContent.trim() : null;
+    if (dateText && /\d{4}/.test(dateText)) {
+      var dateBadge = document.createElement('span');
+      dateBadge.className = 'reading-badge';
+      dateBadge.textContent = dateText;
+      row.appendChild(dateBadge);
+      // Remove original date from content to avoid duplication
+      if (dateEl) dateEl.style.display = 'none';
+    }
+
+    // Reading time pill (always show, calculated fresh)
     var minutes = calcReadingTime();
     if (minutes) {
       var badge = document.createElement('span');
@@ -88,6 +100,11 @@
       badge.textContent = minutes + ' min read';
       row.appendChild(badge);
     }
+
+    // Hide old reading time / date elements in page content
+    document.querySelectorAll('.reading-time, .blog-meta').forEach(function(el) {
+      if (el.textContent.match(/min\s*read/i)) el.style.display = 'none';
+    });
 
     toolbar.appendChild(row);
 
