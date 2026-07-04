@@ -48,6 +48,7 @@
 
         /* Bio section */
         .bio { margin-bottom: 3rem; }
+        .bio-photo { width: 150px; height: 150px; border-radius: 14px; object-fit: cover; float: right; margin: 0 0 1rem 1.5rem; border: 1px solid var(--border); }
         .bio h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.025em; }
         .bio .subtitle { color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.25rem; }
         .bio p { margin-bottom: 1rem; font-size: 0.9375rem; }
@@ -126,6 +127,7 @@
 
         @media (max-width: 640px) {
             .bio h1 { font-size: 1.5rem; }
+            .bio-photo { width: 110px; height: 110px; }
             .interest-grid { grid-template-columns: 1fr; }
             .timeline-item { flex-direction: column; gap: 0.25rem; }
             .timeline-year { min-width: auto; }
@@ -169,6 +171,7 @@
         <main>
             <!-- Bio -->
             <section class="bio">
+                <img class="bio-photo" src="/assets/profiles/profile05-avatar.jpg" alt="Arun Malik" width="150" height="150">
                 <h1>Arun Malik</h1>
                 <p class="subtitle">Principal Software Engineer · Microsoft Azure Networking</p>
                 <p>I build AI-powered autonomous operations systems for hyperscale cloud infrastructure. My work focuses on multi-agent architectures that can independently detect, diagnose, and resolve network incidents, shifting operations from reactive human-driven response to proactive, self-healing infrastructure.</p>
