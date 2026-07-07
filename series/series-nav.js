@@ -9,20 +9,26 @@
   // Determine current post from URL
   function getCurrentContext() {
     const path = window.location.pathname;
-    // Match /series/{seriesId}/{postSlug}/ pattern
+
+    // 1) Standard /series/{seriesId}/{postSlug}/ pattern
     const match = path.match(/\/series\/([^/]+)\/([^/]+)\/?$/);
-    if (!match) return null;
+    if (match) {
+      const series = SERIES_DATA.find(s => s.id === match[1]);
+      if (series) {
+        const postIndex = series.posts.findIndex(p => p.slug === match[2]);
+        if (postIndex !== -1) return { series, postIndex, post: series.posts[postIndex] };
+      }
+    }
 
-    const seriesId = match[1];
-    const postSlug = match[2];
+    // 2) Fallback: a post that lives elsewhere (e.g. /posts/slug/) but is registered
+    //    in a series via its absolute url. Match on normalized pathname.
+    const norm = path.replace(/\/+$/, '');
+    for (const series of SERIES_DATA) {
+      const postIndex = series.posts.findIndex(p => (p.url || '').replace(/\/+$/, '') === norm);
+      if (postIndex !== -1) return { series, postIndex, post: series.posts[postIndex] };
+    }
 
-    const series = SERIES_DATA.find(s => s.id === seriesId);
-    if (!series) return null;
-
-    const postIndex = series.posts.findIndex(p => p.slug === postSlug);
-    if (postIndex === -1) return null;
-
-    return { series, postIndex, post: series.posts[postIndex] };
+    return null;
   }
 
   // Render series header banner
