@@ -18,6 +18,38 @@ then open `http://localhost:8899/`.
 When you add a post, register it in `posts/index.html`, `feed.xml`, and
 `sitemap.xml`. Series membership is defined in `series/series-data.js`.
 
+## Keep the index pages in sync (do this every time)
+
+The listing pages are hand-maintained static HTML. They do **not** auto-update
+from post files, so they drift unless you update them by hand. After you add,
+rename, retitle, re-slug, re-tag, or change the status of any post or series,
+re-check these three live pages and their source files, and update whatever is
+stale:
+
+- **Home** (`index.html`, live at `https://blog.arunmalik.dev/`): the Featured
+  card, the "Recent Writing" grid (add the new post, newest first), and the
+  "Active Series" grid (add/refresh the series card and its part count/status).
+- **Writing listing** (`posts/index.html`, live at `/posts/`): add or update the
+  post card, its date, excerpt, and tags. If the post belongs to a series, give
+  it a **`Series`** tag like the other series posts carry.
+- **Series** (`series/index.html`, live at `/series/`, plus the specific
+  `series/<id>/index.html`): the series card status (Research / In Progress),
+  the "N parts" / meta line, and the per-post list (link published posts, mark
+  the rest "coming soon"). Update `series/series-data.js` for membership.
+
+Also update the machine-readable indexes: `feed.xml` (new `<entry>`) and
+`sitemap.xml` (new `<url>`).
+
+Consistency checks to run each time:
+
+- **Tags** match across the post page, the writing card, and `series-data.js`.
+- **Titles, slugs, dates, and excerpts** are identical everywhere they appear.
+- **Series status and part counts** agree between `series-data.js`,
+  `series/<id>/index.html`, `series/index.html`, and the home page.
+- **No dangling links**: every URL you reference resolves.
+
+Verify against the running local server (or the live site) before committing.
+
 ## Writing skills (in `skills/`)
 
 Two portable `SKILL.md` skills support the writing workflow. Read the file and
