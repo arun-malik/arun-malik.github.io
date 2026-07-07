@@ -5,10 +5,21 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-06-19T00:00:00Z</updated>
+  <updated>2026-07-06T00:00:00Z</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>AI Comes for the Grunt Work, Not the Judgment</title>
+    <link href="https://blog.arunmalik.dev/posts/ai-comes-for-the-grunt-work/"/>
+    <id>https://blog.arunmalik.dev/posts/ai-comes-for-the-grunt-work/</id>
+    <updated>2026-07-06T00:00:00Z</updated>
+    <summary>If AI writes the code, what's left for the developer? The accountant already lived this when the computer arrived. The role was reshaped rather than erased, then it moved up the org chart via the Jevons paradox. An interactive scrollytelling essay, with a very possible AI bubble in between.</summary>
+    <category term="Essay"/>
+    <category term="Future of Work"/>
+    <category term="AI Bubble"/>
+  </entry>
 
   <entry>
     <title>Why Human-in-the-Loop is Not Optional for Production AI Agents</title>

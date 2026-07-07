@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Future of Work, AI and Jobs, AI Bubble, Jevons Paradox, Compute Revolution, Dot-com Fiber, Automation, Accountants, Knowledge Work">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="AI Comes for the Grunt Work, Not the Judgment">
+    <meta property="og:description" content="If AI writes the code, what's left for the developer? The same answer the accountant found when the computer arrived: not replacement, but a promotion, with a real bubble in between.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/posts/ai-comes-for-the-grunt-work/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-comes-for-the-grunt-work.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Comes for the Grunt Work, Not the Judgment">
+    <meta name="twitter:description" content="AI writes the code now. So is the developer finished? The accountant already answered that question a generation ago.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>AI Comes for the Grunt Work, Not the Judgment - Arun Malik</title>
+    <meta name="description" content="If AI writes the code, what is left for the developer? A scrollytelling essay. The accountant already lived this when the computer arrived: the role was reshaped rather than erased, then it moved up the org chart via the Jevons paradox. A very possible AI bubble sits in the middle of the story.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    </style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article>
+        <header class="blog-header">
+            <h1>AI Comes for the Grunt Work, Not the Judgment</h1>
+            <div class="blog-meta">
+                <span>Arun Malik</span>
+                <span>2026-07-06</span>
+                <span class="tag">Essay</span>
+                <span>Future of Work</span>
+            </div>
+        </header>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+            <p>You type a sentence and the AI writes working code, a whole component while you blink. If you write software, you have felt the jolt: <em>if the machine writes the code, what am I here for?</em> It is the sharpest version of the question hanging over almost every knowledge job right now, from coders to analysts to marketers. "Will AI take my job?"</p>
+
+            <p>I answer it the same way every time, with a story that already ran to the end: the accountant and the computer. Because the fear the developer feels today is the exact fear the accountant felt a generation ago, and we know how that one turned out. So follow the accountant through the last big shift. The visual pins above and moves as you read. Then we'll come back to you, by way of the two questions everyone is really asking: is this an <em>AI bubble</em>, and either way, what does your job become?</p>
+
+            <figure class="journey-fig" style="margin-top:1.5rem">
+              <svg viewBox="0 0 900 330" role="img" aria-label="The whole argument in one chart: over time, rote work falls, human judgment work rises, and total jobs grow, with an entry-level risk">
+                <line x1="80" y1="50" x2="80" y2="280" stroke="var(--border)" stroke-width="1.5"/>
+                <line x1="80" y1="210" x2="640" y2="210" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 4"/>
+                <text x="96" y="305" class="mut" font-size="12">the machine arrives</text>
+                <text x="360" y="305" class="mut" font-size="12" text-anchor="middle">today</text>
+                <text x="640" y="305" class="mut" font-size="12" text-anchor="middle">2030</text>
+                <path d="M96,196 C 280,176 440,108 640,64" fill="none" stroke="var(--c3)" stroke-width="3.5"/>
+                <circle cx="640" cy="64" r="5" fill="var(--c3)"/>
+                <text x="660" y="60" class="lbl" font-size="13" style="fill:var(--c3)">Total jobs &uarr;</text>
+                <text x="660" y="78" class="mut" font-size="11">+78M net by 2030 &middot; WEF</text>
+                <path d="M96,214 C 280,212 440,172 640,132" fill="none" stroke="var(--c1)" stroke-width="3.5"/>
+                <circle cx="640" cy="132" r="5" fill="var(--c1)"/>
+                <text x="660" y="128" class="lbl" font-size="13" style="fill:var(--c1)">Judgment &uarr;</text>
+                <text x="660" y="146" class="mut" font-size="11">+56% AI pay &middot; PwC</text>
+                <path d="M96,188 C 280,206 440,250 640,280" fill="none" stroke="var(--c5)" stroke-width="3" stroke-dasharray="7 5"/>
+                <circle cx="640" cy="280" r="5" fill="var(--c5)"/>
+                <text x="660" y="276" class="lbl" font-size="13" style="fill:var(--c5)">Rote work &darr;</text>
+                <text x="660" y="294" class="mut" font-size="11">what AI takes</text>
+                <circle cx="135" cy="222" r="6" fill="none" stroke="var(--c4)" stroke-width="2.5"/>
+                <path d="M135,228 L135,252" stroke="var(--c4)" stroke-width="1.5"/>
+                <text x="108" y="270" class="mut" font-size="11" style="fill:var(--c4)">entry rung &minus;13% &middot; Stanford</text>
+              </svg>
+              <figcaption class="figcap">The whole argument in one chart. The rote layer falls, the human layer rises, the total grows. The rest of this piece is the <em>why</em>.</figcaption>
+            </figure>
+        </div>
+
+        <!-- ===================== SCROLLYTELLING ===================== -->
+        <div class="scrolly-wrap">
+          <div class="scrolly" data-scrolly>
+            <div class="scrolly-graphic">
+              <div class="scene-stack">
+
+                <!-- Scene 1: the developer + AI writing code -->
+                <div class="scene" data-scene="1">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="An AI writes most of the lines of code in an editor while a developer watches">
+                    <g class="anim d1">
+                      <rect x="66" y="120" width="268" height="180" rx="12" fill="none" stroke="var(--c1)" stroke-width="2.5"/>
+                      <line x1="66" y1="150" x2="334" y2="150" stroke="var(--c1)" stroke-width="1.5" opacity="0.5"/>
+                      <circle cx="84" cy="135" r="4" fill="var(--c5)"/><circle cx="98" cy="135" r="4" fill="var(--c4)"/><circle cx="112" cy="135" r="4" fill="var(--c3)"/>
+                    </g>
+                    <g class="anim d2">
+                      <rect x="92" y="172" width="120" height="8" rx="4" fill="var(--text-muted)" opacity="0.55"/>
+                      <rect x="112" y="192" width="88" height="8" rx="4" fill="var(--text-muted)" opacity="0.55"/>
+                    </g>
+                    <g class="anim d4">
+                      <rect x="112" y="212" width="150" height="8" rx="4" fill="var(--c1)"/>
+                      <rect x="112" y="232" width="112" height="8" rx="4" fill="var(--c1)"/>
+                      <rect x="92" y="252" width="140" height="8" rx="4" fill="var(--c1)"/>
+                      <rect x="112" y="272" width="96" height="8" rx="4" fill="var(--c1)"/>
+                    </g>
+                    <g class="anim d4" transform="translate(300,214)">
+                      <path d="M0,-13 L3.5,-3.5 L13,0 L3.5,3.5 L0,13 L-3.5,3.5 L-13,0 L-3.5,-3.5 Z" fill="var(--c4)"/>
+                    </g>
+                    <text x="200" y="330" text-anchor="middle" class="lbl anim d5">the AI writes most of the code</text>
+                  </svg>
+                  <div class="scene-caption">Every coder has felt this jolt</div>
+                </div>
+
+                <!-- Scene 2: before computers, many accountants -->
+                <div class="scene" data-scene="2">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Before computers, one company had many accountants keeping ledgers by hand">
+                    <g fill="none" stroke="var(--text-muted)" stroke-width="2">
+                      <g class="anim d1">
+                        <g transform="translate(110,120)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                        <g transform="translate(200,120)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                        <g transform="translate(290,120)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                      </g>
+                      <g class="anim d2">
+                        <g transform="translate(110,210)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                        <g transform="translate(200,210)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                        <g transform="translate(290,210)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                      </g>
+                      <g class="anim d3">
+                        <g transform="translate(110,300)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                        <g transform="translate(200,300)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                        <g transform="translate(290,300)"><circle cx="0" cy="-14" r="8"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/><rect x="15" y="0" width="12" height="15" rx="1"/></g>
+                      </g>
+                    </g>
+                    <text x="200" y="360" text-anchor="middle" class="lbl anim d3">ledgers, calculators, every department</text>
+                  </svg>
+                  <div class="scene-caption">Before computers: many accountants per company</div>
+                </div>
+
+                <!-- Scene 3: the computer arrives -->
+                <div class="scene" data-scene="3">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Accounting software arrives on a computer, replacing the paper ledger">
+                    <g class="anim d1" transform="translate(120,190)">
+                      <rect x="-40" y="-30" width="80" height="15" rx="2" fill="none" stroke="var(--text-muted)" stroke-width="2"/>
+                      <rect x="-40" y="-15" width="80" height="15" rx="2" fill="none" stroke="var(--text-muted)" stroke-width="2"/>
+                      <rect x="-40" y="0" width="80" height="15" rx="2" fill="none" stroke="var(--text-muted)" stroke-width="2"/>
+                      <line x1="-52" y1="-38" x2="52" y2="18" stroke="var(--c5)" stroke-width="3"/>
+                    </g>
+                    <text x="120" y="240" text-anchor="middle" class="lbl-mut anim d1">paper ledger</text>
+                    <path class="anim d3" d="M182,190 L228,190" stroke="var(--text-muted)" stroke-width="2.5" marker-end="url(#arrA)"/>
+                    <defs><marker id="arrA" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                    <g class="anim d4" transform="translate(292,175)">
+                      <rect x="-46" y="-34" width="92" height="64" rx="5" fill="none" stroke="var(--c1)" stroke-width="2.5"/>
+                      <g stroke="var(--c1)" stroke-width="1.6" opacity="0.8">
+                        <line x1="-30" y1="-16" x2="30" y2="-16"/><line x1="-30" y1="-2" x2="30" y2="-2"/><line x1="-30" y1="12" x2="30" y2="12"/>
+                        <line x1="-8" y1="-30" x2="-8" y2="26"/><line x1="12" y1="-30" x2="12" y2="26"/>
+                      </g>
+                      <line x1="0" y1="30" x2="0" y2="44" stroke="var(--c1)" stroke-width="2.5"/>
+                      <line x1="-18" y1="44" x2="18" y2="44" stroke="var(--c1)" stroke-width="2.5"/>
+                    </g>
+                    <text x="292" y="248" text-anchor="middle" class="lbl anim d4" style="fill:var(--c1)">accounting software</text>
+                  </svg>
+                  <div class="scene-caption">Then the computer arrived</div>
+                </div>
+
+                <!-- Scene 4: the job transformed, not eliminated -->
+                <div class="scene" data-scene="4">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Fewer accountants remained, and the work shifted from manual calculation to data entry and validation">
+                    <g class="anim d1" fill="var(--text-muted)" opacity="0.3">
+                      <circle cx="70" cy="150" r="9"/><circle cx="100" cy="150" r="9"/><circle cx="130" cy="150" r="9"/>
+                      <circle cx="70" cy="180" r="9"/><circle cx="100" cy="180" r="9"/><circle cx="130" cy="180" r="9"/>
+                      <circle cx="70" cy="210" r="9"/><circle cx="100" cy="210" r="9"/><circle cx="130" cy="210" r="9"/>
+                    </g>
+                    <text x="100" y="248" text-anchor="middle" class="lbl-mut anim d1">before: many</text>
+                    <path class="anim d2" d="M162,180 L212,180" stroke="var(--text-muted)" stroke-width="2.5" marker-end="url(#arrB)"/>
+                    <defs><marker id="arrB" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                    <g class="anim d3" fill="none" stroke="var(--c1)" stroke-width="2.5">
+                      <g transform="translate(258,180)"><circle cx="0" cy="-13" r="8"/><path d="M-12,20 Q-12,3 0,3 Q12,3 12,20"/></g>
+                      <g transform="translate(300,180)"><circle cx="0" cy="-13" r="8"/><path d="M-12,20 Q-12,3 0,3 Q12,3 12,20"/></g>
+                      <g transform="translate(342,180)"><circle cx="0" cy="-13" r="8"/><path d="M-12,20 Q-12,3 0,3 Q12,3 12,20"/></g>
+                    </g>
+                    <text x="300" y="248" text-anchor="middle" class="lbl anim d3" style="fill:var(--c1)">after: fewer</text>
+                    <g class="anim d5">
+                      <text x="200" y="300" text-anchor="middle" class="lbl-mut" style="fill:var(--c5)">manual calculation</text>
+                      <line x1="120" y1="296" x2="280" y2="296" stroke="var(--c5)" stroke-width="2"/>
+                    </g>
+                    <text x="200" y="332" text-anchor="middle" class="lbl anim d6" style="fill:var(--c3)">&rarr; data entry &amp; validation</text>
+                  </svg>
+                  <div class="scene-caption">The job didn't vanish. It changed shape</div>
+                </div>
+
+                <!-- Scene 5: accountants moved up the stack -->
+                <div class="scene" data-scene="5">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Accountants became the domain experts who helped build the software, then power users of it">
+                    <g class="anim d1" fill="none" stroke="var(--c1)" stroke-width="2.5" transform="translate(70,170)"><circle cx="0" cy="-14" r="9"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/></g>
+                    <text x="70" y="216" text-anchor="middle" class="lbl-mut anim d1">accountant</text>
+                    <path class="anim d2" d="M96,166 L150,166" stroke="var(--text-muted)" stroke-width="2.5" marker-end="url(#arrC)"/>
+                    <defs><marker id="arrC" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                    <g class="anim d3" transform="translate(200,166)">
+                      <rect x="-38" y="-30" width="76" height="60" rx="6" fill="none" stroke="var(--c1)" stroke-width="2.5"/>
+                      <g stroke="var(--c1)" stroke-width="1.6" opacity="0.8"><line x1="-24" y1="-12" x2="24" y2="-12"/><line x1="-24" y1="2" x2="24" y2="2"/><line x1="-24" y1="16" x2="6" y2="16"/></g>
+                    </g>
+                    <text x="200" y="222" text-anchor="middle" class="lbl anim d3">helps build the software</text>
+                    <text x="200" y="242" text-anchor="middle" class="lbl-mut anim d3" style="fill:var(--c1)">domain expert</text>
+                    <path class="anim d4" d="M250,166 L304,166" stroke="var(--text-muted)" stroke-width="2.5" marker-end="url(#arrC)"/>
+                    <g class="anim d5" transform="translate(338,166)">
+                      <path d="M4,-22 L-14,4 L2,4 L-4,24 L16,-4 L0,-4 Z" fill="var(--c4)"/>
+                    </g>
+                    <text x="336" y="222" text-anchor="middle" class="lbl anim d5" style="fill:var(--c4)">power user</text>
+                    <text x="336" y="242" text-anchor="middle" class="lbl-mut anim d5">does far more</text>
+                  </svg>
+                  <div class="scene-caption">The survivors moved up the value stack</div>
+                </div>
+
+                <!-- Scene 6: whole new industries fan out -->
+                <div class="scene" data-scene="6">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="The software industry created entirely new job categories: developers, testers, operations, and infrastructure">
+                    <g class="anim d1"><rect x="150" y="46" width="100" height="30" rx="7" fill="var(--c1)"/><text x="200" y="66" text-anchor="middle" class="lbl" style="fill:#fff;font-size:11px">the software</text></g>
+                    <g stroke="var(--text-muted)" stroke-width="1.8" fill="none">
+                      <path class="anim d2" d="M175,76 L70,150"/>
+                      <path class="anim d3" d="M190,76 L122,205"/>
+                      <path class="anim d4" d="M210,76 L266,205"/>
+                      <path class="anim d5" d="M225,76 L326,150"/>
+                    </g>
+                    <g class="anim d2"><rect x="18" y="150" width="104" height="30" rx="7" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="70" y="170" text-anchor="middle" class="lbl-mut" style="fill:var(--c3);font-size:10px">developers</text></g>
+                    <g class="anim d3"><rect x="70" y="205" width="104" height="30" rx="7" fill="none" stroke="var(--c2)" stroke-width="2.5"/><text x="122" y="225" text-anchor="middle" class="lbl-mut" style="fill:var(--c2);font-size:10px">QA / testers</text></g>
+                    <g class="anim d4"><rect x="214" y="205" width="104" height="30" rx="7" fill="none" stroke="var(--c4)" stroke-width="2.5"/><text x="266" y="225" text-anchor="middle" class="lbl-mut" style="fill:var(--c4);font-size:10px">SaaS ops</text></g>
+                    <g class="anim d5"><rect x="270" y="150" width="112" height="30" rx="7" fill="none" stroke="var(--c1)" stroke-width="2.5"/><text x="326" y="170" text-anchor="middle" class="lbl-mut" style="fill:var(--c1);font-size:10px">hosting / infra</text></g>
+                    <text x="200" y="300" text-anchor="middle" class="lbl anim d6">&hellip; and a hundred more</text>
+                  </svg>
+                  <div class="scene-caption">One job replaced, whole industries born</div>
+                </div>
+
+                <!-- Scene 7: chart, where the work went -->
+                <div class="scene" data-scene="7">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartRoles" height="320" aria-label="Roles after the compute revolution: manual calculation shrank while new categories grew"></canvas>
+                  </div>
+                  <div class="scene-caption">Where the work actually went</div>
+                </div>
+
+                <!-- Scene 8: three waves -->
+                <div class="scene" data-scene="8">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Three waves: energy and machines, compute and software, and now intelligence and agents">
+                    <line x1="40" y1="330" x2="370" y2="330" stroke="var(--border)" stroke-width="2"/>
+                    <g class="anim d1"><rect x="60" y="270" width="80" height="60" rx="4" fill="none" stroke="var(--c1)" stroke-width="2.5"/><text x="100" y="300" text-anchor="middle" class="lbl-mut" style="fill:var(--c1)">energy</text><text x="100" y="316" text-anchor="middle" class="lbl-mut" style="font-size:9px">machines</text></g>
+                    <g class="anim d3"><rect x="160" y="210" width="80" height="120" rx="4" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="200" y="242" text-anchor="middle" class="lbl-mut" style="fill:var(--c3)">compute</text><text x="200" y="258" text-anchor="middle" class="lbl-mut" style="font-size:9px">software</text></g>
+                    <g class="anim d5"><rect x="260" y="130" width="80" height="200" rx="4" fill="none" stroke="var(--c4)" stroke-width="2.5"/><text x="300" y="162" text-anchor="middle" class="lbl-mut" style="fill:var(--c4)">intelligence</text><text x="300" y="178" text-anchor="middle" class="lbl-mut" style="font-size:9px">agents</text></g>
+                    <g class="anim d6">
+                      <circle cx="300" cy="120" r="6" fill="var(--c2)"/>
+                      <text x="300" y="104" text-anchor="middle" class="lbl" style="fill:var(--c2);font-size:11px">we are here</text>
+                    </g>
+                  </svg>
+                  <div class="scene-caption">The third wave has arrived</div>
+                </div>
+
+                <!-- Scene 9: chart, new categories per revolution -->
+                <div class="scene" data-scene="9">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartWaves" height="320" aria-label="New categories of work created by each revolution, growing from Industrial to Compute to AI"></canvas>
+                  </div>
+                  <div class="scene-caption">Each wave creates more than it retires</div>
+                </div>
+
+                <!-- Scene 10: chart, the scale of the bet (AI capex) -->
+                <div class="scene" data-scene="10">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartCapex" height="320" aria-label="Combined AI capital expenditure at the four largest US tech firms rose from about 120 billion dollars in 2022 to over 320 billion in 2025"></canvas>
+                  </div>
+                  <div class="scene-caption">The same tech, a brand-new fear</div>
+                </div>
+
+                <!-- Scene 11: the capital cycle -->
+                <div class="scene" data-scene="11">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="The four beats of a boom: easy money floods in, overcapacity is built, collapse, then a few survivors win big">
+                    <g fill="none" stroke="var(--text-muted)" stroke-width="2">
+                      <path class="anim d2" d="M212,92 A110,110 0 0 1 308,188" marker-end="url(#arrCyc)"/>
+                      <path class="anim d3" d="M308,212 A110,110 0 0 1 212,308" marker-end="url(#arrCyc)"/>
+                      <path class="anim d4" d="M188,308 A110,110 0 0 1 92,212" marker-end="url(#arrCyc)"/>
+                      <path class="anim d5" d="M92,188 A110,110 0 0 1 188,92" marker-end="url(#arrCyc)"/>
+                    </g>
+                    <defs><marker id="arrCyc" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                    <g class="anim d1"><circle cx="200" cy="90" r="18" fill="var(--c3)"/><text x="200" y="95" text-anchor="middle" class="lbl" style="fill:#fff">1</text><text x="200" y="58" text-anchor="middle" class="lbl-mut">easy money floods in</text></g>
+                    <g class="anim d2"><circle cx="310" cy="200" r="18" fill="var(--c4)"/><text x="310" y="205" text-anchor="middle" class="lbl" style="fill:#fff">2</text><text x="310" y="238" text-anchor="middle" class="lbl-mut">overbuild</text></g>
+                    <g class="anim d3"><circle cx="200" cy="310" r="18" fill="var(--c5)"/><text x="200" y="315" text-anchor="middle" class="lbl" style="fill:#fff">3</text><text x="200" y="348" text-anchor="middle" class="lbl-mut">collapse</text></g>
+                    <g class="anim d4"><circle cx="90" cy="200" r="18" fill="var(--c1)"/><text x="90" y="205" text-anchor="middle" class="lbl" style="fill:#fff">4</text><text x="90" y="238" text-anchor="middle" class="lbl-mut">survivors win</text></g>
+                    <text x="200" y="196" text-anchor="middle" class="lbl">the overbuild</text>
+                    <text x="200" y="214" text-anchor="middle" class="lbl">loop</text>
+                  </svg>
+                  <div class="scene-caption">The loop under every boom</div>
+                </div>
+
+                <!-- Scene 12: history rhymes -->
+                <div class="scene" data-scene="12">
+                  <svg viewBox="0 0 680 300" role="img" aria-label="A left-to-right timeline of four overbuilt technologies: 1790s canals left unfinished, 1846 railways a third unbuilt, the 1920s radio boom crashed in 1929, and the 2000 fiber glut left mostly dark">
+                    <text x="340" y="34" text-anchor="middle" class="lbl anim d1" font-size="16">every real tech overbuilds</text>
+                    <line x1="100" y1="150" x2="580" y2="150" stroke="var(--text-muted)" stroke-width="2" opacity="0.5"/>
+                    <g stroke="var(--text-muted)" stroke-width="2" fill="none">
+                      <line class="anim d2" x1="118" y1="150" x2="242" y2="150" marker-end="url(#tArr)"/>
+                      <line class="anim d3" x1="278" y1="150" x2="402" y2="150" marker-end="url(#tArr)"/>
+                      <line class="anim d4" x1="438" y1="150" x2="562" y2="150" marker-end="url(#tArr)"/>
+                    </g>
+                    <defs><marker id="tArr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+
+                    <!-- 1790s canals -->
+                    <g class="anim d1">
+                      <path d="M76,110 L124,110" stroke="var(--c1)" stroke-width="2.5"/>
+                      <path d="M91,110 L109,110 L106,100 L94,100 Z" fill="var(--c1)"/>
+                      <circle cx="100" cy="150" r="7" fill="var(--c1)"/>
+                      <text x="100" y="192" text-anchor="middle" class="lbl" font-size="15">1790s &middot; canals</text>
+                      <text x="100" y="212" text-anchor="middle" font-size="12" style="fill:var(--c5);font-family:var(--font-mono)">many unfinished</text>
+                    </g>
+
+                    <!-- 1846 railways -->
+                    <g class="anim d2">
+                      <path d="M244,120 L260,92" stroke="var(--c1)" stroke-width="2.5"/>
+                      <path d="M276,120 L260,92" stroke="var(--c1)" stroke-width="2.5"/>
+                      <line x1="250" y1="108" x2="270" y2="108" stroke="var(--c1)" stroke-width="1.8"/>
+                      <circle cx="260" cy="150" r="7" fill="var(--c1)"/>
+                      <text x="260" y="192" text-anchor="middle" class="lbl" font-size="15">1846 &middot; railways</text>
+                      <text x="260" y="212" text-anchor="middle" font-size="12" style="fill:var(--c5);font-family:var(--font-mono)">&#8531; never built</text>
+                    </g>
+
+                    <!-- 1920s radio -->
+                    <g class="anim d3">
+                      <path d="M406,120 L420,92 L434,120" fill="none" stroke="var(--c4)" stroke-width="2.5"/>
+                      <circle cx="420" cy="90" r="3" fill="var(--c4)"/>
+                      <path d="M427,85 a12,12 0 0 1 0,18" fill="none" stroke="var(--c4)" stroke-width="1.6" opacity="0.7"/>
+                      <circle cx="420" cy="150" r="7" fill="var(--c1)"/>
+                      <text x="420" y="192" text-anchor="middle" class="lbl" font-size="15">1920s &middot; radio</text>
+                      <text x="420" y="212" text-anchor="middle" font-size="12" style="fill:var(--c5);font-family:var(--font-mono)">1929 crash</text>
+                    </g>
+
+                    <!-- 2000 fiber -->
+                    <g class="anim d4">
+                      <g stroke="var(--text-muted)" stroke-width="4" opacity="0.3" stroke-linecap="round">
+                        <line x1="562" y1="94" x2="562" y2="122"/><line x1="574" y1="94" x2="574" y2="122"/><line x1="598" y1="94" x2="598" y2="122"/>
+                      </g>
+                      <line x1="586" y1="94" x2="586" y2="122" stroke="var(--c3)" stroke-width="4" stroke-linecap="round"/>
+                      <circle cx="580" cy="150" r="7" fill="var(--c1)"/>
+                      <text x="580" y="192" text-anchor="middle" class="lbl" font-size="15">2000 &middot; fiber</text>
+                      <text x="580" y="212" text-anchor="middle" font-size="12" style="fill:var(--c5);font-family:var(--font-mono)">left mostly dark</text>
+                    </g>
+                  </svg>
+                  <div class="scene-caption">Four booms, one script</div>
+                </div>
+
+                <!-- Scene 13: chart, the revenue gap -->
+                <div class="scene" data-scene="13">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartGap" height="320" aria-label="AI needs roughly 600 billion dollars a year to justify the spend but earns well under 100 billion"></canvas>
+                  </div>
+                  <div class="scene-caption">Does the math add up?</div>
+                </div>
+
+                <!-- Scene 14: the survivors -->
+                <div class="scene" data-scene="14">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="The overbuilt fiber sat dark, then demand arrived and it became the backbone of the modern internet">
+                    <line x1="40" y1="200" x2="200" y2="200" stroke="var(--text-muted)" stroke-width="6" opacity="0.3" stroke-linecap="round" class="anim d1"/>
+                    <text x="120" y="180" text-anchor="middle" class="lbl-mut anim d1">sat dark for years</text>
+                    <line x1="200" y1="200" x2="300" y2="200" stroke="var(--c3)" stroke-width="6" stroke-linecap="round" class="anim d3"/>
+                    <g stroke="var(--c3)" stroke-width="2.5" fill="none" class="anim d4">
+                      <path d="M300,200 L340,120"/><path d="M300,200 L352,200"/><path d="M300,200 L340,280"/>
+                    </g>
+                    <g class="anim d4"><rect x="330" y="104" width="66" height="28" rx="6" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="363" y="123" text-anchor="middle" class="lbl-mut" style="font-size:10px">search</text></g>
+                    <g class="anim d5"><rect x="330" y="186" width="66" height="28" rx="6" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="363" y="205" text-anchor="middle" class="lbl-mut" style="font-size:10px">streaming</text></g>
+                    <g class="anim d6"><rect x="330" y="266" width="66" height="28" rx="6" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="363" y="285" text-anchor="middle" class="lbl-mut" style="font-size:10px">cloud</text></g>
+                    <text x="180" y="250" text-anchor="middle" class="lbl anim d5">then demand arrived</text>
+                    <text x="180" y="330" text-anchor="middle" class="lbl anim d6" style="fill:var(--c3)">the wreckage became the backbone</text>
+                  </svg>
+                  <div class="scene-caption">The tech outlived the bubble</div>
+                </div>
+
+                <!-- Scene 15: pyramid -> diamond -->
+                <div class="scene" data-scene="15">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="The old org chart was a pyramid with many entry-level doers; in the AI era it becomes a diamond as people move up into higher-value roles">
+                    <!-- pyramid (before) -->
+                    <g class="anim d1">
+                      <polygon points="90,90 40,300 140,300" fill="none" stroke="var(--text-muted)" stroke-width="2.5"/>
+                      <line x1="66" y1="230" x2="114" y2="230" stroke="var(--text-muted)" stroke-width="1.5" opacity="0.6"/>
+                      <line x1="78" y1="160" x2="102" y2="160" stroke="var(--text-muted)" stroke-width="1.5" opacity="0.6"/>
+                      <text x="90" y="285" text-anchor="middle" class="lbl-mut" style="font-size:9px">do</text>
+                    </g>
+                    <text x="90" y="330" text-anchor="middle" class="lbl-mut anim d1">the old pyramid</text>
+                    <path class="anim d3" d="M160,195 L210,195" stroke="var(--text-muted)" stroke-width="2.5" marker-end="url(#arrPD)"/>
+                    <defs><marker id="arrPD" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                    <!-- diamond (after) -->
+                    <g class="anim d4">
+                      <polygon points="310,70 250,195 370,195" fill="none" stroke="var(--c1)" stroke-width="2.5"/>
+                      <polygon points="250,195 370,195 310,320" fill="var(--c1)" fill-opacity="0.12" stroke="var(--c1)" stroke-width="2.5"/>
+                      <text x="310" y="150" text-anchor="middle" class="lbl-mut" style="fill:var(--c1);font-size:9px">lead</text>
+                      <text x="310" y="205" text-anchor="middle" class="lbl" style="fill:var(--c1);font-size:11px">own &amp; direct</text>
+                    </g>
+                    <text x="310" y="345" text-anchor="middle" class="lbl anim d5" style="fill:var(--c1)">the AI-era diamond</text>
+                  </svg>
+                  <div class="scene-caption">The base thins, the middle swells</div>
+                </div>
+
+                <!-- Scene 16: chart, Jevons paradox (cheaper = more used) -->
+                <div class="scene" data-scene="16">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartJevons" height="320" aria-label="As the cost per task falls, total demand rises faster, so the amount of work grows overall"></canvas>
+                  </div>
+                  <div class="scene-caption">Cheaper doesn't mean less. It means more</div>
+                </div>
+
+                <!-- Scene 17: the new work + skills -->
+                <div class="scene" data-scene="17">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Your new role: set the goal and direct a team of AI, using judgment, curiosity, creativity, and critical thinking">
+                    <g class="anim d1" fill="none" stroke="var(--c1)" stroke-width="2.5" transform="translate(200,80)"><circle cx="0" cy="-14" r="10"/><path d="M-15,24 Q-15,4 0,4 Q15,4 15,24"/></g>
+                    <text x="200" y="128" text-anchor="middle" class="lbl anim d1">you: set the goal, direct the work</text>
+                    <g stroke="var(--text-muted)" stroke-width="1.8" fill="none" class="anim d2">
+                      <path d="M180,104 L120,170"/><path d="M200,108 L200,170"/><path d="M220,104 L280,170"/>
+                    </g>
+                    <g class="anim d3">
+                      <g transform="translate(120,185)"><rect x="-26" y="-15" width="52" height="30" rx="6" fill="none" stroke="var(--c4)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c4);font-size:9px">AI</text></g>
+                      <g transform="translate(200,185)"><rect x="-26" y="-15" width="52" height="30" rx="6" fill="none" stroke="var(--c4)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c4);font-size:9px">AI</text></g>
+                      <g transform="translate(280,185)"><rect x="-26" y="-15" width="52" height="30" rx="6" fill="none" stroke="var(--c4)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c4);font-size:9px">AI</text></g>
+                    </g>
+                    <text x="200" y="238" text-anchor="middle" class="lbl-mut anim d4">the skills that move you up</text>
+                    <g class="anim d5">
+                      <g transform="translate(112,268)"><rect x="-58" y="-16" width="116" height="32" rx="16" fill="none" stroke="var(--c3)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c3);font-size:10px">adaptability</text></g>
+                      <g transform="translate(288,268)"><rect x="-52" y="-16" width="104" height="32" rx="16" fill="none" stroke="var(--c3)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c3);font-size:10px">curiosity</text></g>
+                    </g>
+                    <g class="anim d6">
+                      <g transform="translate(112,312)"><rect x="-52" y="-16" width="104" height="32" rx="16" fill="none" stroke="var(--c3)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c3);font-size:10px">creativity</text></g>
+                      <g transform="translate(288,312)"><rect x="-64" y="-16" width="128" height="32" rx="16" fill="none" stroke="var(--c3)" stroke-width="2"/><text x="0" y="4" text-anchor="middle" class="lbl-mut" style="fill:var(--c3);font-size:10px">critical thinking</text></g>
+                    </g>
+                  </svg>
+                  <div class="scene-caption">From doing the work to directing it</div>
+                </div>
+
+                <!-- Scene 18: chart, WEF net jobs 2030 -->
+                <div class="scene" data-scene="18">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartJobs2030" height="320" aria-label="World Economic Forum projection for 2030: about 92 million jobs displaced, 170 million created, a net gain of 78 million"></canvas>
+                  </div>
+                  <div class="scene-caption">The forecasters draw the same shape</div>
+                </div>
+
+                <!-- Scene 19: demo vs rollout -->
+                <div class="scene" data-scene="19">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="A demo works in weeks, but rebuilding a company around the tool takes years">
+                    <text x="200" y="70" text-anchor="middle" class="lbl anim d1">doing a task &ne; reorganising around it</text>
+                    <g class="anim d2">
+                      <text x="60" y="150" class="lbl-mut" style="font-size:11px">the demo</text>
+                      <rect x="60" y="160" width="80" height="16" rx="8" fill="var(--c3)"/>
+                      <g transform="translate(154,168)"><path d="M0,-9 L2.5,-2.5 L9,0 L2.5,2.5 L0,9 L-2.5,2.5 L-9,0 L-2.5,-2.5 Z" fill="var(--c4)"/></g>
+                      <text x="60" y="196" class="lbl-mut" style="font-size:9px">weeks</text>
+                    </g>
+                    <g class="anim d4">
+                      <text x="60" y="250" class="lbl-mut" style="font-size:11px">the rollout</text>
+                      <rect x="60" y="260" width="300" height="16" rx="8" fill="none" stroke="var(--c4)" stroke-width="2"/>
+                      <g stroke="var(--c4)" stroke-width="2" opacity="0.6"><line x1="135" y1="260" x2="135" y2="276"/><line x1="210" y1="260" x2="210" y2="276"/><line x1="285" y1="260" x2="285" y2="276"/></g>
+                      <text x="60" y="296" class="lbl-mut" style="font-size:9px">years</text>
+                    </g>
+                    <text x="200" y="336" text-anchor="middle" class="lbl anim d6" style="fill:var(--c3)">so the market is still steady, for now</text>
+                  </svg>
+                  <div class="scene-caption">Tech moves fast; companies move slowly</div>
+                </div>
+
+                <!-- Scene 20: chart, entry-level squeeze -->
+                <div class="scene" data-scene="20">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartEntry" height="320" aria-label="In AI-exposed roles, workers aged 22 to 25 saw about a 13 percent employment decline while older workers held steady"></canvas>
+                  </div>
+                  <div class="scene-caption">The squeeze lands on the first rung</div>
+                </div>
+
+                <!-- Scene 21: the move (ladder) -->
+                <div class="scene" data-scene="21">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Climb the ladder toward senior work, and rebuild the missing bottom rung">
+                    <g stroke="var(--text-muted)" stroke-width="2.5" fill="none">
+                      <line x1="168" y1="60" x2="168" y2="330" class="anim d1"/>
+                      <line x1="232" y1="60" x2="232" y2="330" class="anim d1"/>
+                      <line x1="168" y1="110" x2="232" y2="110" class="anim d2"/>
+                      <line x1="168" y1="160" x2="232" y2="160" class="anim d2"/>
+                      <line x1="168" y1="210" x2="232" y2="210" class="anim d3"/>
+                      <line x1="168" y1="260" x2="232" y2="260" class="anim d3"/>
+                    </g>
+                    <text x="256" y="86" class="lbl-mut anim d1" style="font-size:10px">senior work</text>
+                    <!-- climbing figure -->
+                    <g class="anim d4" fill="none" stroke="var(--c1)" stroke-width="2.5" transform="translate(200,180)"><circle cx="0" cy="-13" r="9"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/></g>
+                    <path class="anim d4" d="M200,150 L200,120" stroke="var(--c1)" stroke-width="2.5" marker-end="url(#arrUp)"/>
+                    <defs><marker id="arrUp" markerWidth="9" markerHeight="9" refX="3" refY="6" orient="auto"><path d="M0,6 L3,0 L6,6 Z" fill="var(--c1)"/></marker></defs>
+                    <!-- rebuilt bottom rung -->
+                    <line x1="168" y1="310" x2="232" y2="310" stroke="var(--c3)" stroke-width="4" class="anim d5"/>
+                    <text x="256" y="314" class="lbl anim d5" style="fill:var(--c3);font-size:11px">rebuild this rung</text>
+                    <text x="200" y="366" text-anchor="middle" class="lbl anim d6">the move is the accountant's move</text>
+                  </svg>
+                  <div class="scene-caption">Climb, and hold the ladder for the next one</div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="scrolly-steps">
+              <div class="step" data-scene="1">
+                <div class="kicker">The fear, right now</div>
+                <h2>"If the AI writes the code&hellip;"</h2>
+                <p>A prompt becomes a working function. An agent refactors the file, writes the tests, and opens the pull request. For a developer it lands somewhere between magic and dread. The core craft, turned into an autocomplete. Analysts, writers, and support staff are feeling the same thing.</p>
+                <p class="pull">The real question is never "will the job survive?" It is "what shape does the job take next?" And to answer that, we do not have to guess. We can rewind.</p>
+              </div>
+
+              <div class="step" data-scene="2">
+                <div class="kicker">We've seen this film</div>
+                <h2>Before the coder, the accountant</h2>
+                <p>A company of any size once did not have <em>an</em> accountant. It had many, often several per department, keeping ledgers by hand and reconciling everything on calculators. Accounting <em>was</em> arithmetic and record-keeping, done by people, at scale.</p>
+                <p>Then a general-purpose machine arrived and did the arithmetic. It was the exact jolt the developer feels today. This part of the story already ran to the end, so let's watch how it actually turned out.</p>
+              </div>
+
+              <div class="step" data-scene="3">
+                <div class="kicker">The disruption</div>
+                <h2>Then the computer arrived</h2>
+                <p>Accounting software landed on every desk. The paper ledger and the desk calculator, the two tools that defined the craft, were suddenly obsolete.</p>
+                <p>This is the moment the fear predicts a wipe-out. Software can add, reconcile, and report faster and more accurately than any room of people. So surely the accountants were finished.</p>
+              </div>
+
+              <div class="step" data-scene="4">
+                <div class="kicker">What actually happened</div>
+                <h2>The job changed, it didn't vanish</h2>
+                <p>Companies still needed accountants, just fewer of them per company. And the work itself transformed. The bulk of it became <strong>entering data into the software and validating what came out</strong>, rather than calculating by hand.</p>
+                <p>The rote part, the arithmetic, is exactly the part the machine took. What remained was judgment, correctness, and interpretation.</p>
+              </div>
+
+              <div class="step" data-scene="5">
+                <div class="kicker">The upgrade</div>
+                <h2>They moved up the stack</h2>
+                <p>Something more interesting happened to the people. Accountants became the <strong>domain experts</strong> who helped design and build the accounting software in the first place. Nobody else understood the rules well enough.</p>
+                <p>And as users, the software did not shrink them; it amplified them. One accountant with good software could now do what a whole floor once did, and reach for analysis that was never practical by hand.</p>
+              </div>
+
+              <div class="step" data-scene="6">
+                <div class="kicker">The multiplier</div>
+                <h2>And it created whole new industries</h2>
+                <p>This is the part the fear always misses. The accounting software did more than reshape one role. It called entire professions into existence. Software developers to build it. QA engineers to test it. Operations teams to run it as a service. Infrastructure to host it.</p>
+                <p>None of those jobs existed on the old accounting floor. The revolution retired one kind of work and manufactured many kinds in its place. The AI wave is already doing the same, sprouting titles nobody had a decade ago: prompt and agent engineers, eval and safety specialists, AI-ops teams.</p>
+              </div>
+
+              <div class="step" data-scene="7">
+                <div class="kicker">The receipts</div>
+                <h2>Where the work went</h2>
+                <p>Draw it out and the picture is unmistakable. The one column that shrank is manual calculation. Everything around it grew: validation, building, testing, operating, hosting. Most of it did not exist before.</p>
+                <p>Automation did not subtract a job. It rearranged one job into many, and pushed people toward the parts that need a human.</p>
+              </div>
+
+              <div class="step" data-scene="8">
+                <div class="kicker">Now</div>
+                <h2>The third wave is here</h2>
+                <p>Energy and machines were the first wave. Compute and software were the second. Intelligence and agents are the third, and it is the one we are standing in right now.</p>
+                <p class="pull">AI is a general-purpose technology. That is exactly why it will follow the accountant's arc, not escape it, and why the developer is simply the accountant of this wave.</p>
+              </div>
+
+              <div class="step" data-scene="9">
+                <div class="kicker">The bet</div>
+                <h2>It creates more than it retires</h2>
+                <p>If the pattern holds, and general-purpose technologies have a strong track record, AI will take the rote layer of knowledge work the way software took manual arithmetic. Analysts, support agents, marketers, and yes, engineers will spend less time on the mechanical part and more on judgment, direction, and validation.</p>
+                <p>And it will spin up categories of work we do not have clean names for yet: people who build and evaluate AI systems, who supervise and correct them, who operate them safely at scale. More created than retired, again.</p>
+              </div>
+
+              <div class="step" data-scene="10">
+                <div class="kicker">The other fear</div>
+                <h2>But there's a second story</h2>
+                <p>So far this is the optimist's case, and I believe it. But there is a second story running at the same time, and ignoring it would be dishonest. And the link is uncomfortable: the same software wave that promoted our accountant also blew the dot-com bubble. Real transformation and real mania arrived together, and this time is no different.</p>
+                <p>The four biggest US tech firms (Microsoft, Amazon, Alphabet, and Meta) spent roughly <strong>$246 billion</strong> on capital expenditure in 2024, up about 60% in a year, and are guiding well past <strong>$320 billion</strong> for 2025, most of it AI data centers. Their combined spend has more than doubled in two years. When the numbers get this big, the word "bubble" starts showing up.</p>
+              </div>
+
+              <div class="step" data-scene="11">
+                <div class="kicker">The engine</div>
+                <h2>Every boom runs the same loop</h2>
+                <p>There is a rhythm beneath every boom, and it has four beats. High returns pull in capital. Capital keeps flowing until far too much capacity gets built. The overcapacity crushes returns and the thing collapses. And then a few survivors pick up the wreckage cheap and make a fortune when demand finally catches up.</p>
+                <p class="pull">The technology can be completely real and the bubble can still burst. Those are not contradictions. They are the same story.</p>
+              </div>
+
+              <div class="step" data-scene="12">
+                <div class="kicker">History rhymes</div>
+                <h2>We have seen this film before</h2>
+                <p>Britain's <a href="https://en.wikipedia.org/wiki/Canal_Mania" target="_blank" rel="noopener">canal mania</a> of the 1790s funded dozens of waterways, many never finished, yet the ones that were became arteries of the Industrial Revolution. Its <a href="https://en.wikipedia.org/wiki/Railway_Mania" target="_blank" rel="noopener">railway mania</a> of 1846 authorized around 9,500 miles of track and left roughly a third of it unbuilt. The 1920s radio boom sent stocks like RCA to the moon and then to the floor in 1929, but the broadcast networks stayed.</p>
+                <p>The clearest rhyme is the dot-com fiber glut: hundreds of billions were spent burying cable, and by 2002 <a href="https://www.oregonlive.com/business/2002/12/amid_telecom_ruins_a_fortune_i.html" target="_blank" rel="noopener">at most about 5% of it was actually lit</a>. The rest sat "dark" for years. Each time the story was intoxicating and mostly true. That never stopped the money from getting wildly ahead of the demand.</p>
+              </div>
+
+              <div class="step" data-scene="13">
+                <div class="kicker">The math</div>
+                <h2>Does the spend pencil out?</h2>
+                <p>Run the same arithmetic on AI. Sequoia Capital laid it out plainly: to justify the hardware being bought, the industry needs on the order of <a href="https://www.sequoiacap.com/article/ais-600b-question/" target="_blank" rel="noopener">$600 billion a year in revenue</a>. Actual AI revenue is still well under $100 billion, and several of the leaders are losing money. That is close to a ten-to-one gap between what is being spent and what is coming back.</p>
+                <p>The returns on the ground are shaky too. An <a href="https://www.artificialintelligence-news.com/wp-content/uploads/2025/08/ai_report_2025.pdf" target="_blank" rel="noopener">MIT study of enterprise deployments</a> found roughly 95% of generative-AI pilots delivering no measurable profit, and companies are already shifting to smaller, cheaper models just to keep their token bills under control.</p>
+              </div>
+
+              <div class="step" data-scene="14">
+                <div class="kicker">The survivors</div>
+                <h2>The tech outlives the bubble</h2>
+                <p>The twist ties both stories together. That <a href="https://www.oregonlive.com/business/2002/12/amid_telecom_ruins_a_fortune_i.html" target="_blank" rel="noopener">dark fiber</a> did not vanish when the bubble burst. It sat in the ground until streaming, cloud, and the smartphone arrived, and then it became the backbone of the modern internet, the very infrastructure that made Google, Netflix, and AWS possible.</p>
+                <p>The companies that overbuilt mostly died. The technology, and the transformation it enabled, absolutely did not. So even in the worst case for the AI market, the capability that has the developer worried is not going anywhere.</p>
+              </div>
+
+              <div class="step" data-scene="15">
+                <div class="kicker">Back to you</div>
+                <h2>The developer is the new accountant</h2>
+                <p>So the capability always outlives the crash. But surviving the bust is not the exciting part. What happens to the <em>people</em> is. The developer is walking the accountant's exact path. The AI takes the rote layer, the boilerplate and glue code and first drafts, the way software took manual arithmetic.</p>
+                <p>Picture the old org chart as a pyramid: a wide base doing the routine work, narrowing up through experienced owners, senior leads, and executives. AI eats the base. Smart teams do not simply lop it off. They let that pyramid bulge into a <strong>diamond</strong>, lifting people out of grunt work into roles that own more, direct more, and decide more.</p>
+              </div>
+
+              <div class="step" data-scene="16">
+                <div class="kicker">Why there's more, not less</div>
+                <h2>The Jevons paradox</h2>
+                <p>In 1865, William Jevons noticed something strange: as steam engines got more efficient, Britain burned <em>more</em> coal, not less. Cheaper power meant everyone found new uses for it, so total demand climbed. Efficiency did not shrink the market. It exploded it.</p>
+                <p>AI is the same story, and you are the coal. As the cost of doing a task collapses, we do not do fewer things; we do far more of them, and invent things that were never worth doing before. Microsoft's Satya Nadella <a href="https://www.geekwire.com/2025/microsoft-ceo-says-ai-use-will-skyrocket-with-more-efficiency-amid-craze-over-deepseek/" target="_blank" rel="noopener">invoked exactly this</a> about AI; IBM, after once planning to automate roles away, is now <a href="https://techcrunch.com/2026/02/12/ibm-will-hire-your-entry-level-talent-in-the-age-of-ai/" target="_blank" rel="noopener">tripling its entry-level hiring</a> into redesigned jobs.</p>
+              </div>
+
+              <div class="step" data-scene="17">
+                <div class="kicker">Your promotion</div>
+                <h2>From writing the code to directing it</h2>
+                <p>That is the shape of the new job. The developer stops hand-typing every line and starts deciding <em>what</em> to build and <em>why</em>: framing the problem, directing a team of AI agents, reviewing what they produce, owning the result. It looks a lot like the senior or architect work we used to reserve for years in, handed to people far earlier. The accountant became the person who <em>ran</em> the software; the developer becomes the person who <em>directs</em> it.</p>
+                <p class="pull">The skills that carry you up the diamond are stubbornly human: adaptability, curiosity, creativity, and above all critical thinking. Master the tool, help build it, and you do not get replaced. You get promoted.</p>
+              </div>
+
+              <div class="step" data-scene="18">
+                <div class="kicker">Does the data agree?</div>
+                <h2>The forecasters draw the same shape</h2>
+                <p>Broadly, yes. The World Economic Forum's 2030 tally is <a href="https://www.weforum.org/press/2025/01/future-of-jobs-report-2025-78-million-new-job-opportunities-by-2030-but-urgent-upskilling-needed-to-prepare-workforces/" target="_blank" rel="noopener">roughly 92 million roles lost and 170 million created, a net gain of about 78 million</a>. <a href="https://www.pwc.com/gx/en/issues/artificial-intelligence/job-barometer/2025/report.pdf" target="_blank" rel="noopener">PwC</a> sees headcount still climbing even in the most exposed occupations, with a steep pay premium on AI skills.</p>
+                <p>And <a href="https://www.mckinsey.com/mgi/our-research/generative-ai-and-the-future-of-work-in-america" target="_blank" rel="noopener">McKinsey</a> expects a big slice of today's tasks to become automatable this decade, but as an assistant to skilled work rather than a replacement for it. Three studies, one picture: the machine takes the mechanical part, people move to the judgment, and the total keeps growing.</p>
+              </div>
+
+              <div class="step" data-scene="19">
+                <div class="kicker">But not overnight</div>
+                <h2>A demo is not a rollout</h2>
+                <p>I would not oversell the speed. <a href="https://budgetlab.yale.edu/research/tracking-impact-ai-labor-market" target="_blank" rel="noopener">Yale's Budget Lab</a> finds the labour market broadly steady since ChatGPT arrived, and that fits how these shifts actually run.</p>
+                <p>A tool being able to do a task is not the same as an industry rebuilding itself around that tool. The gap between a slick demo and a company genuinely re-tooled is measured in years, not news cycles, and most companies are still at the demo.</p>
+              </div>
+
+              <div class="step" data-scene="20">
+                <div class="kicker">The catch</div>
+                <h2>The first rung is disappearing</h2>
+                <p>One finding I won't wave away: <a href="https://www.cnbc.com/2025/08/28/generative-ai-reshapes-us-job-market-stanford-study-shows-entry-level-young-workers.html" target="_blank" rel="noopener">Stanford's researchers</a> see the youngest workers, those in their early twenties in exposed fields like software and support, already losing ground while senior colleagues hold firm.</p>
+                <p>That is the real hazard of this wave. Not mass unemployment, but the quiet removal of the first rung, the junior job where you used to learn the craft by grinding through the boring parts. The promotion still waits at the top of the ladder; getting a foot on it is what just got harder.</p>
+              </div>
+
+              <div class="step" data-scene="21">
+                <div class="kicker">So, the move</div>
+                <h2>Climb, and hold the ladder</h2>
+                <p>Which is why the advice is the same, whichever job worries you. Get fluent in the tool early, while everyone else is still debating it. Be the person who points it at the right problem, checks its work, and puts their name on the result. The judgment and the accountability are the parts it cannot hand back.</p>
+                <p class="pull">Do that and you don't get automated; you reach the senior work years early. And if you do the hiring: rebuild the bottom rung instead of deleting it. That pipeline is where your future seniors come from.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- =================== END SCROLLYTELLING =================== -->
+
+        <div class="content">
+            <h2>The journey, in one row</h2>
+            <div class="journey-fig">
+              <svg viewBox="0 0 900 250" role="img" aria-label="The journey in four steps: the fear that AI writes the code, the proof of the accountant, the AI bubble, and the promotion up the diamond">
+                <defs><marker id="jArr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                <g stroke="var(--text-muted)" stroke-width="2" fill="none">
+                  <line x1="140" y1="90" x2="303" y2="90" marker-end="url(#jArr)"/>
+                  <line x1="367" y1="90" x2="529" y2="90" marker-end="url(#jArr)"/>
+                  <line x1="593" y1="90" x2="756" y2="90" marker-end="url(#jArr)"/>
+                </g>
+                <!-- 1 fear -->
+                <g transform="translate(110,90)"><circle r="27" fill="var(--bg)" stroke="var(--c5)" stroke-width="2.5"/>
+                  <rect x="-14" y="-10" width="28" height="20" rx="3" fill="none" stroke="var(--c5)" stroke-width="1.6"/><line x1="-9" y1="-3" x2="9" y2="-3" stroke="var(--c5)" stroke-width="1.4"/><line x1="-9" y1="3" x2="4" y2="3" stroke="var(--c5)" stroke-width="1.4"/></g>
+                <text x="110" y="150" text-anchor="middle" class="lbl" font-size="14">The fear</text>
+                <text x="110" y="170" text-anchor="middle" class="mut" font-size="12">"AI writes the code"</text>
+                <!-- 2 proof -->
+                <g transform="translate(337,90)"><circle r="27" fill="var(--bg)" stroke="var(--c1)" stroke-width="2.5"/>
+                  <circle cx="0" cy="-6" r="5" fill="none" stroke="var(--c1)" stroke-width="1.6"/><path d="M-10,13 Q-10,0 0,0 Q10,0 10,13" fill="none" stroke="var(--c1)" stroke-width="1.6"/></g>
+                <text x="337" y="150" text-anchor="middle" class="lbl" font-size="14">The proof</text>
+                <text x="337" y="170" text-anchor="middle" class="mut" font-size="12">the accountant</text>
+                <!-- 3 bubble -->
+                <g transform="translate(563,90)"><circle r="27" fill="var(--bg)" stroke="var(--c4)" stroke-width="2.5"/>
+                  <path d="M-14,6 C -6,-15 6,-15 14,6" fill="none" stroke="var(--c4)" stroke-width="1.8"/><circle cx="14" cy="6" r="2.6" fill="var(--c4)"/></g>
+                <text x="563" y="150" text-anchor="middle" class="lbl" font-size="14">The bubble</text>
+                <text x="563" y="170" text-anchor="middle" class="mut" font-size="12">real tech, real mania</text>
+                <!-- 4 promotion -->
+                <g transform="translate(790,90)"><circle r="27" fill="var(--bg)" stroke="var(--c3)" stroke-width="2.5"/>
+                  <line x1="-7" y1="-13" x2="-7" y2="13" stroke="var(--c3)" stroke-width="1.6"/><line x1="7" y1="-13" x2="7" y2="13" stroke="var(--c3)" stroke-width="1.6"/><line x1="-7" y1="-4" x2="7" y2="-4" stroke="var(--c3)" stroke-width="1.6"/><line x1="-7" y1="6" x2="7" y2="6" stroke="var(--c3)" stroke-width="1.6"/></g>
+                <text x="790" y="150" text-anchor="middle" class="lbl" font-size="14">The promotion</text>
+                <text x="790" y="170" text-anchor="middle" class="mut" font-size="12">move up the diamond</text>
+                <line x1="110" y1="200" x2="790" y2="200" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 4"/>
+                <text x="450" y="228" text-anchor="middle" class="mut" font-size="13">+78M net jobs &middot; +56% AI-skill pay &middot; but the entry rung is &minus;13%</text>
+              </svg>
+            </div>
+
+            <h2>Sources &amp; further reading</h2>
+            <ul class="refs">
+                <li>David Cahn, <a href="https://www.sequoiacap.com/article/ais-600b-question/" target="_blank" rel="noopener">"AI's $600B Question,"</a> Sequoia Capital (2024).</li>
+                <li>MIT Project NANDA, <a href="https://www.artificialintelligence-news.com/wp-content/uploads/2025/08/ai_report_2025.pdf" target="_blank" rel="noopener">"The GenAI Divide: State of AI in Business 2025."</a></li>
+                <li>Big-tech AI capex: <a href="https://www.cnbc.com/2025/10/31/tech-ai-google-meta-amazon-microsoft-spend.html" target="_blank" rel="noopener">CNBC</a>, <a href="https://www.visualcapitalist.com/visualized-big-tech-ai-spending/" target="_blank" rel="noopener">Visual Capitalist</a>, <a href="https://epoch.ai/data-insights/hyperscaler-capex-trend" target="_blank" rel="noopener">Epoch AI</a>.</li>
+                <li>Nvidia, <a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2025" target="_blank" rel="noopener">FY2025 financial results</a>.</li>
+                <li>Historical parallels: <a href="https://en.wikipedia.org/wiki/Canal_Mania" target="_blank" rel="noopener">Canal Mania (1790s)</a>, <a href="https://en.wikipedia.org/wiki/Railway_Mania" target="_blank" rel="noopener">Railway Mania (1846)</a>, the 1920s radio boom, and the dot-com <a href="https://en.wikipedia.org/wiki/Dark_fibre" target="_blank" rel="noopener">dark-fibre</a> glut. On the fiber, see "<a href="https://www.oregonlive.com/business/2002/12/amid_telecom_ruins_a_fortune_i.html" target="_blank" rel="noopener">Amid telecom ruins, a fortune is buried</a>" (The Oregonian, 2002).</li>
+                <li><a href="https://en.wikipedia.org/wiki/Jevons_paradox" target="_blank" rel="noopener">Jevons paradox</a>; Satya Nadella on AI and Jevons (<a href="https://www.geekwire.com/2025/microsoft-ceo-says-ai-use-will-skyrocket-with-more-efficiency-amid-craze-over-deepseek/" target="_blank" rel="noopener">GeekWire, 2025</a>); IBM's entry-level hiring shift (<a href="https://techcrunch.com/2026/02/12/ibm-will-hire-your-entry-level-talent-in-the-age-of-ai/" target="_blank" rel="noopener">TechCrunch, 2026</a>).</li>
+                <li>Future of work: <a href="https://www.weforum.org/press/2025/01/future-of-jobs-report-2025-78-million-new-job-opportunities-by-2030-but-urgent-upskilling-needed-to-prepare-workforces/" target="_blank" rel="noopener">WEF Future of Jobs 2025</a>, <a href="https://www.mckinsey.com/mgi/our-research/generative-ai-and-the-future-of-work-in-america" target="_blank" rel="noopener">McKinsey</a>, <a href="https://www.pwc.com/gx/en/issues/artificial-intelligence/job-barometer/2025/report.pdf" target="_blank" rel="noopener">PwC 2025 AI Jobs Barometer</a>, <a href="https://budgetlab.yale.edu/research/tracking-impact-ai-labor-market" target="_blank" rel="noopener">Yale Budget Lab</a>, and Stanford's <a href="https://www.cnbc.com/2025/08/28/generative-ai-reshapes-us-job-market-stanford-study-shows-entry-level-young-workers.html" target="_blank" rel="noopener">"Canaries in the Coal Mine"</a>.</li>
+            </ul>
+            <p class="refs">Figures are rounded and, where noted, approximate; several are analyst or investor estimates rather than audited totals.</p>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+    <!-- Scene charts: built lazily when their scene first becomes active -->
+    <script>
+    (function () {
+        var built = {};
+        if (typeof Chart !== 'undefined') { Chart.defaults.maintainAspectRatio = false; }
+        function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+        function buildRoles() {
+            if (built.roles || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartRoles'); if (!el) return;
+            built.roles = true;
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: ['Manual calculation', 'Data entry & validation', 'Software developers', 'QA & testing', 'SaaS operations', 'Hosting & infra'],
+                    datasets: [{
+                        label: 'Relative roles after the shift',
+                        data: [12, 55, 85, 48, 42, 38],
+                        backgroundColor: [css('--c5'), css('--c3'), css('--c1'), css('--c2'), css('--c4'), css('--c3')],
+                        borderRadius: 5,
+                        barPercentage: 0.7
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Roles after the compute revolution (directional)', color: css('--text-muted'), font: { size: 12 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text-muted') }, grid: { color: css('--border') } },
+                        y: { ticks: { color: css('--text'), font: { size: 11 } }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function buildWaves() {
+            if (built.waves || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartWaves'); if (!el) return;
+            built.waves = true;
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: ['Industrial', 'Compute', 'AI (projected)'],
+                    datasets: [{
+                        label: 'New categories of work created',
+                        data: [22, 58, 92],
+                        backgroundColor: [css('--c1'), css('--c3'), css('--c4')],
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'New categories of work per revolution (directional)', color: css('--text-muted'), font: { size: 12 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted') }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        function buildCapex() {
+            if (built.capex || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartCapex'); if (!el) return;
+            built.capex = true;
+            new Chart(el, {
+                type: 'line',
+                data: {
+                    labels: ['2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Capex ($B)',
+                        data: [120, 150, 246, 340],
+                        borderColor: css('--c4'),
+                        backgroundColor: 'transparent',
+                        tension: 0.25,
+                        borderWidth: 3,
+                        pointRadius: 4,
+                        pointBackgroundColor: css('--c4')
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return '$' + c.parsed.y + 'B'; } } },
+                        title: { display: true, text: 'Combined capex, four largest US tech firms \u2014 $B (approx.)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted'), callback: function (v) { return '$' + v + 'B'; } }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        function buildGap() {
+            if (built.gap || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartGap'); if (!el) return;
+            built.gap = true;
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: ['Needed / yr', 'Actual / yr'],
+                    datasets: [{
+                        label: 'Annual revenue ($B)',
+                        data: [600, 100],
+                        backgroundColor: [css('--c5'), css('--c3')],
+                        borderRadius: 6,
+                        barPercentage: 0.55
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return '$' + c.parsed.y + 'B'; } } },
+                        title: { display: true, text: 'AI revenue: needed vs actual \u2014 $B/yr (Sequoia est.)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted'), callback: function (v) { return '$' + v + 'B'; } }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        function buildJevons() {
+            if (built.jevons || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartJevons'); if (!el) return;
+            built.jevons = true;
+            new Chart(el, {
+                type: 'line',
+                data: {
+                    labels: ['', '', '', '', '', ''],
+                    datasets: [
+                        { label: 'Cost per task', data: [100, 60, 34, 18, 9, 4], borderColor: css('--c5'), backgroundColor: 'transparent', tension: 0.35, borderWidth: 3, pointRadius: 0 },
+                        { label: 'Total work done', data: [100, 150, 235, 360, 540, 780], borderColor: css('--c3'), backgroundColor: 'transparent', tension: 0.35, borderWidth: 3, pointRadius: 0 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: css('--text-muted'), boxWidth: 14, font: { size: 11 } } },
+                        title: { display: true, text: 'As cost falls, total work rises (the Jevons effect)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'efficiency \u2192', color: css('--text-muted'), font: { size: 10 } }, ticks: { display: false }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted') }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        function buildJobs2030() {
+            if (built.jobs2030 || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartJobs2030'); if (!el) return;
+            built.jobs2030 = true;
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: ['Displaced', 'Created', 'Net gain'],
+                    datasets: [{
+                        label: 'Jobs by 2030 (millions)',
+                        data: [92, 170, 78],
+                        backgroundColor: [css('--c5'), css('--c3'), css('--c1')],
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return c.parsed.y + 'M jobs'; } } },
+                        title: { display: true, text: 'Global jobs by 2030 (WEF, millions)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted'), callback: function (v) { return v + 'M'; } }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        function buildEntry() {
+            if (built.entry || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartEntry'); if (!el) return;
+            built.entry = true;
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: ['Ages 22\u201325 (exposed)', 'Older / senior'],
+                    datasets: [{
+                        label: 'Employment change',
+                        data: [-13, 2],
+                        backgroundColor: [css('--c5'), css('--c3')],
+                        borderRadius: 6,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return (c.parsed.y > 0 ? '+' : '') + c.parsed.y + '%'; } } },
+                        title: { display: true, text: 'Employment change in AI-exposed roles (Stanford)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted'), callback: function (v) { return v + '%'; } }, grid: { color: css('--border') }, suggestedMin: -16, suggestedMax: 4 }
+                    }
+                }
+            });
+        }
+
+        var root = document.querySelector('[data-scrolly]');
+        if (root) {
+            root.addEventListener('scrolly:change', function (e) {
+                if (e.detail.scene === '7') buildRoles();
+                if (e.detail.scene === '9') buildWaves();
+                if (e.detail.scene === '10') buildCapex();
+                if (e.detail.scene === '13') buildGap();
+                if (e.detail.scene === '16') buildJevons();
+                if (e.detail.scene === '18') buildJobs2030();
+                if (e.detail.scene === '20') buildEntry();
+            });
+        }
+    })();
+    </script>
+
+    <script src="/assets/scrollytelling.js"></script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+</body>
+</html>

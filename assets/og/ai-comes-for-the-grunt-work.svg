@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- baseline -->
+<line x1="120" y1="470" x2="1080" y2="470" stroke="#334155" stroke-width="2"/>
+<!-- rising staircase of three revolutions -->
+<g fill="none" stroke-width="3">
+  <path d="M170,430 L370,430 L370,340 L620,340 L620,220 L900,220 L900,120 L1060,120" stroke="#475569" stroke-width="2" stroke-dasharray="6 6"/>
+</g>
+<!-- Wave 1: energy / machines (gear) -->
+<g transform="translate(270,410)">
+  <circle r="34" fill="none" stroke="#93c5fd" stroke-width="3"/>
+  <g stroke="#93c5fd" stroke-width="3"><line x1="-34" y1="0" x2="-48" y2="0"/><line x1="34" y1="0" x2="48" y2="0"/><line x1="0" y1="-34" x2="0" y2="-48"/><line x1="0" y1="34" x2="0" y2="48"/></g>
+  <path d="M3,-15 L-9,3 L2,3 L-3,17 L11,-3 L0,-3 Z" fill="#93c5fd"/>
+</g>
+<!-- Wave 2: compute / software (monitor) -->
+<g transform="translate(520,300)">
+  <rect x="-40" y="-30" width="80" height="56" rx="5" fill="none" stroke="#6ee7b7" stroke-width="3"/>
+  <line x1="-24" y1="-14" x2="24" y2="-14" stroke="#6ee7b7" stroke-width="2" opacity="0.7"/>
+  <line x1="-24" y1="-2" x2="24" y2="-2" stroke="#6ee7b7" stroke-width="2" opacity="0.7"/>
+  <line x1="-24" y1="10" x2="8" y2="10" stroke="#6ee7b7" stroke-width="2" opacity="0.7"/>
+  <line x1="0" y1="26" x2="0" y2="40" stroke="#6ee7b7" stroke-width="3"/>
+  <line x1="-16" y1="40" x2="16" y2="40" stroke="#6ee7b7" stroke-width="3"/>
+</g>
+<!-- Wave 3: intelligence / agents (node cluster) -->
+<g transform="translate(790,180)">
+  <polygon points="0,-34 30,-17 30,17 0,34 -30,17 -30,-17" fill="none" stroke="#fbbf24" stroke-width="3"/>
+  <circle r="11" fill="#fbbf24"/>
+  <g stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.7">
+    <path d="M30,-10 L58,-24"/><path d="M30,10 L58,24"/>
+  </g>
+  <circle cx="62" cy="-24" r="7" fill="none" stroke="#fbbf24" stroke-width="2"/>
+  <circle cx="62" cy="24" r="7" fill="none" stroke="#fbbf24" stroke-width="2"/>
+</g>
+<!-- "we are here" marker on wave 3 -->
+<circle cx="960" cy="120" r="7" fill="#c4b5fd"/>
+<circle cx="960" cy="120" r="16" fill="none" stroke="#c4b5fd" stroke-width="2" opacity="0.6"/>
+<!-- growing job dots above each wave (more with each revolution) -->
+<g fill="#f1f5f9" opacity="0.35">
+  <circle cx="256" cy="360" r="4"/><circle cx="284" cy="360" r="4"/>
+  <circle cx="500" cy="250" r="4"/><circle cx="524" cy="250" r="4"/><circle cx="548" cy="250" r="4"/><circle cx="512" cy="234" r="4"/>
+  <circle cx="760" cy="120" r="4"/><circle cx="784" cy="120" r="4"/><circle cx="808" cy="120" r="4"/><circle cx="772" cy="104" r="4"/><circle cx="796" cy="104" r="4"/><circle cx="820" cy="104" r="4"/>
+</g>
+</svg>
