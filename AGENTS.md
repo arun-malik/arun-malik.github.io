@@ -68,6 +68,11 @@ follow it when the trigger applies.
 A good flow for a new post: **grill-me** (sharpen the argument) → draft →
 **humanize-writing** (strip AI tells) → publish.
 
+For the GitHub Copilot runtime, these are also exposed as slash commands via
+`.github/prompts/grill-me.prompt.md` and `.github/prompts/humanize-writing.prompt.md`
+(they point back to the `SKILL.md` files as the single source of truth), and a
+Copilot-native mirror of this guidance lives in `.github/copilot-instructions.md`.
+
 ## House writing style
 
 The full ruleset is in `skills/humanize-writing/SKILL.md`. The essentials:
