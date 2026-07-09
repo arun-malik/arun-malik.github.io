@@ -47,7 +47,12 @@
     <priority>0.7</priority>
   </url>
   <!-- Published posts -->
-  <url>
+    <url>
+    <loc>https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/</loc>
+    <lastmod>2026-07-13</lastmod>
+    <priority>0.8</priority>
+    </url>
+    <url>
     <loc>https://blog.arunmalik.dev/posts/ai-comes-for-the-grunt-work/</loc>
     <lastmod>2026-07-06</lastmod>
     <priority>0.8</priority>

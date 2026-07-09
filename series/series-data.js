@@ -168,7 +168,7 @@ const SERIES_DATA = [
         excerpt: "An 8,214-participant meta-analysis shows human+AI teams beat either humans or AI working alone.",
         tags: ["evidence", "collaboration"],
         references: ["ai-comes-for-the-grunt-work"],
-        published: false
+        published: true
       },
       {
         slug: "02-centaur-advantage",

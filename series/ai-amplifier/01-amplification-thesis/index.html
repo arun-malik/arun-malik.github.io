@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Human-AI collaboration, Amplification, Augmentation, AI strategy, Complementarity, Centaur, Future of work">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="The Amplification Thesis: The Best AI Strategy Is Not Replacement">
+    <meta property="og:description" content="Across 28 studies and 8,214 people, human-plus-AI teams beat humans alone and AI alone. Why amplification, not replacement, is the AI strategy that compounds.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/01-amplification-thesis.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Amplification Thesis: The Best AI Strategy Is Not Replacement">
+    <meta name="twitter:description" content="Human alone and AI alone score about the same. Human plus AI wins. The evidence, the mechanism, and why amplification is a moat.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>The Amplification Thesis - Arun Malik</title>
+    <meta name="description" content="Across 28 studies and 8,214 participants, human-plus-AI teams outperform humans alone and AI alone. An animated, scrollytelling case for designing AI to amplify people rather than replace them, and why that choice compounds into a competitive moat.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    </style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article>
+        <header class="blog-header">
+            <h1>The Amplification Thesis</h1>
+            <div class="blog-meta">
+                <span>Arun Malik</span>
+                <span>2026-07-13</span>
+                <span class="tag">Essay</span>
+                <span>AI Strategy</span>
+            </div>
+        </header>
+
+        <div id="series-header"></div>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+            <p>Almost every serious AI conversation in 2026 opens with the same question: where can we cut headcount? It is the reflex of the moment. Automate the support queue, retire the junior analyst, thin out the engineering team. Replacement is the default frame, and most AI strategies are quietly built on top of it.</p>
+
+            <p>The frame is not wrong so much as it is small. It leaves the bigger prize sitting on the table. Because when researchers actually measure it, the strongest configuration is almost never the human alone or the machine alone. It is the two together. Follow the evidence with me. The visual above pins and moves as you scroll, and by the end the strategic question flips from "what can AI replace?" to the one that actually compounds: "what can AI amplify?"</p>
+
+            <figure class="journey-fig" style="margin-top:1.5rem">
+              <svg viewBox="0 0 900 330" role="img" aria-label="Creative performance from a meta-analysis of 28 studies: humans alone and AI alone score about the same, while humans working with AI score clearly higher">
+                <line x1="120" y1="60" x2="120" y2="272" stroke="var(--border)" stroke-width="1.5"/>
+                <line x1="120" y1="272" x2="830" y2="272" stroke="var(--border)" stroke-width="1.5"/>
+                <rect x="190" y="132" width="130" height="140" rx="4" fill="var(--c1)"/>
+                <text x="255" y="120" text-anchor="middle" class="lbl" font-size="14">100</text>
+                <text x="255" y="292" text-anchor="middle" class="mut" font-size="12">Human alone</text>
+                <rect x="390" y="138" width="130" height="134" rx="4" fill="var(--c4)"/>
+                <text x="455" y="126" text-anchor="middle" class="lbl" font-size="14">96</text>
+                <text x="455" y="292" text-anchor="middle" class="mut" font-size="12">AI alone</text>
+                <rect x="590" y="82" width="130" height="190" rx="4" fill="var(--c3)"/>
+                <text x="655" y="70" text-anchor="middle" class="lbl" font-size="15" style="fill:var(--c3)">127</text>
+                <text x="655" y="292" text-anchor="middle" class="lbl" font-size="12" style="fill:var(--c3)">Human + AI</text>
+                <text x="775" y="150" class="mut" font-size="12">28 studies</text>
+                <text x="775" y="168" class="mut" font-size="12">8,214 people</text>
+              </svg>
+              <figcaption class="figcap">The whole argument in one chart. On their own, people and AI score about the same on creative work. Together they pull clearly ahead. Index relative to humans alone, from a 2025 meta-analysis. The rest of this piece is the <em>why</em>, and the honest caveat.</figcaption>
+            </figure>
+        </div>
+
+        <!-- ===================== SCROLLYTELLING ===================== -->
+        <div class="scrolly-wrap">
+          <div class="scrolly" data-scrolly>
+            <div class="scrolly-graphic">
+              <div class="scene-stack">
+
+                <!-- Scene 1: the default question -->
+                <div class="scene" data-scene="1">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="A boardroom asks where headcount can be cut, striking out a worker to save cost">
+                    <g class="anim d1">
+                      <rect x="80" y="118" width="240" height="64" rx="10" fill="none" stroke="var(--text-muted)" stroke-width="2.5"/>
+                      <text x="200" y="156" text-anchor="middle" class="lbl">"Where can we cut?"</text>
+                    </g>
+                    <g class="anim d2" stroke="var(--text-muted)" stroke-width="2.5" fill="none">
+                      <g transform="translate(120,250)"><circle cx="0" cy="-14" r="9"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/></g>
+                      <g transform="translate(200,250)"><circle cx="0" cy="-14" r="9"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/></g>
+                      <g transform="translate(280,250)"><circle cx="0" cy="-14" r="9"/><path d="M-13,22 Q-13,4 0,4 Q13,4 13,22"/></g>
+                    </g>
+                    <g class="anim d4">
+                      <line x1="255" y1="226" x2="305" y2="276" stroke="var(--c5)" stroke-width="3.5"/>
+                      <line x1="305" y1="226" x2="255" y2="276" stroke="var(--c5)" stroke-width="3.5"/>
+                    </g>
+                    <text x="200" y="322" text-anchor="middle" class="lbl anim d5" style="fill:var(--c5)">a head is a cost to remove</text>
+                  </svg>
+                  <div class="scene-caption">Every AI plan seems to start here</div>
+                </div>
+
+                <!-- Scene 2: the false binary -->
+                <div class="scene" data-scene="2">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="The industry frames AI as a binary switch between full automation and staying manual">
+                    <g class="anim d1">
+                      <rect x="70" y="182" width="260" height="60" rx="30" fill="none" stroke="var(--text-muted)" stroke-width="2.5"/>
+                      <circle cx="130" cy="212" r="22" fill="var(--c5)"/>
+                    </g>
+                    <text x="130" y="160" text-anchor="middle" class="lbl anim d2" style="fill:var(--c5)">automate</text>
+                    <text x="272" y="160" text-anchor="middle" class="lbl-mut anim d3">stay manual</text>
+                    <text x="200" y="300" text-anchor="middle" class="lbl anim d4">two options, and that's the whole menu</text>
+                  </svg>
+                  <div class="scene-caption">The industry's binary</div>
+                </div>
+
+                <!-- Scene 3: chart, linear vs superlinear -->
+                <div class="scene" data-scene="3">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartGains" height="320" aria-label="Replacement gives a one-time gain that flattens; amplification compounds and keeps rising"></canvas>
+                  </div>
+                  <div class="scene-caption">Two very different payoffs</div>
+                </div>
+
+                <!-- Scene 4: chart, human + AI beats both -->
+                <div class="scene" data-scene="4">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartMeta" height="320" aria-label="Meta-analysis of 28 studies and 8,214 participants: human plus AI outperforms humans alone and AI alone"></canvas>
+                  </div>
+                  <div class="scene-caption">28 studies, 8,214 people</div>
+                </div>
+
+                <!-- Scene 5: complementarity -->
+                <div class="scene" data-scene="5">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Two overlapping circles: human context and judgment on one side, AI scale and recall on the other, meeting in the middle">
+                    <g class="anim d1"><circle cx="155" cy="205" r="100" fill="var(--c1)" opacity="0.14" stroke="var(--c1)" stroke-width="2.5"/></g>
+                    <g class="anim d2"><circle cx="245" cy="205" r="100" fill="var(--c3)" opacity="0.14" stroke="var(--c3)" stroke-width="2.5"/></g>
+                    <text x="112" y="200" text-anchor="middle" class="lbl anim d1" style="fill:var(--c1)">human</text>
+                    <text x="112" y="220" text-anchor="middle" class="lbl-mut anim d1">context, judgment</text>
+                    <text x="288" y="200" text-anchor="middle" class="lbl anim d2" style="fill:var(--c3)">AI</text>
+                    <text x="288" y="220" text-anchor="middle" class="lbl-mut anim d2">scale, recall</text>
+                    <text x="200" y="209" text-anchor="middle" class="lbl anim d3" style="fill:var(--c4)">1 + 1 &gt; 2</text>
+                    <text x="200" y="332" text-anchor="middle" class="lbl anim d4">different knowledge, different strengths</text>
+                  </svg>
+                  <div class="scene-caption">The overlap is where the gain lives</div>
+                </div>
+
+                <!-- Scene 6: a 60-year idea -->
+                <div class="scene" data-scene="6">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="A timeline of the human-AI symbiosis idea: Licklider in 1960, Engelbart in 1962, and today">
+                    <line x1="55" y1="205" x2="345" y2="205" stroke="var(--border)" stroke-width="2"/>
+                    <g class="anim d1"><circle cx="95" cy="205" r="7" fill="var(--c1)"/><text x="95" y="182" text-anchor="middle" class="lbl-mut">1960</text><text x="95" y="234" text-anchor="middle" class="lbl-mut" style="font-size:9px">Licklider</text><text x="95" y="247" text-anchor="middle" class="lbl-mut" style="font-size:9px">symbiosis</text></g>
+                    <g class="anim d3"><circle cx="200" cy="205" r="7" fill="var(--c3)"/><text x="200" y="182" text-anchor="middle" class="lbl-mut">1962</text><text x="200" y="234" text-anchor="middle" class="lbl-mut" style="font-size:9px">Engelbart</text><text x="200" y="247" text-anchor="middle" class="lbl-mut" style="font-size:9px">augment intellect</text></g>
+                    <g class="anim d5"><circle cx="320" cy="205" r="8" fill="var(--c4)"/><text x="320" y="182" text-anchor="middle" class="lbl" style="fill:var(--c4)">today</text><text x="320" y="234" text-anchor="middle" class="lbl-mut" style="font-size:9px">finally</text><text x="320" y="247" text-anchor="middle" class="lbl-mut" style="font-size:9px">buildable</text></g>
+                    <text x="200" y="322" text-anchor="middle" class="lbl anim d6">a 60-year-old bet, newly practical</text>
+                  </svg>
+                  <div class="scene-caption">Not a new idea</div>
+                </div>
+
+                <!-- Scene 7: workers want a partner -->
+                <div class="scene" data-scene="7">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="On the Human Agency Scale, workers in most surveyed occupations prefer an equal human-AI partnership over full automation">
+                    <line x1="60" y1="212" x2="340" y2="212" stroke="var(--text-muted)" stroke-width="2.5"/>
+                    <text x="60" y="240" text-anchor="start" class="lbl-mut anim d1">full AI</text>
+                    <text x="340" y="240" text-anchor="end" class="lbl-mut anim d1">full human</text>
+                    <g class="anim d3"><path d="M200,198 L200,152" stroke="var(--c3)" stroke-width="2"/><circle cx="200" cy="212" r="14" fill="var(--c3)"/><text x="200" y="142" text-anchor="middle" class="lbl" style="fill:var(--c3)">equal partnership</text></g>
+                    <text x="200" y="302" text-anchor="middle" class="lbl anim d5">the top choice in 47 of 104 jobs</text>
+                  </svg>
+                  <div class="scene-caption">What workers actually want</div>
+                </div>
+
+                <!-- Scene 8: chart, production amplification -->
+                <div class="scene" data-scene="8">
+                  <div style="width:100%;padding:0 5%;">
+                    <canvas id="chartScale" height="320" aria-label="In production, work handled rose more than twentyfold over a year while team size stayed flat"></canvas>
+                  </div>
+                  <div class="scene-caption">Amplification in production</div>
+                </div>
+
+                <!-- Scene 9: three design choices -->
+                <div class="scene" data-scene="9">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Three design choices: humans set the boundaries, engineers converse with the system, and novel problems route to people first">
+                    <g class="anim d1"><rect x="45" y="92" width="310" height="58" rx="8" fill="none" stroke="var(--c1)" stroke-width="2.5"/><text x="200" y="118" text-anchor="middle" class="lbl">1. Humans set the boundaries</text><text x="200" y="137" text-anchor="middle" class="lbl-mut" style="font-size:10px">AI executes inside them</text></g>
+                    <g class="anim d3"><rect x="45" y="171" width="310" height="58" rx="8" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="200" y="197" text-anchor="middle" class="lbl">2. Conversations, not pipelines</text><text x="200" y="216" text-anchor="middle" class="lbl-mut" style="font-size:10px">engineers stay in the loop</text></g>
+                    <g class="anim d5"><rect x="45" y="250" width="310" height="58" rx="8" fill="none" stroke="var(--c4)" stroke-width="2.5"/><text x="200" y="276" text-anchor="middle" class="lbl">3. Novel problems go to humans</text><text x="200" y="295" text-anchor="middle" class="lbl-mut" style="font-size:10px">expertise is built, not bypassed</text></g>
+                  </svg>
+                  <div class="scene-caption">How we designed for it</div>
+                </div>
+
+                <!-- Scene 10: the consensus -->
+                <div class="scene" data-scene="10">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Three leaders converge: Nadella on co-pilot not autopilot, Mollick on co-intelligence, Brynjolfsson on racing with the machine">
+                    <g class="anim d1"><rect x="55" y="92" width="290" height="52" rx="8" fill="none" stroke="var(--c1)" stroke-width="2"/><text x="200" y="114" text-anchor="middle" class="lbl">"co-pilot, not autopilot"</text><text x="200" y="133" text-anchor="middle" class="lbl-mut" style="font-size:10px">Nadella, Microsoft</text></g>
+                    <g class="anim d3"><rect x="55" y="164" width="290" height="52" rx="8" fill="none" stroke="var(--c3)" stroke-width="2"/><text x="200" y="186" text-anchor="middle" class="lbl">"co-intelligence"</text><text x="200" y="205" text-anchor="middle" class="lbl-mut" style="font-size:10px">Mollick, Wharton</text></g>
+                    <g class="anim d5"><rect x="55" y="236" width="290" height="52" rx="8" fill="none" stroke="var(--c4)" stroke-width="2"/><text x="200" y="258" text-anchor="middle" class="lbl">"race with the machine"</text><text x="200" y="277" text-anchor="middle" class="lbl-mut" style="font-size:10px">Brynjolfsson, Stanford</text></g>
+                    <text x="200" y="326" text-anchor="middle" class="lbl anim d6">three vantage points, one conclusion</text>
+                  </svg>
+                  <div class="scene-caption">The leaders agree</div>
+                </div>
+
+                <!-- Scene 11: the moat -->
+                <div class="scene" data-scene="11">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="Automation is a commodity a competitor can buy; amplification built on your team's judgment cannot be copied">
+                    <g class="anim d1"><rect x="38" y="138" width="150" height="124" rx="10" fill="none" stroke="var(--text-muted)" stroke-width="2.5" stroke-dasharray="6 5"/><text x="113" y="188" text-anchor="middle" class="lbl">automation</text><text x="113" y="210" text-anchor="middle" class="lbl-mut" style="font-size:10px">same model,</text><text x="113" y="224" text-anchor="middle" class="lbl-mut" style="font-size:10px">anyone can buy</text></g>
+                    <g class="anim d3"><rect x="212" y="138" width="150" height="124" rx="10" fill="none" stroke="var(--c3)" stroke-width="3"/><text x="287" y="180" text-anchor="middle" class="lbl" style="fill:var(--c3)">amplification</text><rect x="274" y="196" width="26" height="20" rx="3" fill="none" stroke="var(--c3)" stroke-width="2"/><path d="M279,196 v-6 a8,8 0 0 1 16,0 v6" fill="none" stroke="var(--c3)" stroke-width="2"/><text x="287" y="238" text-anchor="middle" class="lbl-mut" style="font-size:10px">your team's judgment</text></g>
+                    <text x="200" y="312" text-anchor="middle" class="lbl anim d5">one is a commodity, one is a moat</text>
+                  </svg>
+                  <div class="scene-caption">Only one of these is yours</div>
+                </div>
+
+                <!-- Scene 12: the honest counterpoint -->
+                <div class="scene" data-scene="12">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="A router sends routine tasks to automation and novel judgment tasks to human-AI amplification">
+                    <g class="anim d1"><circle cx="200" cy="118" r="26" fill="none" stroke="var(--text-muted)" stroke-width="2.5"/><text x="200" y="123" text-anchor="middle" class="lbl-mut" style="font-size:10px">route</text></g>
+                    <g stroke="var(--text-muted)" stroke-width="2" fill="none">
+                      <path class="anim d2" d="M182,136 L112,208"/>
+                      <path class="anim d4" d="M218,136 L288,208"/>
+                    </g>
+                    <g class="anim d2"><rect x="42" y="210" width="140" height="60" rx="8" fill="none" stroke="var(--c1)" stroke-width="2.5"/><text x="112" y="236" text-anchor="middle" class="lbl">routine</text><text x="112" y="256" text-anchor="middle" class="lbl-mut" style="font-size:10px">automate it</text></g>
+                    <g class="anim d4"><rect x="218" y="210" width="140" height="60" rx="8" fill="none" stroke="var(--c3)" stroke-width="2.5"/><text x="288" y="236" text-anchor="middle" class="lbl">novel</text><text x="288" y="256" text-anchor="middle" class="lbl-mut" style="font-size:10px">amplify it</text></g>
+                    <text x="200" y="322" text-anchor="middle" class="lbl anim d5">the skill is knowing which is which</text>
+                  </svg>
+                  <div class="scene-caption">Not everything should be amplified</div>
+                </div>
+
+                <!-- Scene 13: the question flips -->
+                <div class="scene" data-scene="13">
+                  <svg viewBox="0 0 400 400" role="img" aria-label="The strategic question flips from what can AI replace to what can AI amplify">
+                    <g class="anim d1"><text x="200" y="158" text-anchor="middle" class="lbl" style="fill:var(--text-muted)">What can AI replace?</text><line x1="88" y1="153" x2="312" y2="153" stroke="var(--c5)" stroke-width="2.5"/></g>
+                    <g class="anim d3"><path d="M200,178 L200,214" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#flipArr)"/><defs><marker id="flipArr" markerWidth="10" markerHeight="10" refX="4" refY="6" orient="auto"><path d="M0,0 L8,0 L4,7 Z" fill="var(--text-muted)"/></marker></defs></g>
+                    <g class="anim d5"><text x="200" y="268" text-anchor="middle" class="lbl" style="fill:var(--c3);font-size:17px">What can AI amplify?</text></g>
+                  </svg>
+                  <div class="scene-caption">Change the question</div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="scrolly-steps">
+              <div class="step" data-scene="1">
+                <div class="kicker">The default question</div>
+                <h2>"Where can we cut headcount?"</h2>
+                <p>It is the first thing most leadership teams ask about AI, and you can understand why. A head is a line on a budget, and a tool that does part of the work looks like a way to erase the line. So the strategy writes itself: find the tasks a model can do, and take the people off them.</p>
+                <p class="pull">Replacement is the default frame. Almost every AI plan is quietly built on it. And it aims at the smaller of the two prizes.</p>
+              </div>
+
+              <div class="step" data-scene="2">
+                <div class="kicker">The false choice</div>
+                <h2>Automate, or stay manual</h2>
+                <p>The framing turns every decision into a switch with two settings. Either a machine does the task end to end, or a person keeps doing it by hand. Vendors reinforce it: the pitch is almost always "this does what your team does, for less."</p>
+                <p>Both settings quietly assume the human and the machine are substitutes, two ways to buy the same output. That assumption is where the strategy goes wrong, because the most valuable option is not on the switch at all.</p>
+              </div>
+
+              <div class="step" data-scene="3">
+                <div class="kicker">The reframe</div>
+                <h2>Replacement is linear. Amplification compounds.</h2>
+                <p>Replacement pays once. You automate a task, book the saving, and the curve flattens. There is no more to take. Amplification behaves differently: when a tool makes a capable person meaningfully better, and the person keeps learning where the tool helps and where it does not, the gains keep building on each other.</p>
+                <p>One curve tops out. The other keeps climbing. That gap, over a couple of years, is the whole argument for treating AI as a multiplier on people rather than a substitute for them.</p>
+              </div>
+
+              <div class="step" data-scene="4">
+                <div class="kicker">The evidence</div>
+                <h2>The combination beats either alone</h2>
+                <p>This is not a hunch. A 2025 meta-analysis pulled together 28 studies covering 8,214 participants on creative work and found a clean pattern. Humans alone and AI alone landed at roughly the same level. Humans working <em>with</em> AI clearly outperformed both (<a href="https://arxiv.org/abs/2505.17241" target="_blank" rel="noopener">Holzner et al., 2025</a>).</p>
+                <p>I will give you the caveat the same study found, because it matters and it is easy to hide: pairing with AI raised the quality of the output but <strong>narrowed the diversity of ideas</strong>. More polish, fewer genuinely different directions. That tradeoff has its own post later in this series. For now, hold the headline: on the work itself, two together beat either one.</p>
+              </div>
+
+              <div class="step" data-scene="5">
+                <div class="kicker">The mechanism</div>
+                <h2>Why the pair wins</h2>
+                <p>The reason is complementarity, and it runs on two channels at once. The first is knowledge: a person and a model literally know different things. You carry context, history, and the unwritten rules of your domain. The model carries patterns and recall at a scale no person can hold in their head.</p>
+                <p>The second is capability: they are good at different jobs. People are strong on judgment under ambiguity, taste, and knowing what actually matters. Models are strong on speed, consistency, and volume. Put different knowledge and different strengths on the same problem and the result is not an average. It is a lift.</p>
+              </div>
+
+              <div class="step" data-scene="6">
+                <div class="kicker">The long arc</div>
+                <h2>A 60-year-old bet</h2>
+                <p>None of this is new thinking. In 1960, <a href="https://groups.csail.mit.edu/medg/people/psz/Licklider.html" target="_blank" rel="noopener">J.C.R. Licklider described "man-computer symbiosis"</a>, a partnership where people set the goals and machines do the heavy lifting in between. Two years later, <a href="https://www.dougengelbart.org/content/view/138/" target="_blank" rel="noopener">Douglas Engelbart set out to "augment human intellect"</a> rather than replace it, and went on to invent much of the interface you are using to read this.</p>
+                <p>The idea has been right for six decades. What changed is that we finally have the models, the compute, and the interfaces to build it for real. The vision was never the bottleneck. The tooling was.</p>
+              </div>
+
+              <div class="step" data-scene="7">
+                <div class="kicker">The preference</div>
+                <h2>Workers want a partner, not a boss</h2>
+                <p>Ask the people doing the jobs and the same answer comes back. Stanford's <a href="https://arxiv.org/abs/2506.06576" target="_blank" rel="noopener">Future of Work with AI Agents</a> study surveyed workers across 104 occupations and scored, task by task, how much AI involvement they actually wanted. In 47 of those occupations, the top choice was an equal human-AI partnership, not a handover (<a href="https://hai.stanford.edu/news/what-workers-really-want-from-artificial-intelligence" target="_blank" rel="noopener">Stanford HAI</a>).</p>
+                <p>People are happy to hand a model the drudgery: scheduling, boilerplate, first-pass research. They want to keep the judgment, the relationships, and the final call. That is not resistance to AI. It is a fairly precise request for amplification.</p>
+              </div>
+
+              <div class="step" data-scene="8">
+                <div class="kicker">In production</div>
+                <h2>We chose amplification</h2>
+                <p>When my team built an incident-response platform for Azure Networking, we faced the exact fork in this post. We could aim for a system that handled incidents without engineers, or one that made engineers far better at handling them. We chose the second.</p>
+                <p>Over about a year, the platform went from handling a baseline load to processing <strong>more than twenty times as much</strong>, with the same team size. That is the tell. Twenty-plus times the work with no extra headcount is not a replacement story. Every engineer got dramatically more capable, not less needed.</p>
+              </div>
+
+              <div class="step" data-scene="9">
+                <div class="kicker">The design</div>
+                <h2>Three choices that made it work</h2>
+                <p>Amplification did not happen by accident. Three design choices carried it. First, <strong>humans set the boundaries</strong>: people define what the AI may do, when it must escalate, and which actions are too risky to automate. The AI moves fast inside those lines.</p>
+                <p>Second, <strong>conversations, not pipelines</strong>: engineers question the system, challenge its diagnoses, and ask for alternatives, so they stay sharp instead of rubber-stamping output. Third, <strong>novel problems go to humans first</strong>. When the system hits something it has not seen, it routes to a person rather than guessing, and that person's solution becomes the next playbook. Expertise gets built, not bypassed.</p>
+              </div>
+
+              <div class="step" data-scene="10">
+                <div class="kicker">The consensus</div>
+                <h2>Different vantage points, one conclusion</h2>
+                <p>The same idea keeps arriving from people who rarely agree on anything. Satya Nadella frames AI as a co-pilot rather than an autopilot, scaffolding for human capability. Ethan Mollick's <a href="https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/" target="_blank" rel="noopener">Co-Intelligence</a> makes the case that AI is at its best as a collaborator and coach, and that a few hours of honest practice is enough to feel where it lifts you.</p>
+                <p>Erik Brynjolfsson has spent years arguing we should race <em>with</em> the machine, not against it, and warning about what he calls the <a href="https://digitaleconomy.stanford.edu/publications/the-turing-trap/" target="_blank" rel="noopener">Turing Trap</a>: aiming AI at imitating humans, which concentrates power, instead of extending them, which spreads the gains. Three vantage points, one conclusion.</p>
+              </div>
+
+              <div class="step" data-scene="11">
+                <div class="kicker">The strategy</div>
+                <h2>Amplification is the moat</h2>
+                <p>Here is why this is a strategy question and not just a nice sentiment. Automation is a commodity. If you automate a process with a frontier model this quarter, your competitor automates the same process with the same model next quarter. You bought an efficiency, not an advantage.</p>
+                <p class="pull">Amplification is not copyable. Your team's domain expertise, institutional memory, and collective judgment, multiplied by AI, is a combination no competitor can buy on an API call. The moat is not the model. It is your people running it well.</p>
+              </div>
+
+              <div class="step" data-scene="12">
+                <div class="kicker">The nuance</div>
+                <h2>Some things should be automated</h2>
+                <p>This is not a claim that automation is bad. Plenty of work should be fully automated: routine, well-defined, low-risk tasks with a clear right answer. Nobody should be hand-reconciling what a script can reconcile. The amplification thesis is about the other pile, the knowledge, creativity, and judgment work where a human in the loop is the difference between good and dangerous.</p>
+                <p>So the real skill is routing. Send the routine to automation. Send the novel and the high-stakes to human-AI amplification. The strategic error is defaulting everything to replacement when amplification would pay far more.</p>
+              </div>
+
+              <div class="step" data-scene="13">
+                <div class="kicker">The question</div>
+                <h2>Stop asking what AI can replace</h2>
+                <p>So change the question. "What can AI replace?" points you at a one-time saving and a commodity capability your rivals will match within months. "What can AI amplify?" points you at compounding capability, work your competitors cannot copy, and teams that get stronger over time rather than smaller.</p>
+                <p class="pull">The bottleneck was never the technology. It is whether an organization is willing to design for amplification instead of settling for replacement.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- ===================== /SCROLLYTELLING ===================== -->
+
+        <div class="content">
+            <figure class="journey-fig">
+              <svg viewBox="0 0 900 250" role="img" aria-label="The argument in four beats: the default is to replace, the evidence says human plus AI wins, the mechanism is complementarity, and the payoff is amplification as a moat">
+                <defs><marker id="jArr" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--text-muted)"/></marker></defs>
+                <g stroke="var(--text-muted)" stroke-width="1.5">
+                  <line x1="140" y1="90" x2="300" y2="90" marker-end="url(#jArr)"/>
+                  <line x1="367" y1="90" x2="527" y2="90" marker-end="url(#jArr)"/>
+                  <line x1="593" y1="90" x2="753" y2="90" marker-end="url(#jArr)"/>
+                </g>
+                <g transform="translate(110,90)"><circle r="27" fill="var(--bg)" stroke="var(--c5)" stroke-width="2.5"/>
+                  <line x1="-11" y1="-11" x2="11" y2="11" stroke="var(--c5)" stroke-width="2"/><line x1="11" y1="-11" x2="-11" y2="11" stroke="var(--c5)" stroke-width="2"/></g>
+                <text x="110" y="150" text-anchor="middle" class="lbl" font-size="14">The default</text>
+                <text x="110" y="170" text-anchor="middle" class="mut" font-size="12">"who can we cut?"</text>
+                <g transform="translate(337,90)"><circle r="27" fill="var(--bg)" stroke="var(--c1)" stroke-width="2.5"/>
+                  <rect x="-13" y="-4" width="7" height="14" fill="var(--c1)"/><rect x="-3" y="-11" width="7" height="21" fill="var(--c1)"/><rect x="7" y="-13" width="7" height="23" fill="var(--c3)"/></g>
+                <text x="337" y="150" text-anchor="middle" class="lbl" font-size="14">The evidence</text>
+                <text x="337" y="170" text-anchor="middle" class="mut" font-size="12">human + AI wins</text>
+                <g transform="translate(563,90)"><circle r="27" fill="var(--bg)" stroke="var(--c4)" stroke-width="2.5"/>
+                  <circle cx="-6" cy="0" r="9" fill="none" stroke="var(--c4)" stroke-width="1.8"/><circle cx="6" cy="0" r="9" fill="none" stroke="var(--c4)" stroke-width="1.8"/></g>
+                <text x="563" y="150" text-anchor="middle" class="lbl" font-size="14">The mechanism</text>
+                <text x="563" y="170" text-anchor="middle" class="mut" font-size="12">complementarity</text>
+                <g transform="translate(790,90)"><circle r="27" fill="var(--bg)" stroke="var(--c3)" stroke-width="2.5"/>
+                  <rect x="-11" y="-3" width="22" height="16" rx="2" fill="none" stroke="var(--c3)" stroke-width="1.8"/><path d="M-6,-3 v-5 a6,6 0 0 1 12,0 v5" fill="none" stroke="var(--c3)" stroke-width="1.8"/></g>
+                <text x="790" y="150" text-anchor="middle" class="lbl" font-size="14">The moat</text>
+                <text x="790" y="170" text-anchor="middle" class="mut" font-size="12">amplification is yours</text>
+                <line x1="110" y1="200" x2="790" y2="200" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 4"/>
+                <text x="450" y="228" text-anchor="middle" class="mut" font-size="13">human + AI beats both &middot; workers want partnership &middot; judgment cannot be copied</text>
+              </svg>
+              <figcaption class="figcap">The argument in four beats. The default is to replace; the evidence, the mechanism, and the strategy all point the other way.</figcaption>
+            </figure>
+
+            <h2>Where this series goes next</h2>
+            <p>This is the first deep dive in the series. It set the thesis: designed well, AI amplifies people rather than replacing them, and that choice compounds. The posts that follow take it apart piece by piece.</p>
+            <p>Next up is the <strong>centaur advantage</strong>, the specific mechanism behind that winning combination and how to architect systems that actually capture it, so the human-plus-AI lift is a design decision rather than a happy accident. After that: why AI lifts beginners the most, the cognitive-offloading trap, what all of this does to code and to creativity (including that idea-diversity caveat from the meta-analysis), the rising premium on human skills, and a playbook for redesigning jobs around amplification.</p>
+
+            <div class="references">
+            <ul class="refs">
+                <li>N. Holzner, S. Maier, and S. Feuerriegel, <a href="https://arxiv.org/abs/2505.17241" target="_blank" rel="noopener">"Generative AI and Creativity: A Systematic Literature Review and Meta-Analysis,"</a> arXiv:2505.17241 (2025). 28 studies, 8,214 participants.</li>
+                <li>Y. Shao et al., <a href="https://arxiv.org/abs/2506.06576" target="_blank" rel="noopener">"Future of Work with AI Agents,"</a> Stanford SALT Lab, arXiv:2506.06576 (2025); summary: Stanford HAI, <a href="https://hai.stanford.edu/news/what-workers-really-want-from-artificial-intelligence" target="_blank" rel="noopener">"What Workers Really Want from AI."</a></li>
+                <li>J.C.R. Licklider, <a href="https://groups.csail.mit.edu/medg/people/psz/Licklider.html" target="_blank" rel="noopener">"Man-Computer Symbiosis,"</a> IRE Transactions on Human Factors in Electronics (1960).</li>
+                <li>D. C. Engelbart, <a href="https://www.dougengelbart.org/content/view/138/" target="_blank" rel="noopener">"Augmenting Human Intellect: A Conceptual Framework,"</a> SRI (1962).</li>
+                <li>E. Mollick, <a href="https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/" target="_blank" rel="noopener">Co-Intelligence: Living and Working with AI</a> (2024).</li>
+                <li>E. Brynjolfsson, <a href="https://digitaleconomy.stanford.edu/publications/the-turing-trap/" target="_blank" rel="noopener">"The Turing Trap: The Promise and Peril of Human-Like Artificial Intelligence,"</a> Daedalus (2022).</li>
+                <li>McKinsey, <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank" rel="noopener">"The State of AI"</a> (2025).</li>
+            </ul>
+            <p class="refs">Production figures are directional and generalized; the meta-analysis and survey results are as reported in the cited papers.</p>
+            </div>
+        </div>
+        <div id="series-footer"></div>
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+    <!-- Scene charts: built lazily when their scene first becomes active -->
+    <script>
+    (function () {
+        var built = {};
+        if (typeof Chart !== 'undefined') { Chart.defaults.maintainAspectRatio = false; }
+        function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+        function buildGains() {
+            if (built.gains || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartGains'); if (!el) return;
+            built.gains = true;
+            new Chart(el, {
+                type: 'line',
+                data: {
+                    labels: ['start', '', '', '', '', 'later'],
+                    datasets: [
+                        { label: 'Replacement (one-time)', data: [0, 22, 34, 40, 42, 43], borderColor: css('--c5'), backgroundColor: 'transparent', tension: 0.35, borderWidth: 3, pointRadius: 0 },
+                        { label: 'Amplification (compounding)', data: [0, 18, 42, 78, 128, 195], borderColor: css('--c3'), backgroundColor: 'transparent', tension: 0.35, borderWidth: 3, pointRadius: 0 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: css('--text-muted'), boxWidth: 14, font: { size: 11 } } },
+                        title: { display: true, text: 'Replacement plateaus; amplification compounds (illustrative)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text-muted') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted') }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        function buildMeta() {
+            if (built.meta || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartMeta'); if (!el) return;
+            built.meta = true;
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: ['Human alone', 'AI alone', 'Human + AI'],
+                    datasets: [{
+                        label: 'Creative performance (indexed)',
+                        data: [100, 96, 127],
+                        backgroundColor: [css('--c1'), css('--c4'), css('--c3')],
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return 'index ' + c.parsed.y; } } },
+                        title: { display: true, text: 'Creative performance, indexed to humans alone (28 studies, 8,214 people)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted') }, grid: { color: css('--border') }, suggestedMin: 0 }
+                    }
+                }
+            });
+        }
+
+        function buildScale() {
+            if (built.scale || typeof Chart === 'undefined') return;
+            var el = document.getElementById('chartScale'); if (!el) return;
+            built.scale = true;
+            new Chart(el, {
+                type: 'line',
+                data: {
+                    labels: ['Month 1', 'Month 4', 'Month 7', 'Month 10', 'Month 12'],
+                    datasets: [
+                        { label: 'Work handled (indexed)', data: [1, 4, 9, 15, 21], borderColor: css('--c3'), backgroundColor: 'transparent', tension: 0.3, borderWidth: 3, pointRadius: 3, pointBackgroundColor: css('--c3') },
+                        { label: 'Team size (indexed)', data: [1, 1, 1, 1, 1], borderColor: css('--c1'), backgroundColor: 'transparent', borderWidth: 3, borderDash: [6, 5], pointRadius: 0 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: css('--text-muted'), boxWidth: 14, font: { size: 11 } } },
+                        title: { display: true, text: 'Work handled vs team size over ~12 months (indexed, directional)', color: css('--text-muted'), font: { size: 11 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: css('--text') }, grid: { display: false } },
+                        y: { ticks: { color: css('--text-muted'), callback: function (v) { return v + 'x'; } }, grid: { color: css('--border') } }
+                    }
+                }
+            });
+        }
+
+        var root = document.querySelector('[data-scrolly]');
+        if (root) {
+            root.addEventListener('scrolly:change', function (e) {
+                if (e.detail.scene === '3') buildGains();
+                if (e.detail.scene === '4') buildMeta();
+                if (e.detail.scene === '8') buildScale();
+            });
+        }
+    })();
+    </script>
+
+    <script src="/assets/scrollytelling.js"></script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+</body>
+</html>

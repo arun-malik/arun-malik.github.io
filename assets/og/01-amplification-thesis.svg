@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1200" height="630" fill="#0f172a"/>
+<!-- part label -->
+<text x="80" y="96" fill="#94a3b8" font-size="24" font-weight="600" letter-spacing="1.5">AI AS HUMAN AMPLIFIER &#183; PART 1</text>
+<!-- title -->
+<text x="80" y="178" fill="#e6edf3" font-size="66" font-weight="700">The Amplification Thesis</text>
+<text x="80" y="238" fill="#94a3b8" font-size="34" font-weight="500">Human + AI beats either one alone</text>
+<!-- baseline -->
+<line x1="120" y1="540" x2="1080" y2="540" stroke="#334155" stroke-width="2"/>
+<!-- Human alone -->
+<rect x="360" y="382" width="150" height="158" rx="6" fill="#60a5fa"/>
+<text x="435" y="360" text-anchor="middle" fill="#e6edf3" font-size="34" font-weight="700">100</text>
+<text x="435" y="576" text-anchor="middle" fill="#94a3b8" font-size="26">Human alone</text>
+<!-- AI alone -->
+<rect x="560" y="390" width="150" height="150" rx="6" fill="#fbbf24"/>
+<text x="635" y="368" text-anchor="middle" fill="#e6edf3" font-size="34" font-weight="700">96</text>
+<text x="635" y="576" text-anchor="middle" fill="#94a3b8" font-size="26">AI alone</text>
+<!-- Human + AI -->
+<rect x="760" y="292" width="150" height="248" rx="6" fill="#34d399"/>
+<text x="835" y="270" text-anchor="middle" fill="#34d399" font-size="40" font-weight="700">127</text>
+<text x="835" y="576" text-anchor="middle" fill="#34d399" font-size="27" font-weight="600">Human + AI</text>
+<!-- note -->
+<text x="985" y="392" fill="#94a3b8" font-size="24">28 studies</text>
+<text x="985" y="424" fill="#94a3b8" font-size="24">8,214 people</text>
+<!-- byline -->
+<text x="80" y="600" fill="#64748b" font-size="24">blog.arunmalik.dev</text>
+</svg>

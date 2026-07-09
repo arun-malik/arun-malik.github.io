@@ -5,10 +5,21 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-07-06T00:00:00Z</updated>
+  <updated>2026-07-13T00:00:00Z</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>The Amplification Thesis</title>
+    <link href="https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/"/>
+    <id>https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/</id>
+    <updated>2026-07-13T00:00:00Z</updated>
+    <summary>Across 28 studies and 8,214 participants, human-plus-AI teams outperform humans alone and AI alone. An animated scrollytelling case for designing AI to amplify people rather than replace them, and why that choice compounds into a competitive moat. Part 1 of the AI as Human Amplifier series.</summary>
+    <category term="Series"/>
+    <category term="Essay"/>
+    <category term="AI Strategy"/>
+  </entry>
 
   <entry>
     <title>AI Comes for the Grunt Work, Not the Judgment</title>
