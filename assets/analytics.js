@@ -133,4 +133,14 @@
       obs.observe(s, { attributes: true, attributeFilter: ["class"] });
     });
   }
+  // ---- 6. Post / series card clicks (home + listing grids) -----------------
+  // Which posts get opened from the home grid, listing, and series pages.
+  document.addEventListener("click", function (e) {
+    var card = e.target.closest && e.target.closest("a.post-card, a.featured-card");
+    if (!card) return;
+    var href = card.getAttribute("href") || "";
+    var titleEl = card.querySelector(".card-title, .featured-title");
+    var title = titleEl ? titleEl.textContent.trim() : "";
+    track("card_click", { target: href, title: title, from: ctx.pageType });
+  }, true);
 })();
