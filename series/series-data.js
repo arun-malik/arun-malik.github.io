@@ -35,11 +35,11 @@ const SERIES_DATA = [
         slug: "02-hidden-debt",
         url: "/series/strategic-hitl/02-hidden-debt/",
         title: "The Hidden Debt in AI-Generated Code",
-        date: "2026-07-15",
-        excerpt: "AI commits introduce code smells at 2-3x the human baseline rate. Analysis of 302,600 commits reveals the true cost.",
-        tags: ["code-quality", "technical-debt"],
+        date: "2026-09-23",
+        excerpt: "What public studies reveal about persistent code-quality issues, the limits of AI-versus-human comparisons, and reviewing architectural change.",
+        tags: ["Series", "code-quality", "technical-debt"],
         references: ["00-why-not-optional"],
-        published: false
+        published: true
       },
       {
         slug: "03-graduated-automation",

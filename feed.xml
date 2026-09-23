@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-22T22:58:44-07:00</updated>
+  <updated>2026-09-23T08:44:39-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>The Hidden Debt in AI-Generated Code</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/02-hidden-debt/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/02-hidden-debt/</id>
+    <published>2026-09-23T08:44:39-07:00</published>
+    <updated>2026-09-23T08:44:39-07:00</updated>
+    <summary>What public studies reveal about persistent code-quality issues, the limits of AI-versus-human comparisons, and reviewing architectural change.</summary>
+    <category term="Series"/>
+    <category term="code-quality"/>
+    <category term="technical-debt"/>
+  </entry>
 
   <entry>
     <title>AI and critical thinking: What the research actually shows</title>
