@@ -182,7 +182,7 @@
         .post-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateY(-2px); }
         .card-img { height: 140px; background-size: cover; background-position: center; }
         .card-body { padding: 1rem 1.25rem; }
-        .card-meta { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+        .card-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
         .card-tag {
             font-size: 0.6875rem; font-weight: 600; text-transform: uppercase;
             letter-spacing: 0.04em; color: var(--accent);
@@ -285,16 +285,17 @@
 
             <!-- Featured Post (latest/best) -->
             <section class="featured-section">
-                <a href="/series/strategic-hitl/00-why-not-optional/" class="featured-card">
-                    <div class="featured-img" style="background:url(/assets/og/00-why-not-optional.svg) center/cover no-repeat"></div>
+                <a href="/series/strategic-hitl/01-cognitive-erosion/" class="featured-card">
+                    <div class="featured-img" style="background:url(/assets/og/strategic-hitl.svg) center/cover no-repeat"></div>
                     <div class="featured-content">
                         <div class="featured-meta">
                             <span class="card-tag">Series</span>
-                            <span class="card-tag">HITL</span>
-                            <span class="card-date">Jul 2026</span>
+                            <span class="card-tag">cognitive-science</span>
+                            <span class="card-tag">research</span>
+                            <span class="card-date">Sep 22, 2026</span>
                         </div>
-                        <h2 class="featured-title">Why Human-in-the-Loop is Not Optional for Production AI Agents</h2>
-                        <p class="featured-excerpt">The six-pillar argument for why HITL is not a transitional compromise but a structural requirement of any production AI system.</p>
+                        <h2 class="featured-title">AI and critical thinking: What the research actually shows</h2>
+                        <p class="featured-excerpt">What an EEG experiment, a knowledge-worker survey, and a perspective paper tell us about AI, critical thinking, and meaningful human oversight.</p>
                     </div>
                 </a>
             </section>
@@ -303,6 +304,14 @@
             <section class="posts-section">
                 <h2>Recent Writing</h2>
                 <div class="post-grid">
+                    <a href="/series/strategic-hitl/01-cognitive-erosion/" class="post-card">
+                        <div class="card-img" style="background:url(/assets/og/strategic-hitl.svg) center/cover no-repeat"></div>
+                        <div class="card-body">
+                            <div class="card-meta"><span class="card-tag">Series</span><span class="card-tag">cognitive-science</span><span class="card-tag">research</span><span class="card-date">Sep 22, 2026</span></div>
+                            <h3 class="card-title">AI and critical thinking: What the research actually shows</h3>
+                            <p class="card-excerpt">What an EEG experiment, a knowledge-worker survey, and a perspective paper tell us about AI, critical thinking, and meaningful human oversight.</p>
+                        </div>
+                    </a>
                     <a href="/series/ai-amplifier/01-amplification-thesis/" class="post-card">
                         <div class="card-img" style="background:url(/assets/og/01-amplification-thesis.svg) center/cover no-repeat"></div>
                         <div class="card-body">
@@ -317,6 +326,14 @@
                             <div class="card-meta"><span class="card-tag">Series</span><span class="card-date">Jul 2026</span></div>
                             <h3 class="card-title">AI Comes for the Grunt Work, Not the Judgment</h3>
                             <p class="card-excerpt">The accountant already answered what happens to a job when the machine arrives. A scrollytelling essay on AI, work, and the bubble question.</p>
+                        </div>
+                    </a>
+                    <a href="/series/strategic-hitl/00-why-not-optional/" class="post-card">
+                        <div class="card-img" style="background:url(/assets/og/00-why-not-optional.svg) center/cover no-repeat"></div>
+                        <div class="card-body">
+                            <div class="card-meta"><span class="card-tag">Series</span><span class="card-tag">HITL</span><span class="card-date">Jul 2026</span></div>
+                            <h3 class="card-title">Why Human-in-the-Loop is Not Optional for Production AI Agents</h3>
+                            <p class="card-excerpt">The six-pillar argument for why HITL is not a transitional compromise but a structural requirement of any production AI system.</p>
                         </div>
                     </a>
                     <a href="/posts/decentralized-access-control/" class="post-card">
@@ -387,7 +404,7 @@
                     <a href="/series/strategic-hitl/" class="post-card">
                         <div class="card-img" style="background:url(/assets/og/strategic-hitl.svg) center/cover no-repeat"></div>
                         <div class="card-body">
-                            <div class="card-meta"><span class="card-tag">13 parts</span><span class="card-date">In Progress</span></div>
+                            <div class="card-meta"><span class="card-tag">2 of 13 published</span><span class="card-date">In Progress</span></div>
                             <h3 class="card-title">Strategic HITL for Production AI Agents</h3>
                         </div>
                     </a>

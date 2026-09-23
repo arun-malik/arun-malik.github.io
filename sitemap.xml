@@ -2,17 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://blog.arunmalik.dev/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/posts/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
@@ -28,7 +28,7 @@
   <!-- Series landing pages -->
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -47,6 +47,11 @@
     <priority>0.7</priority>
   </url>
   <!-- Published posts -->
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/01-cognitive-erosion/</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
     <url>
     <loc>https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/</loc>
     <lastmod>2026-07-13</lastmod>

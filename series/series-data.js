@@ -24,12 +24,12 @@ const SERIES_DATA = [
       {
         slug: "01-cognitive-erosion",
         url: "/series/strategic-hitl/01-cognitive-erosion/",
-        title: "AI is Making Us Worse at Thinking: Here's the Research",
-        date: "2026-07-08",
-        excerpt: "MIT EEG studies show neural degradation after 4 months of heavy LLM use. What cognitive debt means for engineering teams.",
-        tags: ["cognitive-science", "research"],
+        title: "AI and critical thinking: What the research actually shows",
+        date: "2026-09-22",
+        excerpt: "What an EEG experiment, a knowledge-worker survey, and a perspective paper tell us about AI, critical thinking, and meaningful human oversight.",
+        tags: ["Series", "cognitive-science", "research"],
         references: ["00-why-not-optional"],
-        published: false
+        published: true
       },
       {
         slug: "02-hidden-debt",

@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-07-13T00:00:00Z</updated>
+  <updated>2026-09-22T22:58:44-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>AI and critical thinking: What the research actually shows</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/01-cognitive-erosion/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/01-cognitive-erosion/</id>
+    <published>2026-09-22T22:58:44-07:00</published>
+    <updated>2026-09-22T22:58:44-07:00</updated>
+    <summary>What an EEG experiment, a knowledge-worker survey, and a perspective paper tell us about AI, critical thinking, and meaningful human oversight.</summary>
+    <category term="Series"/>
+    <category term="cognitive-science"/>
+    <category term="research"/>
+  </entry>
 
   <entry>
     <title>The Amplification Thesis</title>
