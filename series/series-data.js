@@ -45,11 +45,11 @@ const SERIES_DATA = [
         slug: "03-graduated-automation",
         url: "/series/strategic-hitl/03-graduated-automation/",
         title: "Graduated Automation: How to Scale AI Without Losing Control",
-        date: "2026-07-22",
-        excerpt: "Architecture patterns and decision boundaries for scaling AI autonomy progressively while preserving human oversight.",
-        tags: ["architecture", "governance", "autonomy"],
+        date: "2026-09-24",
+        excerpt: "How a procedure earns permission to act: scoped approvals, independent checks, and withdrawing autonomy when conditions change.",
+        tags: ["Series", "architecture", "governance", "autonomy"],
         references: ["00-why-not-optional"],
-        published: false
+        published: true
       },
       {
         slug: "04-toxic-skills",
