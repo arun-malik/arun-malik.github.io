@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your AI Agent's Skills Might Be Malware - Arun Malik</title>
+    <meta name="description" content="What the ToxicSkills audit found, what its numbers do not prove, and how to limit the damage from a compromised agent skill.">
+    <meta name="keywords" content="Series, security, supply-chain">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/strategic-hitl/04-toxic-skills/">
+    <meta property="og:title" content="Your AI Agent's Skills Might Be Malware">
+    <meta property="og:description" content="What the ToxicSkills audit found, what its numbers do not prove, and how to limit the damage from a compromised agent skill.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/strategic-hitl/04-toxic-skills/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/strategic-hitl.png">
+    <meta property="og:image:alt" content="Abstract artwork for the Strategic HITL series">
+    <meta property="article:published_time" content="2026-09-26T14:59:23-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your AI Agent's Skills Might Be Malware">
+    <meta name="twitter:description" content="What the ToxicSkills audit found, what its numbers do not prove, and how to limit the damage from a compromised agent skill.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --bg: #ffffff; --bg-secondary: #f9fafb; --text: #111827;
+            --text-secondary: #6b7280; --accent: #2563eb; --border: #e5e7eb;
+            --max-width: 680px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', Menlo, monospace;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9;
+            --text-secondary: #94a3b8; --accent: #60a5fa; --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+        .site-nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .site-name:hover { color: var(--accent); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 0.25rem; }
+        .theme-btn:hover { color: var(--text); }
+        article { margin-bottom: 3rem; }
+        .article-meta { margin-bottom: 2rem; }
+        .article-date { font-size: 0.8125rem; color: var(--text-secondary); font-family: var(--font-mono); }
+        .reading-time { font-size: 0.8125rem; color: var(--text-secondary); margin-left: 1rem; }
+        .article-title { font-size: 1.75rem; font-weight: 700; margin: 0.75rem 0; letter-spacing: -0.025em; line-height: 1.3; }
+        .article-excerpt { color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.6; }
+        .article-tags { color: var(--text-secondary); font-size: 0.8125rem; margin-top: 0.75rem; }
+        .article-content h2 { font-size: 1.25rem; font-weight: 700; margin: 2.5rem 0 1rem; letter-spacing: -0.01em; }
+        .article-content p { margin-bottom: 1.25rem; font-size: 1rem; }
+        .article-content ul, .article-content ol { margin: 0.75rem 0 1.25rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; font-size: 1rem; }
+        .article-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+        .references { margin-top: 2rem; }
+        .references h2 { font-size: 1rem; }
+        .references li { font-size: 0.875rem; color: var(--text-secondary); }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 0.8125rem; color: var(--text-secondary); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+        @media (max-width: 640px) { .nav-links { gap: 1rem; } header { padding-top: 2rem; } }
+    </style>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="site-nav">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div id="series-header"></div>
+            <div id="article-toc"></div>
+            <article>
+                <div class="article-meta">
+                    <time class="article-date" datetime="2026-09-26">2026-09-26</time>
+                    <span class="reading-time">6 min read</span>
+                    <h1 class="article-title">Your AI Agent's Skills Might Be Malware</h1>
+                    <p class="article-excerpt">What the ToxicSkills audit found, what its numbers do not prove, and how to limit the damage from a compromised agent skill.</p>
+                    <p class="article-tags">Series &middot; security &middot; supply-chain</p>
+                </div>
+                <div class="article-content">
+                    <p>A skill can be a Markdown file and still change what an agent tries to do with your credentials.</p>
+                    <p>That is the uncomfortable part of adding a capability through instructions. The file may explain a useful workflow. It may also steer the agent toward an unnecessary download, a different destination for its output, or an operation the user never requested. Reading the description is not the same as reviewing the behaviour.</p>
+                    <p>The evidence warrants caution. It does not warrant treating every scanner finding as malware or assuming that loading a file automatically defeats every permission boundary.</p>
+                    <h2>What ToxicSkills actually found</h2>
+                    <p>Snyk's February 5, 2026 ToxicSkills report lists 3,984 scanned skills in its main findings, with 534 containing at least one critical-level security issue and 1,467 containing an issue of any severity. Those correspond to 13.4% and 36.82%. The critical category is included in the any-severity total. Adding the percentages together would count some skills twice. [1]</p>
+                    <p>The report's introduction mentions ClawHub and skills.sh, while its findings section describes the 3,984-skill scan as ClawHub. It separately presents detection rates for a curated top-100 skills.sh set. I would keep the counts attached to the reported scan rather than describe them as the prevalence of malware across all agent platforms.</p>
+                    <p>Snyk also reports human review confirming 76 malicious payloads. That is a different claim from flagging a security concern. The report's taxonomy includes exposed secrets, suspicious downloads, and third-party content exposure. A skill that fetches untrusted content can create an attack surface without its author intending harm.</p>
+                    <p>The described method combines automated scanning, customized models and deterministic rules, with human review of hundreds of skills. It does not establish that every flagged skill was dynamically exploited against a production user. Snyk explicitly cautions that a malicious skill does not necessarily result in a successful compromise.</p>
+                    <p>These are vendor-reported findings from a dated dataset, using the vendor's detection categories. Skills are deduplicated by author and skill ID, not across different authors republishing the same content. The counts are useful evidence that malicious packages existed in the sampled distribution channels, not a probability that a particular skill you install today will compromise your machine.</p>
+                    <h2>The file is not the whole dependency</h2>
+                    <p>The Cloud Security Alliance's May 2026 research note describes agent context poisoning as a supply-chain risk involving files such as SKILL.md. Its analysis also acknowledges that the effect depends on the platform's instruction hierarchy and runtime boundaries. [2]</p>
+                    <p>There are at least two things to inspect. The instructions may try to redirect the agent's decisions. The scripts, executables, or remote content referenced by those instructions may perform the harmful operation. A review that reads only the Markdown can miss the second part.</p>
+                    <p>Consider a hypothetical release-notes skill. Its stated job is to summarize commits. A modified version tells the agent to upload a diagnostic bundle before generating the summary. The bundle could include material unrelated to release notes.</p>
+                    <p>This is an illustrative example, not an account of a Microsoft system. Whether the upload can happen depends on which files the agent can read, which network destinations it can reach, and whether the upload operation requires authorization. The prose alone does not grant those permissions. But broad existing access can turn a misleading instruction into a consequential action.</p>
+                    <p>The same problem can arise without a malicious skill author. A legitimate skill may retrieve a document containing attacker-controlled instructions. The agent should treat that document as task data, not as authority to expand the task.</p>
+                    <p>Traditional supply-chain controls still matter here. Signing can help establish origin and detect changes; it does not prove that signed content is safe. Dependency review, code scanning, and isolated testing remain useful. Agent instructions add another object to review rather than making those controls obsolete.</p>
+                    <h2>Review a version, not a marketplace name</h2>
+                    <p>Before allowing a new skill into a privileged workflow, I would record the exact package version or content digest, its source, and the capabilities it needs. A recognizable name or download count cannot establish that the installed files match a version someone reviewed.</p>
+                    <p>The review should include setup steps and referenced scripts, not just the advertised task. If the skill retrieves executable code or additional instructions at runtime, inspect how that content is selected and controlled. Pinning the top-level file does not freeze a mutable remote dependency.</p>
+                    <p>For the release-notes example, I would expect access to the relevant commits and an approved output location. A request for unrelated credentials, a shell-wide environment dump, or an unexplained external upload needs an explanation before the skill runs.</p>
+                    <p>Use automated checks to help identify suspicious instructions, exposed secrets, and unexpected dependencies. Test behaviour in an isolated environment with synthetic data and without production credentials. Neither a clean scan nor a successful test proves safety: a conditional behaviour may not be exercised by the test.</p>
+                    <p>Updates deserve another review when they change instructions, dependencies, or requested access. Record which workflows used which version so a later finding can be investigated without guessing.</p>
+                    <h2>Make an unsafe request fail outside the model</h2>
+                    <p>OWASP's excessive-agency guidance recommends limiting functionality, permissions, and autonomy separately. It also recommends authorization in downstream systems instead of relying on the model to decide whether an operation is allowed. [3]</p>
+                    <p>For a skill-enabled workflow, I would apply that through a few concrete boundaries:</p>
+                    <ol>
+                        <li><strong>Limit available operations.</strong> Prefer a tool with a narrow purpose over a general shell when the task allows it. Do not leave unrelated connectors available because another workflow needs them.</li>
+                        <li><strong>Limit reachable data and destinations.</strong> Restrict the execution identity, filesystem access, and network egress to the task. A container with broad host mounts and production secrets still exposes those resources.</li>
+                        <li><strong>Authorize consequential actions explicitly.</strong> Show the actual target and proposed data transfer or change. Approval should cover that operation, expire, and be checked by the execution path. It should not authorize whatever a skill asks for next.</li>
+                        <li><strong>Observe outcomes and preserve an off switch.</strong> Record the skill version, tool requests, policy decisions, and destinations without logging secrets. Make it possible to disable a suspect version across affected workflows.</li>
+                    </ol>
+                    <p>These are engineering recommendations, not controls whose effectiveness the ToxicSkills scan measured. They should be tested against the failure modes that matter in the intended environment.</p>
+                    <p>A human reviewer can still approve a harmful action, especially when the agent supplies a persuasive explanation. Review cannot promise a zero blast radius. And a confirmation before one tool call is of little help if the same operation remains available through an unrestricted alternative.</p>
+                    <h2>Removing the skill may not finish the response</h2>
+                    <p>If a skill is suspected of causing a compromise, disabling it can stop new uses. It does not reverse a data transfer, invalidate an exposed credential, or remove changes already made to the environment.</p>
+                    <p>The response should preserve relevant evidence, identify affected versions and runs, and examine the actions they took. Revoke or rotate credentials that may have been exposed. Inspect persistent instructions, scheduled work, and other modified state within the affected scope, and restore from a trusted baseline where necessary. Follow the organization's incident-response process rather than asking the suspect agent to certify that it is clean.</p>
+                    <p>This is why I would put the most important question before installation: if this skill gives the agent the wrong instruction, which independent control prevents the harmful action?</p>
+                    <p>If the answer is only "the agent should know better," the skill has been given too much trust.</p>
+                    <div class="references">
+                        <h2>References</h2>
+                        <ul>
+                            <li>[1] Snyk, ToxicSkills research report, February 5, 2026. <a href="https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/">Findings, methodology, and limitations</a>. Vendor research; counts refer to the reported scan.</li>
+                            <li>[2] Cloud Security Alliance AI Safety Initiative, "Agent Context Poisoning: SKILL.md and the New AI Supply Chain Attack Surface," May 6, 2026. <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-skill-md-agent-context-poisoning-20260506/">Research note</a>.</li>
+                            <li>[3] OWASP, "LLM06:2025 Excessive Agency." <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">Public guidance</a>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+            <div id="related-posts"></div>
+            <div id="series-footer"></div>
+        </main>
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+            <p>&copy; 2026 Arun Malik</p>
+        </footer>
+    </div>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/series/post-links.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

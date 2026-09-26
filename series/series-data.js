@@ -55,11 +55,11 @@ const SERIES_DATA = [
         slug: "04-toxic-skills",
         url: "/series/strategic-hitl/04-toxic-skills/",
         title: "Your AI Agent's Skills Might Be Malware",
-        date: "2026-07-29",
-        excerpt: "534 of 3,984 public agent skills are critically compromised. The supply chain risk no one is talking about.",
-        tags: ["security", "supply-chain"],
+        date: "2026-09-26",
+        excerpt: "What the ToxicSkills audit found, what its numbers do not prove, and how to limit the damage from a compromised agent skill.",
+        tags: ["Series", "security", "supply-chain"],
         references: ["00-why-not-optional"],
-        published: false
+        published: true
       },
       {
         slug: "05-investment-not-tax",
