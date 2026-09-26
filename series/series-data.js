@@ -64,12 +64,12 @@ const SERIES_DATA = [
       {
         slug: "05-investment-not-tax",
         url: "/series/strategic-hitl/05-investment-not-tax/",
-        title: "HITL is an Investment, Not a Tax",
-        date: "2026-08-05",
-        excerpt: "The cost model that proves human oversight generates compounding returns rather than linear overhead.",
-        tags: ["economics", "roi"],
+        title: "When Human Oversight Pays for Itself",
+        date: "2026-09-26",
+        excerpt: "A practical cost model for human review, with a hypothetical payback calculation, sensitivity checks, and cases where oversight does not break even.",
+        tags: ["Series", "economics", "roi", "governance"],
         references: ["00-why-not-optional", "03-graduated-automation"],
-        published: false
+        published: true
       },
       {
         slug: "06-uniform-governance-fails",

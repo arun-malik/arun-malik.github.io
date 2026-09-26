@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When Human Oversight Pays for Itself - Arun Malik</title>
+    <meta name="description" content="A practical cost model for human review, with a hypothetical payback calculation, sensitivity checks, and cases where oversight does not break even.">
+    <meta name="keywords" content="Series, economics, roi, governance">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/strategic-hitl/05-investment-not-tax/">
+    <meta property="og:title" content="When Human Oversight Pays for Itself">
+    <meta property="og:description" content="A practical cost model for human review, with a hypothetical payback calculation, sensitivity checks, and cases where oversight does not break even.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/strategic-hitl/05-investment-not-tax/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/strategic-hitl.png">
+    <meta property="og:image:alt" content="Abstract artwork for the Strategic HITL series">
+    <meta property="article:published_time" content="2026-09-26T15:18:46-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="When Human Oversight Pays for Itself">
+    <meta name="twitter:description" content="A practical cost model for human review, with a hypothetical payback calculation, sensitivity checks, and cases where oversight does not break even.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --bg: #ffffff; --bg-secondary: #f9fafb; --text: #111827;
+            --text-secondary: #6b7280; --accent: #2563eb; --border: #e5e7eb;
+            --max-width: 680px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', Menlo, monospace;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9;
+            --text-secondary: #94a3b8; --accent: #60a5fa; --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+        .site-nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .site-name:hover { color: var(--accent); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 0.25rem; }
+        .theme-btn:hover { color: var(--text); }
+        article { margin-bottom: 3rem; }
+        .article-meta { margin-bottom: 2rem; }
+        .article-date { font-size: 0.8125rem; color: var(--text-secondary); font-family: var(--font-mono); }
+        .reading-time { font-size: 0.8125rem; color: var(--text-secondary); margin-left: 1rem; }
+        .article-title { font-size: 1.75rem; font-weight: 700; margin: 0.75rem 0; letter-spacing: -0.025em; line-height: 1.3; }
+        .article-excerpt { color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.6; }
+        .article-tags { color: var(--text-secondary); font-size: 0.8125rem; margin-top: 0.75rem; }
+        .article-content h2 { font-size: 1.25rem; font-weight: 700; margin: 2.5rem 0 1rem; letter-spacing: -0.01em; }
+        .article-content p { margin-bottom: 1.25rem; font-size: 1rem; }
+        .article-content ul, .article-content ol { margin: 0.75rem 0 1.25rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; font-size: 1rem; }
+        .article-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+        .references { margin-top: 2rem; }
+        .references h2 { font-size: 1rem; }
+        .references li { font-size: 0.875rem; color: var(--text-secondary); }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 0.8125rem; color: var(--text-secondary); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+        @media (max-width: 640px) { .nav-links { gap: 1rem; } header { padding-top: 2rem; } }
+    </style>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="site-nav">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div id="series-header"></div>
+            <div id="article-toc"></div>
+            <article>
+                <div class="article-meta">
+                    <time class="article-date" datetime="2026-09-26">2026-09-26</time>
+                    <span class="reading-time">7 min read</span>
+                    <h1 class="article-title">When Human Oversight Pays for Itself</h1>
+                    <p class="article-excerpt">A practical cost model for human review, with a hypothetical payback calculation, sensitivity checks, and cases where oversight does not break even.</p>
+                    <p class="article-tags">Series &middot; economics &middot; roi &middot; governance</p>
+                </div>
+                <div class="article-content">
+                    <p>Human review has to earn its place in an operating model. An approval queue consumes time even when it catches nothing. Removing it can make work cheaper, or leave a costly failure undetected. Calling oversight an investment does not settle which outcome you will get.</p>
+                    <p>I would ask a narrower question: does this particular review step reduce enough expected loss, or save enough other work, to justify its full cost?</p>
+                    <p>The arithmetic below uses invented numbers to show how to answer that question. They are not industry estimates, production measurements, or rounded versions of confidential observations.</p>
+                    <h2>Compare options you could actually run</h2>
+                    <p>Start with two feasible ways to deliver the same volume and scope of work, meeting the same service-quality requirements over the same time horizon. One might use targeted human approval; the other might rely on existing permission limits, automated checks, and post-action monitoring, with less per-action review.</p>
+                    <p>That second option still has costs and controls. Comparing a staffed review process with imaginary zero-cost, uncontrolled autonomy makes almost any oversight proposal look attractive.</p>
+                    <p>If the options deliver different outcomes, price those differences explicitly or admit that the comparison is incomplete. A cheaper workflow that cannot meet the required response time is not an equivalent alternative.</p>
+                    <p>This is ordinary appraisal applied to an AI workflow. HM Treasury's Green Book describes appraisal as assessing the costs, benefits, and risks of different options for achieving an objective. It distinguishes that exercise from evaluating an intervention after implementation. [1] It is public-sector guidance, not evidence that a particular AI review process pays back.</p>
+                    <p>Some constraints come before the calculation. Legal obligations, safety requirements, or unacceptable potential harm can rule out an option even when its expected dollar cost looks lower. An average cannot give permission to expose someone to a prohibited risk.</p>
+                    <h2>Put the costs in the same units</h2>
+                    <p>Separate incremental setup cost from incremental recurring cost. Setup includes designing the review boundary, building the interface, training reviewers, and evaluating the proposed control. Recurring costs include active review, routing and escalation, audits, maintenance, and the consequences of waiting for a decision.</p>
+                    <p>Count the work outside the approval click. Someone has to cover absences, investigate ambiguous cases, and keep the rules current. Reviewer attention has an opportunity cost even when nobody hires another employee. Distinguish that cost from a cash budget reduction.</p>
+                    <p>Include underlying execution costs on both sides. They cancel only if they are the same. Extra model calls or a different execution path belong in the comparison.</p>
+                    <p>For a simple model, express recurring amounts and expected losses in dollars per month:</p>
+                    <p><strong>Monthly net benefit = expected loss reduction + other savings - incremental recurring cost.</strong></p>
+                    <p>Other savings should be measured where possible and labelled as assumptions otherwise. If incident loss already includes engineering rework, do not also claim that rework as a separate saving. Avoid counting delay costs in both categories too.</p>
+                    <p>Estimate residual losses under each option, including mistakes that survive human review and harm caused by delayed or incorrect decisions. For a defined incident class, expected incidents per month multiplied by mean loss per incident gives expected monthly loss. Use option-specific severity estimates if review changes the size of incidents as well as their frequency.</p>
+                    <p>An expected incident count is not a probability: more than one incident can occur in a month. Nor is the fraction of unsafe proposed actions automatically an incident rate. Several actions may contribute to one outage, and one action may affect many customers. Define the event and its costs before counting it. Where failures cluster or share a cause, model those scenarios without assuming each action fails independently or counting the same damage repeatedly.</p>
+                    <h2>A hypothetical eight-month payback</h2>
+                    <p>Suppose a workflow handles 10,000 eligible actions per month. A proposed process adds targeted review for 5% of them, with three minutes of active work per review and fully loaded labour at $80 an hour. These are invented scenario inputs, not recommended staffing levels.</p>
+                    <p>That means 500 reviews, 25 hours, and $2,000 in monthly review labour. Add $1,000 for incremental routing, maintenance, and audit work, plus $500 assigned to delay costs. Total incremental recurring cost is <strong>$3,500 per month</strong>. Assume incremental design and evaluation cost <strong>$12,000 upfront</strong>, with underlying execution costs unchanged and no other savings.</p>
+                    <p>Now stipulate expected harmful incidents of 0.20 per month under the less-reviewed baseline and 0.10 under the proposed process. Assume a mean loss of $50,000 per incident under either option.</p>
+                    <p>This is the uncertain assumption doing most of the work. Reviewing 5% of actions does not establish a 50% reduction in incidents. The scenario assumes targeted review catches a disproportionate share of consequential mistakes. That causal effect needs evidence; a random 5% sample does not justify it.</p>
+                    <p>Under those assumptions, expected monthly loss falls from $10,000 to $5,000. The $5,000 reduction, less $3,500 of recurring cost, leaves <strong>$1,500 in monthly net benefit</strong>.</p>
+                    <p>With positive, constant monthly net benefit, undiscounted payback is incremental setup cost divided by that benefit. Here, cumulative expected net benefit after <em>m</em> months is <strong>$1,500 × m - $12,000</strong>. It reaches zero at eight months. A six-month project would still be $3,000 short of recovering setup cost. At twelve months, cumulative expected net benefit would be $6,000.</p>
+                    <p>This is a conditional payback calculation, not an observed return or a promise. Expected loss reduction is not $5,000 arriving in the bank every month. Actual losses may be absent for a long stretch and then arrive together. The organisation must still fund the review process.</p>
+                    <h2>Change the assumption that matters</h2>
+                    <p>Keep the example's costs and incident severity fixed, but reduce the assumed improvement to 0.02 incidents per month. Avoided expected loss is now $1,000 per month. Net benefit is negative $2,500: the process does not cover its recurring cost, let alone recover the initial $12,000.</p>
+                    <p>At a reduction of 0.07 incidents per month, avoided expected loss is $3,500. That is operating parity. Setup cost is never recovered under these constant assumptions.</p>
+                    <p>At a reduction of 0.15 incidents per month, avoided expected loss is $7,500 and monthly net benefit is $4,000. Undiscounted payback becomes three months. None of these scenarios is an empirical forecast.</p>
+                    <p>The useful output is the threshold: this example needs more than 0.07 fewer expected incidents per month just to begin recovering setup cost. It also needs enough operating life to finish doing so.</p>
+                    <p>Test review time and incident severity too. More reviews, longer queues, or lower losses can erase the apparent advantage. For a longer-lived proposal, compare discounted costs and benefits over its expected life. If volumes, staffing, or effectiveness change, calculate each period rather than dividing setup cost by one convenient month's benefit.</p>
+                    <h2>Find out whether review changes outcomes</h2>
+                    <p>NIST's AI Risk Management Framework calls for testing before deployment and regularly during operation. Its Measure function includes human-AI configurations, uncertainty, and performance benchmarks; its Manage function allocates resources to assessed risks. [2] Those principles support evaluating the control. They do not supply any of the example's numbers.</p>
+                    <p>I would record why a case was routed, what the reviewer changed, active review time, waiting time, and the eventual outcome. Separate useful corrections from unnecessary overrides and harmful approvals. An approval count tells you how much review happened, not how much damage it prevented.</p>
+                    <p>Estimating avoided harm is harder. A blocked action does not reveal what would have happened if it had run. Use historical replay, controlled testing, and staged comparisons where safe and permitted, while documenting how each differs from deployment. A before-and-after improvement could reflect a different workload or better automated checks rather than human review.</p>
+                    <p>Rare events leave wide uncertainty. A finite run with no observed failures does not establish zero risk, especially if detection is incomplete. Carry plausible ranges through the calculation instead of choosing the incident rate that makes the proposal pass.</p>
+                    <p>And keep possible future automation out of today's savings until it is justified. A reviewer may discover a reusable procedure. Turning it into automation still requires implementation, testing, and maintenance. Some exceptions will remain exceptions. There is no reason to assume every intervention makes the next month cheaper.</p>
+                    <p>If the evidence cannot support the required loss reduction, I would narrow the review scope, improve what the reviewer sees, or test a different control. Where oversight is mandatory, that means finding a better compliant design, not deleting the requirement.</p>
+                    <p>Before approving the budget, write down which assumption would reverse the decision and how you will check it. In this example, the question is whether targeted review can reduce expected incidents enough to cover $3,500 a month and recover $12,000 within the workflow's useful life. That is a claim someone can investigate.</p>
+                    <div class="references">
+                    <h2>References</h2>
+                    <ul>
+                    <li>[1] HM Treasury, <em>The Green Book</em> (2026), introduction and overview of appraisal. <a href="https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government/the-green-book-2026">Public guidance on comparing options</a>.</li>
+                    <li>[2] NIST, <em>AI Risk Management Framework 1.0</em> (2023), AI RMF Core, Measure and Manage functions. <a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">Public framework</a>.</li>
+                    </ul>
+                    </div>
+                </div>
+            </article>
+            <div id="related-posts"></div>
+            <div id="series-footer"></div>
+        </main>
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+            <p>&copy; 2026 Arun Malik</p>
+        </footer>
+    </div>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/series/post-links.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>
