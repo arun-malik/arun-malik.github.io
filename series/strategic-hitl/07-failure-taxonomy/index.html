@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Five Ways to Question an AI Agent's Success - Arun Malik</title>
+    <meta name="description" content="A proposed review framework for checking an agent's diagnosis, scope, lasting outcome, downstream effects, and context freshness beyond a successful tool call.">
+    <meta name="keywords" content="Series, reliability, failure-modes">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/strategic-hitl/07-failure-taxonomy/">
+    <meta property="og:title" content="Five Ways to Question an AI Agent's Success">
+    <meta property="og:description" content="A proposed review framework for checking an agent's diagnosis, scope, lasting outcome, downstream effects, and context freshness beyond a successful tool call.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/strategic-hitl/07-failure-taxonomy/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/strategic-hitl.png">
+    <meta property="og:image:alt" content="Abstract artwork for the Strategic HITL series">
+    <meta property="article:published_time" content="2026-09-26T16:19:22-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Five Ways to Question an AI Agent's Success">
+    <meta name="twitter:description" content="A proposed review framework for checking an agent's diagnosis, scope, lasting outcome, downstream effects, and context freshness beyond a successful tool call.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --bg: #ffffff; --bg-secondary: #f9fafb; --text: #111827;
+            --text-secondary: #6b7280; --accent: #2563eb; --border: #e5e7eb;
+            --max-width: 680px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', Menlo, monospace;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9;
+            --text-secondary: #94a3b8; --accent: #60a5fa; --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+        .site-nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .site-name:hover { color: var(--accent); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 0.25rem; }
+        .theme-btn:hover { color: var(--text); }
+        article { margin-bottom: 3rem; }
+        .article-meta { margin-bottom: 2rem; }
+        .article-date { font-size: 0.8125rem; color: var(--text-secondary); font-family: var(--font-mono); }
+        .reading-time { font-size: 0.8125rem; color: var(--text-secondary); margin-left: 1rem; }
+        .article-title { font-size: 1.75rem; font-weight: 700; margin: 0.75rem 0; letter-spacing: -0.025em; line-height: 1.3; }
+        .article-excerpt { color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.6; }
+        .article-tags { color: var(--text-secondary); font-size: 0.8125rem; margin-top: 0.75rem; }
+        .article-content h2 { font-size: 1.25rem; font-weight: 700; margin: 2.5rem 0 1rem; letter-spacing: -0.01em; }
+        .article-content p { margin-bottom: 1.25rem; font-size: 1rem; }
+        .article-content ul, .article-content ol { margin: 0.75rem 0 1.25rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; font-size: 1rem; }
+        .article-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+        .references { margin-top: 2rem; }
+        .references h2 { font-size: 1rem; }
+        .references li { font-size: 0.875rem; color: var(--text-secondary); }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 0.8125rem; color: var(--text-secondary); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+        @media (max-width: 640px) { .nav-links { gap: 1rem; } header { padding-top: 2rem; } }
+    </style>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="site-nav">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div id="series-header"></div>
+            <div id="article-toc"></div>
+            <article>
+                <div class="article-meta">
+                    <time class="article-date" datetime="2026-09-26">2026-09-26</time>
+                    <span class="reading-time">6 min read</span>
+                    <h1 class="article-title">Five Ways to Question an AI Agent's Success</h1>
+                    <p class="article-excerpt">A proposed review framework for checking an agent's diagnosis, scope, lasting outcome, downstream effects, and context freshness beyond a successful tool call.</p>
+                    <p class="article-tags">Series &middot; reliability &middot; failure-modes</p>
+                </div>
+                <div class="article-content">
+                    <p>"The tool returned success" is a statement about a tool call. It leaves open whether the requested outcome happened, whether it lasted, and what else changed.</p>
+                    <p>That gap is not unique to AI. Google's SRE book describes an HTTP success response containing the wrong content as an implicit error. It distinguishes monitoring internal behaviour from testing what a user can actually observe [1]. An agent that writes a convincing completion summary adds another place where a success claim can become detached from the outcome.</p>
+                    <p>I use five questions to examine that gap: was the explanation wrong, was the scope wrong, did the result last, did harm appear elsewhere, and was the context still current? This is a proposed review framework. It is not an exhaustive taxonomy or a measured ranking of agent failures. The categories overlap, and none is inherently invisible to an automated check.</p>
+                    <p>The examples below describe an invented online shop. They are independent illustrations, not production incidents.</p>
+                    <h2>A plausible explanation for the wrong problem</h2>
+                    <p>The shop's agent sees that a product is missing from search. It concludes that the search index is stale and requests a rebuild. The rebuild finishes. The product remains hidden because its publication status was never enabled.</p>
+                    <p>Everything about the action can be technically correct while the diagnosis is wrong.</p>
+                    <p>The useful check tests an observation that distinguishes the competing explanations. Before rebuilding, inspect whether the product is eligible for publication. Afterwards, query the customer-facing search path. Another fluent explanation of why rebuilding should work does not supply that evidence.</p>
+                    <p>A second model may help propose alternatives, but it may also repeat the same assumption. Its agreement is not an independent measurement of the shop. Likewise, a model's stated confidence is not a calibrated probability unless that interpretation has been validated for the task and conditions.</p>
+                    <p>If the evidence cannot distinguish causes, the agent can gather more information or hand over the investigation without making a change. A human reviewer should see the unresolved alternatives rather than just a polished preferred answer.</p>
+                    <h2>The right operation on too many objects</h2>
+                    <p>Suppose the agent correctly identifies a pricing error in a seasonal collection. It sends a valid price-update request but selects the whole catalogue instead of that collection. The tool can truthfully report that the update succeeded.</p>
+                    <p>The failure is in the target set.</p>
+                    <p>Record the intended set before execution and compare it with the resolved targets. The mutation service should reject targets outside the authorised collection, even if the agent's summary says the scope is narrow. A readable preview helps a reviewer, but the actual object identifiers matter more than the label on the approval button.</p>
+                    <p>Verification should inspect both the corrected prices and whether unrelated products changed. Testing only the selected collection misses the defining error in this example.</p>
+                    <p>Humans can overlook scope too, especially when a preview is long or incomplete. Use enforceable limits as well as review. If the tool cannot expose its resolved targets or constrain the update, that limitation belongs in the decision about whether to allow it.</p>
+                    <h2>Improvement that does not last</h2>
+                    <p>The agent removes an incorrect "out of stock" label. The product becomes available. A scheduled import later restores the wrong label because the upstream inventory record still contains the error.</p>
+                    <p>An immediate customer-facing check would pass. It would still be useful, but it would not establish that the problem was resolved.</p>
+                    <p>Choose the follow-up condition from the mechanism. In this example, verify the upstream record and check again after the relevant import has run. A universal rule to recheck every task after the same number of hours would be arbitrary. Some outcomes need event-based checks; others need an observation period chosen for the task.</p>
+                    <p>Keep execution complete, immediate outcome verified, and follow-up pending as separate states. If follow-up fails to run, the result remains unverified. It should not quietly become a success because no new alert appeared.</p>
+                    <p>When a problem returns, preserve the link to the earlier action. Otherwise, separate tickets can make repeated temporary relief look like several independent resolutions.</p>
+                    <h2>A local improvement with a downstream cost</h2>
+                    <p>The shop's agent retries a backlog of order-confirmation emails. The backlog shrinks, but the increased traffic delays password-reset messages using the same delivery service.</p>
+                    <p>Local success and wider harm can coexist. Watching only the confirmation queue would miss the tradeoff.</p>
+                    <p>Define relevant downstream checks before enabling the action. Here, delivery latency for other message classes and the shared service's limits are pertinent. That does not require a complete model of every dependency. It requires an explicit account of which neighbouring effects the team can observe and which remain uncertain.</p>
+                    <p>If delays follow the retry burst, timing is a reason to investigate, not proof of causation. Compare the action record with delivery-service telemetry and other concurrent changes. Automated correlation can identify a lead without settling the diagnosis.</p>
+                    <p>The response also needs care. Blindly undoing or retrying work again can make the situation worse. Pause further submissions where appropriate, inspect what was accepted, and give the incident owner the evidence needed to choose a recovery action.</p>
+                    <h2>A sound decision on expired facts</h2>
+                    <p>The agent prepares an inventory correction while a warehouse import is still running. By the time the write arrives, the stock record has changed. Applying the earlier correction overwrites newer information.</p>
+                    <p>Freshness is a property of the evidence and the write protocol, not the quality of the explanation.</p>
+                    <p>Capture the version of the record used to prepare the update. Where the storage system supports it, require the write to match that version. A conflict should trigger a fresh read and reassessment, not an automatic repeat of the old write. A recent timestamp alone cannot establish that no intervening change occurred.</p>
+                    <p>If the underlying tool offers no conditional update, the team needs another means of coordination or a narrower permission. Asking a human to review an equally stale snapshot does not repair the race.</p>
+                    <p>This category can cause several others. Stale collection membership can lead to excessive scope; a stale inventory record can lead to the wrong diagnosis. Classifying the event in more than one place is fine if that exposes the missing checks.</p>
+                    <h2>Keep the result open to challenge</h2>
+                    <p>A useful completion record lets another observer challenge it. Preserve the requested outcome, actual targets, evidence versions, and tool result. Attach the observations supporting the outcome, plus any outstanding follow-up. Restrict access and retention where those records contain sensitive information.</p>
+                    <p>The verifier should obtain evidence beyond the agent's narrative. Customer-visible tests and authoritative state reads can help, but they also have limitations. If the verifier shares the agent's stale cache, its apparent independence adds little. If monitoring is unavailable, report that uncertainty instead of interpreting silence as health.</p>
+                    <p>NIST's AI RMF calls for production monitoring in MEASURE 2.4 and post-deployment plans covering incident response, recovery, and change management in MANAGE 4.1 [2]. It does not prescribe these five categories or establish their frequency.</p>
+                    <p>Use the questions to construct tests before expanding permissions. Deliberately give the test environment a stale record, an overbroad target set, or a delayed reappearance of the fault. Then check whether the system reports the right outcome and whether the escalation reaches someone who can act.</p>
+                    <p>The most useful status may be "the action completed, but we have not yet verified the result." Leave room for it.</p>
+                    <div class="references">
+                    <h2>References</h2>
+                    <ul>
+                    <li>[1] Rob Ewaschuk, <em>Monitoring Distributed Systems</em>, Google SRE book. <a href="https://sre.google/sre-book/monitoring-distributed-systems/">Chapter</a>. See "Black-box versus white-box" and the discussion of implicit errors under "The four golden signals." This is public engineering guidance, not a study of AI-agent failure rates.</li>
+                    <li>[2] NIST, <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em>, January 2023. <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=936225">Official publication</a>. See MEASURE 2.4 and MANAGE 4.1.</li>
+                    </ul>
+                    </div>
+                </div>
+            </article>
+            <div id="related-posts"></div>
+            <div id="series-footer"></div>
+        </main>
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+            <p>&copy; 2026 Arun Malik</p>
+        </footer>
+    </div>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/series/post-links.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

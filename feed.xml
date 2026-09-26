@@ -5,10 +5,98 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-26T15:18:46-07:00</updated>
+  <updated>2026-09-26T16:19:22-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>The road ahead: What evidence would justify more autonomy?</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/12-road-ahead/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/12-road-ahead/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>Before removing an approval step, ask what evidence would justify the change, what the trial cannot show, and what would reverse the decision.</summary>
+    <category term="AI Agents"/>
+    <category term="HITL"/>
+    <category term="Governance"/>
+    <category term="Series"/>
+  </entry>
+
+  <entry>
+    <title>Incident resolution with AI: A hypothetical reference design</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/11-hyperscale-resolution/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/11-hyperscale-resolution/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>A fictional incident workflow follows an AI-assisted rollback from alert to verified recovery, with explicit authority, handoff, and failure constraints.</summary>
+    <category term="AI Agents"/>
+    <category term="HITL"/>
+    <category term="Operations"/>
+    <category term="Series"/>
+  </entry>
+
+  <entry>
+    <title>From vibe coding to verified: Practising independent diagnosis</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/10-cognitive-fitness/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/10-cognitive-fitness/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>A proposal for practising independent diagnosis in AI-assisted engineering, with synthetic exercises and tests of whether the learning transfers.</summary>
+    <category term="AI Agents"/>
+    <category term="HITL"/>
+    <category term="Engineering"/>
+    <category term="Series"/>
+  </entry>
+
+  <entry>
+    <title>What sleeper agents mean for production AI systems</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/09-sleeper-agents/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/09-sleeper-agents/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>Sleeper-agent experiments show why cleaner evaluations do not prove harmful behaviour is gone, and why production checks need independent evidence.</summary>
+    <category term="AI Agents"/>
+    <category term="HITL"/>
+    <category term="Security"/>
+    <category term="Series"/>
+  </entry>
+
+  <entry>
+    <title>Designing Decision Boundaries for AI Autonomy</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/08-decision-boundaries/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/08-decision-boundaries/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>How to turn autonomy policy into testable action conditions, using a hypothetical booking service to examine consent, reversibility, retries, and the cost of delay.</summary>
+    <category term="Series"/>
+    <category term="architecture"/>
+    <category term="decision-framework"/>
+  </entry>
+
+  <entry>
+    <title>Five Ways to Question an AI Agent's Success</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/07-failure-taxonomy/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/07-failure-taxonomy/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>A proposed review framework for checking an agent's diagnosis, scope, lasting outcome, downstream effects, and context freshness beyond a successful tool call.</summary>
+    <category term="Series"/>
+    <category term="reliability"/>
+    <category term="failure-modes"/>
+  </entry>
+
+  <entry>
+    <title>AI Governance Needs Shared Rules and Different Controls</title>
+    <link href="https://blog.arunmalik.dev/series/strategic-hitl/06-uniform-governance-fails/"/>
+    <id>https://blog.arunmalik.dev/series/strategic-hitl/06-uniform-governance-fails/</id>
+    <published>2026-09-26T16:19:22-07:00</published>
+    <updated>2026-09-26T16:19:22-07:00</updated>
+    <summary>How to keep shared AI governance rules while tailoring controls to each use, with explicit ownership, testable evidence, and reassessment when permissions change.</summary>
+    <category term="Series"/>
+    <category term="governance"/>
+    <category term="organizational"/>
+  </entry>
 
   <entry>
     <title>When Human Oversight Pays for Itself</title>

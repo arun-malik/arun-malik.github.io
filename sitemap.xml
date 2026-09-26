@@ -48,6 +48,41 @@
   </url>
   <!-- Published posts -->
   <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/12-road-ahead/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/11-hyperscale-resolution/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/10-cognitive-fitness/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/09-sleeper-agents/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/08-decision-boundaries/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/07-failure-taxonomy/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://blog.arunmalik.dev/series/strategic-hitl/06-uniform-governance-fails/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/05-investment-not-tax/</loc>
     <lastmod>2026-09-26</lastmod>
     <priority>0.8</priority>

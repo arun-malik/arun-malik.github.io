@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Governance Needs Shared Rules and Different Controls - Arun Malik</title>
+    <meta name="description" content="How to keep shared AI governance rules while tailoring controls to each use, with explicit ownership, testable evidence, and reassessment when permissions change.">
+    <meta name="keywords" content="Series, governance, organizational">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/strategic-hitl/06-uniform-governance-fails/">
+    <meta property="og:title" content="AI Governance Needs Shared Rules and Different Controls">
+    <meta property="og:description" content="How to keep shared AI governance rules while tailoring controls to each use, with explicit ownership, testable evidence, and reassessment when permissions change.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/strategic-hitl/06-uniform-governance-fails/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/strategic-hitl.png">
+    <meta property="og:image:alt" content="Abstract artwork for the Strategic HITL series">
+    <meta property="article:published_time" content="2026-09-26T16:19:22-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Governance Needs Shared Rules and Different Controls">
+    <meta name="twitter:description" content="How to keep shared AI governance rules while tailoring controls to each use, with explicit ownership, testable evidence, and reassessment when permissions change.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --bg: #ffffff; --bg-secondary: #f9fafb; --text: #111827;
+            --text-secondary: #6b7280; --accent: #2563eb; --border: #e5e7eb;
+            --max-width: 680px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', Menlo, monospace;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9;
+            --text-secondary: #94a3b8; --accent: #60a5fa; --border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+        .site-nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .site-name:hover { color: var(--accent); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 0.25rem; }
+        .theme-btn:hover { color: var(--text); }
+        article { margin-bottom: 3rem; }
+        .article-meta { margin-bottom: 2rem; }
+        .article-date { font-size: 0.8125rem; color: var(--text-secondary); font-family: var(--font-mono); }
+        .reading-time { font-size: 0.8125rem; color: var(--text-secondary); margin-left: 1rem; }
+        .article-title { font-size: 1.75rem; font-weight: 700; margin: 0.75rem 0; letter-spacing: -0.025em; line-height: 1.3; }
+        .article-excerpt { color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.6; }
+        .article-tags { color: var(--text-secondary); font-size: 0.8125rem; margin-top: 0.75rem; }
+        .article-content h2 { font-size: 1.25rem; font-weight: 700; margin: 2.5rem 0 1rem; letter-spacing: -0.01em; }
+        .article-content p { margin-bottom: 1.25rem; font-size: 1rem; }
+        .article-content ul, .article-content ol { margin: 0.75rem 0 1.25rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; font-size: 1rem; }
+        .article-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+        .references { margin-top: 2rem; }
+        .references h2 { font-size: 1rem; }
+        .references li { font-size: 0.875rem; color: var(--text-secondary); }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 0.8125rem; color: var(--text-secondary); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+        @media (max-width: 640px) { .nav-links { gap: 1rem; } header { padding-top: 2rem; } }
+    </style>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="site-nav">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div id="series-header"></div>
+            <div id="article-toc"></div>
+            <article>
+                <div class="article-meta">
+                    <time class="article-date" datetime="2026-09-26">2026-09-26</time>
+                    <span class="reading-time">6 min read</span>
+                    <h1 class="article-title">AI Governance Needs Shared Rules and Different Controls</h1>
+                    <p class="article-excerpt">How to keep shared AI governance rules while tailoring controls to each use, with explicit ownership, testable evidence, and reassessment when permissions change.</p>
+                    <p class="article-tags">Series &middot; governance &middot; organizational</p>
+                </div>
+                <div class="article-content">
+                    <p>A shared AI policy is useful. A shared approval workflow for every use of AI is harder to defend.</p>
+                    <p>Consider a hypothetical public library. One assistant answers questions about opening hours from the public website. Another drafts replies using a member's borrowing history. Both produce text. Neither can change a database. Yet the second can expose information the first never sees. Calling both "read-only assistants" hides the difference that matters.</p>
+                    <p>Now give the first assistant permission to publish closure notices on the library's website. Its model has not changed, but its authority has. An incorrect answer to one reader and an incorrect notice to everyone deserve different controls.</p>
+                    <p>These are invented examples, not accounts of a deployment. They illustrate the problem with assigning governance by agent name or broad task category. The useful unit is a particular use, with particular data, permissions, and consequences.</p>
+                    <h2>Keep a common floor</h2>
+                    <p>Differentiated governance does not mean letting every team invent its own rules. I would keep shared requirements for a named owner, an inventory of deployed uses, access control, incident reporting, and a way to withdraw a capability. Applicable legal and privacy obligations do not disappear because a team calls its assistant low risk.</p>
+                    <p>The controls above that floor can differ. A public-information assistant might need source freshness checks and sampled answer review. An assistant handling borrowing records needs restrictions on which records it can access and where its output can go. A publishing assistant needs a policy for who may authorise a notice, plus a correction process when something wrong goes live.</p>
+                    <p>Those controls address different failure paths. Asking a person to approve every public-hours answer would consume attention without necessarily checking the more consequential problem: whether the source itself is out of date.</p>
+                    <p>This distinction is compatible with the NIST AI Risk Management Framework. GOVERN 1.3 calls for processes that determine the needed level of risk management based on organisational risk tolerance. GOVERN 1.6 addresses inventories resourced according to risk priorities. The framework also provides use-case profiles for particular settings [1]. It offers guidance for tailoring risk management, not evidence that one workflow fails everywhere.</p>
+                    <h2>Classify the use before debating the tier</h2>
+                    <p>Tier names can make an unsettled decision look settled. "Medium risk" tells a reviewer little unless it comes with an explanation of what could go wrong.</p>
+                    <p>For the library's member-correspondence assistant, I would begin with a short description: it may retrieve records for the authenticated member, draft a response for an authorised librarian, and show that draft only in the staff workspace. It may not send messages or retrieve another member's records. The potential harms include disclosure and misleading advice, even though it has no write access.</p>
+                    <p>That description creates questions a team can test. Does record access enforce the member boundary? Can a generated answer include information from a different conversation? Can the draft be copied into an external channel without a further check?</p>
+                    <p>A useful classification should record:</p>
+                    <ul>
+                    <li>The intended use and the people who could be affected.</li>
+                    <li>The data available and the actions the system can actually take.</li>
+                    <li>The consequences of an error, including exposure that cannot be undone.</li>
+                    <li>The evidence supporting the proposed controls and the uncertainty left over.</li>
+                    </ul>
+                    <p>These are inputs to a decision, not numbers to multiply into a supposedly objective risk score. A familiar task can still involve sensitive data. A reversible database update can still cause an irreversible disclosure. A successful test history can support a narrow permission without justifying broader access.</p>
+                    <p>NIST's MAP 1.1 asks organisations to document intended purposes, deployment settings, assumptions, and potential impacts. MAP 2.1 asks them to define the tasks the system will support [1]. The library description is my practical application of that guidance, not a NIST-prescribed template.</p>
+                    <h2>Give the disagreement an owner</h2>
+                    <p>The hard part often arrives when a control makes a useful feature slower. The product team wants the correspondence assistant to send replies directly. The privacy reviewer wants staff to check each one. Both are responding to something worth protecting.</p>
+                    <p>The governance record should make that disagreement explicit. What extra harm could direct sending create? What evidence would support a limited trial? Who can accept the remaining risk, and who can stop the trial?</p>
+                    <p>Assigning those decisions to "the human in the loop" is too vague. The librarian checking a reply may be able to spot a factual error but may have no authority to approve a new data use. A workflow owner needs to own the control design; an authorised decision-maker needs to accept residual risk within their remit. Reviewers need access to evidence and permission to reject an action.</p>
+                    <p>GOVERN 2.1 addresses clear roles, responsibilities, and communication. GOVERN 2.3 places responsibility for development and deployment risk decisions with executive leadership [1]. A signed approval should not quietly transfer an organisation's obligations to whichever operator happened to be on duty.</p>
+                    <p>And approval can be wrong. Access restrictions and destination checks should still apply after someone approves a draft.</p>
+                    <h2>Ask what the controls actually catch</h2>
+                    <p>Counting completed reviews is easy. Finding out whether the reviews work takes more care.</p>
+                    <p>For the hypothetical library, a test could present conflicting opening-hours entries and check whether the public assistant flags the uncertainty. A separate test could ask the correspondence assistant for another member's history and verify that access is denied. Neither test establishes safety in general. Each tests a stated control against a stated failure.</p>
+                    <p>For sampled answer review, record how the sample was selected. For disclosure tests, record which access paths were exercised. Report missed errors as well as caught ones. A high approval rate could mean proposals are good, reviewers are overloaded, or the sample contains only easy cases. It cannot distinguish those explanations on its own.</p>
+                    <p>Keep results separated by use and consequence. An aggregate score dominated by routine public questions could conceal weak handling of member records. NIST MEASURE 1.2 calls for regular assessment of both metrics and the effectiveness of controls [1]. That is a better basis for a review meeting than the number of boxes checked.</p>
+                    <h2>Reopen the decision when the use changes</h2>
+                    <p>The member assistant's original assessment stops fitting when someone adds an external sending tool. The public assistant's assessment stops fitting when it starts using non-public documents. A change in audience can matter as much as a new model.</p>
+                    <p>Write these triggers into the record before launch. A broader recipient group, new data source, or expanded permission should prompt reassessment of the affected use. Routine changes within the assessed scope need not restart the entire governance process, but someone must decide what counts as remaining within that scope.</p>
+                    <p>The next governance review should be able to answer a concrete question: why is this assistant allowed to do this action with this information today?</p>
+                    <p>If the answer is only "all our agents follow the policy," the team has more work to do.</p>
+                    <div class="references">
+                    <h2>References</h2>
+                    <ul>
+                    <li>[1] NIST, <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em>, January 2023. <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=936225">Official publication</a>. Relevant sections: GOVERN 1.3, 1.6, 2.1, 2.3; MAP 1.1, 2.1; MEASURE 1.2; section 6 on profiles. This is a voluntary risk-management framework, not an empirical comparison of governance models.</li>
+                    </ul>
+                    </div>
+                </div>
+            </article>
+            <div id="related-posts"></div>
+            <div id="series-footer"></div>
+        </main>
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+            <p>&copy; 2026 Arun Malik</p>
+        </footer>
+    </div>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/series/post-links.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

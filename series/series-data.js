@@ -7,8 +7,8 @@ const SERIES_DATA = [
   {
     id: "strategic-hitl",
     title: "Strategic HITL for Production AI Agents",
-    description: "A 13-part series exploring why Human-in-the-Loop is a structural requirement for production AI systems, backed by 53 research papers and a hyperscale case study.",
-    status: "in-progress",
+    description: "A complete 13-part series on human oversight for AI agents, combining public research with hypothetical engineering designs and explicit limits on the evidence.",
+    status: "complete",
     tags: ["ai-agents", "hitl", "production", "governance"],
     posts: [
       {
@@ -74,72 +74,72 @@ const SERIES_DATA = [
       {
         slug: "06-uniform-governance-fails",
         url: "/series/strategic-hitl/06-uniform-governance-fails/",
-        title: "Why Uniform AI Governance Always Fails",
-        date: "2026-08-12",
-        excerpt: "Gartner findings on one-size-fits-all AI policies. The case for tiered, risk-proportional governance.",
-        tags: ["governance", "organizational"],
+        title: "AI Governance Needs Shared Rules and Different Controls",
+        date: "2026-09-26",
+        excerpt: "How to keep shared AI governance rules while tailoring controls to each use, with explicit ownership, testable evidence, and reassessment when permissions change.",
+        tags: ["Series", "governance", "organizational"],
         references: ["03-graduated-automation"],
-        published: false
+        published: true
       },
       {
         slug: "07-failure-taxonomy",
         url: "/series/strategic-hitl/07-failure-taxonomy/",
-        title: "The Failure Taxonomy: 5 Ways AI Agents Fail Silently",
-        date: "2026-08-19",
-        excerpt: "A classification of silent failure modes in production AI agents, with detection strategies for each.",
-        tags: ["reliability", "failure-modes"],
+        title: "Five Ways to Question an AI Agent's Success",
+        date: "2026-09-26",
+        excerpt: "A proposed review framework for checking an agent's diagnosis, scope, lasting outcome, downstream effects, and context freshness beyond a successful tool call.",
+        tags: ["Series", "reliability", "failure-modes"],
         references: ["00-why-not-optional"],
-        published: false
+        published: true
       },
       {
         slug: "08-decision-boundaries",
         url: "/series/strategic-hitl/08-decision-boundaries/",
         title: "Designing Decision Boundaries for AI Autonomy",
-        date: "2026-08-26",
-        excerpt: "A practical framework using risk-reversibility quadrants to determine where human judgement should intervene.",
-        tags: ["architecture", "decision-framework"],
+        date: "2026-09-26",
+        excerpt: "How to turn autonomy policy into testable action conditions, using a hypothetical booking service to examine consent, reversibility, retries, and the cost of delay.",
+        tags: ["Series", "architecture", "decision-framework"],
         references: ["03-graduated-automation", "06-uniform-governance-fails"],
-        published: false
+        published: true
       },
       {
         slug: "09-sleeper-agents",
         url: "/series/strategic-hitl/09-sleeper-agents/",
-        title: "What Sleeper Agents Mean for Production AI Systems",
-        date: "2026-09-02",
-        excerpt: "Deceptive alignment is not theoretical. Anthropic and Apollo Research demonstrate models faking compliance during evaluation.",
-        tags: ["alignment", "security", "behavioral"],
+        title: "What sleeper agents mean for production AI systems",
+        date: "2026-09-26",
+        excerpt: "Sleeper-agent experiments show why cleaner evaluations do not prove harmful behaviour is gone, and why production checks need independent evidence.",
+        tags: ["AI Agents", "HITL", "Security", "Series"],
         references: ["00-why-not-optional", "04-toxic-skills"],
-        published: false
+        published: true
       },
       {
         slug: "10-cognitive-fitness",
         url: "/series/strategic-hitl/10-cognitive-fitness/",
-        title: "From Vibe Coding to Verified: The Case for Cognitive Fitness",
-        date: "2026-09-09",
-        excerpt: "Preserving critical thinking capacity in engineering teams as AI handles more routine work.",
-        tags: ["cognitive-science", "engineering-culture"],
+        title: "From vibe coding to verified: Practising independent diagnosis",
+        date: "2026-09-26",
+        excerpt: "A proposal for practising independent diagnosis in AI-assisted engineering, with synthetic exercises and tests of whether the learning transfers.",
+        tags: ["AI Agents", "HITL", "Engineering", "Series"],
         references: ["01-cognitive-erosion"],
-        published: false
+        published: true
       },
       {
         slug: "11-hyperscale-resolution",
         url: "/series/strategic-hitl/11-hyperscale-resolution/",
-        title: "Autonomous Incident Resolution at Hyperscale",
-        date: "2026-09-16",
-        excerpt: "Companion post to arXiv:2606.09122. How multi-agent orchestration achieves 90%+ resolution rates with safety guarantees.",
-        tags: ["incident-resolution", "multi-agent", "case-study"],
+        title: "Incident resolution with AI: A hypothetical reference design",
+        date: "2026-09-26",
+        excerpt: "A fictional incident workflow follows an AI-assisted rollback from alert to verified recovery, with explicit authority, handoff, and failure constraints.",
+        tags: ["AI Agents", "HITL", "Operations", "Series"],
         references: ["03-graduated-automation", "08-decision-boundaries"],
-        published: false
+        published: true
       },
       {
         slug: "12-road-ahead",
         url: "/series/strategic-hitl/12-road-ahead/",
-        title: "The Road Ahead: What Must Change Before We Trust AI Agents",
-        date: "2026-09-23",
-        excerpt: "Concrete recommendations for the industry: standards, tooling, and cultural shifts needed for trustworthy AI autonomy.",
-        tags: ["future", "recommendations"],
+        title: "The road ahead: What evidence would justify more autonomy?",
+        date: "2026-09-26",
+        excerpt: "Before removing an approval step, ask what evidence would justify the change, what the trial cannot show, and what would reverse the decision.",
+        tags: ["AI Agents", "HITL", "Governance", "Series"],
         references: ["00-why-not-optional", "05-investment-not-tax", "08-decision-boundaries"],
-        published: false
+        published: true
       }
     ]
   },
