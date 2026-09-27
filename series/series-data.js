@@ -201,7 +201,7 @@ const SERIES_DATA = [
       "references": [
         "ai-comes-for-the-grunt-work"
       ],
-      "published": false
+      "published": true
     },
     {
       "slug": "03-great-equalizer",

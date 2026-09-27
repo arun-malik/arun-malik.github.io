@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Series, Architecture, Human-AI Teaming">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="The Centaur Advantage">
+    <meta property="og:description" content="Human-AI routing only helps if the router can identify a useful difference in ability. A chess experiment shows both the opportunity and the difficulty.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/ai-amplifier/02-centaur-advantage/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-amplifier.png" data-banner-src="/assets/og/ai-amplifier.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Centaur Advantage">
+    <meta name="twitter:description" content="Human-AI routing only helps if the router can identify a useful difference in ability. A chess experiment shows both the opportunity and the difficulty.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>The Centaur Advantage - Arun Malik</title>
+    <meta name="description" content="Human-AI routing only helps if the router can identify a useful difference in ability. A chess experiment shows both the opportunity and the difficulty.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    .publication-note { color:var(--text-muted); font-size:.8rem; margin-top:1rem; }
+details { border:1px solid var(--border); border-radius:8px; padding:1rem; margin:1.5rem 0; }
+summary { cursor:pointer; font-weight:600; }
+details p:first-of-type { margin-top:1rem; }
+.content, .step { overflow-wrap:anywhere; }
+.scrolly:not(.scrolly-enabled) .step { opacity:1; min-height:0; margin:2rem 0; }
+.scrolly:not(.scrolly-enabled) .anim { opacity:1; }
+@media (max-width:600px) { .site-nav { flex-wrap:wrap; gap:1rem; } .site-header-wrapper .nav-links { gap:1rem!important; flex-wrap:wrap; } }
+</style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-amplifier/02-centaur-advantage/">
+<meta property="article:published_time" content="2026-09-27T01:33:25-07:00">
+<meta property="article:modified_time" content="2026-09-27T01:33:25-07:00">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>The Centaur Advantage</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">Architecture</span><span class="tag">Human-AI Teaming</span></div>
+<div class="article-meta"><span class="article-date" data-date-label="Series date">Series date: <time datetime="2026-07-23">2026-07-23</time></span></div>
+<p class="publication-note">Series date follows the <a href="/series/ai-amplifier/">editorial schedule</a>. First published <time datetime="2026-09-27T01:33:25-07:00">2026-09-27</time>; updated <time datetime="2026-09-27T01:33:25-07:00">2026-09-27</time>.</p>
+        </header>
+
+        <div id="series-header"></div>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+<p>A human can know something the model does not and still fail to improve the result. Somebody has to recognise when that knowledge matters. If the system asks the wrong person, defers too late, or follows the wrong recommendation, the possible advantage stays possible.</p>
+<p>That is the useful part of the centaur idea for me: treat the decision about who acts as an engineering problem. The name comes from human-computer chess teams. It is an appealing image, but the image can hide an extra component. Alongside the human and the AI sits a router. It can be wrong too.</p>
+
+<h2>A chess result worth reading carefully</h2>
+<p>In <a href="https://arxiv.org/html/2412.18593v2">Modeling the Centaur</a>, David Shoresh and Yonatan Loewenstein study this selection problem using two chess models. Maia is trained on human games to produce human-like play. Leela learns through self-play. When the models disagree about a move, a manager selects one recommendation.</p>
+<p>There were no live human teammates in this experiment. The researchers explicitly state that limitation. Maia is useful for modelling a kind of difference between players; it is not evidence that a person under time pressure, with a changing workload, will behave the same way.</p>
+<p>The evaluation used 500 held-out opening positions, played from both sides for 1,000 games. The score is wins plus half of draws, divided by games played: a win-draw-loss score, or WDL. It is not a percentage of decisions that were correct, an Elo rating, or a measure of worker productivity.</p>
+<figure class="journey-fig">
+  <svg viewBox="0 0 620 265" role="img" aria-label="Symmetric-team experiment: Maia WDL .3995, Leela .3515, reinforcement-learning manager .5435, approximate oracle .799. The oracle had access unavailable in admissible play.">
+    <text x="12" y="24" class="lbl">WDL against the study's configured opponent</text>
+    <line x1="200" y1="40" x2="200" y2="223" stroke="var(--border)"/>
+    <g fill="var(--c1)"><rect x="200" y="50" width="159.8" height="26"/><rect x="200" y="94" width="140.6" height="26"/><rect x="200" y="138" width="217.4" height="26"/></g>
+    <rect x="200" y="182" width="319.6" height="26" fill="var(--c4)"/>
+    <g class="lbl"><text x="12" y="69">Maia</text><text x="12" y="113">Leela</text><text x="12" y="157">Learned manager</text><text x="12" y="201">Approximate oracle</text></g>
+    <g class="lbl-mut"><text x="368" y="69">.3995</text><text x="350" y="113">.3515</text><text x="427" y="157">.5435</text><text x="529" y="201">.799</text><text x="200" y="245">0</text><text x="600" y="245">1</text></g>
+  </svg>
+  <figcaption class="figcap">Point estimates from section 3.1, approximately symmetric team. Bars use a zero-to-one scale; uncertainty is not displayed here. The paper reports significance tests and SEM in its figure. The oracle is a diagnostic comparison, not a deployable router.</figcaption>
+</figure>
+<p>In the approximately equal-strength pairing, the learned manager achieved a higher WDL than either model alone. But increasing the strength of Leela changed the result. The learned manager and the expert manager did not produce synergy in the more asymmetric teams. The existence of a weaker partner with occasional useful moves was not enough.</p>
+<p>The approximate oracle still found considerable room for improvement. It could simulate continuations using access to the opponent's policy, access that would be inadmissible during normal play. This tells us that exploitable differences existed under that evaluation. It does not tell us that an ordinary router could find them.</p>
+<p>The paper also trained its managers for particular players and opponents. Transfer to unfamiliar teammates was left open. A router tested with one model version and one reviewer population needs reassessment when either changes.</p>
+
+<h2>Confidence is not relative advantage</h2>
+<p>Suppose an AI says it is confident. Even a well-calibrated estimate of its own accuracy does not tell us how a particular human would do on the same case. Both may find the case difficult. Or the person may have access to a fact missing from the model's input. The relevant comparison includes that difference, not just the model's score.</p>
+<p>And a confident sentence is not automatically a calibrated probability. A proposed routing rule needs evidence from independently checked cases. A numerical cutoff copied from another workflow would look precise while telling us very little.</p>
+<p>Here is an independent hypothetical example. A museum wants help drafting catalogue descriptions. The assistant can extract dates and materials from supplied records. A curator can inspect an object and consult provenance documents that are not in the input. Those are different information sources, not a blanket claim that people are better at judgment.</p>
+<details>
+  <summary>Try the routing decision: two catalogue entries</summary>
+  <p><strong>Entry A:</strong> the task is to reformat a verified accession date into the museum's display format. A deterministic formatter may be enough. Adding a language model and a curator could create more opportunities for mistakes than the task requires.</p>
+  <p><strong>Entry B:</strong> a donor's attribution conflicts with a conservation report. The assistant can show the conflict and cite the records. It should not silently choose a provenance claim because its generated confidence is high. A qualified curator needs the underlying evidence and an explicit opportunity to defer publication.</p>
+  <p>These are proposed decisions, not observed museum outcomes. If the curator has no better evidence either, escalation has uncovered an unresolved question, not manufactured an answer.</p>
+</details>
+<p>In that design, the first boundary is whether the action is allowed at all. The second is whether there is enough information to act. Only then does it make sense to compare which permitted route is likely to work better. The chess experiment isolates recommendation selection. A real workflow also has permissions, delay and a cost of being wrong.</p>
+
+<h2>Test the router, not just the partners</h2>
+<p>Start with cases that can be reviewed independently. Compare the current process, a fixed division of work, and the proposed adaptive router. Where an AI-only route is lawful and meaningful, include it. Hold the inputs and outcome definition steady. Time spent gathering evidence and resolving disagreements belongs in the combined workflow's cost.</p>
+<p>Record the cases where routing changed the outcome, especially when it made the result worse. Did it send a hard case to an unprepared reviewer? Did a routine exception accumulate in a queue? Did both routes use the same mistaken source? A low escalation rate is compatible with a router that confidently sends every difficult case the wrong way.</p>
+<p>Do not claim to know the unchosen route's outcome just because the selected route succeeded. Estimating that counterfactual needs a suitable evaluation design, such as independent assessments on held-out cases, and it may still be limited by what reviewers can observe retrospectively.</p>
+<p>My design preference is to start with a simple allocation and make the router earn its complexity. If a fixed rule or deterministic check works as well at lower cost, use it. The chess result gives a reason to investigate routing. It does not justify spending more on routing than on model quality in every system.</p>
+<p>The centaur advantage begins with a difference between partners. It becomes an advantage only when the workflow can use that difference reliably.</p>
+
+<h2>Source and revision note</h2>
+<p>Shoresh and Loewenstein, <a href="https://arxiv.org/html/2412.18593v2">Modeling the Centaur: Human-Machine Synergy in Sequential Decision Making</a>, March 2025 revision, AAMAS 2025. See sections 2.1, 2.5, 2.6, 3.1, 3.2 and 7.2. The chart reproduces four point estimates from the symmetric-team experiment; the museum example is hypothetical. This revision removes unsupported claims of universal team superiority and operational anecdotes that are not public evidence.</p>
+
+</div>
+
+
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

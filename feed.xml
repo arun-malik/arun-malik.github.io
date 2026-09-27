@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:29:35-07:00</updated>
+  <updated>2026-09-27T01:33:25-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>The Centaur Advantage</title>
+    <link href="https://blog.arunmalik.dev/series/ai-amplifier/02-centaur-advantage/"/>
+    <id>https://blog.arunmalik.dev/series/ai-amplifier/02-centaur-advantage/</id>
+    <published>2026-09-27T01:33:25-07:00</published>
+    <updated>2026-09-27T01:33:25-07:00</updated>
+    <summary>Human-AI routing only helps if the router can identify a useful difference in ability. A chess experiment shows both the opportunity and the difficulty.</summary>
+    <category term="Series"/>
+    <category term="Architecture"/>
+    <category term="Human-AI Teaming"/>
+  </entry>
 
   <entry>
     <title>The road ahead: What evidence would justify more autonomy?</title>
