@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Series, Learning, Cognitive Science">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="The Cognitive Offloading Trap">
+    <meta property="og:description" content="Better assisted work and better learning are different outcomes. A classroom experiment shows why the distinction matters.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/ai-amplifier/04-cognitive-offloading-trap/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-amplifier.png" data-banner-src="/assets/og/ai-amplifier.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Cognitive Offloading Trap">
+    <meta name="twitter:description" content="Better assisted work and better learning are different outcomes. A classroom experiment shows why the distinction matters.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>The Cognitive Offloading Trap - Arun Malik</title>
+    <meta name="description" content="Better assisted work and better learning are different outcomes. A classroom experiment shows why the distinction matters.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    .publication-note { color:var(--text-muted); font-size:.8rem; margin-top:1rem; }
+details { border:1px solid var(--border); border-radius:8px; padding:1rem; margin:1.5rem 0; }
+summary { cursor:pointer; font-weight:600; }
+details p:first-of-type { margin-top:1rem; }
+.content, .step { overflow-wrap:anywhere; }
+.scrolly:not(.scrolly-enabled) .step { opacity:1; min-height:0; margin:2rem 0; }
+.scrolly:not(.scrolly-enabled) .anim { opacity:1; }
+@media (max-width:600px) { .site-nav { flex-wrap:wrap; gap:1rem; } .site-header-wrapper .nav-links { gap:1rem!important; flex-wrap:wrap; } }
+</style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-amplifier/04-cognitive-offloading-trap/">
+<meta property="article:published_time" content="2026-09-27T01:38:03-07:00">
+<meta property="article:modified_time" content="2026-09-27T01:38:03-07:00">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>The Cognitive Offloading Trap</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">Learning</span><span class="tag">Cognitive Science</span></div>
+<div class="article-meta"><span class="article-date" data-date-label="Series date">Series date: <time datetime="2026-08-14">2026-08-14</time></span></div>
+<p class="publication-note">Series date follows the <a href="/series/ai-amplifier/">editorial schedule</a>. First published <time datetime="2026-09-27T01:38:03-07:00">2026-09-27</time>; updated <time datetime="2026-09-27T01:38:03-07:00">2026-09-27</time>.</p>
+        </header>
+
+        <div id="series-header"></div>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+<p>A student can hand in a better answer and learn less from producing it. If we measure only the answer, a learning problem can look like a successful AI deployment.</p>
+<p>That is a more precise concern than saying AI makes people less intelligent. Offloading is ordinary: we use notes, calculators and colleagues to reduce what we have to hold in our heads. The question is which part of the work a person needs to practise, and whether the tool removes that practice before the skill has formed.</p>
+
+<h2>One experiment, two outcomes</h2>
+<p>Hamsa Bastani and colleagues tested GPT-4 tutoring with nearly 1,000 students at a high school in Turkey. In <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/">their 2025 PNAS paper</a>, classrooms were assigned to ordinary study resources, a basic GPT interface, or a specially designed tutor. The study ran four 90-minute sessions covering mathematics material previously taught in class.</p>
+<p>Each session included teacher review, practice, and an unassisted exam. AI access was available during practice, not the exam. The researchers collected answers on paper and used independent graders. Their main analysis excluded honours classrooms, which were not populated in the same way as the other classrooms.</p>
+<p>Both AI conditions improved assisted practice performance. Relative to the control mean, the reported increases were 48% for GPT Base and 127% for GPT Tutor. Those are relative changes in scores on the practice exercises. They are not percentage-point increases in a final course grade.</p>
+<p>Then the assistance went away. On the unassisted exam, the GPT Base group performed worse than the control group: a 0.054 reduction on a zero-to-one normalised grade scale, about 17% of the control mean. The GPT Tutor estimate was −0.004, statistically indistinguishable from the control group.</p>
+<figure class="journey-fig">
+  <svg viewBox="0 0 620 240" role="img" aria-label="Table 1 estimated effects on normalized scores: GPT Base plus .137 in practice and minus .054 in the unaided exam; GPT Tutor plus .361 in practice and minus .004 in the exam.">
+    <text x="15" y="27" class="lbl">Practice gains did not become exam gains</text>
+    <g class="lbl"><text x="225" y="72">Assisted practice</text><text x="420" y="72">Unaided exam</text><text x="15" y="124">GPT Base</text><text x="15" y="177">GPT Tutor</text></g>
+    <g fill="var(--c3)" font-family="monospace" font-size="23"><text x="248" y="126">+.137</text><text x="248" y="179">+.361</text></g>
+    <g fill="var(--c4)" font-family="monospace" font-size="23"><text x="447" y="126">−.054</text><text x="447" y="179">−.004</text></g>
+    <text x="15" y="222" class="lbl-mut">Differences on a 0–1 grade scale; not percentages</text>
+  </svg>
+  <figcaption class="figcap">PNAS Table 1, intention-to-treat regression estimates. Classroom-clustered standard errors: .031 and .022 for Base; .032 and .013 for Tutor, respectively. The Tutor exam effect was not statistically significant. The two columns concern different assessments.</figcaption>
+</figure>
+<p>The distinction matters: the guarded tutor largely avoided the harm found with the basic interface. It did not demonstrate a positive unassisted exam effect. Describing it as a proven learning boost would overstate the result.</p>
+
+<h2>The tutor contained work by teachers</h2>
+<p>GPT Tutor did more than ask the model to be educational. Its prompt told the model to offer hints rather than answers. Teachers also supplied problem-specific correct solutions, common mistakes and guidance on feedback. That preparation was labour-intensive.</p>
+<p>These features were bundled together. The trial does not isolate the effect of a hint-only instruction from the effect of better problem-specific information. Nor does it tell us that adding a five-second delay, an approval checkbox, or a request to “think critically” would reproduce the result.</p>
+<p>The authors' analysis of interactions found more answer-seeking and copying with GPT Base, and more substantive engagement with GPT Tutor. That helps explain why the two designs might differ. It is not a measurement of damaged neural pathways, clinical dementia, or an irreversible loss of intelligence.</p>
+<p>More immediately, this is evidence about skill acquisition over a short period in a particular school. Failing to acquire a skill is different from losing expertise previously held. Four classroom sessions cannot establish what happens to an experienced professional's capability over several years.</p>
+
+<h2>Where assistance should leave some work unfinished</h2>
+<p>For a learning task, completion is sometimes the wrong optimisation target. If I want to learn to debug a small program, an immediate patch can remove the very reasoning I came to practise. A useful tutor might instead ask me to predict the failing input, then help me compare that prediction with a test.</p>
+<details>
+  <summary>Try an answer-first versus attempt-first exercise</summary>
+  <p><strong>Hypothetical practice case:</strong> a program rejects a valid date at a month boundary. Before opening an assistant, write down one explanation and a test that would distinguish it from another explanation.</p>
+  <p>Then ask for feedback on the test. If you ask for a patch, identify which observation would show that the patch addresses the cause rather than the example. Finish with a different date-boundary problem without the assistant.</p>
+  <p>This is a proposed exercise, not a validated treatment for deskilling. Its value should be judged by later independent performance and the time it requires, not by the number of sentences the learner writes.</p>
+</details>
+<p>The same design would be inappropriate as a compulsory delay during every urgent repair. Practice and delivery have different purposes. Build a protected practice setting rather than turning time-critical work into an unannounced examination.</p>
+<p>Assistance can also make practice possible for someone who would otherwise be stuck. Withholding every hint in the name of independence may simply stop learning. The useful question is whether the help leaves an achievable piece of reasoning for the learner, not whether they can be made to struggle longer.</p>
+
+<h2>Measure capability without making it surveillance</h2>
+<p>A team can test this concern using synthetic exercises and agreed learning goals. Compare independent performance on new cases, with consistent conditions and an appropriate delay. Track the cost of the practice design as well as correctness. If an exercise only teaches people to recite the tool's explanation, change it.</p>
+<p>Fast approvals alone do not diagnose cognitive decline. They may reflect a routine case, better tooling, or a superficial check. A request for an explanation can likewise produce a convincing paragraph without showing understanding. Look for evidence tied to the task: a prediction that can fail, a test that distinguishes alternatives, or an independently checked decision.</p>
+<p>Be explicit about the use of the results. A learning trial should help improve training and support. Secretly ranking workers by how often they use an approved assistant would measure incentives as much as capability.</p>
+<p>The trap is treating assisted performance as if it were learning. To avoid it, name the skill you want people to retain and test that skill separately. The answer on the screen cannot do that measurement for you.</p>
+
+<h2>Source and revision note</h2>
+<p>Bastani and colleagues, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/">Generative AI without guardrails can harm learning: Evidence from high school mathematics</a>, PNAS, 2025, DOI 10.1073/pnas.2422633122. See Experimental Design and Table 1. This revision replaces unsupported causal claims about brain atrophy and an unverified workplace incident narrative with the narrower classroom evidence. The debugging exercise is an independent proposal, not a finding from the trial.</p>
+
+</div>
+
+
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

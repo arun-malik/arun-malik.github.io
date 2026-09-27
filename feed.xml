@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:35:48-07:00</updated>
+  <updated>2026-09-27T01:38:03-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>The Cognitive Offloading Trap</title>
+    <link href="https://blog.arunmalik.dev/series/ai-amplifier/04-cognitive-offloading-trap/"/>
+    <id>https://blog.arunmalik.dev/series/ai-amplifier/04-cognitive-offloading-trap/</id>
+    <published>2026-09-27T01:38:03-07:00</published>
+    <updated>2026-09-27T01:38:03-07:00</updated>
+    <summary>Better assisted work and better learning are different outcomes. A classroom experiment shows why the distinction matters.</summary>
+    <category term="Series"/>
+    <category term="Learning"/>
+    <category term="Cognitive Science"/>
+  </entry>
 
   <entry>
     <title>The Great Equalizer</title>
