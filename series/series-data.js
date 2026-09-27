@@ -150,7 +150,7 @@ const SERIES_DATA = [
   "id": "ai-amplifier",
   "title": "AI as Human Amplifier vs Replacement",
   "description": "An overview and eight essays on when AI improves human work, when automation makes sense, and how to test the difference.",
-  "status": "in-progress",
+  "status": "complete",
   "tags": [
     "ai-agents",
     "human-augmentation",
@@ -297,7 +297,7 @@ const SERIES_DATA = [
       "references": [
         "ai-comes-for-the-grunt-work"
       ],
-      "published": false
+      "published": true
     }
   ]
 },

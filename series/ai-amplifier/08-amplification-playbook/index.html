@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Series, AI Strategy, Work Design">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="The Amplification Playbook">
+    <meta property="og:description" content="A proposed trial for redesigning one workflow around AI, with explicit baselines, worker input, learning checks, and a decision to stop.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/ai-amplifier/08-amplification-playbook/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-amplifier.png" data-banner-src="/assets/og/ai-amplifier.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Amplification Playbook">
+    <meta name="twitter:description" content="A proposed trial for redesigning one workflow around AI, with explicit baselines, worker input, learning checks, and a decision to stop.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>The Amplification Playbook - Arun Malik</title>
+    <meta name="description" content="A proposed trial for redesigning one workflow around AI, with explicit baselines, worker input, learning checks, and a decision to stop.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    .publication-note { color:var(--text-muted); font-size:.8rem; margin-top:1rem; }
+details { border:1px solid var(--border); border-radius:8px; padding:1rem; margin:1.5rem 0; }
+summary { cursor:pointer; font-weight:600; }
+details p:first-of-type { margin-top:1rem; }
+.content, .step { overflow-wrap:anywhere; }
+.scrolly:not(.scrolly-enabled) .step { opacity:1; min-height:0; margin:2rem 0; }
+.scrolly:not(.scrolly-enabled) .anim { opacity:1; }
+@media (max-width:600px) { .site-nav { flex-wrap:wrap; gap:1rem; } .site-header-wrapper .nav-links { gap:1rem!important; flex-wrap:wrap; } }
+</style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-amplifier/08-amplification-playbook/">
+<meta property="article:published_time" content="2026-09-27T01:48:45-07:00">
+<meta property="article:modified_time" content="2026-09-27T01:48:45-07:00">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article data-reading-minutes="6">
+        <header class="blog-header">
+            <h1>The Amplification Playbook</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI Strategy</span><span class="tag">Work Design</span></div>
+<div class="article-meta"><span class="article-date" data-date-label="Series date">Series date: <time datetime="2026-09-26">2026-09-26</time></span></div>
+<p class="publication-note">Series date follows the <a href="/series/ai-amplifier/">editorial schedule</a>. First published <time datetime="2026-09-27T01:48:45-07:00">2026-09-27</time>; updated <time datetime="2026-09-27T01:48:45-07:00">2026-09-27</time>.</p>
+        </header>
+
+        <div id="series-header"></div>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+<p>Pick one workflow. Describe what would count as better work, who would benefit, and what evidence would make you stop. That is a more useful start than an organisation-wide promise that AI will amplify everyone.</p>
+<p>The essays in this series do not prove that human-plus-AI is always best. They show why the answer depends on the comparison, the task and the people doing it. The playbook below is my proposed way to turn those distinctions into a trial. It is not a report of a deployment or a validated organisational recipe.</p>
+
+<h2>Start with an outcome somebody wants</h2>
+<p>Consider a hypothetical adult-education centre answering questions about its courses. Staff want to send accurate, useful replies without spending their day reconstructing information scattered across course pages. Learners want to know whether a course fits their needs. Neither group is asking for more generated text.</p>
+<p>Write the outcome in those terms: correct answers that help learners decide, within a useful response time and an affordable workload. Ask staff which questions are repetitive, which require conversation, and which are hard because the records disagree. Ask learners what an unhelpful answer costs them.</p>
+<p>Set the initial scope narrowly. The assistant may draft answers from approved course information. It may not change enrolments, promise exceptions, approve refunds or invent accessibility provision. Those are proposed limits for this example, not universal rules for education services. Avoid putting personal or sensitive information into a tool unless the organisation has established that the use is permitted.</p>
+<p>Name a person responsible for the trial and a route for resolving policy questions. If nobody can answer whether a proposed use is acceptable, a more fluent draft will not fix the missing decision.</p>
+
+<h2>Keep a simpler alternative in the comparison</h2>
+<p>The current process is one baseline. A cleaned-up reference page or a deterministic answer lookup may be another. Compare those with an AI-assisted draft-and-review workflow. Do not let the trial become a contest between an improved AI process and an intentionally neglected manual one.</p>
+<p>Where an autonomous route is lawful and appropriate, evaluate it separately. Where it is not, say why it is excluded. <a href="/series/ai-amplifier/01-amplification-thesis/">The amplification thesis</a> requires a clear baseline, not an unsafe experiment carried out to fill every column.</p>
+<p>For the centre, a useful first evaluation could use a de-identified, independently reviewed set of representative questions. Include conflicting information and questions that should be deferred. Separate the cases used to improve the tool from those used to assess it. An assistant that looks good only on the examples used to tune it has not passed a useful test.</p>
+<figure class="journey-fig">
+  <svg viewBox="0 0 620 270" role="img" aria-label="Proposed trial: define the work, compare permitted options, assess outcomes, then expand, revise or stop. This is a design proposal, not an empirical result.">
+    <g fill="none" stroke="var(--c1)" stroke-width="2"><rect x="150" y="15" width="320" height="45" rx="8"/><rect x="150" y="85" width="320" height="45" rx="8"/><rect x="150" y="155" width="320" height="45" rx="8"/><path d="M310 60 V85 M310 130 V155 M310 200 V225"/></g>
+    <g class="lbl"><text x="310" y="43" text-anchor="middle">Define outcomes and limits</text><text x="310" y="113" text-anchor="middle">Compare permitted workflows</text><text x="310" y="183" text-anchor="middle">Assess quality and total cost</text><text x="310" y="249" text-anchor="middle">Expand, revise, or stop</text></g>
+  </svg>
+  <figcaption class="figcap">A proposed evaluation loop. Learning, worker experience and affected users belong in the assessment alongside delivery metrics.</figcaption>
+</figure>
+
+<h2>Decide where a person can change the result</h2>
+<p>In the assisted route, the draft should show which source supports the answer and flag missing information. A reviewer needs time, relevant knowledge and the ability to correct or withhold the reply. Adding a person who cannot inspect the evidence does not create useful oversight.</p>
+<p>For a simple published start time, an exact lookup may be sufficient. For conflicting course descriptions, the assistant can identify the conflict and send it to the information owner. If neither the person nor the tool has the answer, the workflow should acknowledge that uncertainty rather than reward whichever produces a confident sentence first.</p>
+<p><a href="/series/ai-amplifier/02-centaur-advantage/">The routing essay</a> explains why this allocation needs testing. A model's self-reported confidence is not a measurement of its advantage over a particular reviewer. Route design should follow checked outcomes and permissions, not a borrowed numerical threshold.</p>
+
+<h2>Measure the whole bill</h2>
+<p>Choose the main outcome and acceptance conditions before looking at results. For this example, check correctness against approved information, unsupported promises, appropriate deferrals and useful response time. Count staff effort spent checking sources, editing drafts, handling escalations and repairing mistakes. Include setup and ongoing maintenance in the cost discussion.</p>
+<details>
+  <summary>A hypothetical saving that disappears at review</summary>
+  <p>Suppose the current process takes 60 minutes for a fixed batch of questions. The assisted route uses 20 minutes to prepare drafts, 25 minutes to check them and 20 minutes to resolve exceptions: 65 minutes of staff effort.</p>
+  <p>Drafting may feel much faster, but this batch has not saved labour. All four numbers are invented solely for this arithmetic example. They are not a forecast or a result from an organisation.</p>
+  <p>Better answers could still justify the extra effort. Faster elapsed delivery might also matter. Record those benefits separately rather than calling the result a labour saving.</p>
+</details>
+<p>A live trial needs an appropriate comparison design. Random assignment of eligible cases can help when feasible, but account for staff learning, case difficulty and shared queues. Record exclusions, unfinished cases and departures from the assigned process. A small trial with no observed serious errors does not establish that serious errors cannot occur.</p>
+<p><a href="/series/ai-amplifier/05-amplification-in-code/">The coding evidence</a> shows why perceived speed, task selection and measured time can diverge. <a href="/series/ai-amplifier/06-amplifying-creativity/">The creativity evidence</a> adds another warning: if the workflow generates options, assess their range separately from the quality of the strongest one.</p>
+
+<h2>Make room for learning and for workers</h2>
+<p>Ask whether new staff are becoming more capable or simply completing supported tasks. The two can move differently. Use safe practice cases to check later independent performance, with a clear explanation of how results will improve training. Do not insert surprise exams into live work or use a learning trial as covert performance surveillance.</p>
+<p>The <a href="/series/ai-amplifier/03-great-equalizer/">support-agent evidence</a> gives reasons to examine who benefits rather than reporting only an average. The <a href="/series/ai-amplifier/04-cognitive-offloading-trap/">classroom evidence</a> shows why assisted output is not a learning measure. Neither supplies a universal onboarding timetable for the centre.</p>
+<p>Discuss what happens if the trial succeeds. Do staff get time for harder enquiries, shorter queues, training, or a different workload? Who maintains the course information and who receives credit for that work? A productivity result does not settle those decisions. <a href="/series/ai-amplifier/07-new-skill-premium/">Job-posting trends</a> cannot promise a promotion to the people affected.</p>
+
+<h2>Give stopping the same status as expanding</h2>
+<p>Agree on what pauses the trial: for example, an unauthorised disclosure, repeated unsupported commitments, or a reviewer queue that cannot meet the service's obligations. The responsible owner should be able to withdraw access and return to the previous process. Keep a way for staff and learners to report problems without having to prove that AI caused them.</p>
+<p>Expansion should name the scope justified by the evidence. Passing on ordinary timetable questions does not justify answering every policy exception. Reassess when the model, sources, permissions or working population changes. If the simple reference guide performs as well with less burden, choosing it is a successful evaluation result.</p>
+<p>The <a href="https://airc.nist.gov/airmf-resources/playbook/">NIST AI RMF Playbook</a> is useful background for organising this work around Govern, Map, Measure and Manage. NIST describes it as voluntary suggested actions, not a checklist to follow in full. AI RMF 1.0 is under revision; the linked guidance does not certify this proposed trial or establish its return on investment.</p>
+<p>At the end, write a short decision record: which workflow was tested, the evidence, the remaining uncertainty, the authorised next scope and the conditions for reversing it. If the record cannot explain why the people doing the work are better supported, revise the design before calling it amplification.</p>
+
+<h2>Sources and status</h2>
+<p>This concludes the overview and eight essays. The study-specific evidence is linked in the relevant articles above. <a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI RMF 1.0</a> and its <a href="https://airc.nist.gov/airmf-resources/playbook/">companion Playbook</a> provide voluntary risk-management guidance, not empirical validation of this framework. The centre and cost calculation are hypothetical. Earlier draft claims of a proven organisational playbook and private operating results have been removed.</p>
+
+</div>
+
+
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:45:29-07:00</updated>
+  <updated>2026-09-27T01:48:45-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>The Amplification Playbook</title>
+    <link href="https://blog.arunmalik.dev/series/ai-amplifier/08-amplification-playbook/"/>
+    <id>https://blog.arunmalik.dev/series/ai-amplifier/08-amplification-playbook/</id>
+    <published>2026-09-27T01:48:45-07:00</published>
+    <updated>2026-09-27T01:48:45-07:00</updated>
+    <summary>A proposed trial for redesigning one workflow around AI, with explicit baselines, worker input, learning checks, and a decision to stop.</summary>
+    <category term="Series"/>
+    <category term="AI Strategy"/>
+    <category term="Work Design"/>
+  </entry>
 
   <entry>
     <title>The New Skill Premium</title>
@@ -237,7 +249,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/"/>
     <id>https://blog.arunmalik.dev/series/ai-amplifier/01-amplification-thesis/</id>
     <published>2026-07-13T00:00:00Z</published>
-    <updated>2026-09-27T01:00:00-07:00</updated>
+    <updated>2026-09-27T01:48:45-07:00</updated>
     <summary>AI can improve human work without making human-plus-AI the best option. Design for amplification, then test it against the alternatives.</summary>
     <category term="Series"/>
     <category term="Essay"/>
