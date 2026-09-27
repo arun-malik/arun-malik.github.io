@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Series, Creativity, Research">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="Amplifying Creativity">
+    <meta property="og:description" content="AI suggestions can improve an individual story while making a collection of stories more alike. Quality and variety need separate tests.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/ai-amplifier/06-amplifying-creativity/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-amplifier.png" data-banner-src="/assets/og/ai-amplifier.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Amplifying Creativity">
+    <meta name="twitter:description" content="AI suggestions can improve an individual story while making a collection of stories more alike. Quality and variety need separate tests.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>Amplifying Creativity - Arun Malik</title>
+    <meta name="description" content="AI suggestions can improve an individual story while making a collection of stories more alike. Quality and variety need separate tests.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    .publication-note { color:var(--text-muted); font-size:.8rem; margin-top:1rem; }
+details { border:1px solid var(--border); border-radius:8px; padding:1rem; margin:1.5rem 0; }
+summary { cursor:pointer; font-weight:600; }
+details p:first-of-type { margin-top:1rem; }
+.content, .step { overflow-wrap:anywhere; }
+.scrolly:not(.scrolly-enabled) .step { opacity:1; min-height:0; margin:2rem 0; }
+.scrolly:not(.scrolly-enabled) .anim { opacity:1; }
+@media (max-width:600px) { .site-nav { flex-wrap:wrap; gap:1rem; } .site-header-wrapper .nav-links { gap:1rem!important; flex-wrap:wrap; } }
+</style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-amplifier/06-amplifying-creativity/">
+<meta property="article:published_time" content="2026-09-27T01:42:33-07:00">
+<meta property="article:modified_time" content="2026-09-27T01:42:33-07:00">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>Amplifying Creativity</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">Creativity</span><span class="tag">Research</span></div>
+<div class="article-meta"><span class="article-date" data-date-label="Series date">Series date: <time datetime="2026-09-04">2026-09-04</time></span></div>
+<p class="publication-note">Series date follows the <a href="/series/ai-amplifier/">editorial schedule</a>. First published <time datetime="2026-09-27T01:42:33-07:00">2026-09-27</time>; updated <time datetime="2026-09-27T01:42:33-07:00">2026-09-27</time>.</p>
+        </header>
+
+        <div id="series-header"></div>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+<p>A collection can become less varied even while each item gets better reviews. That is a useful warning for anyone using AI to generate options: judging the best proposal and judging the range of proposals are different jobs.</p>
+<p>The problem is easy to miss in a writing tool. A suggestion helps one person get past a blank page. The finished piece reads better. If many people receive similar starting points, though, the collection may contain fewer distinct directions. The individual and the editor looking at the whole collection can have different reasons to be pleased.</p>
+
+<h2>Better stories, closer together</h2>
+<p>Anil Doshi and Oliver Hauser tested this in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11244532/">a 2024 Science Advances experiment</a>. Participants wrote an eight-sentence story for a teenage and young-adult audience. Writers were randomly assigned to work without AI ideas, to have access to one GPT-4 starting idea, or to have access to up to five.</p>
+<p>The study collected 293 stories. A separate group of 600 evaluators assessed stories without initially knowing which writers had been offered AI. Writers could choose whether to request the ideas. They could not customise the model prompt or have an iterative conversation with it.</p>
+<p>Access to AI ideas improved evaluators' ratings of novelty and usefulness on average. In the up-to-five-ideas condition, the reported increases relative to the human-only baseline were 8.1% for novelty and 9.0% for usefulness. “Usefulness” here was a story-specific rating about suitability for the audience and potential for further publication, not proof that a publisher would buy the work.</p>
+<p>The researchers also examined how similar stories were to other stories in the same condition, using text embeddings and cosine similarity. AI-assisted stories were closer to the average of other stories in their condition. That collection-level finding can coexist with an evaluator judging an individual story more novel.</p>
+<figure class="journey-fig">
+  <svg viewBox="0 0 620 245" role="img" aria-label="Two separate evaluation questions: how well an individual story is rated, and how similar it is to the rest of the collection. Conceptual illustration, not measured data.">
+    <rect x="30" y="45" width="260" height="145" rx="10" fill="none" stroke="var(--c1)" stroke-width="2"/>
+    <rect x="330" y="45" width="260" height="145" rx="10" fill="none" stroke="var(--c2)" stroke-width="2"/>
+    <g class="lbl"><text x="160" y="85" text-anchor="middle">One story</text><text x="460" y="85" text-anchor="middle">The collection</text><text x="160" y="130" text-anchor="middle">Novelty and usefulness</text><text x="460" y="130" text-anchor="middle">Similarity across stories</text></g>
+    <g class="lbl-mut"><text x="160" y="163" text-anchor="middle">Human evaluator ratings</text><text x="460" y="163" text-anchor="middle">Text-embedding comparison</text><text x="310" y="225" text-anchor="middle">Different questions. Neither replaces the other.</text></g>
+  </svg>
+  <figcaption class="figcap">Conceptual illustration of the study's two measurements, not a chart of effect sizes. Higher ratings do not establish greater collection diversity.</figcaption>
+</figure>
+<p>This was not a test of output volume: the task called for one short story per writer. Nor was it a comparison showing that people with AI beat a standalone AI on the same writing task. The study supports a narrower claim about access to starting ideas in this constrained setting.</p>
+<p>Benefits were larger for writers with lower scores on a preliminary divergent-association task. That score is one creativity-related measure, not a complete assessment of a person's talent. It cannot establish that adaptable generalists should replace specialists in a hiring plan.</p>
+
+<h2>The first suggestion can set the direction</h2>
+<p>The stories were also more similar to the AI ideas the writers received. That is consistent with anchoring on a starting point. It does not prove that every shared model produces a creative monoculture, or that a model cannot propose something original.</p>
+<p>The experiment's constraints matter here. A professional writer might reject a suggestion, change the prompt, draw on outside material, or revise repeatedly. Those behaviours were not the treatment tested. The paper is a reason to watch for convergence, not a forecast of all creative work.</p>
+<p>There is a parallel design concern outside fiction. If a team asks for twenty product concepts and receives twenty variants of the same assumption, counting concepts overstates the range it explored. But that product-team example is an inference to investigate, not a measured outcome from the story experiment.</p>
+
+<h2>Keep the alternatives different where it matters</h2>
+<p>Imagine a hypothetical team designing an exhibition about a river. One approach follows its ecology, another follows a family's memories, and another asks visitors to decide how scarce water should be allocated. These are different organising ideas, not just three colour palettes.</p>
+<details>
+  <summary>Try the collection test on an exhibition brief</summary>
+  <p>Write one initial concept before requesting suggestions. Then ask an assistant for alternatives and list the main assumption behind each. Does the visitor observe, investigate, or make a choice? Whose perspective is missing?</p>
+  <p>Have another person assess the concepts without seeing which were AI-assisted. Rate the strength of each separately from how much new ground it adds to the set. A polished version of an existing concept may score well on one and poorly on the other.</p>
+  <p>This is a proposed design exercise. The cited study did not test it, and it does not guarantee more original work. Keep it only if the additional range is useful enough to justify the effort.</p>
+</details>
+<p>Changing models or prompts may produce different wording without changing the underlying idea. Do not assume that purchasing several tools buys independence between their suggestions. Look at the outputs and the assumptions they share.</p>
+<p>Nor should a team preserve every unusual idea indefinitely. Variety has a cost. An exhibition still needs to make sense to visitors and fit its space and budget. The point is to avoid eliminating a direction before anyone has understood what it offers, then to make a deliberate choice.</p>
+<p>When the task requires consistency, convergence may even be useful. A set of instructions should not be made less clear merely to maximise novelty. Decide what kind of variation serves the audience before treating variation as a target.</p>
+
+<h2>Credit and evidence belong in the process</h2>
+<p>AI-generated material can still contain unattributed borrowing, invented facts or a confident description of something that never happened. Check factual claims against sources and follow the relevant publication and rights requirements. A high creativity rating is not clearance to publish.</p>
+<p>Keep enough provenance to explain the process honestly: which ideas were supplied, what the author changed, and which sources support the factual material. That also makes it easier to notice when supposedly independent proposals descend from the same starting point.</p>
+<p>I would ask a creative team to show its strongest option and one materially different option it seriously considered. The second may lose. Seeing why it lost is more informative than being shown ten polished versions of the winner.</p>
+
+<h2>Source and scope</h2>
+<p>Doshi and Hauser, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11244532/">Generative AI enhances individual creativity but reduces the collective diversity of novel content</a>, Science Advances, 2024, DOI 10.1126/sciadv.adn5290. See experimental design, creativity ratings, embedding comparisons and limitations. This revision removes unsupported volume claims, universal claims about the origin of breakthroughs, and a private architecture anecdote. The exhibition exercise is hypothetical.</p>
+
+</div>
+
+
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

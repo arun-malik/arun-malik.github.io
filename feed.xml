@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:40:13-07:00</updated>
+  <updated>2026-09-27T01:42:33-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Amplifying Creativity</title>
+    <link href="https://blog.arunmalik.dev/series/ai-amplifier/06-amplifying-creativity/"/>
+    <id>https://blog.arunmalik.dev/series/ai-amplifier/06-amplifying-creativity/</id>
+    <published>2026-09-27T01:42:33-07:00</published>
+    <updated>2026-09-27T01:42:33-07:00</updated>
+    <summary>AI suggestions can improve an individual story while making a collection of stories more alike. Quality and variety need separate tests.</summary>
+    <category term="Series"/>
+    <category term="Creativity"/>
+    <category term="Research"/>
+  </entry>
 
   <entry>
     <title>Intelligence Amplification in Code</title>
