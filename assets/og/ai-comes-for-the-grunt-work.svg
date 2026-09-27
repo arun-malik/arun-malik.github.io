@@ -34,10 +34,6 @@
 <!-- "we are here" marker on wave 3 -->
 <circle cx="960" cy="120" r="7" fill="#c4b5fd"/>
 <circle cx="960" cy="120" r="16" fill="none" stroke="#c4b5fd" stroke-width="2" opacity="0.6"/>
-<!-- growing job dots above each wave (more with each revolution) -->
-<g fill="#f1f5f9" opacity="0.35">
-  <circle cx="256" cy="360" r="4"/><circle cx="284" cy="360" r="4"/>
-  <circle cx="500" cy="250" r="4"/><circle cx="524" cy="250" r="4"/><circle cx="548" cy="250" r="4"/><circle cx="512" cy="234" r="4"/>
-  <circle cx="760" cy="120" r="4"/><circle cx="784" cy="120" r="4"/><circle cx="808" cy="120" r="4"/><circle cx="772" cy="104" r="4"/><circle cx="796" cy="104" r="4"/><circle cx="820" cy="104" r="4"/>
-</g>
+<text x="600" y="540" text-anchor="middle" fill="#f1f5f9" font-family="sans-serif" font-size="30">AI changes the work. Who gets the gains?</text>
+<text x="600" y="585" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="22">Technology changes. Employment outcomes are not guaranteed.</text>
 </svg>

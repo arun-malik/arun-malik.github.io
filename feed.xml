@@ -5,7 +5,7 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:00:00-07:00</updated>
+  <updated>2026-09-27T01:29:35-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
@@ -173,14 +173,15 @@
   </entry>
 
   <entry>
-    <title>AI Comes for the Grunt Work, Not the Judgment</title>
+    <title>AI changes the work. Who gets the gains?</title>
     <link href="https://blog.arunmalik.dev/posts/ai-comes-for-the-grunt-work/"/>
     <id>https://blog.arunmalik.dev/posts/ai-comes-for-the-grunt-work/</id>
-    <updated>2026-07-06T00:00:00Z</updated>
-    <summary>If AI writes the code, what's left for the developer? The accountant already lived this when the computer arrived. The role was reshaped rather than erased, then it moved up the org chart via the Jevons paradox. An interactive scrollytelling essay, with a very possible AI bubble in between.</summary>
+    <published>2026-07-06T00:00:00Z</published>
+    <updated>2026-09-27T01:29:35-07:00</updated>
+    <summary>Automating a task can help a worker, replace their work, or create demand elsewhere. The outcome depends on how jobs and institutions change.</summary>
+    <category term="Series"/>
     <category term="Essay"/>
     <category term="Future of Work"/>
-    <category term="AI Bubble"/>
   </entry>
 
   <entry>

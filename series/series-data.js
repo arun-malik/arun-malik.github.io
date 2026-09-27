@@ -147,104 +147,160 @@ const SERIES_DATA = [
     ]
   },
   {
-    id: "ai-amplifier",
-    title: "AI as Human Amplifier vs Replacement",
-    description: "An overview and eight essays on when AI improves human work, when automation makes sense, and how to test the difference.",
-    status: "in-progress",
-    tags: ["ai-agents", "human-augmentation", "philosophy"],
-    posts: [
-      {
-        slug: "ai-comes-for-the-grunt-work",
-        url: "/posts/ai-comes-for-the-grunt-work/",
-        title: "AI Comes for the Grunt Work, Not the Judgment",
-        date: "2026-07-06",
-        excerpt: "The overview: AI takes the rote layer of knowledge work and pushes people up the value stack, the same way the computer reshaped the accountant. Includes the proof, the bubble question, and what the research says.",
-        tags: ["overview", "future-of-work", "amplification"],
-        references: [],
-        published: true
-      },
-      {
-        slug: "01-amplification-thesis",
-        url: "/series/ai-amplifier/01-amplification-thesis/",
-        title: "The Amplification Thesis",
-        date: "2026-07-13",
-        excerpt: "AI can improve human work without making human-plus-AI the best option. Design for amplification, then test it against the alternatives.",
-        tags: ["Series", "Essay", "AI Strategy"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: true
-      },
-      {
-        slug: "02-centaur-advantage",
-        url: "/series/ai-amplifier/02-centaur-advantage/",
-        title: "The Centaur Advantage",
-        date: "2026-07-20",
-        excerpt: "From freestyle chess to modern systems: the edge comes from routing each decision to human or AI by relative strength.",
-        tags: ["architecture", "routing"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      },
-      {
-        slug: "03-great-equalizer",
-        url: "/series/ai-amplifier/03-great-equalizer/",
-        title: "The Great Equalizer",
-        date: "2026-07-27",
-        excerpt: "AI lifts novices 30%+ toward expert-level output while barely moving the experts.",
-        tags: ["skills", "novices"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      },
-      {
-        slug: "04-cognitive-offloading-trap",
-        url: "/series/ai-amplifier/04-cognitive-offloading-trap/",
-        title: "The Cognitive Offloading Trap",
-        date: "2026-08-03",
-        excerpt: "Without deliberate design, AI offloads thinking so thoroughly it erodes the very skills it was meant to boost.",
-        tags: ["cognitive-science", "risk"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      },
-      {
-        slug: "05-amplification-in-code",
-        url: "/series/ai-amplifier/05-amplification-in-code/",
-        title: "Intelligence Amplification in Code",
-        date: "2026-08-10",
-        excerpt: "AI coding assistants speed the typing but shift the bottleneck to review, architecture, and coordination.",
-        tags: ["engineering", "code"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      },
-      {
-        slug: "06-amplifying-creativity",
-        url: "/series/ai-amplifier/06-amplifying-creativity/",
-        title: "Amplifying Creativity",
-        date: "2026-08-17",
-        excerpt: "AI raises creative output while quietly reducing the diversity of ideas.",
-        tags: ["creativity", "tradeoffs"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      },
-      {
-        slug: "07-new-skill-premium",
-        url: "/series/ai-amplifier/07-new-skill-premium/",
-        title: "The New Skill Premium",
-        date: "2026-08-24",
-        excerpt: "30 million job postings show demand shifting toward the human skills that complement AI.",
-        tags: ["labor-market", "skills"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      },
-      {
-        slug: "08-amplification-playbook",
-        url: "/series/ai-amplifier/08-amplification-playbook/",
-        title: "The Amplification Playbook",
-        date: "2026-08-31",
-        excerpt: "Task decomposition, routing, skills, friction, and metrics: how to actually redesign jobs for amplification.",
-        tags: ["playbook", "organizational"],
-        references: ["ai-comes-for-the-grunt-work"],
-        published: false
-      }
-    ]
-  },
+  "id": "ai-amplifier",
+  "title": "AI as Human Amplifier vs Replacement",
+  "description": "An overview and eight essays on when AI improves human work, when automation makes sense, and how to test the difference.",
+  "status": "in-progress",
+  "tags": [
+    "ai-agents",
+    "human-augmentation",
+    "philosophy"
+  ],
+  "posts": [
+    {
+      "slug": "ai-comes-for-the-grunt-work",
+      "url": "/posts/ai-comes-for-the-grunt-work/",
+      "title": "AI changes the work. Who gets the gains?",
+      "date": "2026-07-01",
+      "excerpt": "Automating a task can help a worker, replace their work, or create demand elsewhere. The outcome depends on how jobs and institutions change.",
+      "tags": [
+        "Series",
+        "Essay",
+        "Future of Work"
+      ],
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "01-amplification-thesis",
+      "url": "/series/ai-amplifier/01-amplification-thesis/",
+      "title": "The Amplification Thesis",
+      "date": "2026-07-12",
+      "excerpt": "AI can improve human work without making human-plus-AI the best option. Design for amplification, then test it against the alternatives.",
+      "tags": [
+        "Series",
+        "Essay",
+        "AI Strategy"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": true
+    },
+    {
+      "slug": "02-centaur-advantage",
+      "url": "/series/ai-amplifier/02-centaur-advantage/",
+      "title": "The Centaur Advantage",
+      "date": "2026-07-23",
+      "excerpt": "Human-AI routing only helps if the router can identify a useful difference in ability. A chess experiment shows both the opportunity and the difficulty.",
+      "tags": [
+        "Series",
+        "Architecture",
+        "Human-AI Teaming"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    },
+    {
+      "slug": "03-great-equalizer",
+      "url": "/series/ai-amplifier/03-great-equalizer/",
+      "title": "The Great Equalizer",
+      "date": "2026-08-03",
+      "excerpt": "AI can narrow performance gaps on a task. That does not mean it gives novices an expert's knowledge, pay, or independence.",
+      "tags": [
+        "Series",
+        "Skills",
+        "Research"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    },
+    {
+      "slug": "04-cognitive-offloading-trap",
+      "url": "/series/ai-amplifier/04-cognitive-offloading-trap/",
+      "title": "The Cognitive Offloading Trap",
+      "date": "2026-08-14",
+      "excerpt": "Better assisted work and better learning are different outcomes. A classroom experiment shows why the distinction matters.",
+      "tags": [
+        "Series",
+        "Learning",
+        "Cognitive Science"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    },
+    {
+      "slug": "05-amplification-in-code",
+      "url": "/series/ai-amplifier/05-amplification-in-code/",
+      "title": "Intelligence Amplification in Code",
+      "date": "2026-08-24",
+      "excerpt": "AI coding tools can accelerate a bounded task and slow experienced maintainers. Measure the work you actually need to finish.",
+      "tags": [
+        "Series",
+        "Engineering",
+        "Research"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    },
+    {
+      "slug": "06-amplifying-creativity",
+      "url": "/series/ai-amplifier/06-amplifying-creativity/",
+      "title": "Amplifying Creativity",
+      "date": "2026-09-04",
+      "excerpt": "AI suggestions can improve an individual story while making a collection of stories more alike. Quality and variety need separate tests.",
+      "tags": [
+        "Series",
+        "Creativity",
+        "Research"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    },
+    {
+      "slug": "07-new-skill-premium",
+      "url": "/series/ai-amplifier/07-new-skill-premium/",
+      "title": "The New Skill Premium",
+      "date": "2026-09-15",
+      "excerpt": "Job postings show which skills employers ask for, not what caused a wage premium. Build a development plan without mistaking either for a guarantee.",
+      "tags": [
+        "Series",
+        "Skills",
+        "Labor Market"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    },
+    {
+      "slug": "08-amplification-playbook",
+      "url": "/series/ai-amplifier/08-amplification-playbook/",
+      "title": "The Amplification Playbook",
+      "date": "2026-09-26",
+      "excerpt": "A proposed trial for redesigning one workflow around AI, with explicit baselines, worker input, learning checks, and a decision to stop.",
+      "tags": [
+        "Series",
+        "AI Strategy",
+        "Work Design"
+      ],
+      "references": [
+        "ai-comes-for-the-grunt-work"
+      ],
+      "published": false
+    }
+  ]
+},
   {
     id: "progressive-crystallization",
     title: "Progressive Crystallization",
