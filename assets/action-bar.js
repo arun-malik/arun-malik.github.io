@@ -93,12 +93,21 @@
     printBtn.addEventListener('click', function() { window.print(); });
     row.appendChild(printBtn);
 
-    // Date published pill - find date and format consistently
+    // Keep explicitly labeled editorial dates distinct from publication dates.
     var dateText = findDate();
     if (dateText) {
       var dateBadge = document.createElement('span');
       dateBadge.className = 'reading-badge';
-      dateBadge.textContent = formatDate(dateText);
+      var labeledDate = document.querySelector('.article-date[data-date-label]');
+      var dateTime = labeledDate && labeledDate.querySelector('time[datetime]');
+      if (dateTime) {
+        dateBadge.textContent = labeledDate.getAttribute('data-date-label') + ': ';
+        var time = dateTime.cloneNode(true);
+        time.textContent = formatDate(dateTime.getAttribute('datetime'));
+        dateBadge.appendChild(time);
+      } else {
+        dateBadge.textContent = formatDate(dateText);
+      }
       row.appendChild(dateBadge);
     }
 

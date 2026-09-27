@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://blog.arunmalik.dev/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/posts/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
@@ -28,7 +28,7 @@
   <!-- Series landing pages -->
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -49,62 +49,62 @@
   <!-- Published posts -->
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/12-road-ahead/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/11-hyperscale-resolution/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/10-cognitive-fitness/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/09-sleeper-agents/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/08-decision-boundaries/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/07-failure-taxonomy/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/06-uniform-governance-fails/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/05-investment-not-tax/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/04-toxic-skills/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/03-graduated-automation/</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/02-hidden-debt/</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/01-cognitive-erosion/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
     <url>
@@ -119,7 +119,7 @@
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/strategic-hitl/00-why-not-optional/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
