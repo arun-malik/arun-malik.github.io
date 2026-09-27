@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Series, Skills, Research">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="The Great Equalizer">
+    <meta property="og:description" content="AI can narrow performance gaps on a task. That does not mean it gives novices an expert&#x27;s knowledge, pay, or independence.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/ai-amplifier/03-great-equalizer/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-amplifier.png" data-banner-src="/assets/og/ai-amplifier.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Great Equalizer">
+    <meta name="twitter:description" content="AI can narrow performance gaps on a task. That does not mean it gives novices an expert&#x27;s knowledge, pay, or independence.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <title>The Great Equalizer - Arun Malik</title>
+    <meta name="description" content="AI can narrow performance gaps on a task. That does not mean it gives novices an expert&#x27;s knowledge, pay, or independence.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --text: #1f2328;
+            --text-muted: #656d76;
+            --border: #d0d7de;
+            --accent: #2563eb;
+            --accent-subtle: #ddf4ff;
+            /* scene palette (works on light + dark) */
+            --c1: #2563eb; --c2: #7c3aed; --c3: #059669; --c4: #d97706; --c5: #dc2626;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent-subtle: #1f2a38;
+            --c1: #60a5fa; --c2: #a78bfa; --c3: #34d399; --c4: #fbbf24; --c5: #f87171;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .nav-bar a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+
+        /* Content */
+        .content h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+        .content p { margin-bottom: 1rem; }
+        .content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content strong { font-weight: 600; }
+        .content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; }
+        .content a { color: var(--accent); }
+        .refs { font-size: 0.9rem; }
+        .refs li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .step a { color: var(--accent); }
+        .journey-fig { margin: 1rem 0 1.25rem; }
+        .journey-fig svg { width: 100%; height: auto; display: block; }
+        .figcap { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+        /* Key metrics */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .metric-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+        .metric-card .value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .metric-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        /* ============ Scrollytelling: kept at the article's reading width ============ */
+        .scrolly-wrap {
+            margin: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .scrolly { display: block; }
+        .scrolly-graphic {
+            position: sticky;
+            top: 0;
+            height: 44vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 5;
+        }
+        .scrolly-graphic .scene-stack { position: relative; width: 100%; max-width: 680px; height: 100%; max-height: 340px; margin: 0 auto; }
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        /* No-JS / pre-init fallback: show the first scene so the panel is never blank */
+        .scrolly:not(.scrolly-enabled) .scene[data-scene="1"] { opacity: 1; }
+        .scene.is-active { opacity: 1; }
+        .scene svg { width: 100%; height: 100%; overflow: visible; }
+        .scene > div:not(.scene-caption) { height: 84%; }
+        .scene-caption { position: absolute; bottom: -2px; left: 0; right: 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        /* animated sub-elements within a scene (opacity-only so it never overrides SVG transforms) */
+        .anim { opacity: 0; transition: opacity 0.5s ease; }
+        .scene.is-active .anim { opacity: 1; }
+        .scene.is-active .anim.d1 { transition-delay: 0.10s; }
+        .scene.is-active .anim.d2 { transition-delay: 0.22s; }
+        .scene.is-active .anim.d3 { transition-delay: 0.34s; }
+        .scene.is-active .anim.d4 { transition-delay: 0.46s; }
+        .scene.is-active .anim.d5 { transition-delay: 0.58s; }
+        .scene.is-active .anim.d6 { transition-delay: 0.70s; }
+
+        .scrolly-steps { padding: 3vh 0 6vh; }
+        .step { min-height: 66vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.35s ease; }
+        .step.is-active { opacity: 1; }
+        .step h2 { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin: 0 0 0.75rem; padding: 0; border: 0; }
+        .step .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+        .step p { margin-bottom: 0.9rem; }
+        .step .pull { font-size: 1.05rem; font-weight: 600; color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.85rem; }
+
+        /* scene glyph helpers */
+        .lbl { fill: var(--text); font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+        .lbl-mut { fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+        .mut { fill: var(--text-muted); font-family: var(--font-mono); }
+
+        /* Footer */
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Small screens: a slightly shorter pinned graphic */
+        @media (max-width: 600px) {
+            .scrolly-graphic { height: 40vh; }
+            .scrolly-graphic .scene-stack { max-height: 300px; }
+            .step { min-height: 60vh; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .scene, .anim, .step { transition: none !important; }
+            .anim { opacity: 1 !important; }
+        }
+    .publication-note { color:var(--text-muted); font-size:.8rem; margin-top:1rem; }
+details { border:1px solid var(--border); border-radius:8px; padding:1rem; margin:1.5rem 0; }
+summary { cursor:pointer; font-weight:600; }
+details p:first-of-type { margin-top:1rem; }
+.content, .step { overflow-wrap:anywhere; }
+.scrolly:not(.scrolly-enabled) .step { opacity:1; min-height:0; margin:2rem 0; }
+.scrolly:not(.scrolly-enabled) .anim { opacity:1; }
+@media (max-width:600px) { .site-nav { flex-wrap:wrap; gap:1rem; } .site-header-wrapper .nav-links { gap:1rem!important; flex-wrap:wrap; } }
+</style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-amplifier/03-great-equalizer/">
+<meta property="article:published_time" content="2026-09-27T01:35:48-07:00">
+<meta property="article:modified_time" content="2026-09-27T01:35:48-07:00">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>The Great Equalizer</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">Skills</span><span class="tag">Research</span></div>
+<div class="article-meta"><span class="article-date" data-date-label="Series date">Series date: <time datetime="2026-08-03">2026-08-03</time></span></div>
+<p class="publication-note">Series date follows the <a href="/series/ai-amplifier/">editorial schedule</a>. First published <time datetime="2026-09-27T01:35:48-07:00">2026-09-27</time>; updated <time datetime="2026-09-27T01:35:48-07:00">2026-09-27</time>.</p>
+        </header>
+
+        <div id="series-header"></div>
+
+        <div id="article-toc"></div>
+
+        <div class="content">
+<p>The same assistant can be valuable to a beginner and unhelpful to an expert. That sounds obvious. It gets lost surprisingly quickly when a team reports one average productivity number and uses it to decide everyone's tooling, training, and workload.</p>
+<p>The strongest reason to take the equalizer idea seriously is a specific workplace study, not a general promise that AI turns juniors into seniors. It found large differences in who benefited. Those differences are more useful than the slogan.</p>
+
+<h2>What the support-agent study measured</h2>
+<p>Erik Brynjolfsson, Danielle Li and Lindsey Raymond studied the staggered introduction of a conversational assistant to customer-support workers. The tool suggested responses during chats. Agents remained responsible for the conversation and could ignore the suggestions.</p>
+<p>I use the <a href="https://www.nber.org/system/files/working_papers/w31161/w31161.pdf">November 2023 version of their NBER working paper, Generative AI at Work</a>, for the figures here. It covers 5,179 agents and reports a 14% average increase in productivity, measured as customer issues resolved per hour. Its headline estimate for novice and low-skilled workers is 34%, with minimal productivity gains for experienced and highly skilled workers. These are that version's figures, not a blend of numbers from the later journal publication and earlier summaries.</p>
+<p>The outcome matters. Resolved issues per hour combines handling time, the number of chats handled, and the share resolved. It is not a measure of general intelligence, total professional expertise, or how much somebody learned. Nor does a 34% increase in that rate mean each conversation took 34% less time.</p>
+<figure class="journey-fig">
+  <svg viewBox="0 0 620 205" role="img" aria-label="November 2023 NBER estimates: resolved issues per hour increased 14 percent on average and 34 percent for novice and low-skilled workers. The subgroup is included in the average.">
+    <text x="15" y="28" class="lbl">Change in resolved issues per hour</text>
+    <g fill="var(--c1)"><rect x="225" y="58" width="112" height="32"/><rect x="225" y="115" width="272" height="32"/></g>
+    <g class="lbl"><text x="15" y="79">All agents, average</text><text x="15" y="136">Novice / low-skilled</text><text x="348" y="79">14%</text><text x="508" y="136">34%</text></g>
+    <line x1="225" y1="160" x2="545" y2="160" stroke="var(--border)"/>
+    <g class="lbl-mut"><text x="225" y="184">0</text><text x="385" y="184">20%</text><text x="535" y="184">40%</text></g>
+  </svg>
+  <figcaption class="figcap">Point estimates from the working-paper abstract and introduction. These are overlapping populations, not two independent experimental arms. The graphic does not show confidence intervals or invented intermediate quartiles.</figcaption>
+</figure>
+<p>This was a workplace rollout analysed using differences in adoption timing, not an individually randomised trial. The authors use a difference-in-differences design and examine pre-adoption trends. Interpreting the estimates causally depends on the design's assumptions, including whether the comparison workers provide a credible account of what would have happened without access.</p>
+<p>Within that setting, the result is encouraging: assistance improved the measured performance of the people who had more room to improve. It does not establish that beginners in every profession benefit more, or that experts have nothing to gain from a differently designed assistant.</p>
+
+<h2>Borrowing a good answer versus learning to produce one</h2>
+<p>The authors offer evidence consistent with useful practices spreading from stronger agents to others. Lower-skill agents' language became more similar to higher-skill agents' language. Workers also retained some productivity gains during software outages when suggestions were unavailable.</p>
+<p>That is more informative than assisted performance alone. But the paper calls the mechanism evidence suggestive, and outages are not a randomised long-term test of independent expertise. We should not turn the finding into the claim that AI is the fastest knowledge-transfer mechanism ever built.</p>
+<p>There is a practical distinction here. An assistant might help a new worker locate the relevant policy, phrase a clear response, and avoid a known mistake. The worker could still struggle when the policy is missing, two records conflict, or a customer describes an unfamiliar problem. Excellent performance in the supported task does not answer those questions.</p>
+<details>
+  <summary>Read the percentage without changing its meaning</summary>
+  <p>Suppose, purely to explain the arithmetic, a baseline were 10 resolved issues per hour. A 34% increase in that rate would be 13.4 issues per hour. Neither number is a reported baseline from the study.</p>
+  <p>You could not conclude that a trainee became 34% more knowledgeable, that their salary should change by 34%, or that staffing could safely fall by 34%. Those are different quantities with different constraints.</p>
+  <p>Even the time-per-issue conversion would require assumptions about concurrency, case mix and quality. A rate is a good result to measure. It is a poor substitute for every other result.</p>
+</details>
+
+<h2>A better onboarding experiment</h2>
+<p>Consider a hypothetical organisation training staff to answer membership questions. Rather than announcing that AI will replace months of training, give the experiment a narrower question: does access help new staff resolve representative questions correctly, and do they retain enough understanding to handle new cases?</p>
+<p>Keep experienced staff in the evaluation. Record the time they spend correcting suggestions and helping trainees. If the assistant saves the trainee time but doubles the expert's interruptions, the trainee's dashboard is not the whole result.</p>
+<p>Use an independently reviewed set of cases, including exceptions and questions that should be deferred. Compare an ordinary reference guide with AI-assisted access to the same material. Where practical, assign access randomly and keep outcome review blind to the condition. Separate tenure from baseline performance: someone new to the organisation may bring substantial experience from elsewhere.</p>
+<p>Then test a fresh set of cases without the assistant, after a suitable interval. Explain to participants that this checks the training design, not whether they can be blamed for using an approved tool. The delay and sample should fit the work. There is no universal number of days or cases that makes an onboarding trial trustworthy.</p>
+<p>A useful result might be faster assisted work with unchanged independent performance. Another might be improved learning but extra review time. Both deserve more precise names than “equalization.” If less-supported workers fall behind, investigate access, language, training and case assignment before describing the difference as ability.</p>
+
+<h2>Who owns the improvement?</h2>
+<p>The support-agent paper explicitly does not determine aggregate employment or wage effects. A firm could respond to improved novice productivity in several ways, including changing hiring or redesigning roles. The study cannot choose that response for it.</p>
+<p>That matters for experts too. If their examples help train or maintain a tool, writing and checking those examples is work. Calling it knowledge sharing does not make the time free. A fair implementation would make that contribution visible and discuss how the gains affect workload and progression.</p>
+<p>I would therefore ask a manager for two results: the distribution of assisted outcomes, and what workers can do after the assistance is removed. A narrower performance gap is worth having. It is not yet proof of a narrower opportunity gap.</p>
+
+<h2>Source and scope</h2>
+<p>Brynjolfsson, Li and Raymond, <a href="https://www.nber.org/papers/w31161">Generative AI at Work</a>, NBER working paper 31161, April 2023, revised November 2023. The linked PDF supplies the sample and estimates used here, along with the staggered-rollout design and learning analysis. Earlier draft claims about engineering onboarding, invented skill-quartile estimates and universal human-only capabilities are not retained. The membership workflow is hypothetical.</p>
+
+</div>
+
+
+    </article>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/arun-malik" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/malik-arun/" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+
+
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+</body>
+</html>
