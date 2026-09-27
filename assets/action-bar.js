@@ -189,6 +189,11 @@
   }
 
   function calcReadingTime() {
+    // Scrollytelling pages can exclude duplicated diagram and fallback text from their estimate.
+    var estimate = document.querySelector('article[data-reading-minutes]');
+    if (estimate && /^[1-9]\d*$/.test(estimate.getAttribute('data-reading-minutes'))) {
+      return Number(estimate.getAttribute('data-reading-minutes'));
+    }
     var content = document.querySelector('.article-content') || document.querySelector('article') || document.body;
     var clone = content.cloneNode(true);
     clone.querySelectorAll('pre, code, script, style, nav, header, footer, .action-row, .page-toolbar, .post-hero-banner, .breadcrumb-bar').forEach(function(el) { el.remove(); });

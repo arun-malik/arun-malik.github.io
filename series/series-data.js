@@ -149,7 +149,7 @@ const SERIES_DATA = [
   {
     id: "ai-amplifier",
     title: "AI as Human Amplifier vs Replacement",
-    description: "Exploring AI as a tool that amplifies human capability rather than replacing it. A framework for building AI systems that make people better at their jobs.",
+    description: "An overview and eight essays on when AI improves human work, when automation makes sense, and how to test the difference.",
     status: "in-progress",
     tags: ["ai-agents", "human-augmentation", "philosophy"],
     posts: [
@@ -168,8 +168,8 @@ const SERIES_DATA = [
         url: "/series/ai-amplifier/01-amplification-thesis/",
         title: "The Amplification Thesis",
         date: "2026-07-13",
-        excerpt: "An 8,214-participant meta-analysis shows human+AI teams beat either humans or AI working alone.",
-        tags: ["evidence", "collaboration"],
+        excerpt: "AI can improve human work without making human-plus-AI the best option. Design for amplification, then test it against the alternatives.",
+        tags: ["Series", "Essay", "AI Strategy"],
         references: ["ai-comes-for-the-grunt-work"],
         published: true
       },

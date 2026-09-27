@@ -11,8 +11,8 @@
     var imageUrl = ogImage.getAttribute('content');
     if (!imageUrl || imageUrl.includes('og-default')) return;
 
-    // Get SVG URL from the PNG OG reference
-    var svgUrl = imageUrl.replace('.png', '.svg');
+    // An explicit local source lets draft previews use revised art before publication.
+    var svgUrl = ogImage.getAttribute('data-banner-src') || imageUrl.replace('.png', '.svg');
 
     // Inject styles
     var style = document.createElement('style');
