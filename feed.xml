@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:38:03-07:00</updated>
+  <updated>2026-09-27T01:40:13-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Intelligence Amplification in Code</title>
+    <link href="https://blog.arunmalik.dev/series/ai-amplifier/05-amplification-in-code/"/>
+    <id>https://blog.arunmalik.dev/series/ai-amplifier/05-amplification-in-code/</id>
+    <published>2026-09-27T01:40:13-07:00</published>
+    <updated>2026-09-27T01:40:13-07:00</updated>
+    <summary>AI coding tools can accelerate a bounded task and slow experienced maintainers. Measure the work you actually need to finish.</summary>
+    <category term="Series"/>
+    <category term="Engineering"/>
+    <category term="Research"/>
+  </entry>
 
   <entry>
     <title>The Cognitive Offloading Trap</title>
