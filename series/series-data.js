@@ -409,8 +409,18 @@ const SERIES_DATA = [
     {
       "slug": "07-permissions-and-recovery",
       "title": "Permissions, recovery, and changed inputs",
-      "published": false,
-      "excerpt": "A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority."
+      "published": true,
+      "excerpt": "A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority.",
+      "url": "/series/progressive-crystallization/07-permissions-and-recovery/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "06-rule-evidence"
+      ]
     },
     {
       "slug": "08-measure-outcomes",

@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:12:12-07:00</updated>
+  <updated>2026-09-27T22:14:02-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Permissions, recovery, and changed inputs</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/07-permissions-and-recovery/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/07-permissions-and-recovery/</id>
+    <published>2026-09-27T22:14:02-07:00</published>
+    <updated>2026-09-27T22:14:02-07:00</updated>
+    <summary>A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>When a rule has earned its place</title>
