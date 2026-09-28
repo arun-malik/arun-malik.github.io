@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:05:53-07:00</updated>
+  <updated>2026-09-27T22:07:50-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>What a playbook must promise, and who can author it</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/</id>
+    <published>2026-09-27T22:07:50-07:00</published>
+    <updated>2026-09-27T22:07:50-07:00</updated>
+    <summary>A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>Two ways to get a useful playbook</title>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>What a playbook must promise, and who can author it - Arun Malik</title>
+    <meta name="description" content="A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.">
+    <meta name="keywords" content="Series, AI Agents, Automation">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/">
+    <meta property="og:title" content="What a playbook must promise, and who can author it">
+    <meta property="og:description" content="A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/04-playbook-contract.png" data-banner-src="/assets/og/04-playbook-contract.svg">
+    <meta property="og:image:alt" content="Abstract geometric paths and facets related to the article’s question.">
+    <meta property="article:published_time" content="2026-09-27T22:07:50-07:00">
+    <meta property="article:modified_time" content="2026-09-27T22:07:50-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What a playbook must promise, and who can author it">
+    <meta name="twitter:description" content="A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.">
+    <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/04-playbook-contract.png">
+    <link rel="stylesheet" href="/assets/crystallization.css">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+            --bg: #ffffff; --bg-secondary: #f6f8fa; --text: #1f2328;
+            --text-muted: #656d76; --text-secondary: #656d76; --border: #d0d7de;
+            --accent: #2563eb; --accent-subtle: #ddf4ff;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117; --bg-secondary: #161b22; --text: #e6edf3;
+            --text-muted: #8b949e; --text-secondary: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-subtle: #1f2a38;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+        .article-meta { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        a { color: var(--accent); }
+        .nav-bar a { text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+        .content { overflow-wrap: anywhere; }
+        .content h2 { font-size: 1.375rem; line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content p { margin-bottom: 1rem; }
+        .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.75rem; }
+        .refs { font-size: 0.9rem; color: var(--text-muted); }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        @media (max-width: 600px) {
+            .site-nav { flex-wrap: wrap; gap: 1rem; }
+            .site-header-wrapper { padding: 0 !important; }
+            .site-header-wrapper .nav-links { gap: 1rem !important; flex-wrap: wrap; }
+            .series-prev:empty { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar" aria-label="Site">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+    <figure class="pc-art" data-crystallization-art>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M70 90L405 145M90 300L435 240M1110 80L760 145M1100 290L765 240"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="thread" stroke="#a7ced9" fill="none" stroke-width="1.2"><path d="M430 90Q650 5 820 150M835 245Q630 365 415 270M470 110Q650 55 760 150M765 235Q610 310 455 235"/></g><g class="facet" transform="translate(575 190)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(700 210)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
+</figure>
+    <main>
+    <article data-reading-minutes="4">
+        <header class="blog-header">
+            <h1>What a playbook must promise, and who can author it</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI Agents</span><span class="tag">Automation</span></div>
+            <div class="article-meta"><span class="article-date">Published <time datetime="2026-09-27">Sep 27, 2026</time></span></div>
+        </header>
+        <div id="series-header"><p><a href="/series/progressive-crystallization/">Progressive Crystallization</a> &middot; Part 4 of 10</p></div>
+        <div id="article-toc"></div>
+        <div class="content">
+<p>“Check the interface and tell me what is wrong” is a reasonable request to a colleague. It is an incomplete contract for a reusable playbook.</p>
+<p>Which interface? Who may read its status? How old can the observation be? Does “down” mean an observed state, a diagnosis, or permission to do something about it? A reviewer cannot answer those questions by inspecting the prompt alone.</p>
+<p>A playbook contract makes the promised behavior inspectable. It should be understandable to the operator who knows the scenario and precise enough for the engineer who implements it. Neither person should have to guess where the authority comes from.</p>
+
+<h2 id="contract">A contract for the fictional status check</h2>
+<p>The following is an original design for the series' invented lab. It authorizes no access to real equipment. It is deliberately narrower than a troubleshooting procedure: collect eligible evidence and report a status interpretation. Nothing here resets, reconfigures, or repairs an interface.</p>
+<figure class="pc-diagram" aria-labelledby="contract-caption">
+  <div class="pc-box"><strong>Evidence boundary</strong><p>Requested target, approved source, response format, observation time, and evidence identity must agree.</p></div>
+  <p class="pc-edge">Only eligible evidence reaches interpretation.</p>
+  <div class="pc-box"><strong>Decision boundary</strong><p>Return “appears up”, “appears down”, or “review required”. Attach the evidence reference and the reason for any rejection.</p></div>
+  <p class="pc-edge">A supported classification permits only the declared report.</p>
+  <div class="pc-box pc-stop"><strong>Authority boundary</strong><p>Collection and reporting each use an authorized identity and destination. No branch grants change authority. Uncertainty does not expand the allowed tool set.</p></div>
+  <figcaption id="contract-caption">Evidence, decisions, and authority answer different questions. A schema can validate a response's shape without validating its truth or granting permission to act.</figcaption>
+</figure>
+<dl class="pc-contract">
+  <dt>Name, version, and purpose</dt><dd>Lab status report, contract version 1. Describe one approved observation. The operational owner must be recorded before any real deployment.</dd>
+  <dt>Inputs</dt><dd>A requested target, an approved observation source, a trusted evaluation time, and the scenario's reviewed freshness limit. The fixture demonstration will supply these locally, not retrieve them from a service.</dd>
+  <dt>Preconditions</dt><dd>The executor has permission to read this target and report to this recipient. The requested operation matches the contract. The source and format are supported. Required approval, if any, is current and covers this run.</dd>
+  <dt>Evidence schema</dt><dd>A format identifier, target identity, observation timestamp, evidence identifier, and status value. Check types and required fields. A parseable timestamp must also meet the freshness and clock assumptions.</dd>
+  <dt>Outputs and postconditions</dt><dd>A report contains the interpretation, evidence reference, and contract version. A review outcome contains a reason instead of a status guess. A reported status does not assert a cause, recovery, or successful delivery to a third party.</dd>
+  <dt>Allowed branches</dt><dd>Supported evidence reaches the selected interpretation method. Unsupported or uncertain evidence stops for review. No path invokes a new tool merely because the expected answer was unavailable.</dd>
+  <dt>Timeouts and retries</dt><dd>Set a collection deadline appropriate to the approved lab source. Limit retries and retain distinct observations. A retry needs current authority; a previous permission decision is not permanent permission.</dd>
+  <dt>Approval points</dt><dd>Apply the scenario's access policy before collection and its disclosure policy before reporting. Any later mitigation requires a separate contract and authority. Do not infer approval from the report's status.</dd>
+  <dt>Failure and recovery</dt><dd>Missing, malformed, stale, contradictory, or denied evidence produces an explicit terminal reason. Preserve only the permitted evidence. A reviewer can revise the contract or authorize a different investigation.</dd>
+  <dt>Ownership and changes</dt><dd>Record author, reviewer, operational owner, contract version, dependencies, and retirement or review triggers. Recheck tests when the producer's schema or meaning changes.</dd>
+</dl>
+
+<h2 id="roles">The author does not have to be the executor</h2>
+<p>An operator may know exactly which observation distinguishes two conditions while having no reason to write a parser. A network specialist may identify an exception. A datacenter technician may know that a procedure assumes a maintenance state that is absent today. Engineers can turn that knowledge into an implementation, but they should not erase its provenance.</p>
+<p>These contributors can author or correct the contract. Publication review and execution authorization remain separate decisions.</p>
+<figure class="pc-diagram" aria-labelledby="roles-caption">
+  <div class="pc-grid">
+    <div class="pc-box"><strong>Author</strong><p>Contributes scenario knowledge, assumptions, and candidate behavior.</p></div>
+    <div class="pc-box"><strong>Reviewer</strong><p>Checks evidence, applicability, failure paths, and proposed permissions.</p></div>
+    <div class="pc-box"><strong>Executor identity</strong><p>Runs only the operations its current policy permits.</p></div>
+    <div class="pc-box"><strong>Operational owner</strong><p>Maintains the contract, receives failures, and decides when to withdraw it.</p></div>
+  </div>
+  <figcaption id="roles-caption">These are responsibilities, not automatically distinct people or mandatory job titles. Combining roles does not remove the need to make each decision explicit.</figcaption>
+</figure>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP's Authorization Cheat Sheet</a> distinguishes authentication from authorization and recommends least privilege, deny-by-default behavior, and permission validation on every request. That supports the separation between an identified author and an authorized operation. It does not prescribe the particular role map above or certify our fictional workflow.</p>
+<p>Read access deserves the same specificity. “It only reads” is not an access policy. Reading a different target could disclose restricted information; repeatedly polling an expensive source could create load. The permission check should refer to the target and operation, not simply to whether the tool sounds observational.</p>
+
+<h2 id="failures">Promises become useful at failure boundaries</h2>
+<p>Suppose collection times out. The contract should return “observation unavailable,” not “appears down.” If the producer later supplies a response after the deadline, the owner must decide whether it belongs to the expired run or a new one. Quietly attaching it to whichever run is active makes the evidence misleading.</p>
+<p>Suppose reporting is added as an external delivery operation. A timeout then has a different meaning: perhaps nothing was delivered, or perhaps delivery succeeded and its acknowledgement was lost. Retrying without understanding that state can create duplicate reports. The local fixture exercise does not implement a delivery service and should not pretend that it solved this problem.</p>
+<p>The <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library article on idempotent APIs</a> explains why a caller-provided request identifier can make retry intent explicit, and why recording that identifier must be coordinated atomically with the mutation. Copying an identifier into a playbook is not enough. The receiving system must enforce the promised semantics.</p>
+<p>These details belong in the contract because they determine what “done” means. A valid model answer is not a delivered report. A delivered report is not a repaired interface.</p>
+<p>Keep the template small enough to review, but make its stopping behavior as concrete as its successful output. The point where it refuses to continue is part of what the playbook promises.</p>
+
+<h2 id="sources">Sources and scope</h2>
+<ol class="refs">
+  <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP, Authorization Cheat Sheet</a>: authorization versus authentication, least privilege, default denial, and per-request validation. General application guidance.</li>
+  <li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library, Making retries safe with idempotent APIs</a>: expressing retry intent and coordinating request records with effects. API design guidance, not an implementation supplied by this article.</li>
+</ol>
+<p class="refs">The contract and responsibility map are design proposals for an invented lab. They do not represent an employer's implementation, approval policy, or security certification.</p>
+
+        </div>
+        <div id="series-footer"><p><a href="/series/progressive-crystallization/">All ten topics</a> &middot; <a href="/series/progressive-crystallization/03-runs-and-specifications/">Previous: Two ways to get a useful playbook</a></p></div>
+    </article>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="https://github.com/arun-malik" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener">LinkedIn</a></div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        setTheme(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches));
+        toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'dark'));
+    </script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/crystallization-art.js"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

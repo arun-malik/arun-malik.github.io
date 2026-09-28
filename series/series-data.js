@@ -361,8 +361,18 @@ const SERIES_DATA = [
     {
       "slug": "04-playbook-contract",
       "title": "What a playbook must promise, and who can author it",
-      "published": false,
-      "excerpt": "A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect."
+      "published": true,
+      "excerpt": "A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.",
+      "url": "/series/progressive-crystallization/04-playbook-contract/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "03-runs-and-specifications"
+      ]
     },
     {
       "slug": "05-bounded-reasoning",
