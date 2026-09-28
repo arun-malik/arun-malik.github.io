@@ -12,13 +12,14 @@
     <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/01-ordinary-automation.png" data-banner-src="/assets/og/01-ordinary-automation.svg">
-    <meta property="og:image:alt" content="When an AI workflow should become ordinary automation. Keep reasoning where the rules run out.">
+    <meta property="og:image:alt" content="Exploratory paths meet local geometric facets, with open connections remaining.">
     <meta property="article:published_time" content="2026-09-27T21:06:17-07:00">
-    <meta property="article:modified_time" content="2026-09-27T21:06:17-07:00">
+    <meta property="article:modified_time" content="2026-09-27T22:00:06-07:00">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="When an AI workflow should become ordinary automation">
     <meta name="twitter:description" content="Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?">
     <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/01-ordinary-automation.png">
+    <link rel="stylesheet" href="/assets/crystallization.css">
     <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -78,6 +79,12 @@
             <span id="moonIcon">&#9790;</span>
         </button>
     </nav>
+    <figure class="pc-art" data-crystallization-art>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M45 250Q180 50 320 180T560 220M430 75L560 220L695 145M820 235Q955 95 1155 210"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="facet" transform="translate(175 180)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(425 225)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(675 165)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(965 220)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
+</figure>
     <main>
     <article data-reading-minutes="7">
         <header class="blog-header">
@@ -91,6 +98,16 @@
             <p>A working AI workflow is a good place to start asking where you can stop using AI.</p>
             <p>If a model keeps choosing the same operation for a well-defined input, there may be no useful decision left for it to make. Parsing a known file format, checking a required field, or sorting records by a declared key can be ordinary software. The difficult part is knowing whether you have found a stable rule or merely seen a few similar cases.</p>
             <p>I use <em>progressive crystallization</em> here for a proposed engineering practice: move a bounded part of an AI-assisted workflow into explicit code when you can state its contract and test it. Leave unresolved judgment visible. This is an argument about how to design work, not a claim of a new algorithm or a report of measured savings.</p>
+            <p>The knowledge need not start with an agent. Operators, domain experts, and engineers can author a playbook from a procedure they already understand, or learn it through an investigation. Either source can support an agent-led, hybrid, or deterministic implementation. A fully agent-orchestrated playbook is still a playbook. Reuse does not require removing AI.</p>
+            <p>My <a href="https://arxiv.org/html/2607.07052v1#S3">public paper's execution taxonomy</a> is the conceptual starting point. This series makes the choices explicit rather than prescribing a ladder: skip an unnecessary stage, keep a mixed workflow, or start with rules. Service integration is an optional location decision. It may improve handling without fixing the underlying cause. The paper is cited for terminology, not as evidence of savings, automatic promotion, or safety guarantees.</p>
+            <figure class="pc-diagram" aria-labelledby="choices-caption">
+                <div class="pc-grid">
+                    <div class="pc-box"><strong>Source of knowledge</strong><p>Investigation findings or proactively supplied expertise. Both need review.</p></div>
+                    <div class="pc-box"><strong>Execution form</strong><p>Agent-led, hybrid, or deterministic. Choose for a stated scope, not a maturity score.</p></div>
+                    <div class="pc-box"><strong>Implementation location</strong><p>A maintained playbook, or understood behavior incorporated into service code.</p></div>
+                </div>
+                <figcaption id="choices-caption">Three separate decisions. Permissions and approvals constrain every combination; none follows automatically from another.</figcaption>
+            </figure>
 
             <h2 id="a-small-example">Start with a reading list</h2>
             <p>Imagine a local experiment that turns synthetic book records into a reading-list page. There are no customer records, production services, or outgoing messages. An assistant reads two fixture files, works out their column names, combines the records, and suggests subject groupings. A person reviews the generated page.</p>
@@ -133,10 +150,11 @@
                 <li><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic, Building effective agents</a> (originally December 2024; living page). See “What are agents?” and “When (and when not) to use agents.” Definitions and design guidance, not a comparative trial.</li>
                 <li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library, Making retries safe with idempotent APIs</a>. See “Reducing client complexity with idempotent API design” for request identifiers and atomic handling of side effects.</li>
                 <li><a href="https://sre.google/sre-book/automation-at-google/">Niall Murphy with John Looney and Michael Kacirek, The Evolution of Automation at Google</a>, <em>Site Reliability Engineering</em>, Chapter 7 (2016). See the opening caution and “The Use Cases for Automation” discussion of changing systems and fragile automation.</li>
+                <li><a href="https://arxiv.org/html/2607.07052v1#S3">Arun Malik, Progressive Crystallization, arXiv v1, Section III</a>. Conceptual taxonomy only. This series does not reproduce or independently validate the paper's operational results.</li>
             </ol>
             <p class="refs">Public sources checked September 27, 2026.</p>
         </div>
-        <div id="series-footer"><p><a href="/series/progressive-crystallization/">See the ten-part series plan</a>. Part 2 is coming soon.</p></div>
+        <div id="series-footer"><p><a href="/series/progressive-crystallization/">All ten topics</a></p></div>
     </article>
     </main>
     <footer>
@@ -164,7 +182,7 @@
     <script src="/series/series-nav.js"></script>
     <script src="/assets/search.js"></script>
     <script src="/assets/article-enhance.js"></script>
-    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/crystallization-art.js"></script>
     <script src="/assets/action-bar.js?v=2"></script>
     <script src="/assets/reading-save.js"></script>
     <script src="/assets/giscus.js"></script>

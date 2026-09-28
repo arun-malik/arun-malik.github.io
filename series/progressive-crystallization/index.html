@@ -4,17 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Progressive Crystallization - Series - Arun Malik</title>
-    <meta name="description" content="A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.">
+    <meta name="description" content="Ten essays on agent-led, hybrid, and deterministic playbooks: where knowledge comes from, what to test, and where the behavior belongs.">
     <!-- Open Graph / Social Cards -->
     <meta property="og:title" content="Progressive Crystallization - Arun Malik">
-    <meta property="og:description" content="A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.">
+    <meta property="og:description" content="Ten essays on agent-led, hybrid, and deterministic playbooks: where knowledge comes from, what to test, and where the behavior belongs.">
     <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/progressive-crystallization.png" data-banner-src="/assets/og/progressive-crystallization.svg">
-    <meta property="og:image:alt" content="Progressive Crystallization: reasoning, rules, and review">
+    <meta property="og:image:alt" content="An open constellation of exploratory curves, bounded clusters, and connected facets.">
+    <link rel="stylesheet" href="/assets/crystallization.css">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Progressive Crystallization - Arun Malik">
-    <meta name="twitter:description" content="A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.">
+    <meta name="twitter:description" content="Ten essays on agent-led, hybrid, and deterministic playbooks: where knowledge comes from, what to test, and where the behavior belongs.">
     <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/">
     <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -127,94 +128,37 @@
             </nav>
         </header>
 
+        <figure class="pc-art" data-crystallization-art><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M40 270Q130 80 270 190T480 240L610 120M610 120Q790 80 900 230T1160 120"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="facet" transform="translate(175 180)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(425 225)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(675 165)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(965 220)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
+</figure>
         <main>
             <div class="breadcrumb">
                 <a href="/series/">Series</a> &rarr; Progressive Crystallization
             </div>
 
             <h1>Progressive Crystallization</h1>
-            <p class="series-desc">A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.</p>
-            <p class="series-desc">Once a workflow works, which decisions still need reasoning? These essays examine where explicit rules help, what evidence supports a change, and when automation should stop. Repeatability alone establishes neither correctness nor safety.</p>
+            <p class="series-desc">Ten essays on agent-led, hybrid, and deterministic playbooks: where knowledge comes from, what to test, and where the behavior belongs.</p>
+            <p class="series-desc">A useful playbook can come from an investigation or from an expert who already understands the scenario. It can remain agent-led, combine fixed steps with AI decisions, or run without runtime AI. These are choices, not a maturity ladder. Keeping the playbook and incorporating understood behavior into service code are separate options.</p>
+            <p class="series-desc">The articles distinguish observations from specifications, permissions from reasoning, and reduced inference from total cost. Determinism guarantees neither correctness nor safety. Service integration need not remove a root cause. Unknown inputs call for a stop or reviewed handoff, not a silent expansion of authority.</p>
 
             <div class="series-status">In Progress &middot; 1 of 10 published</div>
 
             <ol class="post-list">
-                <li class="post-item">
-                    <span class="post-number">01</span>
-                    <div class="post-content">
-                        <h2 class="post-title"><a href="/series/progressive-crystallization/01-ordinary-automation/">When an AI workflow should become ordinary automation</a></h2>
-                        <p class="post-excerpt">Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?</p>
-                        <p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 1</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">02</span>
-                    <div class="post-content">
-                        <h2 class="post-title">Where rules end and reasoning begins</h2>
-                        <p class="post-excerpt">Choosing between explicit code paths and model-directed work, one decision at a time. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">03</span>
-                    <div class="post-content">
-                        <h2 class="post-title">A successful run is not a specification</h2>
-                        <p class="post-excerpt">What an observed execution can tell us, and which requirements still need to be written and tested. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">04</span>
-                    <div class="post-content">
-                        <h2 class="post-title">What evidence justifies automating a decision?</h2>
-                        <p class="post-excerpt">Comparisons, failure cases, and the limits of a passing test set. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">05</span>
-                    <div class="post-content">
-                        <h2 class="post-title">The costs that remain after the model call</h2>
-                        <p class="post-excerpt">Counting compute, maintenance, review, and recovery alongside inference costs. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">06</span>
-                    <div class="post-content">
-                        <h2 class="post-title">Repeatable does not mean safe</h2>
-                        <p class="post-excerpt">Permissions, input boundaries, and checks on what the software actually changed. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">07</span>
-                    <div class="post-content">
-                        <h2 class="post-title">What to record when a workflow runs</h2>
-                        <p class="post-excerpt">Useful execution evidence, missing context, and the privacy limits of logging. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">08</span>
-                    <div class="post-content">
-                        <h2 class="post-title">When a familiar procedure stops fitting</h2>
-                        <p class="post-excerpt">Detecting changed assumptions and designing a stop or a reviewed handoff. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">09</span>
-                    <div class="post-content">
-                        <h2 class="post-title">A small automation experiment</h2>
-                        <p class="post-excerpt">A hypothetical nonproduction exercise for comparing an assisted workflow with a bounded program. Coming soon.</p>
-                    </div>
-                </li>
-                <li class="post-item">
-                    <span class="post-number">10</span>
-                    <div class="post-content">
-                        <h2 class="post-title">Measure the work, not the automation share</h2>
-                        <p class="post-excerpt">Assessing useful outcomes and ongoing effort without treating less reasoning as a goal by itself. Coming soon.</p>
-                    </div>
-                </li>
-            </ol>
+<li class="post-item"><span class="post-number">01</span><div class="post-content"><h2 class="post-title"><a href="/series/progressive-crystallization/01-ordinary-automation/">When an AI workflow should become ordinary automation</a></h2><p class="post-excerpt">Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?</p><p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 1</p></div></li>
+<li class="post-item"><span class="post-number">02</span><div class="post-content"><h2 class="post-title">Three execution forms, not a maturity ladder</h2><p class="post-excerpt">Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">03</span><div class="post-content"><h2 class="post-title">Two ways to get a useful playbook</h2><p class="post-excerpt">Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">04</span><div class="post-content"><h2 class="post-title">What a playbook must promise, and who can author it</h2><p class="post-excerpt">A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">05</span><div class="post-content"><h2 class="post-title">Keep the reasoning where it is needed</h2><p class="post-excerpt">A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">06</span><div class="post-content"><h2 class="post-title">When a rule has earned its place</h2><p class="post-excerpt">An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">07</span><div class="post-content"><h2 class="post-title">Permissions, recovery, and changed inputs</h2><p class="post-excerpt">A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">08</span><div class="post-content"><h2 class="post-title">Measure the outcome, not just the model calls</h2><p class="post-excerpt">Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">09</span><div class="post-content"><h2 class="post-title">Keep the playbook, or move behavior into the service?</h2><p class="post-excerpt">An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">10</span><div class="post-content"><h2 class="post-title">One scenario, several defensible designs</h2><p class="post-excerpt">A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+</ol>
 
-            <div class="coming-soon-note">
-                Part 1 is available above. The remaining nine entries are planned topics, not completed studies or promised results. This series develops an engineering proposal from public sources; its examples are hypothetical, not reports of an employer's systems. Later titles may change as the evidence is reviewed.
-            </div>
+            <div class="coming-soon-note">1 of 10 articles are available. Unlinked entries are planned topics, not promised results. The examples are independently constructed fiction, not employer case studies. Public sources support the stated engineering guidance, not a validated universal lifecycle.</div>
         </main>
 
         <footer>
@@ -248,7 +192,7 @@
             setTheme(!isDark);
         });
     </script>
-    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/crystallization-art.js"></script>
     <script src="/assets/action-bar.js?v=2"></script>
     <script src="/assets/reading-save.js"></script>
     <script src="/assets/giscus.js"></script>

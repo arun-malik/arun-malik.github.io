@@ -302,33 +302,86 @@ const SERIES_DATA = [
   ]
 },
   {
-    id: "progressive-crystallization",
-    title: "Progressive Crystallization",
-    description: "A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.",
-    status: "in-progress",
-    tags: ["automation", "ai-agents", "optimization"],
-    posts: [
-      {
-        slug: "01-ordinary-automation",
-        url: "/series/progressive-crystallization/01-ordinary-automation/",
-        title: "When an AI workflow should become ordinary automation",
-        date: "2026-09-27",
-        excerpt: "Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?",
-        tags: ["Series", "AI Agents", "Automation"],
-        references: [],
-        published: true
-      },
-      { slug: "02-rules-and-reasoning", title: "Where rules end and reasoning begins", published: false },
-      { slug: "03-runs-and-specifications", title: "A successful run is not a specification", published: false },
-      { slug: "04-evidence-for-automation", title: "What evidence justifies automating a decision?", published: false },
-      { slug: "05-costs-that-remain", title: "The costs that remain after the model call", published: false },
-      { slug: "06-repeatable-not-safe", title: "Repeatable does not mean safe", published: false },
-      { slug: "07-execution-evidence", title: "What to record when a workflow runs", published: false },
-      { slug: "08-changed-assumptions", title: "When a familiar procedure stops fitting", published: false },
-      { slug: "09-small-experiment", title: "A small automation experiment", published: false },
-      { slug: "10-measure-the-work", title: "Measure the work, not the automation share", published: false }
-    ]
-  },
+  "id": "progressive-crystallization",
+  "title": "Progressive Crystallization",
+  "description": "Ten essays on agent-led, hybrid, and deterministic playbooks: where knowledge comes from, what to test, and where the behavior belongs.",
+  "status": "in-progress",
+  "tags": [
+    "automation",
+    "ai-agents",
+    "optimization"
+  ],
+  "posts": [
+    {
+      "slug": "01-ordinary-automation",
+      "url": "/series/progressive-crystallization/01-ordinary-automation/",
+      "title": "When an AI workflow should become ordinary automation",
+      "date": "2026-09-27",
+      "excerpt": "Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "02-rules-and-reasoning",
+      "title": "Three execution forms, not a maturity ladder",
+      "published": false,
+      "excerpt": "Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder."
+    },
+    {
+      "slug": "03-runs-and-specifications",
+      "title": "Two ways to get a useful playbook",
+      "published": false,
+      "excerpt": "Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain."
+    },
+    {
+      "slug": "04-playbook-contract",
+      "title": "What a playbook must promise, and who can author it",
+      "published": false,
+      "excerpt": "A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect."
+    },
+    {
+      "slug": "05-bounded-reasoning",
+      "title": "Keep the reasoning where it is needed",
+      "published": false,
+      "excerpt": "A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible."
+    },
+    {
+      "slug": "06-rule-evidence",
+      "title": "When a rule has earned its place",
+      "published": false,
+      "excerpt": "An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code."
+    },
+    {
+      "slug": "07-permissions-and-recovery",
+      "title": "Permissions, recovery, and changed inputs",
+      "published": false,
+      "excerpt": "A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority."
+    },
+    {
+      "slug": "08-measure-outcomes",
+      "title": "Measure the outcome, not just the model calls",
+      "published": false,
+      "excerpt": "Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement."
+    },
+    {
+      "slug": "09-implementation-location",
+      "title": "Keep the playbook, or move behavior into the service?",
+      "published": false,
+      "excerpt": "An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides."
+    },
+    {
+      "slug": "10-several-designs",
+      "title": "One scenario, several defensible designs",
+      "published": false,
+      "excerpt": "A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint."
+    }
+  ]
+},
   {
     id: "cloud-security",
     title: "Cloud Security",

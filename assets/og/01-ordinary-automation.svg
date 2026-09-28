@@ -1,16 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">When an AI workflow should become ordinary automation</title>
-  <desc id="desc">Progressive Crystallization, Part 1. Keep reasoning where the rules run out.</desc>
-  <rect width="1200" height="630" fill="#0f172a"/>
-  <g font-family="Segoe UI, sans-serif">
-    <text x="80" y="100" font-size="24" fill="#fbbf24">PROGRESSIVE CRYSTALLIZATION / PART 1</text>
-    <g fill="#f1f5f9" font-size="55" font-weight="600">
-      <text x="80" y="213">When an AI workflow</text>
-      <text x="80" y="286">should become</text>
-      <text x="80" y="359">ordinary automation</text>
-    </g>
-    <path d="M80 413 H1120" stroke="#fbbf24" stroke-width="2"/>
-    <text x="80" y="477" font-size="30" fill="#fbbf24">Keep reasoning where the rules run out.</text>
-    <text x="80" y="560" font-size="23" fill="#f1f5f9">Arun Malik / blog.arunmalik.dev</text>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M45 250Q180 50 320 180T560 220M430 75L560 220L695 145M820 235Q955 95 1155 210"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="facet" transform="translate(175 180)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(425 225)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(675 165)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(965 220)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>

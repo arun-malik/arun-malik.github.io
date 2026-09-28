@@ -1,32 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<rect width="1200" height="630" fill="#0f172a"/>
-<!-- Fluid/stochastic (left) - wavy lines -->
-<g fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.4">
-  <path d="M150,250 Q200,230 250,260 Q300,290 350,260 Q400,230 450,270"/>
-  <path d="M150,315 Q200,295 250,325 Q300,355 350,325 Q400,295 450,335"/>
-  <path d="M150,380 Q200,360 250,390 Q300,420 350,390 Q400,360 450,400"/>
-</g>
-<!-- Transition arrow -->
-<g fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.5">
-  <path d="M500,315 L700,315" stroke-dasharray="6,4"/>
-  <polygon points="700,310 715,315 700,320" fill="#fbbf24" opacity="0.5"/>
-</g>
-<!-- Crystal/deterministic (right) - sharp geometric shapes -->
-<g fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.7">
-  <polygon points="850,250 900,220 950,250 950,310 900,340 850,310"/>
-  <polygon points="800,310 850,280 900,310 900,370 850,400 800,370"/>
-  <polygon points="900,310 950,280 1000,310 1000,370 950,400 900,370"/>
-</g>
-<!-- Filled facets showing solidification -->
-<g fill="#f59e0b" opacity="0.15">
-  <polygon points="850,250 900,220 950,250 950,310 900,340 850,310"/>
-</g>
-<g fill="#fbbf24" opacity="0.2">
-  <polygon points="900,310 950,280 1000,310 1000,370 950,400 900,370"/>
-</g>
-<g font-family="Segoe UI, sans-serif" text-anchor="middle">
-  <text x="600" y="100" font-size="42" font-weight="600" fill="#f1f5f9">Progressive Crystallization</text>
-  <text x="600" y="155" font-size="26" fill="#fbbf24">Reasoning, rules, and review</text>
-  <text x="600" y="535" font-size="23" fill="#f1f5f9">Where does ordinary software fit?</text>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M40 270Q130 80 270 190T480 240L610 120M610 120Q790 80 900 230T1160 120"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="facet" transform="translate(175 180)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(425 225)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(675 165)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(965 220)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
