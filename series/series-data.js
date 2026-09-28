@@ -425,8 +425,18 @@ const SERIES_DATA = [
     {
       "slug": "08-measure-outcomes",
       "title": "Measure the outcome, not just the model calls",
-      "published": false,
-      "excerpt": "Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement."
+      "published": true,
+      "excerpt": "Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.",
+      "url": "/series/progressive-crystallization/08-measure-outcomes/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "07-permissions-and-recovery"
+      ]
     },
     {
       "slug": "09-implementation-location",

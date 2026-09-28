@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:14:02-07:00</updated>
+  <updated>2026-09-27T22:16:09-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Measure the outcome, not just the model calls</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/</id>
+    <published>2026-09-27T22:16:09-07:00</published>
+    <updated>2026-09-27T22:16:09-07:00</updated>
+    <summary>Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>Permissions, recovery, and changed inputs</title>

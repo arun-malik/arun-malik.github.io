@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Measure the outcome, not just the model calls - Arun Malik</title>
+    <meta name="description" content="Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.">
+    <meta name="keywords" content="Series, AI Agents, Automation">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/">
+    <meta property="og:title" content="Measure the outcome, not just the model calls">
+    <meta property="og:description" content="Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/08-measure-outcomes.png" data-banner-src="/assets/og/08-measure-outcomes.svg">
+    <meta property="og:image:alt" content="Abstract geometric paths and facets related to the article’s question.">
+    <meta property="article:published_time" content="2026-09-27T22:16:09-07:00">
+    <meta property="article:modified_time" content="2026-09-27T22:16:09-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Measure the outcome, not just the model calls">
+    <meta name="twitter:description" content="Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.">
+    <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/08-measure-outcomes.png">
+    <link rel="stylesheet" href="/assets/crystallization.css">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+            --bg: #ffffff; --bg-secondary: #f6f8fa; --text: #1f2328;
+            --text-muted: #656d76; --text-secondary: #656d76; --border: #d0d7de;
+            --accent: #2563eb; --accent-subtle: #ddf4ff;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117; --bg-secondary: #161b22; --text: #e6edf3;
+            --text-muted: #8b949e; --text-secondary: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-subtle: #1f2a38;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+        .article-meta { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        a { color: var(--accent); }
+        .nav-bar a { text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+        .content { overflow-wrap: anywhere; }
+        .content h2 { font-size: 1.375rem; line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content p { margin-bottom: 1rem; }
+        .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.75rem; }
+        .refs { font-size: 0.9rem; color: var(--text-muted); }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        @media (max-width: 600px) {
+            .site-nav { flex-wrap: wrap; gap: 1rem; }
+            .site-header-wrapper { padding: 0 !important; }
+            .site-header-wrapper .nav-links { gap: 1rem !important; flex-wrap: wrap; }
+            .series-prev:empty { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar" aria-label="Site">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+    <figure class="pc-art" data-crystallization-art>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M130 115L450 115M130 265L450 265M750 115L1070 115M750 265L1070 265"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="thread" stroke="#a7ced9" fill="none" stroke-width="1.2"><rect x="105" y="70" width="375" height="240" rx="95"/><path d="M725 75H1095V305H725Z"/></g><g class="facet" transform="translate(265 190)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(885 190)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
+</figure>
+    <main>
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>Measure the outcome, not just the model calls</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI Agents</span><span class="tag">Automation</span></div>
+            <div class="article-meta"><span class="article-date">Published <time datetime="2026-09-27">Sep 27, 2026</time></span></div>
+        </header>
+        <div id="series-header"><p><a href="/series/progressive-crystallization/">Progressive Crystallization</a> &middot; Part 8 of 10</p></div>
+        <div id="article-toc"></div>
+        <div class="content">
+<p>A workflow can make fewer model calls and still cost more to operate.</p>
+<p>Perhaps the rule rejects more inputs, so reviewers spend longer resolving them. Perhaps the new implementation needs frequent updates. Perhaps it looks fast because its timer stops before a report reaches the person who needs it. An inference bill cannot answer those questions.</p>
+<p>The measurement task starts with a definition of finished work. For our fictional lab, that might be an authorized, evidence-supported status report, or an appropriate stop with a usable reason. It is not “the function returned without throwing.”</p>
+
+<h2 id="population">Keep the population visible</h2>
+<p>Suppose a proposed router sends exact enum responses to the deterministic checker and ambiguous notes to the hybrid workflow. The checker will probably receive different work. Comparing their average times as though the inputs were interchangeable would answer a poorly defined question.</p>
+<p>Instead, define the comparison's eligible population first. If the question is whether a rule is a useful replacement for interpreting the agreed enum, compare routes on those same eligible records. Keep ambiguous notes as a separate category, and report how much of the intended task remains outside the rule's scope.</p>
+<p>A narrow rule can still be valuable. The problem is letting its narrowness disappear from the denominator.</p>
+<figure class="pc-diagram" aria-labelledby="study-caption">
+  <div class="pc-box"><strong>Fixed question and eligible cases</strong><p>For the lab's agreed structured format, can a direct rule produce acceptable status reports with less total work than the proposed interpretation route?</p></div>
+  <p class="pc-edge">Same task, authority, evidence, and outcome criteria</p>
+  <div class="pc-grid">
+    <div class="pc-box"><strong>Route under consideration</strong><p>Record collection, reasoning, verification, approvals, retries, and handoffs.</p></div>
+    <div class="pc-box"><strong>Alternative route</strong><p>Record the same boundaries, including work moved to people or maintenance.</p></div>
+  </div>
+  <p class="pc-edge">Retain failures, exclusions, unknowns, and timeouts.</p>
+  <div class="pc-box"><strong>Reviewed comparison</strong><p>Assess outcome quality and effort together. State mismatches, uncertainty, and what was not measured.</p></div>
+  <figcaption id="study-caption">A proposed study design, not a completed experiment. The equal-sized boxes encode comparable scope, not equal results.</figcaption>
+</figure>
+
+<h2 id="metrics">A metric dictionary before a dashboard</h2>
+<p>These are candidate definitions. They contain no measured values and do not imply that every team should collect every metric.</p>
+<dl class="pc-contract">
+  <dt>Runtime model calls per attempted eligible run</dt><dd>Count every call inside the declared boundary, including retries and assisted recovery. Record model, prompt, and workflow versions. A no-runtime-AI component is not a no-runtime-AI end-to-end process if another step calls a model.</dd>
+  <dt>Time to verified outcome or terminal stop</dt><dd>Measure from the agreed start event through queues, collection, approval, interpretation, and verification. Preserve timeout cases rather than removing them from the distribution. Report slow cases as well as the middle.</dd>
+  <dt>Total effort and cost</dt><dd>Separate runtime and tool charges, model usage, storage, review, authoring, maintenance, and recovery. State the observation window and how shared work is allocated. Keep one-time implementation effort distinct from recurring effort.</dd>
+  <dt>Outcome quality and error</dt><dd>Define expected outcomes independently of the implementation being evaluated. Distinguish unsupported reports, missed reports, wrong diagnoses, appropriate abstentions, and unavailable evidence. Severity matters as well as frequency.</dd>
+  <dt>Reviewed handoff</dt><dd>Record why the route stopped, what the reviewer received, how much work remained, and whether the handoff resolved the request. Fewer escalations can mean better coverage or fewer safeguards; the count alone cannot distinguish them.</dd>
+  <dt>Coverage by pattern</dt><dd>Count eligible, excluded, attempted, reported, and reviewed cases separately for each input pattern. Do not quietly expand or shrink eligibility between comparison windows.</dd>
+  <dt>Contributor effort</dt><dd>Include domain experts' authoring time, reviewers' corrections, operator follow-up, and engineering maintenance. A playbook with no runtime model may still depend on substantial human work.</dd>
+  <dt>Recurrence, only when relevant</dt><dd>If preventing repeat failures is an objective, define the event, exposure, and recurrence window. A status-reporting improvement need not prevent failures. Do not use recurrence as the universal outcome for every playbook.</dd>
+</dl>
+<p>For an economic summary, one candidate is total attributable cost over verified outcomes in a declared window. Put failed attempts and recovery in the numerator. If there are no verified outcomes, the ratio is undefined; do not display a reassuring zero. And show the underlying outcome counts, because a single ratio can conceal a drop in useful coverage.</p>
+<p>Google's <a href="https://sre.google/sre-book/automation-at-google/">automation chapter</a> discusses both the value of consistency and the difficulty of calculating time savings. It also describes automation falling out of step with changing systems. Those cautions are good reasons to include maintenance and recovery instead of treating inference cost as the whole bill.</p>
+
+<h2 id="protocol">A comparison protocol for the lab</h2>
+<p>I would record the following before collecting any comparative result.</p>
+<ol>
+  <li><strong>Task and eligibility.</strong> Compare reporting for the supported structured format. Keep ambiguous notes, unknown schemas, and denied requests visible as separate categories rather than silently treating them as successful exclusions.</li>
+  <li><strong>Alternatives and versions.</strong> Freeze the rule, interpretation contract, model configuration if used, and verification policy. A changed model or a more permissive reviewer changes the experiment.</li>
+  <li><strong>Expected outcomes.</strong> Have someone qualified to judge the scenario review the labels without using the evaluated system's answer as truth. Record disagreements and unresolved cases.</li>
+  <li><strong>Observation boundary.</strong> Include authoring and recurring work under explicit accounting rules. State whether collection, approval, delivery, and maintenance are included or excluded.</li>
+  <li><strong>Failure handling.</strong> Preserve timeouts and unsupported outputs. Define whether an appropriate review outcome satisfies the task or remains unfinished work.</li>
+  <li><strong>Analysis and limitations.</strong> Separate patterns, disclose workload changes, and avoid treating repeated copies of one fixture as independent evidence about a broad population.</li>
+</ol>
+<p>For a real authorized evaluation, a randomized comparison may help separate the route's effect from changing traffic, but it is only appropriate when the alternatives and assignment are themselves permitted. An offline replay can compare parts of a workflow without performing external actions, yet cannot reproduce every queue, human decision, or side effect. A matched observational comparison still has possible confounders.</p>
+<p>The article proposes a protocol; it reports none of those studies. The passing fixtures in <a href="/series/progressive-crystallization/06-rule-evidence/">Part 6</a> provide unit-level contract evidence, not comparative accuracy, latency, or savings.</p>
+
+<h2 id="claims">Put each intended claim through two gates</h2>
+<p>The first gate is permission to disclose. The second is whether the evidence supports the sentence. Passing either one does not pass the other.</p>
+<p>An internal result does not become publishable because someone rounds it, turns it into a percentage, or draws it relative to an arbitrary baseline. A qualitative sentence such as “it saved substantial effort” can still disclose an internal outcome. Public availability of a paper does not establish employer approval for every reuse of its claims.</p>
+<p>For a claims ledger, record the proposed sentence, its source and version, the applicable disclosure status, the population and window, and its limitations. A pending authorization means omit the claim. An independently constructed synthetic example should be labeled as such and should not be made by perturbing private results.</p>
+<p>The evidence gate then asks whether the comparison was fair, whether failures were retained, and whether the design supports causal language. “We observed fewer calls in this window” and “this design reduced total operating cost” are different claims.</p>
+<p>If the evaluation eventually shows fewer calls but more reviewer work, report both. That is a decision-relevant result, not an inconvenience to remove from the chart.</p>
+
+<h2 id="sources">Sources and scope</h2>
+<ol class="refs">
+  <li><a href="https://sre.google/sre-book/automation-at-google/">Niall Murphy with John Looney and Michael Kacirek, The Evolution of Automation at Google</a>, Chapter 7: consistency, time-saving tradeoffs, and changing systems.</li>
+  <li><a href="https://sre.google/sre-book/testing-reliability/">Alex Perry and Max Luebbe, Testing for Reliability</a>, Chapter 17: different test scopes and limits of evidence from passing tests.</li>
+</ol>
+<p class="refs">The metric dictionary and protocol are this series' proposed methodology. There are no operational measurements, estimated gains, internal aggregates, or transformed private results in this article. No disclosure approval or empirical validation is asserted.</p>
+
+        </div>
+        <div id="series-footer"><p><a href="/series/progressive-crystallization/">All ten topics</a> &middot; <a href="/series/progressive-crystallization/07-permissions-and-recovery/">Previous: Permissions, recovery, and changed inputs</a></p></div>
+    </article>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="https://github.com/arun-malik" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener">LinkedIn</a></div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        setTheme(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches));
+        toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'dark'));
+    </script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/crystallization-art.js"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>
