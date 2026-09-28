@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://blog.arunmalik.dev/</loc>
-    <lastmod>2026-09-27T22:21:18-07:00</lastmod>
+    <lastmod>2026-09-27T22:40:18-07:00</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/posts/</loc>
-    <lastmod>2026-09-27T22:21:18-07:00</lastmod>
+    <lastmod>2026-09-27T22:40:18-07:00</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
@@ -43,22 +43,22 @@
   </url>
   <url>
     <loc>https://blog.arunmalik.dev/series/progressive-crystallization/</loc>
-    <lastmod>2026-09-27T22:27:55-07:00</lastmod>
+    <lastmod>2026-09-27T22:40:18-07:00</lastmod>
     <priority>0.7</priority>
   </url>
   <!-- Published posts -->
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/10-several-designs/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/09-implementation-location/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/07-permissions-and-recovery/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/05-bounded-reasoning/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/02-rules-and-reasoning/</loc><lastmod>2026-09-27T22:21:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/10-several-designs/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/09-implementation-location/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/07-permissions-and-recovery/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/05-bounded-reasoning/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://blog.arunmalik.dev/series/progressive-crystallization/02-rules-and-reasoning/</loc><lastmod>2026-09-27T22:40:18-07:00</lastmod><priority>0.8</priority></url>
   <url>
     <loc>https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/</loc>
-    <lastmod>2026-09-27T22:21:18-07:00</lastmod>
+    <lastmod>2026-09-27T22:40:18-07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>

@@ -311,12 +311,14 @@ const SERIES_DATA = [
     "ai-agents",
     "optimization"
   ],
+  // Editorial series dates, evenly spaced July 1 through September 26, 2026.
+  // Original publication timestamps remain in article metadata and feed.xml.
   "posts": [
     {
       "slug": "01-ordinary-automation",
       "url": "/series/progressive-crystallization/01-ordinary-automation/",
       "title": "When an AI workflow should become ordinary automation",
-      "date": "2026-09-27",
+      "date": "2026-07-01",
       "excerpt": "Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?",
       "tags": [
         "Series",
@@ -332,7 +334,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder.",
       "url": "/series/progressive-crystallization/02-rules-and-reasoning/",
-      "date": "2026-09-27",
+      "date": "2026-07-11",
       "tags": [
         "Series",
         "AI Agents",
@@ -348,7 +350,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.",
       "url": "/series/progressive-crystallization/03-runs-and-specifications/",
-      "date": "2026-09-27",
+      "date": "2026-07-20",
       "tags": [
         "Series",
         "AI Agents",
@@ -364,7 +366,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.",
       "url": "/series/progressive-crystallization/04-playbook-contract/",
-      "date": "2026-09-27",
+      "date": "2026-07-30",
       "tags": [
         "Series",
         "AI Agents",
@@ -380,7 +382,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible.",
       "url": "/series/progressive-crystallization/05-bounded-reasoning/",
-      "date": "2026-09-27",
+      "date": "2026-08-09",
       "tags": [
         "Series",
         "AI Agents",
@@ -396,7 +398,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.",
       "url": "/series/progressive-crystallization/06-rule-evidence/",
-      "date": "2026-09-27",
+      "date": "2026-08-18",
       "tags": [
         "Series",
         "AI Agents",
@@ -412,7 +414,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority.",
       "url": "/series/progressive-crystallization/07-permissions-and-recovery/",
-      "date": "2026-09-27",
+      "date": "2026-08-28",
       "tags": [
         "Series",
         "AI Agents",
@@ -428,7 +430,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.",
       "url": "/series/progressive-crystallization/08-measure-outcomes/",
-      "date": "2026-09-27",
+      "date": "2026-09-07",
       "tags": [
         "Series",
         "AI Agents",
@@ -444,7 +446,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides.",
       "url": "/series/progressive-crystallization/09-implementation-location/",
-      "date": "2026-09-27",
+      "date": "2026-09-16",
       "tags": [
         "Series",
         "AI Agents",
@@ -460,7 +462,7 @@ const SERIES_DATA = [
       "published": true,
       "excerpt": "A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint.",
       "url": "/series/progressive-crystallization/10-several-designs/",
-      "date": "2026-09-27",
+      "date": "2026-09-26",
       "tags": [
         "Series",
         "AI Agents",
