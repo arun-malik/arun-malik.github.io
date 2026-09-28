@@ -441,8 +441,18 @@ const SERIES_DATA = [
     {
       "slug": "09-implementation-location",
       "title": "Keep the playbook, or move behavior into the service?",
-      "published": false,
-      "excerpt": "An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides."
+      "published": true,
+      "excerpt": "An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides.",
+      "url": "/series/progressive-crystallization/09-implementation-location/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "08-measure-outcomes"
+      ]
     },
     {
       "slug": "10-several-designs",
