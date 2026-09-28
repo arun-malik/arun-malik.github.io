@@ -377,8 +377,18 @@ const SERIES_DATA = [
     {
       "slug": "05-bounded-reasoning",
       "title": "Keep the reasoning where it is needed",
-      "published": false,
-      "excerpt": "A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible."
+      "published": true,
+      "excerpt": "A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible.",
+      "url": "/series/progressive-crystallization/05-bounded-reasoning/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "04-playbook-contract"
+      ]
     },
     {
       "slug": "06-rule-evidence",

@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:07:50-07:00</updated>
+  <updated>2026-09-27T22:09:34-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Keep the reasoning where it is needed</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/05-bounded-reasoning/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/05-bounded-reasoning/</id>
+    <published>2026-09-27T22:09:34-07:00</published>
+    <updated>2026-09-27T22:09:34-07:00</updated>
+    <summary>A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>What a playbook must promise, and who can author it</title>
