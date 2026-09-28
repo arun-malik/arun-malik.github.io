@@ -51,7 +51,7 @@
         .breadcrumb { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
         .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
         .breadcrumb a:hover { color: var(--accent); }
-        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.025em; }
+        h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.025em; }
         .series-desc { color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.6; }
         .series-status {
             display: inline-flex; align-items: center; gap: 0.5rem;
@@ -111,6 +111,7 @@
     </script>
 </head>
 <body>
+    <a class="pc-skip" href="#main-content">Skip to series</a>
     <div class="container">
         <header>
             <nav class="site-nav">
@@ -120,7 +121,7 @@
                     <a href="/series/" class="active">Series</a>
                     <a href="/about/">About</a>
                     <a href="/contact/">Contact</a>
-                    <button class="theme-btn" id="themeToggle" title="Toggle theme">
+                    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
                         <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                         <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                     </button>
@@ -133,7 +134,7 @@
 <g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M40 270Q130 80 270 190T480 240L610 120M610 120Q790 80 900 230T1160 120"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
 <g class="facet" transform="translate(175 180)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(425 225)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(675 165)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(965 220)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
 </figure>
-        <main>
+        <main id="main-content">
             <div class="breadcrumb">
                 <a href="/series/">Series</a> &rarr; Progressive Crystallization
             </div>
@@ -143,7 +144,7 @@
             <p class="series-desc">A useful playbook can come from an investigation or from an expert who already understands the scenario. It can remain agent-led, combine fixed steps with AI decisions, or run without runtime AI. These are choices, not a maturity ladder. Keeping the playbook and incorporating understood behavior into service code are separate options.</p>
             <p class="series-desc">The articles distinguish observations from specifications, permissions from reasoning, and reduced inference from total cost. Determinism guarantees neither correctness nor safety. Service integration need not remove a root cause. Unknown inputs call for a stop or reviewed handoff, not a silent expansion of authority.</p>
 
-            <div class="series-status">In Progress &middot; 9 of 10 published</div>
+            <div class="series-status is-complete">Complete &middot; 10 of 10 published</div>
 
             <ol class="post-list">
 <li class="post-item"><span class="post-number">01</span><div class="post-content"><h2 class="post-title"><a href="/series/progressive-crystallization/01-ordinary-automation/">When an AI workflow should become ordinary automation</a></h2><p class="post-excerpt">Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?</p><p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 1</p></div></li>
@@ -155,10 +156,22 @@
 <li class="post-item"><span class="post-number">07</span><div class="post-content"><h2 class="post-title"><a href="/series/progressive-crystallization/07-permissions-and-recovery/">Permissions, recovery, and changed inputs</a></h2><p class="post-excerpt">A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority.</p><p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 7</p></div></li>
 <li class="post-item"><span class="post-number">08</span><div class="post-content"><h2 class="post-title"><a href="/series/progressive-crystallization/08-measure-outcomes/">Measure the outcome, not just the model calls</a></h2><p class="post-excerpt">Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.</p><p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 8</p></div></li>
 <li class="post-item"><span class="post-number">09</span><div class="post-content"><h2 class="post-title"><a href="/series/progressive-crystallization/09-implementation-location/">Keep the playbook, or move behavior into the service?</a></h2><p class="post-excerpt">An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides.</p><p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 9</p></div></li>
-<li class="post-item"><span class="post-number">10</span><div class="post-content"><h2 class="post-title">One scenario, several defensible designs</h2><p class="post-excerpt">A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint.</p><p class="post-excerpt">Planned topic. No publication date assigned.</p></div></li>
+<li class="post-item"><span class="post-number">10</span><div class="post-content"><h2 class="post-title"><a href="/series/progressive-crystallization/10-several-designs/">One scenario, several defensible designs</a></h2><p class="post-excerpt">A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint.</p><p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 10</p></div></li>
 </ol>
 
-            <div class="coming-soon-note">9 of 10 articles are available. Unlinked entries are planned topics, not promised results. The examples are independently constructed fiction, not employer case studies. Public sources support the stated engineering guidance, not a validated universal lifecycle.</div>
+            <section aria-labelledby="question-guide">
+                <h2 id="question-guide" style="margin-top:2.5rem">Find the piece you need</h2>
+                <ul class="pc-guide">
+                    <li><a href="/series/progressive-crystallization/02-rules-and-reasoning/">Execution forms and scope</a>: distinguish agent-led, hybrid, and deterministic work.</li>
+                    <li><a href="/series/progressive-crystallization/03-runs-and-specifications/#worksheet">Capture worksheet</a>: record knowledge from investigation or expert authorship.</li>
+                    <li><a href="/series/progressive-crystallization/04-playbook-contract/#contract">Playbook contract</a> and <a href="/series/progressive-crystallization/05-bounded-reasoning/#inventory">decision inventory</a>: define promises, authority, and remaining judgment.</li>
+                    <li><a href="/series/progressive-crystallization/06-rule-evidence/#run">Runnable fixtures</a>: inspect and test the original local status rule.</li>
+                    <li><a href="/series/progressive-crystallization/07-permissions-and-recovery/#fault-cases">Recovery runbook</a>: handle denied access, changed evidence, and incomplete work.</li>
+                    <li><a href="/series/progressive-crystallization/08-measure-outcomes/#protocol">Measurement protocol</a> and <a href="/series/progressive-crystallization/09-implementation-location/#decision-record">location decision record</a>: evaluate the change and choose an owner.</li>
+                    <li><a href="/series/progressive-crystallization/10-several-designs/">Complete worked example</a>: select among defensible designs without a mandatory endpoint.</li>
+                </ul>
+            </section>
+            <div class="coming-soon-note">10 of 10 articles are available. The series is complete. The examples are independently constructed fiction, not employer case studies. Public sources support the stated engineering guidance, not a validated universal lifecycle.</div>
         </main>
 
         <footer>

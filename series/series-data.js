@@ -305,7 +305,7 @@ const SERIES_DATA = [
   "id": "progressive-crystallization",
   "title": "Progressive Crystallization",
   "description": "Ten essays on agent-led, hybrid, and deterministic playbooks: where knowledge comes from, what to test, and where the behavior belongs.",
-  "status": "in-progress",
+  "status": "complete",
   "tags": [
     "automation",
     "ai-agents",
@@ -457,8 +457,18 @@ const SERIES_DATA = [
     {
       "slug": "10-several-designs",
       "title": "One scenario, several defensible designs",
-      "published": false,
-      "excerpt": "A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint."
+      "published": true,
+      "excerpt": "A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint.",
+      "url": "/series/progressive-crystallization/10-several-designs/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "09-implementation-location"
+      ]
     }
   ]
 },

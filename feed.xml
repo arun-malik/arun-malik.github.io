@@ -5,17 +5,27 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:18:44-07:00</updated>
+  <updated>2026-09-27T22:21:18-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>One scenario, several defensible designs</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/10-several-designs/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/10-several-designs/</id>
+    <published>2026-09-27T22:21:18-07:00</published>
+    <updated>2026-09-27T22:21:18-07:00</updated>
+    <summary>A fictional lab scenario brings the contracts, tests, recovery paths, and location choices together without requiring a single endpoint.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>Keep the playbook, or move behavior into the service?</title>
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/09-implementation-location/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/09-implementation-location/</id>
     <published>2026-09-27T22:18:44-07:00</published>
-    <updated>2026-09-27T22:18:44-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>An architecture decision separates execution form from implementation location, with ownership, rollout, and recovery on both sides.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -25,7 +35,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/08-measure-outcomes/</id>
     <published>2026-09-27T22:16:09-07:00</published>
-    <updated>2026-09-27T22:16:09-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>Define eligible work, verified outcomes, cost, and human effort before comparing execution forms or claiming an improvement.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -35,7 +45,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/07-permissions-and-recovery/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/07-permissions-and-recovery/</id>
     <published>2026-09-27T22:14:02-07:00</published>
-    <updated>2026-09-27T22:14:02-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>A recovery runbook for denied access, stale evidence, partial work, and drift, without silently granting an agent more authority.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -45,7 +55,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/</id>
     <published>2026-09-27T22:12:12-07:00</published>
-    <updated>2026-09-27T22:12:12-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -55,7 +65,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/05-bounded-reasoning/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/05-bounded-reasoning/</id>
     <published>2026-09-27T22:09:34-07:00</published>
-    <updated>2026-09-27T22:09:34-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>A worked hybrid workflow separates collection from interpretation and makes invalid answers, uncertainty, and consequences visible.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -65,7 +75,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/04-playbook-contract/</id>
     <published>2026-09-27T22:07:50-07:00</published>
-    <updated>2026-09-27T22:07:50-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>A fictional lab contract separates evidence, decisions, and authority, with ownership and stop conditions that a reviewer can inspect.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -75,7 +85,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/</id>
     <published>2026-09-27T22:05:53-07:00</published>
-    <updated>2026-09-27T22:05:53-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -85,7 +95,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/02-rules-and-reasoning/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/02-rules-and-reasoning/</id>
     <published>2026-09-27T22:03:48-07:00</published>
-    <updated>2026-09-27T22:03:48-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder.</summary>
     <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
   </entry>
@@ -95,7 +105,7 @@
     <link href="https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/"/>
     <id>https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/</id>
     <published>2026-09-27T21:06:17-07:00</published>
-    <updated>2026-09-27T22:00:06-07:00</updated>
+    <updated>2026-09-27T22:21:18-07:00</updated>
     <summary>Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?</summary>
     <category term="Series"/>
     <category term="AI Agents"/>
