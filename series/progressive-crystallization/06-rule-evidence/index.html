@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When a rule has earned its place - Arun Malik</title>
+    <meta name="description" content="An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.">
+    <meta name="keywords" content="Series, AI Agents, Automation">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/">
+    <meta property="og:title" content="When a rule has earned its place">
+    <meta property="og:description" content="An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/06-rule-evidence.png" data-banner-src="/assets/og/06-rule-evidence.svg">
+    <meta property="og:image:alt" content="Abstract geometric paths and facets related to the article’s question.">
+    <meta property="article:published_time" content="2026-09-27T22:12:12-07:00">
+    <meta property="article:modified_time" content="2026-09-27T22:12:12-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="When a rule has earned its place">
+    <meta name="twitter:description" content="An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.">
+    <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/06-rule-evidence.png">
+    <link rel="stylesheet" href="/assets/crystallization.css">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+            --bg: #ffffff; --bg-secondary: #f6f8fa; --text: #1f2328;
+            --text-muted: #656d76; --text-secondary: #656d76; --border: #d0d7de;
+            --accent: #2563eb; --accent-subtle: #ddf4ff;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117; --bg-secondary: #161b22; --text: #e6edf3;
+            --text-muted: #8b949e; --text-secondary: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-subtle: #1f2a38;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+        .article-meta { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        a { color: var(--accent); }
+        .nav-bar a { text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+        .content { overflow-wrap: anywhere; }
+        .content h2 { font-size: 1.375rem; line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content p { margin-bottom: 1rem; }
+        .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.75rem; }
+        .refs { font-size: 0.9rem; color: var(--text-muted); }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        @media (max-width: 600px) {
+            .site-nav { flex-wrap: wrap; gap: 1rem; }
+            .site-header-wrapper { padding: 0 !important; }
+            .site-header-wrapper .nav-links { gap: 1rem !important; flex-wrap: wrap; }
+            .series-prev:empty { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar" aria-label="Site">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+    <figure class="pc-art" data-crystallization-art>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M50 240L260 140L400 220M500 220L620 110L735 220L840 140M965 230L1140 130"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="facet" transform="translate(235 195)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(530 210)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(628 210)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(945 140)"><path class="gold" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="ink" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
+</figure>
+    <main>
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>When a rule has earned its place</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI Agents</span><span class="tag">Automation</span></div>
+            <div class="article-meta"><span class="article-date">Published <time datetime="2026-09-27">Sep 27, 2026</time></span></div>
+        </header>
+        <div id="series-header"><p><a href="/series/progressive-crystallization/">Progressive Crystallization</a> &middot; Part 6 of 10</p></div>
+        <div id="article-toc"></div>
+        <div class="content">
+<p>A rule earns its place by matching a stated contract within a stated boundary. Repeating an agent's answer is not enough.</p>
+<p>That sounds obvious until the demonstration looks convincing. An assistant interprets several responses correctly. We extract the pattern, write a conditional, and run the same examples again. Everything passes. What we have shown is that the conditional reproduces those examples. We still need to ask whether the intended behavior is right, where it applies, and what happens outside it.</p>
+<p>This article includes a small executable example. It has no network access, no model calls, and no connection to real equipment. Its fixtures and clock values are independently invented for teaching. It exercises a contract; it does not measure operational performance.</p>
+
+<h2 id="eligible-domain">Make the eligible domain smaller than the problem</h2>
+<p>The problem is “help someone understand an interface.” The rule's domain is much narrower: classify one locally supplied record in the fictional <code>lab-status/1</code> format when its target, timestamp, and status field meet the contract.</p>
+<p>The function accepts only the exact fields <code>schema</code>, <code>target</code>, <code>observedAtMs</code>, <code>evidenceId</code>, and <code>state</code>. The status must be exactly <code>up</code> or <code>down</code>. It returns “appears up” or “appears down,” with an evidence reference. It does not interpret free text, infer a cause, or change anything.</p>
+<p>That makes the rule an alternative to interpretation only for the structured variant. It is not a replacement for the ambiguous-note workflow in <a href="/series/progressive-crystallization/05-bounded-reasoning/">Part 5</a>. Keeping that workflow hybrid, or requiring human interpretation, remains defensible.</p>
+<figure class="pc-diagram" aria-labelledby="boundary-caption">
+  <div class="pc-grid">
+    <div class="pc-box"><strong>Inside the boundary</strong><p>Supported schema, exact target, usable timestamp, valid evidence ID, and an agreed status enum. Existing permission covers reporting.</p></div>
+    <div class="pc-box pc-stop"><strong>Outside the boundary</strong><p>Unknown format or state, extra fields, stale or future evidence, missing data, or a different target. Return a review reason.</p></div>
+    <div class="pc-box pc-stop"><strong>Authority refused</strong><p>Denied read, denied report, missing context, or an operation other than status reporting. Return a denial, not an interpretation.</p></div>
+  </div>
+  <figcaption id="boundary-caption">The rule has distinct report, review, and denied outcomes. An out-of-scope case is not silently routed to a model.</figcaption>
+</figure>
+
+<h2 id="run">Run the demonstration</h2>
+<p>The source files are <a href="/series/progressive-crystallization/examples/lab-status.cjs">lab-status.cjs</a> and <a href="/series/progressive-crystallization/examples/lab-status.test.cjs">lab-status.test.cjs</a>. Save both in the same directory. With Node.js installed, run:</p>
+<pre><code>node --test lab-status.test.cjs</code></pre>
+<p>No package installation is required. The test file uses Node's built-in test runner and assertions. The implementation is a pure function over supplied JavaScript values. Production input decoding, request-size limits, source authentication, real authorization, and external delivery are intentionally absent.</p>
+<p>The harness supplies <code>readAllowed</code> and <code>reportAllowed</code> flags. These are test doubles for permission decisions, not a security mechanism. A real caller must not be allowed to grant itself access by setting a Boolean. The demonstration checks that the rule respects the supplied decision; it does not prove that an upstream authorization service made the right one.</p>
+<p>The fixture clock uses milliseconds and a deliberately chosen freshness boundary. The test accepts an observation exactly at the limit and rejects one just beyond it. These values are teaching inputs, not a recommended operational timeout. A real freshness policy must account for its producer, clocks, and intended use.</p>
+
+<h2 id="test-specification">Write expected behavior independently of the answer</h2>
+<p>The named cases encode expectations directly from the contract. They are not labeled by asking a model whether its own answer looks correct. That is a useful separation, but it is not independent external adjudication: the example and its tests were prepared together for this article.</p>
+<figure class="pc-diagram" aria-labelledby="tests-caption">
+  <div class="pc-grid">
+    <div class="pc-box"><strong>Accepted observations</strong><p>Known up and down states. Evidence exactly at the declared age boundary. Expected result: the corresponding report.</p></div>
+    <div class="pc-box"><strong>Rejected evidence</strong><p>Missing fields, unexpected fields, wrong target, unsupported schema, invalid time, stale evidence, or unknown state. Expected result: a specific review reason.</p></div>
+    <div class="pc-box"><strong>Denied authority</strong><p>Read or report denied, a truthy string instead of authorization, or a reset request. Expected result: denial before interpreting the observation.</p></div>
+    <div class="pc-box"><strong>Repeat evaluation</strong><p>Frozen inputs, evaluated twice. Expected result: equal output and unchanged input values. No external side effect exists in this function.</p></div>
+  </div>
+  <figcaption id="tests-caption">This is a fixture coverage map, not an accuracy chart. Passing these categories says nothing about how frequently they occur in a real workload.</figcaption>
+</figure>
+<p>Some cases are deliberately inconvenient. Uppercase <code>UP</code> is rejected because the fictional contract defines a case-sensitive enum. An added <code>instruction</code> field is rejected because this version permits no extra fields. That strictness is a design choice, not a universal parser rule. If forward compatibility is required, specify how unknown fields are handled and test that different contract.</p>
+<p>The implementation also denies a read before examining malformed evidence. This makes denial behavior independent of whether the supplied record happens to look healthy. It does not replace checks at the actual collection boundary, because this local function receives an observation that has already been supplied.</p>
+<p>A serious replacement decision would add cases withheld from rule development, independent domain review of expected outputs, and tests at integration boundaries. Do not call a new fixture a holdout after using its failure to tune the rule. Once it influences development, it belongs to the development evidence.</p>
+
+<h2 id="results">What was actually verified</h2>
+<p>On September 27, 2026, the files linked above were run on Windows with Node.js v24.12.0. The built-in runner reported <strong>29 passing tests and no failures</strong>. These are named synthetic contract tests, not a sample-based estimate of accuracy, a comparison with an agent, or a benchmark of cost or latency.</p>
+<p>The exact SHA-256 hashes for that run are:</p>
+<pre><code>lab-status.cjs
+72016c55b5f85cc0ec870217382f6f13ddd66039845c956b3e312b4c7bf60171
+
+lab-status.test.cjs
+ce8c029622001627ac54f907447fe4acd3c4c88e334ac1ac53411db220c51f22</code></pre>
+<p>The rule assumes the producer's field meaning is correct and the supplied context is trustworthy. It cannot detect a producer that confidently reports the wrong state. It does not exercise a real collection timeout, report delivery, a model, or approval expiry. It does not establish general equivalence with an interpretation system.</p>
+<p>The <a href="https://sre.google/sre-book/testing-reliability/">Google SRE testing chapter</a> explicitly cautions that passing tests does not necessarily prove reliability. It also distinguishes unit, integration, and system tests. Our pure-function cases cover one unit. Calling them end-to-end validation would conceal precisely the boundaries we still need to examine.</p>
+
+<h2 id="acceptance">The acceptance decision is narrower than “replace AI”</h2>
+<p>For this toy contract, acceptance means the documented fixture expectations pass, there is no runtime inference in the function, and unsupported evidence does not produce a status guess. The useful conclusion is that this explicit enum mapping can be implemented as ordinary code.</p>
+<p>For a real replacement, the reviewer must also decide whether the eligible domain is useful and whether false reports, rejected cases, and human follow-up are acceptable for the actual task. Those criteria come from consequences and workload, not a universal passing percentage.</p>
+<p>If a new schema breaks the contract, disable that route and return a review outcome while its owner investigates. Reverting to a previous implementation is an option only if that version still fits the input and remains authorized. Calling a more flexible model automatically would change the boundary.</p>
+<p>The rule has earned one small job. It has not earned the rest of the workflow.</p>
+
+<h2 id="sources">Sources and scope</h2>
+<ol class="refs">
+  <li><a href="https://sre.google/sre-book/testing-reliability/">Alex Perry and Max Luebbe, Testing for Reliability</a>, Google SRE, Chapter 17: test levels, uncertainty under change, and limitations of passing tests.</li>
+  <li>The two linked source files and their named assertions are the primary evidence for the local demonstration. The recorded environment and hashes identify what was run.</li>
+</ol>
+<p class="refs">The example is original, synthetic, and nonproduction. It reports no employer implementation, internal measurement, production accuracy, or comparative savings.</p>
+
+        </div>
+        <div id="series-footer"><p><a href="/series/progressive-crystallization/">All ten topics</a> &middot; <a href="/series/progressive-crystallization/05-bounded-reasoning/">Previous: Keep the reasoning where it is needed</a></p></div>
+    </article>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="https://github.com/arun-malik" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener">LinkedIn</a></div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        setTheme(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches));
+        toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'dark'));
+    </script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/crystallization-art.js"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

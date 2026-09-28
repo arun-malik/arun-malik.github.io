@@ -393,8 +393,18 @@ const SERIES_DATA = [
     {
       "slug": "06-rule-evidence",
       "title": "When a rule has earned its place",
-      "published": false,
-      "excerpt": "An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code."
+      "published": true,
+      "excerpt": "An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.",
+      "url": "/series/progressive-crystallization/06-rule-evidence/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "05-bounded-reasoning"
+      ]
     },
     {
       "slug": "07-permissions-and-recovery",

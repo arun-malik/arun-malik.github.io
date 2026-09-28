@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:09:34-07:00</updated>
+  <updated>2026-09-27T22:12:12-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>When a rule has earned its place</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/06-rule-evidence/</id>
+    <published>2026-09-27T22:12:12-07:00</published>
+    <updated>2026-09-27T22:12:12-07:00</updated>
+    <summary>An executable synthetic example tests a narrow status rule, its rejection boundary, and the limits of replacing interpretation with code.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>Keep the reasoning where it is needed</title>
