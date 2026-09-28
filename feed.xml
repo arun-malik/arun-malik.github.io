@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:00:06-07:00</updated>
+  <updated>2026-09-27T22:03:48-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Three execution forms, not a maturity ladder</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/02-rules-and-reasoning/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/02-rules-and-reasoning/</id>
+    <published>2026-09-27T22:03:48-07:00</published>
+    <updated>2026-09-27T22:03:48-07:00</updated>
+    <summary>Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>When an AI workflow should become ordinary automation</title>

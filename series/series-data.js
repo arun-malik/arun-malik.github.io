@@ -329,8 +329,18 @@ const SERIES_DATA = [
     {
       "slug": "02-rules-and-reasoning",
       "title": "Three execution forms, not a maturity ladder",
-      "published": false,
-      "excerpt": "Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder."
+      "published": true,
+      "excerpt": "Who chooses the next step, where reasoning occurs, and how to describe a mixed workflow without calling it a maturity ladder.",
+      "url": "/series/progressive-crystallization/02-rules-and-reasoning/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "01-ordinary-automation"
+      ]
     },
     {
       "slug": "03-runs-and-specifications",
