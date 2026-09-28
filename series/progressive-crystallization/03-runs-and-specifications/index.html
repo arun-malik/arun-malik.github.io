@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Two ways to get a useful playbook - Arun Malik</title>
+    <meta name="description" content="Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.">
+    <meta name="keywords" content="Series, AI Agents, Automation">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/">
+    <meta property="og:title" content="Two ways to get a useful playbook">
+    <meta property="og:description" content="Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/03-runs-and-specifications.png" data-banner-src="/assets/og/03-runs-and-specifications.svg">
+    <meta property="og:image:alt" content="Abstract geometric paths and facets related to the article’s question.">
+    <meta property="article:published_time" content="2026-09-27T22:05:53-07:00">
+    <meta property="article:modified_time" content="2026-09-27T22:05:53-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Two ways to get a useful playbook">
+    <meta name="twitter:description" content="Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.">
+    <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/03-runs-and-specifications.png">
+    <link rel="stylesheet" href="/assets/crystallization.css">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+            --bg: #ffffff; --bg-secondary: #f6f8fa; --text: #1f2328;
+            --text-muted: #656d76; --text-secondary: #656d76; --border: #d0d7de;
+            --accent: #2563eb; --accent-subtle: #ddf4ff;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117; --bg-secondary: #161b22; --text: #e6edf3;
+            --text-muted: #8b949e; --text-secondary: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-subtle: #1f2a38;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+        .article-meta { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        a { color: var(--accent); }
+        .nav-bar a { text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+        .content { overflow-wrap: anywhere; }
+        .content h2 { font-size: 1.375rem; line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content p { margin-bottom: 1rem; }
+        .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.75rem; }
+        .refs { font-size: 0.9rem; color: var(--text-muted); }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        @media (max-width: 600px) {
+            .site-nav { flex-wrap: wrap; gap: 1rem; }
+            .site-header-wrapper { padding: 0 !important; }
+            .site-header-wrapper .nav-links { gap: 1rem !important; flex-wrap: wrap; }
+            .series-prev:empty { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar" aria-label="Site">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+    <figure class="pc-art" data-crystallization-art>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Abstract paths, open contours, and connected geometric facets">
+<rect class="ground" width="1200" height="380" fill="#172722"/>
+<g class="thread" fill="none" stroke="#a7ced9" stroke-width="1.6" opacity=".55"><path d="M40 80Q250 90 485 190T1120 130M40 300Q250 270 485 190T1120 280"/><path d="M15 345Q450 275 1170 345" opacity=".25"/></g>
+<g class="facet" transform="translate(155 130)"><path class="ink" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="sage" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(175 285)"><path class="clay" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="gold" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(530 190)"><path class="sage" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="clay" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" transform="translate(870 170)"><path class="gold" fill="#416775" fill-opacity=".72" d="M0 -48L52 0L0 48L-48 0Z"/><path class="ink" fill="#65816a" fill-opacity=".58" d="M0 -48L48 -94L96 -48L52 0Z"/><path class="thread" fill="none" stroke="#a7ced9" stroke-width="1.5" d="M-48 0L0 48L52 0L96 48L48 94L0 48M0 -48L52 0L96 -48"/></g><g class="facet" fill="#ad684d" opacity=".65"><path class="clay" d="M60 320L81 299L99 330Z"/><path class="sage" d="M1100 45L1127 67L1088 80Z"/></g></svg>
+</figure>
+    <main>
+    <article data-reading-minutes="5">
+        <header class="blog-header">
+            <h1>Two ways to get a useful playbook</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI Agents</span><span class="tag">Automation</span></div>
+            <div class="article-meta"><span class="article-date">Published <time datetime="2026-09-27">Sep 27, 2026</time></span></div>
+        </header>
+        <div id="series-header"><p><a href="/series/progressive-crystallization/">Progressive Crystallization</a> &middot; Part 3 of 10</p></div>
+        <div id="article-toc"></div>
+        <div class="content">
+<p>“We learned this during an incident” and “the operator already knew this” can lead to the same useful playbook. They leave different questions for its reviewer.</p>
+<p>An investigation gives you observations, decisions, and sometimes a successful outcome. An expert-authored procedure gives you a proposed explanation of how the task should work. Neither arrives with its applicability already proved.</p>
+<p>Progressive crystallization needs both routes. Otherwise we make people run an agent to discover knowledge they already have, or mistake a plausible execution trace for a specification.</p>
+
+<h2 id="two-notes">Two notes from an invented lab</h2>
+<p>Return to the fictional interface-status check from <a href="/series/progressive-crystallization/02-rules-and-reasoning/">Part 2</a>. Everything in the notes below is newly constructed teaching material. There is no real device, incident, internal troubleshooting guide, or operational result behind it.</p>
+<figure class="pc-diagram" aria-labelledby="notes-caption">
+  <div class="pc-grid">
+    <div class="pc-box"><strong>Investigation note</strong><p>The permitted response said <code>state: down</code>. The assistant proposed that the interface was unavailable. The operator pointed out that the interface might have been deliberately disabled. The final report preserved the observation without asserting a cause.</p></div>
+    <div class="pc-box"><strong>Expert-authored note</strong><p>For the lab's fictional <code>lab-status/1</code> format, report the <code>state</code> field when it is exactly <code>up</code> or <code>down</code>. Do not infer cause. Unsupported values, missing evidence, or a mismatched target require review.</p></div>
+  </div>
+  <p class="pc-edge">Both sources enter the same review, but contribute different evidence.</p>
+  <div class="pc-box"><strong>Candidate contract</strong><p>Report an eligible observation with its provenance. Specify format, target, freshness, authorization, and rejection behavior before choosing an execution form.</p></div>
+  <figcaption id="notes-caption">The investigation reveals a misleading inference. The expert note supplies a proposed rule. Neither establishes that the rule handles every possible response.</figcaption>
+</figure>
+<p>The investigation note is useful because it records a correction. If we kept only the assistant's successful final answer, we would lose the reason to prohibit a causal claim. The operator's intervention belongs in the capture record.</p>
+<p>The expert note is useful because it can make exploration unnecessary. If its contract is confirmed, the status mapping can start as a deterministic parser. But the reviewer still needs to ask what “state” means, which producer owns that meaning, and whether the field says anything about the user's experience. A procedure can be confidently authored and wrong.</p>
+
+<h2 id="capture">Capture the disagreement, not just the winning path</h2>
+<p>A transcript tends to preserve the sequence that happened. A reusable procedure must say what should happen in cases the transcript never saw. Those are different artifacts.</p>
+<p>For an investigation-derived candidate, keep the observation separate from the interpretation. In the invented note, the observation is a field value. “The interface appears down” is an interpretation within the fictional schema. “The cable is faulty” would be an unsupported diagnosis. Resetting the interface would be a proposed action, requiring a different task and authority.</p>
+<p>This separation makes rejected explanations valuable. The expert's correction tells the next author not to turn an operational status into a causal rule. A timeout might likewise tell us that a missing response cannot be treated as “down.” Absence of evidence is a distinct outcome.</p>
+<p><a href="https://opentelemetry.io/docs/concepts/signals/traces/">OpenTelemetry's tracing documentation</a> describes a trace as the path of a request through an application, built from spans representing units of work. Timestamps, parent relationships, and events help reconstruct execution. That is useful infrastructure for capture. It does not decide whether an inference was justified or whether a branch should be permitted next time.</p>
+<p>Do not turn “record the evidence” into “log everything.” For an actual system, the capture design must decide what may be retained, who can read it, and when it expires. An evidence reference can point to a controlled record. It need not copy sensitive input into a broadly readable playbook.</p>
+
+<h2 id="worksheet">A worksheet that works for either source</h2>
+<p>I would put the following record beside a candidate procedure. It is a proposed authoring aid, not an implementation requirement for every organization. The filled entries describe only our fictional lab.</p>
+<dl class="pc-contract">
+  <dt>Scenario and intended outcome</dt><dd>Report whether one approved lab interface appears up or down from an eligible status response. Do not diagnose cause or change the interface.</dd>
+  <dt>Knowledge source and provenance</dt><dd>Either the invented investigation note above, including the operator's correction, or the invented operator-authored format description. Keep the source identifiable instead of blending them into “the system learned.”</dd>
+  <dt>Applicability</dt><dd>The agreed response format, requested target, and evidence freshness must match the contract. A response from another target is not supporting evidence.</dd>
+  <dt>Assumptions</dt><dd>The producer and its schema are trusted within the lab exercise. Real deployment would need to establish producer identity and the reliability of its observations separately.</dd>
+  <dt>Exceptions</dt><dd>Missing, stale, malformed, contradictory, or unsupported evidence produces a review outcome, not a guessed status.</dd>
+  <dt>Owner and review</dt><dd>A named lab maintainer owns the candidate contract. A reviewer checks its interpretation and tests. Authorship alone does not grant collection or execution privileges.</dd>
+  <dt>Unresolved questions</dt><dd>How does the producer represent a deliberately disabled interface? What clock assumptions govern freshness? Can two valid observations disagree? These questions block broader claims even if the narrow status report remains useful.</dd>
+  <dt>Revision trigger</dt><dd>A schema change, an observed contradiction, or a change in the intended outcome reopens review. Record the affected contract version.</dd>
+</dl>
+<p>The blank version is just these headings without the lab answers. Keeping the unresolved-questions field is important. Otherwise the polished procedure hides uncertainty that was visible in the original conversation.</p>
+
+<h2 id="choose-form">The source does not choose the form</h2>
+<p>A domain expert might author an agent-led playbook: investigate within this scope, consult these permitted sources, stop before these actions, and present competing explanations to the DRI. The procedure captures expertise without predicting every step.</p>
+<p>An investigation might instead reveal an already documented, stable enum. After reviewing the contract, an engineer can write a direct parser. There is no obligation to build an intermediate hybrid just to preserve a story about stages.</p>
+<p>And both sources may leave a genuinely ambiguous interpretation. A hybrid workflow can fix collection and reporting while preserving that decision for a model or human. Keeping the ambiguity visible is more useful than claiming that capture finished it.</p>
+<p>The <a href="https://sre.google/sre-book/testing-reliability/">Google SRE chapter on testing</a> describes tests as a way to demonstrate specific areas of equivalence when systems change, and cautions that passing tests does not necessarily prove reliability. Applied here, the next step is to turn the candidate contract into checkable expectations. Neither the transcript nor the expert's name substitutes for that work.</p>
+<p>Before asking how to automate a captured procedure, ask what was actually captured: an observation, an interpretation, an accepted requirement, or an unresolved question. A useful playbook keeps those distinctions intact.</p>
+
+<h2 id="sources">Sources and scope</h2>
+<ol class="refs">
+  <li><a href="https://opentelemetry.io/docs/concepts/signals/traces/">OpenTelemetry, Traces</a>: request paths, spans, timestamps, events, and parent relationships. A tracing data model, not a specification-extraction method or a logging-permission policy.</li>
+  <li><a href="https://sre.google/sre-book/testing-reliability/">Alex Perry and Max Luebbe, Testing for Reliability</a>, Google SRE, Chapter 17: testing changes, uncertainty, and limits of passing tests.</li>
+</ol>
+<p class="refs">The notes and worksheet are original fictional examples. No investigation was performed, no employee account is being retold, and no empirical advantage is claimed for either knowledge source.</p>
+
+        </div>
+        <div id="series-footer"><p><a href="/series/progressive-crystallization/">All ten topics</a> &middot; <a href="/series/progressive-crystallization/02-rules-and-reasoning/">Previous: Three execution forms, not a maturity ladder</a></p></div>
+    </article>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="https://github.com/arun-malik" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener">LinkedIn</a></div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        setTheme(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches));
+        toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'dark'));
+    </script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/crystallization-art.js"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

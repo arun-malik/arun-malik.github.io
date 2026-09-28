@@ -345,8 +345,18 @@ const SERIES_DATA = [
     {
       "slug": "03-runs-and-specifications",
       "title": "Two ways to get a useful playbook",
-      "published": false,
-      "excerpt": "Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain."
+      "published": true,
+      "excerpt": "Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.",
+      "url": "/series/progressive-crystallization/03-runs-and-specifications/",
+      "date": "2026-09-27",
+      "tags": [
+        "Series",
+        "AI Agents",
+        "Automation"
+      ],
+      "references": [
+        "02-rules-and-reasoning"
+      ]
     },
     {
       "slug": "04-playbook-contract",

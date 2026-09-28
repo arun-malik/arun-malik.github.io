@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T22:03:48-07:00</updated>
+  <updated>2026-09-27T22:05:53-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>Two ways to get a useful playbook</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/03-runs-and-specifications/</id>
+    <published>2026-09-27T22:05:53-07:00</published>
+    <updated>2026-09-27T22:05:53-07:00</updated>
+    <summary>Learn from an investigation or start with domain expertise. Both routes need an explicit contract and a record of what remains uncertain.</summary>
+    <category term="Series"/><category term="AI Agents"/><category term="Automation"/>
+  </entry>
 
   <entry>
     <title>Three execution forms, not a maturity ladder</title>
