@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">When an AI workflow should become ordinary automation</title>
+  <desc id="desc">Progressive Crystallization, Part 1. Keep reasoning where the rules run out.</desc>
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <g font-family="Segoe UI, sans-serif">
+    <text x="80" y="100" font-size="24" fill="#fbbf24">PROGRESSIVE CRYSTALLIZATION / PART 1</text>
+    <g fill="#f1f5f9" font-size="55" font-weight="600">
+      <text x="80" y="213">When an AI workflow</text>
+      <text x="80" y="286">should become</text>
+      <text x="80" y="359">ordinary automation</text>
+    </g>
+    <path d="M80 413 H1120" stroke="#fbbf24" stroke-width="2"/>
+    <text x="80" y="477" font-size="30" fill="#fbbf24">Keep reasoning where the rules run out.</text>
+    <text x="80" y="560" font-size="23" fill="#f1f5f9">Arun Malik / blog.arunmalik.dev</text>
+  </g>
+</svg>

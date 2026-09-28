@@ -304,10 +304,30 @@ const SERIES_DATA = [
   {
     id: "progressive-crystallization",
     title: "Progressive Crystallization",
-    description: "A 10-part series on converting AI agent workflows into deterministic, zero-cost automation through incremental formalization.",
-    status: "research",
+    description: "A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.",
+    status: "in-progress",
     tags: ["automation", "ai-agents", "optimization"],
-    posts: []
+    posts: [
+      {
+        slug: "01-ordinary-automation",
+        url: "/series/progressive-crystallization/01-ordinary-automation/",
+        title: "When an AI workflow should become ordinary automation",
+        date: "2026-09-27",
+        excerpt: "Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?",
+        tags: ["Series", "AI Agents", "Automation"],
+        references: [],
+        published: true
+      },
+      { slug: "02-rules-and-reasoning", title: "Where rules end and reasoning begins", published: false },
+      { slug: "03-runs-and-specifications", title: "A successful run is not a specification", published: false },
+      { slug: "04-evidence-for-automation", title: "What evidence justifies automating a decision?", published: false },
+      { slug: "05-costs-that-remain", title: "The costs that remain after the model call", published: false },
+      { slug: "06-repeatable-not-safe", title: "Repeatable does not mean safe", published: false },
+      { slug: "07-execution-evidence", title: "What to record when a workflow runs", published: false },
+      { slug: "08-changed-assumptions", title: "When a familiar procedure stops fitting", published: false },
+      { slug: "09-small-experiment", title: "A small automation experiment", published: false },
+      { slug: "10-measure-the-work", title: "Measure the work, not the automation share", published: false }
+    ]
   },
   {
     id: "cloud-security",

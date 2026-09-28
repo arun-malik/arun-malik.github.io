@@ -4,16 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Progressive Crystallization - Series - Arun Malik</title>
-    <meta name="description" content="A 10-part series on converting AI agent workflows into deterministic, zero-cost automation through incremental formalization.">
+    <meta name="description" content="A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.">
     <!-- Open Graph / Social Cards -->
     <meta property="og:title" content="Progressive Crystallization - Arun Malik">
-    <meta property="og:description" content="A 10-part series on converting AI agent workflows into deterministic, zero-cost automation.">
+    <meta property="og:description" content="A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.">
     <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/progressive-crystallization.png">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/progressive-crystallization.png" data-banner-src="/assets/og/progressive-crystallization.svg">
+    <meta property="og:image:alt" content="Progressive Crystallization: reasoning, rules, and review">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Progressive Crystallization - Arun Malik">
-    <meta name="twitter:description" content="A 10-part series on converting AI agent workflows into deterministic, zero-cost automation.">
+    <meta name="twitter:description" content="A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/">
     <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -69,6 +71,9 @@
         }
         .post-content { flex: 1; }
         .post-title { font-size: 1.0625rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .post-title a { color: var(--accent); text-decoration: none; }
+        .post-title a:hover { text-decoration: underline; }
+        .post-content { min-width: 0; overflow-wrap: anywhere; }
         .post-excerpt { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; opacity: 0.8; }
         .coming-soon-note {
             margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-secondary);
@@ -80,6 +85,12 @@
         footer a { color: var(--text-secondary); text-decoration: none; }
         footer a:hover { color: var(--text); }
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; }
+        @media (max-width: 600px) {
+            .site-nav, .nav-links { flex-wrap: wrap; gap: 1rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+        }
     </style>
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
@@ -122,90 +133,87 @@
             </div>
 
             <h1>Progressive Crystallization</h1>
-            <p class="series-desc">AI agents are deployed as permanent cost centers, re-invoking full LLM inference even for solved problems. This 10-part series explores how to systematically convert agent discoveries into deterministic, zero-cost automation that becomes cheaper, faster, and safer over time.</p>
+            <p class="series-desc">A 10-part series on deciding which parts of an AI-assisted workflow belong in ordinary software, using public sources and hypothetical examples.</p>
+            <p class="series-desc">Once a workflow works, which decisions still need reasoning? These essays examine where explicit rules help, what evidence supports a change, and when automation should stop. Repeatability alone establishes neither correctness nor safety.</p>
 
-            <p style="margin-bottom:1.5rem;">
-                <a href="https://arxiv.org/abs/2607.07052" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--accent);color:#fff;text-decoration:none;font-size:0.875rem;font-weight:600;padding:0.5rem 1rem;border-radius:6px;">Read the paper on arXiv &rarr;</a>
-                <a href="https://arxiv.org/pdf/2607.07052" target="_blank" rel="noopener" style="margin-left:0.75rem;color:var(--accent);text-decoration:none;font-size:0.875rem;font-weight:500;">PDF</a>
-            </p>
-
-            <div class="series-status">Paper published &middot; posts coming soon</div>
+            <div class="series-status">In Progress &middot; 1 of 10 published</div>
 
             <ol class="post-list">
                 <li class="post-item">
                     <span class="post-number">01</span>
                     <div class="post-content">
-                        <h3 class="post-title">Your AI Agent Forgets Everything It Learns: Here's Why That's Expensive</h3>
-                        <p class="post-excerpt">The knowledge loss problem. Every execution re-invokes full reasoning for problems already solved. The same 8-step pattern repeated 47 times, costing 30,000 tokens each time.</p>
+                        <h2 class="post-title"><a href="/series/progressive-crystallization/01-ordinary-automation/">When an AI workflow should become ordinary automation</a></h2>
+                        <p class="post-excerpt">Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?</p>
+                        <p class="post-excerpt"><time datetime="2026-09-27">Sep 27, 2026</time> &middot; Part 1</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">02</span>
                     <div class="post-content">
-                        <h3 class="post-title">The Three Types of AI Automation You Need to Know About</h3>
-                        <p class="post-excerpt">Execution type taxonomy: Deterministic (Type 1, zero tokens), Hybrid (Type 2, structured + LLM), Agent-Orchestrated (Type 3, full reasoning). A spectrum from zero-cost to full-agent.</p>
+                        <h2 class="post-title">Where rules end and reasoning begins</h2>
+                        <p class="post-excerpt">Choosing between explicit code paths and model-directed work, one decision at a time. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">03</span>
                     <div class="post-content">
-                        <h3 class="post-title">How to Turn an Agent's Best Work into Permanent Automation</h3>
-                        <p class="post-excerpt">Trace extraction algorithm, template generation, parameterization, and DAG construction. Converting successful agent runs into reusable deterministic workflows.</p>
+                        <h2 class="post-title">A successful run is not a specification</h2>
+                        <p class="post-excerpt">What an observed execution can tell us, and which requirements still need to be written and tested. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">04</span>
                     <div class="post-content">
-                        <h3 class="post-title">The Promotion Ladder: From Stochastic to Deterministic in 4 Stages</h3>
-                        <p class="post-excerpt">Evidence-based advancement through the crystallization lifecycle. Promotion requires 90%+ success rate, less than 5% false positives, and zero rollbacks for 30 consecutive days.</p>
+                        <h2 class="post-title">What evidence justifies automating a decision?</h2>
+                        <p class="post-excerpt">Comparisons, failure cases, and the limits of a passing test set. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">05</span>
                     <div class="post-content">
-                        <h3 class="post-title">Zero Tokens, Zero Problems: The Economics of Workflow Crystallization</h3>
-                        <p class="post-excerpt">A crystallized playbook runs in 200ms at $0.00. The same resolution via full agent reasoning takes 45 seconds and costs $0.35. Token costs dropped 72% over 8 months.</p>
+                        <h2 class="post-title">The costs that remain after the model call</h2>
+                        <p class="post-excerpt">Counting compute, maintenance, review, and recovery alongside inference costs. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">06</span>
                     <div class="post-content">
-                        <h3 class="post-title">Why Safer AI Gets Cheaper: The Safety-Determinism Connection</h3>
-                        <p class="post-excerpt">Every safety property improves or is maintained across each promotion stage. Deterministic playbooks can be formally verified; agent reasoning cannot.</p>
+                        <h2 class="post-title">Repeatable does not mean safe</h2>
+                        <p class="post-excerpt">Permissions, input boundaries, and checks on what the software actually changed. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">07</span>
                     <div class="post-content">
-                        <h3 class="post-title">Process Mining Meets LLMs: Extracting Workflows from Agent Traces</h3>
-                        <p class="post-excerpt">Applying process mining foundations to agent execution traces. Each execution produces structured logs: ordered tool invocations with typed I/O, decision branches, and timing.</p>
+                        <h2 class="post-title">What to record when a workflow runs</h2>
+                        <p class="post-excerpt">Useful execution evidence, missing context, and the privacy limits of logging. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">08</span>
                     <div class="post-content">
-                        <h3 class="post-title">When Deterministic Fails: Graceful Demotion and the Discovery Pipeline</h3>
-                        <p class="post-excerpt">Circuit breakers, fallback routing, and continuous discovery. How to handle when a crystallized playbook breaks and needs to fall back to agent reasoning.</p>
+                        <h2 class="post-title">When a familiar procedure stops fitting</h2>
+                        <p class="post-excerpt">Detecting changed assumptions and designing a stop or a reviewed handoff. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">09</span>
                     <div class="post-content">
-                        <h3 class="post-title">From Runbooks to Crystallized Playbooks: AIOps in Practice</h3>
-                        <p class="post-excerpt">Enterprise case study with 90%+ autonomous resolution rate. Resolution time decreased from hours to minutes by crystallizing agent discoveries into deterministic workflows.</p>
+                        <h2 class="post-title">A small automation experiment</h2>
+                        <p class="post-excerpt">A hypothetical nonproduction exercise for comparing an assisted workflow with a bounded program. Coming soon.</p>
                     </div>
                 </li>
                 <li class="post-item">
                     <span class="post-number">10</span>
                     <div class="post-content">
-                        <h3 class="post-title">The Maturity Metric: Measuring Your Platform's Crystallization Progress</h3>
-                        <p class="post-excerpt">The Type 1:2:3 execution ratio as a platform health metric. Tracking the shift from 100% agent to 45% deterministic, 30% hybrid, 25% agent over 8 months.</p>
+                        <h2 class="post-title">Measure the work, not the automation share</h2>
+                        <p class="post-excerpt">Assessing useful outcomes and ongoing effort without treating less reasoning as a goal by itself. Coming soon.</p>
                     </div>
                 </li>
             </ol>
 
             <div class="coming-soon-note">
-                This series unpacks the paper <a href="https://arxiv.org/abs/2607.07052" target="_blank" rel="noopener">"Progressive Crystallization" (arXiv:2607.07052)</a>, grounded in production experience building an agentic AIOps platform at Microsoft Azure Networking. The paper is out now; the posts below break it down one idea at a time. First post coming soon.
+                Part 1 is available above. The remaining nine entries are planned topics, not completed studies or promised results. This series develops an engineering proposal from public sources; its examples are hypothetical, not reports of an employer's systems. Later titles may change as the evidence is reviewed.
             </div>
         </main>
 

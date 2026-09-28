@@ -5,10 +5,22 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-27T01:48:45-07:00</updated>
+  <updated>2026-09-27T21:06:17-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>When an AI workflow should become ordinary automation</title>
+    <link href="https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/"/>
+    <id>https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/</id>
+    <published>2026-09-27T21:06:17-07:00</published>
+    <updated>2026-09-27T21:06:17-07:00</updated>
+    <summary>Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?</summary>
+    <category term="Series"/>
+    <category term="AI Agents"/>
+    <category term="Automation"/>
+  </entry>
 
   <entry>
     <title>The Amplification Playbook</title>

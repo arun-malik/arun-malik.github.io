@@ -24,10 +24,9 @@
 <g fill="#fbbf24" opacity="0.2">
   <polygon points="900,310 950,280 1000,310 1000,370 950,400 900,370"/>
 </g>
-<!-- Cost arrow going down -->
-<g fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.5">
-  <path d="M900,430 L900,530"/>
-  <polygon points="895,530 900,545 905,530" fill="#34d399" opacity="0.5"/>
-  <text x="870" y="565" font-family="sans-serif" font-size="12" fill="#34d399" opacity="0.5">$0</text>
+<g font-family="Segoe UI, sans-serif" text-anchor="middle">
+  <text x="600" y="100" font-size="42" font-weight="600" fill="#f1f5f9">Progressive Crystallization</text>
+  <text x="600" y="155" font-size="26" fill="#fbbf24">Reasoning, rules, and review</text>
+  <text x="600" y="535" font-size="23" fill="#f1f5f9">Where does ordinary software fit?</text>
 </g>
 </svg>

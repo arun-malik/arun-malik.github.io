@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When an AI workflow should become ordinary automation - Arun Malik</title>
+    <meta name="description" content="Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?">
+    <meta name="keywords" content="Series, AI Agents, Automation">
+    <link rel="canonical" href="https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/">
+    <meta property="og:title" content="When an AI workflow should become ordinary automation">
+    <meta property="og:description" content="Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?">
+    <meta property="og:url" content="https://blog.arunmalik.dev/series/progressive-crystallization/01-ordinary-automation/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/assets/og/01-ordinary-automation.png" data-banner-src="/assets/og/01-ordinary-automation.svg">
+    <meta property="og:image:alt" content="When an AI workflow should become ordinary automation. Keep reasoning where the rules run out.">
+    <meta property="article:published_time" content="2026-09-27T21:06:17-07:00">
+    <meta property="article:modified_time" content="2026-09-27T21:06:17-07:00">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="When an AI workflow should become ordinary automation">
+    <meta name="twitter:description" content="Once an AI-assisted workflow works, which parts should become normal software and which still need reasoning?">
+    <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/01-ordinary-automation.png">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --font-mono: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+            --bg: #ffffff; --bg-secondary: #f6f8fa; --text: #1f2328;
+            --text-muted: #656d76; --text-secondary: #656d76; --border: #d0d7de;
+            --accent: #2563eb; --accent-subtle: #ddf4ff;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117; --bg-secondary: #161b22; --text: #e6edf3;
+            --text-muted: #8b949e; --text-secondary: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-subtle: #1f2a38;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .blog-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .blog-header h1 { font-size: 1.875rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
+        .blog-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+        .blog-meta .tag { background: var(--accent-subtle); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+        .article-meta { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        a { color: var(--accent); }
+        .nav-bar a { text-decoration: none; font-size: 0.875rem; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text); font-size: 1rem; }
+        .content { overflow-wrap: anywhere; }
+        .content h2 { font-size: 1.375rem; line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .content p { margin-bottom: 1rem; }
+        .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.75rem; }
+        .refs { font-size: 0.9rem; color: var(--text-muted); }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-links { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 0.75rem; }
+        @media (max-width: 600px) {
+            .site-nav { flex-wrap: wrap; gap: 1rem; }
+            .site-header-wrapper { padding: 0 !important; }
+            .site-header-wrapper .nav-links { gap: 1rem !important; flex-wrap: wrap; }
+            .series-prev:empty { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar" aria-label="Site">
+        <a href="/">&larr; Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="sunIcon" style="display:none;">&#9728;</span>
+            <span id="moonIcon">&#9790;</span>
+        </button>
+    </nav>
+    <main>
+    <article data-reading-minutes="7">
+        <header class="blog-header">
+            <h1>When an AI workflow should become ordinary automation</h1>
+            <div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI Agents</span><span class="tag">Automation</span></div>
+            <div class="article-meta"><span class="article-date">Published <time datetime="2026-09-27">Sep 27, 2026</time></span></div>
+        </header>
+        <div id="series-header"><p><a href="/series/progressive-crystallization/">Progressive Crystallization</a> &middot; Part 1 of 10</p></div>
+        <div id="article-toc"></div>
+        <div class="content">
+            <p>A working AI workflow is a good place to start asking where you can stop using AI.</p>
+            <p>If a model keeps choosing the same operation for a well-defined input, there may be no useful decision left for it to make. Parsing a known file format, checking a required field, or sorting records by a declared key can be ordinary software. The difficult part is knowing whether you have found a stable rule or merely seen a few similar cases.</p>
+            <p>I use <em>progressive crystallization</em> here for a proposed engineering practice: move a bounded part of an AI-assisted workflow into explicit code when you can state its contract and test it. Leave unresolved judgment visible. This is an argument about how to design work, not a claim of a new algorithm or a report of measured savings.</p>
+
+            <h2 id="a-small-example">Start with a reading list</h2>
+            <p>Imagine a local experiment that turns synthetic book records into a reading-list page. There are no customer records, production services, or outgoing messages. An assistant reads two fixture files, works out their column names, combines the records, and suggests subject groupings. A person reviews the generated page.</p>
+            <p>At first, asking the assistant to inspect the files is convenient. Suppose the experiment then adopts two fixed input formats, each with an explicit version field. The mappings are now agreed: one format's <code>book_title</code> and the other's <code>title</code> both become <code>title</code>. Records have stable identifiers. The output order is specified.</p>
+            <p>Why ask a model to rediscover those mappings on every run?</p>
+            <p>A small program can accept the two known versions, require a nonempty title and a unique identifier, escape text for HTML, and write a draft page in one designated output directory. It can reject everything else. Those are proposed requirements for this example, not results from a deployed system.</p>
+            <p>Subject grouping is a different question. A book about the history of computing might reasonably belong under technology or history. If the reader wants help exploring such choices, a model can suggest groups for review. If the reader instead supplies an explicit category for every record, that part can become a lookup too.</p>
+            <p>The useful boundary runs through the workflow. It need not put the whole thing on one side.</p>
+
+            <h2 id="the-contract">A run tells you what happened, not what should happen</h2>
+            <p>A successful run might show the assistant merging two records with the same title. That does not establish a deduplication rule. Different editions can share a title. A trace also cannot tell you whether a missing author is acceptable, whether input order matters, or whether the reviewer quietly corrected an error.</p>
+            <p>You have to decide those things. For this experiment, duplicate identifiers might be an error while duplicate titles remain separate records. A missing author might be displayed as unknown. The specification should say so before the implementation is judged against it.</p>
+            <p>Then test the contract, including cases that the attractive demonstration never encountered: an unsupported version, a duplicate identifier, an empty title, and text that would become executable markup if inserted unescaped. Keep additional fixtures aside when developing the converter so the final check is not just a replay of its development examples. Compare the rendered output with independently prepared expectations, not only with what the assistant produced.</p>
+            <p>Passing those tests gives evidence about those cases. It does not prove correctness for every input. A program can consistently apply a mistaken requirement, and a test suite can faithfully encode the same mistake.</p>
+            <p>This is familiar software engineering. The AI-assisted beginning does not exempt the result from it.</p>
+
+            <h2 id="which-decisions">Keep the decisions that still need reasoning</h2>
+            <p>Anthropic's <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a> draws a useful distinction: workflows orchestrate LLMs and tools through predefined code paths, while agents let LLMs direct their processes and tool use. It recommends starting with simpler solutions. That is architectural guidance from a vendor, not experimental proof that one design will outperform another on your task.</p>
+            <p>A predefined workflow can still contain model calls. Removing model-directed orchestration is different from removing inference. Our reading-list converter might be entirely conventional code, while its optional grouping assistant still uses a model. Both can sit behind the same review step.</p>
+            <p>Nor is the problem that all agents forget everything. Systems can retain context, retrieve prior work, and use memory. But remembering a previous solution and executing an explicit rule are different ways to reuse work. If the desired behaviour is fully specified, first compare the model-assisted route with a direct implementation. If the inputs remain ambiguous or the desired output depends on interpretation, the model may still be useful.</p>
+            <p>Sometimes the rule is simple enough to write before running an agent at all. You do not need an AI discovery phase to justify a parser.</p>
+
+            <h2 id="what-stays">The model call can go. The obligations stay.</h2>
+            <p>For the local experiment, the converter should have access only to the fixture inputs and its draft-output directory. A malformed record should stop generation with a useful explanation, rather than trigger a guess. A person should still check the draft before copying it anywhere public. Replacing reasoning with code does not grant permission to publish.</p>
+            <p>Retries need their own design. Repeating a run should not append the same books again or destroy an unrelated file. For this example, generating a new draft and replacing only the designated prior draft is a more sensible contract than accumulating output. Even then, write failures and interrupted runs need tests.</p>
+            <p>The <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library article on idempotent APIs</a> explains the general issue: retrying a request should not create additional side effects. It describes caller-provided request identifiers and the need to coordinate recording the identifier with mutations atomically. An identifier alone is not protection. That API design discussion does not certify our file converter, but it makes clear why “run the same steps again” is an incomplete recovery plan.</p>
+            <p>And the world can change. A new export version might introduce different meanings for familiar columns. The converter should reject the unknown version until its contract is revised. Silently handing rejected inputs to a more capable agent would change both the behaviour and the risk. Any assisted fallback needs its own input limits, permissions, and approval conditions. A stop with a human handoff is a valid outcome.</p>
+            <p>Google's SRE chapter <a href="https://sre.google/sre-book/automation-at-google/">The Evolution of Automation at Google</a> warns that automation can create problems as well as solve them, and discusses automation falling out of step with the systems it manages. These are engineering cautions, not evidence of a guaranteed safety improvement from removing a model. Ordinary software can repeat the wrong operation very efficiently.</p>
+
+            <h2 id="the-bill">What would make the change worthwhile?</h2>
+            <p>The conventional converter needs no model inference for its own work. That says nothing about its total cost.</p>
+            <p>Count model tokens separately from compute and storage. Then account for implementing and maintaining the converter, verifying its output, obtaining approvals, monitoring failures, and revising it when formats or expectations change. The optional grouping assistant still has inference costs. A human reviewer still has work to do.</p>
+            <p>Compare both routes on the same permitted task and representative inputs. Measure correct output and rejected cases alongside elapsed time and human effort. Include recovery work. If the program looks cheaper only because the comparison quietly removed review or ignored maintenance, it has answered a different question.</p>
+            <p>There is no break-even result in this hypothetical example. A frequently used, stable conversion may repay the effort; a rarely used format that keeps changing may not. The decision needs evidence from the actual task, not a promised percentage reduction in tokens.</p>
+            <p>I would start with the fixed column mapping, not the ambiguous subject groupings. Write down what it accepts, what it produces, and when it stops. Then test whether moving that one piece into code improves the work. Leave the next decision alone until you can explain it just as clearly.</p>
+
+            <h2 id="references">Sources and scope</h2>
+            <p>The reading-list experiment is fictional and nonproduction. No deployment results or employer-specific designs are reported. The proposal above is my synthesis; these sources support the stated distinctions and cautions, not a validated method or a claim of novelty.</p>
+            <ol class="refs">
+                <li><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic, Building effective agents</a> (originally December 2024; living page). See “What are agents?” and “When (and when not) to use agents.” Definitions and design guidance, not a comparative trial.</li>
+                <li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library, Making retries safe with idempotent APIs</a>. See “Reducing client complexity with idempotent API design” for request identifiers and atomic handling of side effects.</li>
+                <li><a href="https://sre.google/sre-book/automation-at-google/">Niall Murphy with John Looney and Michael Kacirek, The Evolution of Automation at Google</a>, <em>Site Reliability Engineering</em>, Chapter 7 (2016). See the opening caution and “The Use Cases for Automation” discussion of changing systems and fragile automation.</li>
+            </ol>
+            <p class="refs">Public sources checked September 27, 2026.</p>
+        </div>
+        <div id="series-footer"><p><a href="/series/progressive-crystallization/">See the ten-part series plan</a>. Part 2 is coming soon.</p></div>
+    </article>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="https://github.com/arun-malik" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener">LinkedIn</a></div>
+        <p>&copy; 2026 Arun Malik</p>
+    </footer>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        setTheme(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches));
+        toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'dark'));
+    </script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/series/series-nav.js"></script>
+    <script src="/assets/search.js"></script>
+    <script src="/assets/article-enhance.js"></script>
+    <script src="/assets/hero-banner.js?v=2"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>
