@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Data splits, generalization, overfitting, and leakage.">
-<title>Did it learn the task or memorize the cards? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<title>Did it learn the task or memorize the cards? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css?v=2">
 <link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Did it learn the task or memorize the cards?">
@@ -14,23 +14,41 @@
 <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/05-generalization.png">
 <meta name="author" content="Arun Malik">
 <meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
-<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Did it learn the task or memorize the cards?", "description": "Data splits, generalization, overfitting, and leakage.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/05-generalization.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<meta property="article:modified_time" content="2026-09-28T23:53:21-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Did it learn the task or memorize the cards?", "description": "Data splits, generalization, overfitting, and leakage.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:53:21-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/05-generalization.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 </head>
-<body><a class="skip" href="#main">Skip to content</a>
-<header class="kitchen-site-header">
-<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
-<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
-<a href="/about/">About</a><a href="/contact/">Contact</a>
-<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
-</div></nav></header>
-<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
-<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
-<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-keep-some-examples-out-of-practice">Keep some examples out of practice</a><a href="#section-recognize-two-different-failures">Recognize two different failures</a><a href="#section-stop-answers-sneaking-across-the-boundary">Stop answers sneaking across the boundary</a><a href="#section-restraining-the-fit">Restraining the fit</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="3">
-<div id="series-header"></div>
-<div class="eyebrow">CHAPTER 06 / 16 · Check learning on new cases</div>
+<body class="kitchen-chapter"><a class="skip" href="#main">Skip to content</a>
+<div class="site-header-wrapper"><header class="site-header">
+<nav class="site-nav" aria-label="Main navigation">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active" aria-current="page">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button type="button" hidden class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg aria-hidden="true" id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg aria-hidden="true" id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+</header></div>
+<div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><path d="M35 35 Q390 42 709 145" class="wire"/><path d="M35 90 Q390 42 709 90" class="wire"/><path d="M35 145 Q390 42 709 35" class="wire"/><path d="M120 35 Q390 42 680 145" class="wire"/><path d="M120 90 Q390 42 680 90" class="wire"/><path d="M120 145 Q390 42 680 35" class="wire"/><path d="M205 35 Q390 42 652 145" class="wire"/><path d="M205 90 Q390 42 652 90" class="wire"/><path d="M205 145 Q390 42 652 35" class="wire"/><rect x="290" y="42" width="28" height="104" rx="2" class="gold"/><rect x="344" y="42" width="28" height="104" rx="2" class="sage"/><rect x="398" y="42" width="28" height="104" rx="2" class="blue"/><rect x="452" y="42" width="28" height="104" rx="2" class="gold"/></g></svg></div>
+<main id="main"><article data-reading-minutes="3">
+<header class="blog-header">
+<div class="eyebrow">Chapter 06 of 16: Check learning on new cases</div>
 <h1>Did it learn the task or memorize the cards?</h1>
-<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 3 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><path d="M35 35 Q390 42 709 145" class="wire"/><path d="M35 90 Q390 42 709 90" class="wire"/><path d="M35 145 Q390 42 709 35" class="wire"/><path d="M120 35 Q390 42 680 145" class="wire"/><path d="M120 90 Q390 42 680 90" class="wire"/><path d="M120 145 Q390 42 680 35" class="wire"/><path d="M205 35 Q390 42 652 145" class="wire"/><path d="M205 90 Q390 42 652 90" class="wire"/><path d="M205 145 Q390 42 652 35" class="wire"/><rect x="290" y="42" width="28" height="104" rx="2" class="gold"/><rect x="344" y="42" width="28" height="104" rx="2" class="sage"/><rect x="398" y="42" width="28" height="104" rx="2" class="blue"/><rect x="452" y="42" width="28" height="104" rx="2" class="gold"/></g></svg></div>
+<div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI</span><span class="tag">Foundations</span></div>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 3 min read</span></div>
+</header>
+<div id="series-header"><p><a href="/series/ai-kitchen/">AI Kitchen: from first principles</a> &middot; Part 6 of 16</p></div>
+<p class="guide-link"><a href="/series/ai-kitchen/concepts/">Core concept map</a></p><div id="article-toc"><details class="article-toc-details"><summary>Table of Contents</summary><nav class="article-toc-nav" aria-label="In this chapter"><ol><li><a href="#section-keep-some-examples-out-of-practice">Keep some examples out of practice</a></li><li><a href="#section-recognize-two-different-failures">Recognize two different failures</a></li><li><a href="#section-stop-answers-sneaking-across-the-boundary">Stop answers sneaking across the boundary</a></li><li><a href="#section-restraining-the-fit">Restraining the fit</a></li></ol></nav></details></div>
 <div class="prereqs">Builds on <a href="/series/ai-kitchen/04-neural-networks/">chapter 5</a>. Specific dependencies are in the <a href="/series/ai-kitchen/concepts/#chapter-6">concept map</a>.</div><div class="lesson-body article-content">
 <p>A student who has seen every answer on tomorrow's quiz may score perfectly. That result tells us little about the next quiz. A model can fool us in much the same way.</p>
 <h2 id="section-keep-some-examples-out-of-practice">Keep some examples out of practice</h2>
@@ -53,16 +71,25 @@
 <p><dfn data-needs="overfitting loss" id="regularization">Regularization</dfn> is a family of techniques that discourages some kinds of overly complex fitting. One approach adds a penalty for large weights. It makes the optimizer balance matching examples against the added penalty.</p>
 <p>Like preferring a simple recipe adjustment over a separate exception for every customer, this can encourage patterns that travel better. It is not a guarantee. Stopping when validation results stop improving, improving data coverage, or choosing a simpler model may also help.</p>
 <details><summary>The practice score improves while the rehearsal score worsens. Celebrate?</summary><p>Pause first. It may be overfitting. Check the examples and learning curves, consider an earlier saved model, and avoid choosing the answer by repeatedly peeking at the final test set.</p></details></div>
-<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/04-neural-networks/">Previous: Why build a network of little calculators?</a><a href="/series/ai-kitchen/06-tokens-and-embeddings/">Next: Represent information numerically</a></nav></article></main>
-<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
-No account, model service, or code lab is required. This guide makes no model calls.</footer>
+<div id="series-footer"><nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/04-neural-networks/">Previous: Why build a network of little calculators?</a><a href="/series/ai-kitchen/06-tokens-and-embeddings/">Next: Represent information numerically</a></nav></div></article></main>
+<aside class="guide-note" aria-label="About this guide"><p>AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</p></aside>
+<footer class="site-footer">
+<div class="footer-links">
+<a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+<a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+<a href="/feed.xml">RSS</a>
+</div><p>&copy; 2026 Arun Malik</p>
+</footer>
 
 <script src="/series/series-data.js" defer></script>
-<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/ai-kitchen.js?v=2" defer></script>
 <script src="/assets/search.js" defer></script>
 <script src="/assets/nav-active.js" defer></script>
+<script src="/assets/site-footer.js" defer></script>
 <script src="/series/series-nav.js" defer></script>
 <script src="/assets/action-bar.js" defer></script>
 <script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/reading-save.js" defer></script>
 <script src="/assets/giscus.js" defer></script>
 </body></html>

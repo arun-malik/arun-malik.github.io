@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Applications, workflows, agent loops, state, and recovery.">
-<title>When does an assistant become an agent? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<title>When does an assistant become an agent? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css?v=2">
 <link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/12-agent-loops/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="When does an assistant become an agent?">
@@ -14,23 +14,41 @@
 <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/12-agent-loops.png">
 <meta name="author" content="Arun Malik">
 <meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
-<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "When does an assistant become an agent?", "description": "Applications, workflows, agent loops, state, and recovery.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/12-agent-loops/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/12-agent-loops.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<meta property="article:modified_time" content="2026-09-28T23:53:21-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "When does an assistant become an agent?", "description": "Applications, workflows, agent loops, state, and recovery.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:53:21-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/12-agent-loops/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/12-agent-loops.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 </head>
-<body><a class="skip" href="#main">Skip to content</a>
-<header class="kitchen-site-header">
-<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
-<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
-<a href="/about/">About</a><a href="/contact/">Contact</a>
-<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
-</div></nav></header>
-<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
-<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
-<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-start-with-the-whole-application">Start with the whole application</a><a href="#section-let-observations-affect-the-next-step">Let observations affect the next step</a><a href="#section-who-keeps-the-work-moving">Who keeps the work moving?</a><a href="#section-leave-a-recoverable-handover">Leave a recoverable handover</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="4">
-<div id="series-header"></div>
-<div class="eyebrow">CHAPTER 13 / 16 · Coordinate work</div>
+<body class="kitchen-chapter"><a class="skip" href="#main">Skip to content</a>
+<div class="site-header-wrapper"><header class="site-header">
+<nav class="site-nav" aria-label="Main navigation">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active" aria-current="page">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button type="button" hidden class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg aria-hidden="true" id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg aria-hidden="true" id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+</header></div>
+<div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><rect x="265" y="26" width="245" height="135" rx="22" class="blue"/><circle cx="386" cy="94" r="37" class="gold"/><path d="M386 94 L80 35" class="wire"/><circle cx="80" cy="35" r="13" class="sage"/><path d="M386 94 L150 140" class="wire"/><circle cx="150" cy="140" r="13" class="sage"/><path d="M386 94 L650 40" class="wire"/><circle cx="650" cy="40" r="13" class="sage"/><path d="M386 94 L702 145" class="wire"/><circle cx="702" cy="145" r="13" class="sage"/><rect x="284" y="42" width="207" height="103" rx="12" class="wire"/></g></svg></div>
+<main id="main"><article data-reading-minutes="4">
+<header class="blog-header">
+<div class="eyebrow">Chapter 13 of 16: Coordinate work</div>
 <h1>When does an assistant become an agent?</h1>
-<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><rect x="265" y="26" width="245" height="135" rx="22" class="blue"/><circle cx="386" cy="94" r="37" class="gold"/><path d="M386 94 L80 35" class="wire"/><circle cx="80" cy="35" r="13" class="sage"/><path d="M386 94 L150 140" class="wire"/><circle cx="150" cy="140" r="13" class="sage"/><path d="M386 94 L650 40" class="wire"/><circle cx="650" cy="40" r="13" class="sage"/><path d="M386 94 L702 145" class="wire"/><circle cx="702" cy="145" r="13" class="sage"/><rect x="284" y="42" width="207" height="103" rx="12" class="wire"/></g></svg></div>
+<div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI</span><span class="tag">Foundations</span></div>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div>
+</header>
+<div id="series-header"><p><a href="/series/ai-kitchen/">AI Kitchen: from first principles</a> &middot; Part 13 of 16</p></div>
+<p class="guide-link"><a href="/series/ai-kitchen/concepts/">Core concept map</a></p><div id="article-toc"><details class="article-toc-details"><summary>Table of Contents</summary><nav class="article-toc-nav" aria-label="In this chapter"><ol><li><a href="#section-start-with-the-whole-application">Start with the whole application</a></li><li><a href="#section-let-observations-affect-the-next-step">Let observations affect the next step</a></li><li><a href="#section-who-keeps-the-work-moving">Who keeps the work moving?</a></li><li><a href="#section-leave-a-recoverable-handover">Leave a recoverable handover</a></li></ol></nav></details></div>
 <div class="prereqs">Builds on <a href="/series/ai-kitchen/11-tools-and-actions/">chapter 12</a>. Specific dependencies are in the <a href="/series/ai-kitchen/concepts/#chapter-13">concept map</a>.</div><div class="lesson-body article-content">
 <p>Sometimes the cafe's software should follow a known procedure. Sometimes the next useful step depends on what it just found. These are design choices, not a race to make everything autonomous.</p>
 <h2 id="section-start-with-the-whole-application">Start with the whole application</h2>
@@ -56,16 +74,25 @@
 <p><dfn data-needs="agent orchestration" id="multi-agent">A multi-agent system</dfn> coordinates more than one agent. Separate agents might investigate independent recipe collections, but their findings still need reconciliation. Extra agents add communication, cost, and opportunities for conflicting or repeated work. They are optional, not a guaranteed upgrade over one well-bounded workflow.</p>
 <figure data-diagram="workers" id="visual-workers"><div class="diagram-stage"><svg aria-labelledby="workers-title workers-desc" role="img" viewbox="0 0 360 255" xmlns="http://www.w3.org/2000/svg"><title id="workers-title">Workers</title><desc id="workers-desc">Separate agents can work on independent tasks. Coordination and result checking add work; two agents are not automatically better than one.</desc><rect class="blue" height="50" rx="8" width="174" x="93" y="17"></rect><text text-anchor="middle" x="180" y="48">Coordinate</text><path class="wire" d="M180 76 V94 H75 V108 M180 94 H285 V108"></path><rect class="sage" height="54" rx="8" width="120" x="17" y="116"></rect><text text-anchor="middle" x="77" y="149">Agent A</text><rect class="gold" height="54" rx="8" width="120" x="223" y="116"></rect><text text-anchor="middle" x="283" y="149">Agent B</text><path class="wire" d="M77 177 L180 207 L283 177"></path><text text-anchor="middle" x="180" y="234">Reconcile results</text></svg></div><figcaption>Separate agents can work on independent tasks. Coordination and result checking add work; two agents are not automatically better than one.</figcaption></figure>
 <details><summary>Must a fixed menu lookup become an agent loop?</summary><p>No. If the required steps are known and ordinary code can perform them, a fixed workflow may be simpler to test and operate. Add model-chosen steps when the task benefits from that flexibility.</p></details></div>
-<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/11-tools-and-actions/">Previous: How can words cause an action?</a><a href="/series/ai-kitchen/13-agent-harnesses/">Next: Bound the execution</a></nav></article></main>
-<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
-No account, model service, or code lab is required. This guide makes no model calls.</footer>
+<div id="series-footer"><nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/11-tools-and-actions/">Previous: How can words cause an action?</a><a href="/series/ai-kitchen/13-agent-harnesses/">Next: Bound the execution</a></nav></div></article></main>
+<aside class="guide-note" aria-label="About this guide"><p>AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</p></aside>
+<footer class="site-footer">
+<div class="footer-links">
+<a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+<a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+<a href="/feed.xml">RSS</a>
+</div><p>&copy; 2026 Arun Malik</p>
+</footer>
 
 <script src="/series/series-data.js" defer></script>
-<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/ai-kitchen.js?v=2" defer></script>
 <script src="/assets/search.js" defer></script>
 <script src="/assets/nav-active.js" defer></script>
+<script src="/assets/site-footer.js" defer></script>
 <script src="/series/series-nav.js" defer></script>
 <script src="/assets/action-bar.js" defer></script>
 <script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/reading-save.js" defer></script>
 <script src="/assets/giscus.js" defer></script>
 </body></html>

@@ -5,7 +5,7 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-28T23:33:56-07:00</updated>
+  <updated>2026-09-28T23:53:21-07:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
@@ -15,7 +15,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/00-rules-and-learning/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/00-rules-and-learning/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Ordinary instructions, examples, and the AI family.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -25,7 +25,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/01-data-and-examples/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/01-data-and-examples/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Data, features, targets, representation, and responsible collection.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -35,7 +35,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/02-learning-tasks/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/02-learning-tasks/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Categories, quantities, groups, and reward-driven actions.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -45,7 +45,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/03-models-and-training/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/03-models-and-training/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Models, parameters, loss, optimization, and training.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -55,7 +55,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/04-neural-networks/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/04-neural-networks/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Units, activations, layers, architecture, and backpropagation.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -65,7 +65,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Data splits, generalization, overfitting, and leakage.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -75,7 +75,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/06-tokens-and-embeddings/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/06-tokens-and-embeddings/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Vectors, tokens, identifiers, and learned embeddings.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -85,7 +85,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/07-attention-and-transformers/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/07-attention-and-transformers/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Order, attention, transformer blocks, and generation boundaries.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -95,7 +95,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/08-foundation-models/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/08-foundation-models/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Foundation models, training stages, modalities, and diffusion.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -105,7 +105,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/09-generating-answers/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/09-generating-answers/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Context, probabilities, sampling, temperature, and uncertainty.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -115,7 +115,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/10-retrieval-and-memory/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/10-retrieval-and-memory/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Chunks, indexes, search, RAG, memory, and context assembly.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -125,7 +125,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/11-tools-and-actions/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/11-tools-and-actions/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>APIs, schemas, tool calls, MCP, and reusable skills.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -135,7 +135,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/12-agent-loops/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/12-agent-loops/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Applications, workflows, agent loops, state, and recovery.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -145,7 +145,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/13-agent-harnesses/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/13-agent-harnesses/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Harnesses, context management, permissions, limits, and traces.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -155,7 +155,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/14-evaluation/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/14-evaluation/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>Evaluation cases, rubrics, tests, judges, and meaningful fractions.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>
@@ -165,7 +165,7 @@
     <link href="https://blog.arunmalik.dev/series/ai-kitchen/15-operating-the-system/"/>
     <id>https://blog.arunmalik.dev/series/ai-kitchen/15-operating-the-system/</id>
     <published>2026-09-28T23:33:56-07:00</published>
-    <updated>2026-09-28T23:33:56-07:00</updated>
+    <updated>2026-09-28T23:53:21-07:00</updated>
     <summary>A connected task, deployment, resources, caching, drift, and privacy.</summary>
     <category term="Series"/><category term="AI"/><category term="Foundations"/>
   </entry>

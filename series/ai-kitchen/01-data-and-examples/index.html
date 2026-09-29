@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Data, features, targets, representation, and responsible collection.">
-<title>What counts as an example? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<title>What counts as an example? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css?v=2">
 <link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/01-data-and-examples/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="What counts as an example?">
@@ -14,23 +14,41 @@
 <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/01-data-and-examples.png">
 <meta name="author" content="Arun Malik">
 <meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
-<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "What counts as an example?", "description": "Data, features, targets, representation, and responsible collection.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/01-data-and-examples/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/01-data-and-examples.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<meta property="article:modified_time" content="2026-09-28T23:53:21-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "What counts as an example?", "description": "Data, features, targets, representation, and responsible collection.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:53:21-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/01-data-and-examples/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/01-data-and-examples.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 </head>
-<body><a class="skip" href="#main">Skip to content</a>
-<header class="kitchen-site-header">
-<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
-<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
-<a href="/about/">About</a><a href="/contact/">Contact</a>
-<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
-</div></nav></header>
-<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
-<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
-<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-give-each-observation-a-shape">Give each observation a shape</a><a href="#section-separate-the-clues-from-the-answer">Separate the clues from the answer</a><a href="#section-a-tidy-notebook-can-still-mislead">A tidy notebook can still mislead</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="4">
-<div id="series-header"></div>
-<div class="eyebrow">CHAPTER 02 / 16 · Write useful observations</div>
+<body class="kitchen-chapter"><a class="skip" href="#main">Skip to content</a>
+<div class="site-header-wrapper"><header class="site-header">
+<nav class="site-nav" aria-label="Main navigation">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active" aria-current="page">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button type="button" hidden class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg aria-hidden="true" id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg aria-hidden="true" id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+</header></div>
+<div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><circle cx="54" cy="51" r="7" class="sage"/><circle cx="108" cy="98" r="11" class="rust"/><circle cx="162" cy="35" r="15" class="gold"/><circle cx="216" cy="82" r="7" class="sage"/><circle cx="270" cy="129" r="11" class="rust"/><circle cx="324" cy="66" r="15" class="gold"/><circle cx="378" cy="113" r="7" class="sage"/><circle cx="432" cy="50" r="11" class="rust"/><circle cx="486" cy="97" r="15" class="gold"/><circle cx="540" cy="144" r="7" class="sage"/><circle cx="594" cy="81" r="11" class="rust"/><circle cx="648" cy="128" r="15" class="gold"/><circle cx="702" cy="65" r="7" class="sage"/><path d="M20 122 Q360 15 760 86" class="accent-wire"/></g></svg></div>
+<main id="main"><article data-reading-minutes="4">
+<header class="blog-header">
+<div class="eyebrow">Chapter 02 of 16: Write useful observations</div>
 <h1>What counts as an example?</h1>
-<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><circle cx="54" cy="51" r="7" class="sage"/><circle cx="108" cy="98" r="11" class="rust"/><circle cx="162" cy="35" r="15" class="gold"/><circle cx="216" cy="82" r="7" class="sage"/><circle cx="270" cy="129" r="11" class="rust"/><circle cx="324" cy="66" r="15" class="gold"/><circle cx="378" cy="113" r="7" class="sage"/><circle cx="432" cy="50" r="11" class="rust"/><circle cx="486" cy="97" r="15" class="gold"/><circle cx="540" cy="144" r="7" class="sage"/><circle cx="594" cy="81" r="11" class="rust"/><circle cx="648" cy="128" r="15" class="gold"/><circle cx="702" cy="65" r="7" class="sage"/><path d="M20 122 Q360 15 760 86" class="accent-wire"/></g></svg></div>
+<div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI</span><span class="tag">Foundations</span></div>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div>
+</header>
+<div id="series-header"><p><a href="/series/ai-kitchen/">AI Kitchen: from first principles</a> &middot; Part 2 of 16</p></div>
+<p class="guide-link"><a href="/series/ai-kitchen/concepts/">Core concept map</a></p><div id="article-toc"><details class="article-toc-details"><summary>Table of Contents</summary><nav class="article-toc-nav" aria-label="In this chapter"><ol><li><a href="#section-give-each-observation-a-shape">Give each observation a shape</a></li><li><a href="#section-separate-the-clues-from-the-answer">Separate the clues from the answer</a></li><li><a href="#section-a-tidy-notebook-can-still-mislead">A tidy notebook can still mislead</a></li></ol></nav></details></div>
 <div class="prereqs">Builds on <a href="/series/ai-kitchen/00-rules-and-learning/">chapter 1</a>. Specific dependencies are in the <a href="/series/ai-kitchen/concepts/#chapter-2">concept map</a>.</div><div class="lesson-body article-content">
 <p>We want to estimate preparation time. Before choosing a model, we need to decide what we will write down. A pile of receipts is not yet a useful lesson for a machine.</p>
 <h2 id="section-give-each-observation-a-shape">Give each observation a shape</h2>
@@ -51,16 +69,25 @@
 <p><dfn data-needs="data" id="privacy">Privacy</dfn> concerns how information about people is collected, used, shared, and retained. We need preparation times, not customers' home addresses. Leave unnecessary personal details out, restrict access to what remains, and decide when to delete it. Removing names alone may not make a record anonymous.</p>
 <figure data-diagram="private-notebook" id="visual-private-notebook"><div class="diagram-stage"><svg aria-labelledby="private-notebook-title private-notebook-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="private-notebook-title">Private notebook</title><desc id="private-notebook-desc">Collect the fields the task needs. Omit unnecessary personal information; control access and retention for what remains.</desc><rect class="gold" height="197" rx="2" width="252" x="54" y="14"></rect><text text-anchor="middle" x="180" y="45">Timing notebook</text><text text-anchor="middle" x="180" y="87">Order size</text><text text-anchor="middle" x="180" y="121">Elapsed minutes</text><path class="wire" d="M70 144 H290"></path><text text-anchor="middle" x="180" y="179">No home address</text></svg></div><figcaption>Collect the fields the task needs. Omit unnecessary personal information; control access and retention for what remains.</figcaption></figure>
 <details><summary>Look at the clues: should “time order finished” be an input?</summary><p>No. It would reveal information we do not have when the order arrives. Record it to calculate the training label, but do not feed it to a model that must predict earlier.</p></details></div>
-<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/00-rules-and-learning/">Previous: Can a machine learn from a bowl of fruit?</a><a href="/series/ai-kitchen/02-learning-tasks/">Next: Choose a learning task</a></nav></article></main>
-<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
-No account, model service, or code lab is required. This guide makes no model calls.</footer>
+<div id="series-footer"><nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/00-rules-and-learning/">Previous: Can a machine learn from a bowl of fruit?</a><a href="/series/ai-kitchen/02-learning-tasks/">Next: Choose a learning task</a></nav></div></article></main>
+<aside class="guide-note" aria-label="About this guide"><p>AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</p></aside>
+<footer class="site-footer">
+<div class="footer-links">
+<a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+<a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+<a href="/feed.xml">RSS</a>
+</div><p>&copy; 2026 Arun Malik</p>
+</footer>
 
 <script src="/series/series-data.js" defer></script>
-<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/ai-kitchen.js?v=2" defer></script>
 <script src="/assets/search.js" defer></script>
 <script src="/assets/nav-active.js" defer></script>
+<script src="/assets/site-footer.js" defer></script>
 <script src="/series/series-nav.js" defer></script>
 <script src="/assets/action-bar.js" defer></script>
 <script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/reading-save.js" defer></script>
 <script src="/assets/giscus.js" defer></script>
 </body></html>

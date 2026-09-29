@@ -9,7 +9,8 @@
 
   function apply(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    button.textContent = theme === 'dark' ? '\u2600' : '\u263e';
+    document.getElementById('sunIcon').style.display = theme === 'dark' ? 'block' : 'none';
+    document.getElementById('moonIcon').style.display = theme === 'dark' ? 'none' : 'block';
     button.setAttribute('aria-label', 'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme');
     button.title = button.getAttribute('aria-label');
   }

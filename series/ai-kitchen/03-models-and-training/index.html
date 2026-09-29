@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Models, parameters, loss, optimization, and training.">
-<title>How does a wrong guess become a better one? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<title>How does a wrong guess become a better one? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css?v=2">
 <link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/03-models-and-training/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How does a wrong guess become a better one?">
@@ -14,23 +14,41 @@
 <meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/03-models-and-training.png">
 <meta name="author" content="Arun Malik">
 <meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
-<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How does a wrong guess become a better one?", "description": "Models, parameters, loss, optimization, and training.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/03-models-and-training/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/03-models-and-training.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<meta property="article:modified_time" content="2026-09-28T23:53:21-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How does a wrong guess become a better one?", "description": "Models, parameters, loss, optimization, and training.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:53:21-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/03-models-and-training/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/03-models-and-training.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+<link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 </head>
-<body><a class="skip" href="#main">Skip to content</a>
-<header class="kitchen-site-header">
-<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
-<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
-<a href="/about/">About</a><a href="/contact/">Contact</a>
-<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
-</div></nav></header>
-<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
-<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
-<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-the-recipe-for-learning-and-the-thing-learned">The recipe for learning and the thing learned</a><a href="#section-put-a-number-on-the-miss">Put a number on the miss</a><a href="#section-adjust-the-knobs">Adjust the knobs</a><a href="#section-practice-in-portions">Practice in portions</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="4">
-<div id="series-header"></div>
-<div class="eyebrow">CHAPTER 04 / 16 · Improve a guess</div>
+<body class="kitchen-chapter"><a class="skip" href="#main">Skip to content</a>
+<div class="site-header-wrapper"><header class="site-header">
+<nav class="site-nav" aria-label="Main navigation">
+                <a href="/" class="site-name">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/posts/">Writing</a>
+                    <a href="/series/" class="active" aria-current="page">Series</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button type="button" hidden class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <svg aria-hidden="true" id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg aria-hidden="true" id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+</header></div>
+<div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><circle cx="54" cy="83" r="7" class="sage"/><circle cx="108" cy="130" r="11" class="rust"/><circle cx="162" cy="67" r="15" class="gold"/><circle cx="216" cy="114" r="7" class="sage"/><circle cx="270" cy="51" r="11" class="rust"/><circle cx="324" cy="98" r="15" class="gold"/><circle cx="378" cy="35" r="7" class="sage"/><circle cx="432" cy="82" r="11" class="rust"/><circle cx="486" cy="129" r="15" class="gold"/><circle cx="540" cy="66" r="7" class="sage"/><circle cx="594" cy="113" r="11" class="rust"/><circle cx="648" cy="50" r="15" class="gold"/><circle cx="702" cy="97" r="7" class="sage"/><path d="M20 106 Q360 15 760 118" class="accent-wire"/></g></svg></div>
+<main id="main"><article data-reading-minutes="4">
+<header class="blog-header">
+<div class="eyebrow">Chapter 04 of 16: Improve a guess</div>
 <h1>How does a wrong guess become a better one?</h1>
-<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><circle cx="54" cy="83" r="7" class="sage"/><circle cx="108" cy="130" r="11" class="rust"/><circle cx="162" cy="67" r="15" class="gold"/><circle cx="216" cy="114" r="7" class="sage"/><circle cx="270" cy="51" r="11" class="rust"/><circle cx="324" cy="98" r="15" class="gold"/><circle cx="378" cy="35" r="7" class="sage"/><circle cx="432" cy="82" r="11" class="rust"/><circle cx="486" cy="129" r="15" class="gold"/><circle cx="540" cy="66" r="7" class="sage"/><circle cx="594" cy="113" r="11" class="rust"/><circle cx="648" cy="50" r="15" class="gold"/><circle cx="702" cy="97" r="7" class="sage"/><path d="M20 106 Q360 15 760 118" class="accent-wire"/></g></svg></div>
+<div class="blog-meta"><span>Arun Malik</span><span class="tag">Series</span><span class="tag">AI</span><span class="tag">Foundations</span></div>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div>
+</header>
+<div id="series-header"><p><a href="/series/ai-kitchen/">AI Kitchen: from first principles</a> &middot; Part 4 of 16</p></div>
+<p class="guide-link"><a href="/series/ai-kitchen/concepts/">Core concept map</a></p><div id="article-toc"><details class="article-toc-details"><summary>Table of Contents</summary><nav class="article-toc-nav" aria-label="In this chapter"><ol><li><a href="#section-the-recipe-for-learning-and-the-thing-learned">The recipe for learning and the thing learned</a></li><li><a href="#section-put-a-number-on-the-miss">Put a number on the miss</a></li><li><a href="#section-adjust-the-knobs">Adjust the knobs</a></li><li><a href="#section-practice-in-portions">Practice in portions</a></li></ol></nav></details></div>
 <div class="prereqs">Builds on <a href="/series/ai-kitchen/02-learning-tasks/">chapter 3</a>. Specific dependencies are in the <a href="/series/ai-kitchen/concepts/#chapter-4">concept map</a>.</div><div class="lesson-body article-content">
 <p>Suppose our fictional cafe starts with this estimate: preparation time equals 2 minutes per sandwich, plus 1 minute to pack the order. Two sandwiches produce a guess of 5 minutes. The recorded answer is 7.</p>
 <p>We have an error. What can change?</p>
@@ -55,16 +73,25 @@
 <p>Changing our weight to 3 would make the two-sandwich estimate 7, matching this one card. But perhaps it worsens ten other cards. Learning must consider more than the most recent mistake.</p>
 <figure data-diagram="batches" id="visual-batches"><div class="diagram-stage"><svg aria-labelledby="batches-title batches-desc" role="img" viewbox="0 0 360 250" xmlns="http://www.w3.org/2000/svg"><title id="batches-title">Batches</title><desc id="batches-desc">Invented dataset: twelve cards, shown in two batches. Processing every training example once makes one epoch in this simple setup.</desc><rect class="sage" height="40" rx="2" width="36" x="20" y="40"></rect><rect class="sage" height="40" rx="2" width="36" x="75" y="40"></rect><rect class="sage" height="40" rx="2" width="36" x="130" y="40"></rect><rect class="sage" height="40" rx="2" width="36" x="185" y="40"></rect><rect class="sage" height="40" rx="2" width="36" x="240" y="40"></rect><rect class="sage" height="40" rx="2" width="36" x="295" y="40"></rect><rect class="gold" height="40" rx="2" width="36" x="20" y="96"></rect><rect class="gold" height="40" rx="2" width="36" x="75" y="96"></rect><rect class="gold" height="40" rx="2" width="36" x="130" y="96"></rect><rect class="gold" height="40" rx="2" width="36" x="185" y="96"></rect><rect class="gold" height="40" rx="2" width="36" x="240" y="96"></rect><rect class="gold" height="40" rx="2" width="36" x="295" y="96"></rect><path class="wire" d="M16 26 V17 H345 V26 M16 148 V158 H345 V148"></path><text text-anchor="middle" x="180" y="197">One pass through all cards</text><text class="fine" text-anchor="middle" x="180" y="225">Each colored row is one batch</text></svg></div><figcaption>Invented dataset: twelve cards, shown in two batches. Processing every training example once makes one epoch in this simple setup.</figcaption></figure>
 <details><summary>Work it out: what does the original model predict for three sandwiches?</summary><p>2 × 3 + 1 = 7 minutes. This is inference with fixed parameters. Comparing that prediction with a label does not change the model until an update is actually applied.</p></details></div>
-<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/02-learning-tasks/">Previous: What kind of answer are we asking for?</a><a href="/series/ai-kitchen/04-neural-networks/">Next: Combine little calculations</a></nav></article></main>
-<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
-No account, model service, or code lab is required. This guide makes no model calls.</footer>
+<div id="series-footer"><nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/02-learning-tasks/">Previous: What kind of answer are we asking for?</a><a href="/series/ai-kitchen/04-neural-networks/">Next: Combine little calculations</a></nav></div></article></main>
+<aside class="guide-note" aria-label="About this guide"><p>AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</p></aside>
+<footer class="site-footer">
+<div class="footer-links">
+<a href="https://github.com/arun-malik" target="_blank" rel="noopener noreferrer">GitHub</a>
+<a href="https://www.linkedin.com/in/malik-arun/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+<a href="/feed.xml">RSS</a>
+</div><p>&copy; 2026 Arun Malik</p>
+</footer>
 
 <script src="/series/series-data.js" defer></script>
-<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/ai-kitchen.js?v=2" defer></script>
 <script src="/assets/search.js" defer></script>
 <script src="/assets/nav-active.js" defer></script>
+<script src="/assets/site-footer.js" defer></script>
 <script src="/series/series-nav.js" defer></script>
 <script src="/assets/action-bar.js" defer></script>
 <script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/reading-save.js" defer></script>
 <script src="/assets/giscus.js" defer></script>
 </body></html>
