@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ordinary instructions, examples, and the AI family.">
+<title>Can a machine learn from a bowl of fruit? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/00-rules-and-learning/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Can a machine learn from a bowl of fruit?">
+<meta property="og:description" content="Ordinary instructions, examples, and the AI family.">
+<meta property="og:url" content="https://blog.arunmalik.dev/series/ai-kitchen/00-rules-and-learning/">
+<meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/00-rules-and-learning.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/00-rules-and-learning.png">
+<meta name="author" content="Arun Malik">
+<meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
+<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Can a machine learn from a bowl of fruit?", "description": "Ordinary instructions, examples, and the AI family.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/00-rules-and-learning/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/00-rules-and-learning.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+</head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="kitchen-site-header">
+<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
+<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
+<a href="/about/">About</a><a href="/contact/">Contact</a>
+<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
+</div></nav></header>
+<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
+<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
+<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-start-with-a-rule">Start with a rule</a><a href="#section-let-examples-change-the-sorter">Let examples change the sorter</a><a href="#section-where-ai-fits">Where AI fits</a><a href="#section-a-small-question-not-a-magic-machine">A small question, not a magic machine</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="4">
+<div id="series-header"></div>
+<div class="eyebrow">CHAPTER 01 / 16 · Choose rules or learning</div>
+<h1>Can a machine learn from a bowl of fruit?</h1>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><circle cx="54" cy="35" r="7" class="sage"/><circle cx="108" cy="82" r="11" class="rust"/><circle cx="162" cy="129" r="15" class="gold"/><circle cx="216" cy="66" r="7" class="sage"/><circle cx="270" cy="113" r="11" class="rust"/><circle cx="324" cy="50" r="15" class="gold"/><circle cx="378" cy="97" r="7" class="sage"/><circle cx="432" cy="144" r="11" class="rust"/><circle cx="486" cy="81" r="15" class="gold"/><circle cx="540" cy="128" r="7" class="sage"/><circle cx="594" cy="65" r="11" class="rust"/><circle cx="648" cy="112" r="15" class="gold"/><circle cx="702" cy="49" r="7" class="sage"/><path d="M20 130 Q360 15 760 70" class="accent-wire"/></g></svg></div>
+<div class="prereqs">Start here. No coding or machine-learning background assumed.</div><div class="lesson-body article-content">
+<p>A timer does exactly what you set it to do. A fruit-sorting machine has a different problem: the next apple will not look exactly like the last one. A bruise moves. The light changes. Someone puts a pear in the bowl.</p>
+<p>How could we tell a computer what to do without writing a separate instruction for every fruit?</p>
+<h2 id="section-start-with-a-rule">Start with a rule</h2>
+<p><dfn data-needs="" id="programmed-rule">A programmed rule</dfn> is an instruction a person writes for a computer to follow. If the timer reaches zero, ring the bell. The computer does not need to learn that rule from photographs of timers.</p>
+<p>We can write rules for fruit too: put every red object in this basket. It works until a red pepper arrives or a green apple needs sorting. The rule is doing what we asked. Our description of the task was too simple.</p>
+<figure data-diagram="rules" id="visual-rules"><div class="diagram-stage"><svg aria-labelledby="rules-title rules-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="rules-title">Rules</title><desc id="rules-desc">A red-object rule can sort by one visible property. It does not learn what makes an apple.</desc><g transform="translate(77 48)"><path class="rust" d="M0 -11 C-22 -26 -29 5 -14 18 Q0 27 14 18 C29 5 22 -26 0 -11Z"></path><path class="wire" d="M0 -12 q-2 -11 7 -15"></path></g><g transform="translate(180 48)"><path class="gold" d="M0 -16 C-10 -17 -5 -5 -14 6 C-24 25 24 25 14 6 C5 -5 10 -17 0 -16Z"></path><path class="wire" d="M0 -12 q-2 -11 7 -15"></path></g><g transform="translate(283 48)"><path class="rust" d="M0 -11 C-22 -26 -29 5 -14 18 Q0 27 14 18 C29 5 22 -26 0 -11Z"></path><path class="wire" d="M0 -12 q-2 -11 7 -15"></path></g><path class="wire" d="M77 80 Q77 114 154 124 m-7 -8 l7 8 -10 2"></path><path class="wire" d="M283 80 Q283 114 206 124 m7 -8 l-7 8 10 2"></path><g transform="translate(180 127)"><path class="sage" d="M-57 0 Q-47 52 0 52 Q47 52 57 0Z"></path><path class="wire" d="M-57 0 Q0 13 57 0"></path><text text-anchor="middle" x="0" y="78">A rule chooses a basket</text></g></svg></div><figcaption>A red-object rule can sort by one visible property. It does not learn what makes an apple.</figcaption></figure>
+<p>Rules remain useful. A cafe should calculate a bill with arithmetic, not ask a language model to guess the total. Using AI somewhere in an application does not mean replacing all its ordinary code.</p>
+<h2 id="section-let-examples-change-the-sorter">Let examples change the sorter</h2>
+<p><dfn data-needs="programmed-rule" id="machine-learning">Machine learning</dfn> is a way to build a model by adjusting it using examples. Instead of spelling out every visible detail of an apple, we provide examples and a learning procedure. The procedure changes the model so its answers better match the task.</p>
+<p>Imagine trying several sorting boundaries on a drawing of fruit. Move the boundary, count the mistakes, and adjust it again. That is a small picture of learning from data. Real methods use different ways to make those adjustments, and some never draw a boundary at all.</p>
+<p>A <dfn data-needs="machine-learning" id="pattern">pattern</dfn> is a relationship that recurs in examples. Roundness might help distinguish one kind of fruit from another. But the machine might also notice the background cloth. If every apple was photographed on a blue cloth, it could learn the wrong shortcut.</p>
+<p>Learning means a useful mathematical change, not a machine having a childhood or deciding what fruit means.</p>
+<h2 id="section-where-ai-fits">Where AI fits</h2>
+<p><dfn data-needs="programmed-rule machine-learning" id="ai">Artificial intelligence, or AI,</dfn> is a broad field concerned with making computers perform tasks such as recognizing patterns, using language, or planning actions. Some approaches use human-written rules. Others learn from data.</p>
+<p>Think of AI as a shelf label, not a particular appliance. Machine learning belongs on that shelf, but the shelf holds other approaches too. A program can combine them.</p>
+<figure data-diagram="umbrella" id="visual-umbrella"><div class="diagram-stage"><svg aria-labelledby="umbrella-title umbrella-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="umbrella-title">Umbrella</title><desc id="umbrella-desc">Nested families: deep learning belongs within machine learning, which belongs within AI. The unfilled space matters.</desc><rect class="blue" height="203" rx="8" width="330" x="15" y="12"></rect><text text-anchor="middle" x="180" y="42">AI</text><rect class="sage" height="142" rx="8" width="276" x="42" y="58"></rect><text text-anchor="middle" x="180" y="88">Machine learning</text><rect class="gold" height="74" rx="8" width="200" x="80" y="106"></rect><text text-anchor="middle" x="180" y="148">Deep learning</text></svg></div><figcaption>Nested families: deep learning belongs within machine learning, which belongs within AI. The unfilled space matters.</figcaption></figure>
+<p><dfn data-needs="machine-learning" id="deep-learning">Deep learning</dfn> is a kind of machine learning that uses neural networks with multiple processing layers. Each layer changes a numerical representation before passing it onward. We will build the idea of a layer in <a href="/series/ai-kitchen/04-neural-networks/">chapter 5</a>. For now, keep the nesting: deep learning is part of machine learning, which is part of AI.</p>
+<p>These are overlapping families of methods, not three inventions that took turns making the previous one useless.</p>
+<h2 id="section-a-small-question-not-a-magic-machine">A small question, not a magic machine</h2>
+<p>Our first task will be simple: estimate how long a fictional cafe takes to prepare an order. We will use made-up examples so we can see every number. Later, the cafe will gain a recipe assistant. We will separate what it can say from what it is allowed to do.</p>
+<p>This guide is a <strong>core map</strong>, not an encyclopedia of AI. The path covers learning, neural networks, language models, retrieval, tools, agents, harnesses, evaluation, and operation. It leaves robotics, advanced mathematics, and specialist research branches for another day. You need curiosity and ordinary arithmetic, not coding experience.</p>
+<details><summary>A tiny observation: which task needs learning?</summary><p>A timer ringing at zero can use a rule. Recognizing fruit in varied photographs might benefit from learning. A cafe can use both in the same application. Choosing the simplest suitable method is part of the work.</p></details></div>
+<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/">Back to the guide</a><a href="/series/ai-kitchen/01-data-and-examples/">Next: Write useful observations</a></nav></article></main>
+<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</footer>
+
+<script src="/series/series-data.js" defer></script>
+<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/search.js" defer></script>
+<script src="/assets/nav-active.js" defer></script>
+<script src="/series/series-nav.js" defer></script>
+<script src="/assets/action-bar.js" defer></script>
+<script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/giscus.js" defer></script>
+</body></html>

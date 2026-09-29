@@ -4,6 +4,243 @@
 // URLs can be absolute (/posts/slug/) or relative to /series/ (/series/id/slug/).
 
 const SERIES_DATA = [
+{
+  "id": "ai-kitchen",
+  "title": "AI Kitchen: from first principles",
+  "description": "Sixteen chapters on data, learning, models, retrieval, tools, agents, evaluation, and operation, with 168 linked concepts and original teaching pictures.",
+  "status": "complete",
+  "tags": [
+    "Series",
+    "AI",
+    "Foundations"
+  ],
+  "posts": [
+    {
+      "slug": "00-rules-and-learning",
+      "url": "/series/ai-kitchen/00-rules-and-learning/",
+      "title": "Can a machine learn from a bowl of fruit?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Ordinary instructions, examples, and the AI family.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "01-data-and-examples",
+      "url": "/series/ai-kitchen/01-data-and-examples/",
+      "title": "What counts as an example?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Data, features, targets, representation, and responsible collection.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "02-learning-tasks",
+      "url": "/series/ai-kitchen/02-learning-tasks/",
+      "title": "What kind of answer are we asking for?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Categories, quantities, groups, and reward-driven actions.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "03-models-and-training",
+      "url": "/series/ai-kitchen/03-models-and-training/",
+      "title": "How does a wrong guess become a better one?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Models, parameters, loss, optimization, and training.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "04-neural-networks",
+      "url": "/series/ai-kitchen/04-neural-networks/",
+      "title": "Why build a network of little calculators?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Units, activations, layers, architecture, and backpropagation.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "05-generalization",
+      "url": "/series/ai-kitchen/05-generalization/",
+      "title": "Did it learn the task or memorize the cards?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Data splits, generalization, overfitting, and leakage.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "06-tokens-and-embeddings",
+      "url": "/series/ai-kitchen/06-tokens-and-embeddings/",
+      "title": "How does a word become numbers?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Vectors, tokens, identifiers, and learned embeddings.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "07-attention-and-transformers",
+      "url": "/series/ai-kitchen/07-attention-and-transformers/",
+      "title": "How does a model connect words across a sentence?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Order, attention, transformer blocks, and generation boundaries.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "08-foundation-models",
+      "url": "/series/ai-kitchen/08-foundation-models/",
+      "title": "How can one model help with many jobs?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Foundation models, training stages, modalities, and diffusion.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "09-generating-answers",
+      "url": "/series/ai-kitchen/09-generating-answers/",
+      "title": "Why can the same question get a different answer?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Context, probabilities, sampling, temperature, and uncertainty.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "10-retrieval-and-memory",
+      "url": "/series/ai-kitchen/10-retrieval-and-memory/",
+      "title": "How does the assistant find today's recipe?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Chunks, indexes, search, RAG, memory, and context assembly.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "11-tools-and-actions",
+      "url": "/series/ai-kitchen/11-tools-and-actions/",
+      "title": "How can words cause an action?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "APIs, schemas, tool calls, MCP, and reusable skills.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "12-agent-loops",
+      "url": "/series/ai-kitchen/12-agent-loops/",
+      "title": "When does an assistant become an agent?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Applications, workflows, agent loops, state, and recovery.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "13-agent-harnesses",
+      "url": "/series/ai-kitchen/13-agent-harnesses/",
+      "title": "What keeps the agent inside the kitchen?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Harnesses, context management, permissions, limits, and traces.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "14-evaluation",
+      "url": "/series/ai-kitchen/14-evaluation/",
+      "title": "How do we know it helped?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "Evaluation cases, rubrics, tests, judges, and meaningful fractions.",
+      "references": [],
+      "published": true
+    },
+    {
+      "slug": "15-operating-the-system",
+      "url": "/series/ai-kitchen/15-operating-the-system/",
+      "title": "What does the whole cafe actually need?",
+      "date": "2026-09-28",
+      "tags": [
+        "Series",
+        "AI",
+        "Foundations"
+      ],
+      "excerpt": "A connected task, deployment, resources, caching, drift, and privacy.",
+      "references": [],
+      "published": true
+    }
+  ]
+},
   {
     id: "strategic-hitl",
     title: "Strategic HITL for Production AI Agents",

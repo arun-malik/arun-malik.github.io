@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Categories, quantities, groups, and reward-driven actions.">
+<title>What kind of answer are we asking for? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/02-learning-tasks/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What kind of answer are we asking for?">
+<meta property="og:description" content="Categories, quantities, groups, and reward-driven actions.">
+<meta property="og:url" content="https://blog.arunmalik.dev/series/ai-kitchen/02-learning-tasks/">
+<meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/02-learning-tasks.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/02-learning-tasks.png">
+<meta name="author" content="Arun Malik">
+<meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
+<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "What kind of answer are we asking for?", "description": "Categories, quantities, groups, and reward-driven actions.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/02-learning-tasks/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/02-learning-tasks.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+</head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="kitchen-site-header">
+<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
+<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
+<a href="/about/">About</a><a href="/contact/">Contact</a>
+<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
+</div></nav></header>
+<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
+<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
+<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-learning-with-recorded-answers">Learning with recorded answers</a><a href="#section-finding-groups-without-an-answer-sheet">Finding groups without an answer sheet</a><a href="#section-learning-from-what-happens-after-an-action">Learning from what happens after an action</a><a href="#section-these-are-not-three-rungs-on-a-ladder">These are not three rungs on a ladder</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="4">
+<div id="series-header"></div>
+<div class="eyebrow">CHAPTER 03 / 16 · Choose a learning task</div>
+<h1>What kind of answer are we asking for?</h1>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 4 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><circle cx="54" cy="67" r="7" class="sage"/><circle cx="108" cy="114" r="11" class="rust"/><circle cx="162" cy="51" r="15" class="gold"/><circle cx="216" cy="98" r="7" class="sage"/><circle cx="270" cy="35" r="11" class="rust"/><circle cx="324" cy="82" r="15" class="gold"/><circle cx="378" cy="129" r="7" class="sage"/><circle cx="432" cy="66" r="11" class="rust"/><circle cx="486" cy="113" r="15" class="gold"/><circle cx="540" cy="50" r="7" class="sage"/><circle cx="594" cy="97" r="11" class="rust"/><circle cx="648" cy="144" r="15" class="gold"/><circle cx="702" cy="81" r="7" class="sage"/><path d="M20 114 Q360 15 760 102" class="accent-wire"/></g></svg></div>
+<div class="prereqs">Builds on <a href="/series/ai-kitchen/01-data-and-examples/">chapter 2</a>. Specific dependencies are in the <a href="/series/ai-kitchen/concepts/#chapter-3">concept map</a>.</div><div class="lesson-body article-content">
+<p>“Help with these orders” is too vague. Do we want a category, a number, a useful grouping, or a way to choose actions? Different questions lead to different learning problems.</p>
+<h2 id="section-learning-with-recorded-answers">Learning with recorded answers</h2>
+<p><dfn data-needs="feature label" id="supervised-learning">Supervised learning</dfn> learns from examples that include input features and recorded targets. The learning procedure compares a prediction with the attached answer and uses the difference to improve the model.</p>
+<p>It resembles practicing with an answer sheet, although no person needs to stand beside the computer during every calculation. Labels can come from measurements or software as well as people.</p>
+<p><dfn data-needs="supervised-learning" id="classification">Classification</dfn> predicts membership in categories. A fruit sorter might choose apple, pear, or orange. Some classifiers first produce scores or probabilities for the categories, then use a decision rule to choose one. A printed category can hide uncertainty.</p>
+<p><dfn data-needs="supervised-learning" id="regression">Regression</dfn> predicts a numerical quantity. Estimating 8 minutes of preparation time is regression. The number is an estimate, not a promise that the sandwich will be ready at exactly that instant.</p>
+<figure data-diagram="tasks" id="visual-tasks"><div class="diagram-stage"><svg aria-labelledby="tasks-title tasks-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="tasks-title">Tasks</title><desc id="tasks-desc">Classification asks for a category. Regression asks for a numerical quantity. The same inputs can support different tasks.</desc><g transform="translate(180 38)"><path class="rust" d="M0 -11 C-22 -26 -29 5 -14 18 Q0 27 14 18 C29 5 22 -26 0 -11Z"></path><path class="wire" d="M0 -12 q-2 -11 7 -15"></path></g><path class="wire" d="M180 65 v32 m-5 -6 l5 6 5 -6"></path><path class="wire" d="M180 97 H83 V121 M180 97 H277 V121"></path><rect class="sage" height="55" rx="8" width="126" x="20" y="125"></rect><text text-anchor="middle" x="83" y="159">Apple</text><rect class="gold" height="55" rx="8" width="126" x="214" y="125"></rect><text text-anchor="middle" x="277" y="159">8 minutes</text><text text-anchor="middle" x="83" y="210">Category</text><text text-anchor="middle" x="277" y="210">Quantity</text></svg></div><figcaption>Classification asks for a category. Regression asks for a numerical quantity. The same inputs can support different tasks.</figcaption></figure>
+<p>If the output is “short wait” or “long wait,” we have turned waiting time into classification. If it is minutes, it is regression. The same receipts can support either question, but we must define the target accordingly.</p>
+<h2 id="section-finding-groups-without-an-answer-sheet">Finding groups without an answer sheet</h2>
+<p><dfn data-needs="dataset feature" id="unsupervised-learning">Unsupervised learning</dfn> looks for structure in data without a supplied target answer for each example. One method is <dfn data-needs="unsupervised-learning" id="clustering">clustering</dfn>, which groups examples according to a chosen notion of similarity.</p>
+<p>Put orders with similar contents near each other. We might discover a group of small drink orders and another of large lunch orders. The method finds groupings; a person interprets them. It has not proved that those are the only meaningful groups, or that every customer in one group wants the same thing.</p>
+<figure data-diagram="clusters" id="visual-clusters"><div class="diagram-stage"><svg aria-labelledby="clusters-title clusters-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="clusters-title">Clusters</title><desc id="clusters-desc">These invented points are grouped by proximity. A clustering method does not know the human name or purpose of a group.</desc><ellipse class="sage" cx="94" cy="105" rx="67" ry="75"></ellipse><ellipse class="gold" cx="267" cy="128" rx="67" ry="62"></ellipse><circle class="rust" cx="70" cy="65" r="8"></circle><circle class="rust" cx="109" cy="84" r="8"></circle><circle class="rust" cx="79" cy="118" r="8"></circle><circle class="rust" cx="112" cy="149" r="8"></circle><circle class="rust" cx="241" cy="105" r="8"></circle><circle class="rust" cx="291" cy="120" r="8"></circle><circle class="rust" cx="259" cy="158" r="8"></circle><text text-anchor="middle" x="180" y="221">Groups need interpretation</text></svg></div><figcaption>These invented points are grouped by proximity. A clustering method does not know the human name or purpose of a group.</figcaption></figure>
+<h2 id="section-learning-from-what-happens-after-an-action">Learning from what happens after an action</h2>
+<p><dfn data-needs="machine-learning" id="reinforcement-learning">Reinforcement learning</dfn> learns how to choose actions through feedback from an environment. A simulated cafe might try different preparation schedules, observe the resulting queues, and improve its choices over many trials.</p>
+<p>A <dfn data-needs="reinforcement-learning" id="reward">reward</dfn> is the numerical feedback used to encourage outcomes during that learning. A <dfn data-needs="reward" id="policy">policy</dfn> is a rule or model for choosing actions from the current situation. The policy might choose which waiting order to prepare next.</p>
+<p>The reward is like a scoreboard. If the scoreboard only rewards finishing many orders, the policy might keep postponing large ones. Writing a good score is part of defining the task. Getting more reward does not automatically mean behaving helpfully or fairly.</p>
+<p>The learning trials should happen in an appropriate controlled setting. A useful explanation of reinforcement learning is not permission to experiment on real customers.</p>
+<figure data-diagram="reward-loop" id="visual-reward-loop"><ol class="flow"><li><strong>Situation and policy</strong><span>A queue is observed; the policy chooses which order goes next.</span></li><li><strong>Environment changes</strong><span>The simulated preparation step changes the queue.</span></li><li><strong>Reward and learning</strong><span>Feedback helps update the policy over trials. Check for neglected goals.</span></li></ol><figcaption>A simulated scheduling task connects actions to feedback. A reward is a chosen learning signal, not a certificate of good behavior.</figcaption></figure>
+<h2 id="section-these-are-not-three-rungs-on-a-ladder">These are not three rungs on a ladder</h2>
+<p>A system can combine several approaches. It might classify an order, predict its preparation time, and follow a human-written scheduling rule. It does not need reinforcement learning merely because that name sounds more advanced.</p>
+<p>Later we will meet a way to create training targets from text itself. That lets a model practice without a person labeling every next piece of a sentence. The important question stays the same: <strong>where does the feedback come from?</strong></p>
+<details><summary>Choose the task: group similar orders without naming groups first</summary><p>Clustering is a reasonable candidate. Choosing between already named “drink” and “meal” categories from labeled examples would instead be classification.</p></details></div>
+<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/01-data-and-examples/">Previous: What counts as an example?</a><a href="/series/ai-kitchen/03-models-and-training/">Next: Improve a guess</a></nav></article></main>
+<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</footer>
+
+<script src="/series/series-data.js" defer></script>
+<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/search.js" defer></script>
+<script src="/assets/nav-active.js" defer></script>
+<script src="/series/series-nav.js" defer></script>
+<script src="/assets/action-bar.js" defer></script>
+<script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/giscus.js" defer></script>
+</body></html>

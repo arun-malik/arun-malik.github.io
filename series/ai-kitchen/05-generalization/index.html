@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Data splits, generalization, overfitting, and leakage.">
+<title>Did it learn the task or memorize the cards? - Arun Malik</title><link rel="stylesheet" href="/assets/ai-kitchen.css">
+<link rel="canonical" href="https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Did it learn the task or memorize the cards?">
+<meta property="og:description" content="Data splits, generalization, overfitting, and leakage.">
+<meta property="og:url" content="https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/">
+<meta property="og:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/05-generalization.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.arunmalik.dev/assets/og/ai-kitchen/05-generalization.png">
+<meta name="author" content="Arun Malik">
+<meta property="article:published_time" content="2026-09-28T23:33:56-07:00">
+<meta property="article:modified_time" content="2026-09-28T23:33:56-07:00">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Did it learn the task or memorize the cards?", "description": "Data splits, generalization, overfitting, and leakage.", "datePublished": "2026-09-28T23:33:56-07:00", "dateModified": "2026-09-28T23:33:56-07:00", "url": "https://blog.arunmalik.dev/series/ai-kitchen/05-generalization/", "image": "https://blog.arunmalik.dev/assets/og/ai-kitchen/05-generalization.png", "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}, "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Kitchen: from first principles", "url": "https://blog.arunmalik.dev/series/ai-kitchen/"}, "keywords": ["Series", "AI", "Foundations"]}</script>
+</head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="kitchen-site-header">
+<nav class="site-nav" aria-label="Main navigation"><a class="site-name" href="/">Arun Malik</a>
+<div class="nav-links"><a href="/posts/">Writing</a><a href="/series/">Series</a>
+<a href="/about/">About</a><a href="/contact/">Contact</a>
+<button class="theme-btn" id="themeToggle" type="button" aria-label="Switch color theme" hidden>Theme</button>
+</div></nav></header>
+<nav class="masthead" aria-label="Guide navigation"><a href="/series/ai-kitchen/">AI KITCHEN / FOUNDATIONS</a>
+<a href="/series/ai-kitchen/concepts/">Core concept map</a><span class="status">Complete · 16 of 16 chapters</span></nav>
+<main class="layout" id="main"><nav class="toc" aria-label="In this chapter"><strong>IN THIS CHAPTER</strong><a href="#section-keep-some-examples-out-of-practice">Keep some examples out of practice</a><a href="#section-recognize-two-different-failures">Recognize two different failures</a><a href="#section-stop-answers-sneaking-across-the-boundary">Stop answers sneaking across the boundary</a><a href="#section-restraining-the-fit">Restraining the fit</a><a class="back" href="/series/ai-kitchen/">All sixteen chapters</a></nav><article data-reading-minutes="3">
+<div id="series-header"></div>
+<div class="eyebrow">CHAPTER 06 / 16 · Check learning on new cases</div>
+<h1>Did it learn the task or memorize the cards?</h1>
+<div class="article-meta"><span class="article-date"><time datetime="2026-09-28">Sep 28, 2026</time></span><span class="reading-time"> · 3 min read</span></div><p class="kitchen-tags">Series · AI · Foundations</p><div class="hero post-hero-banner" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185"><g class="arrive"><path d="M35 35 Q390 42 709 145" class="wire"/><path d="M35 90 Q390 42 709 90" class="wire"/><path d="M35 145 Q390 42 709 35" class="wire"/><path d="M120 35 Q390 42 680 145" class="wire"/><path d="M120 90 Q390 42 680 90" class="wire"/><path d="M120 145 Q390 42 680 35" class="wire"/><path d="M205 35 Q390 42 652 145" class="wire"/><path d="M205 90 Q390 42 652 90" class="wire"/><path d="M205 145 Q390 42 652 35" class="wire"/><rect x="290" y="42" width="28" height="104" rx="2" class="gold"/><rect x="344" y="42" width="28" height="104" rx="2" class="sage"/><rect x="398" y="42" width="28" height="104" rx="2" class="blue"/><rect x="452" y="42" width="28" height="104" rx="2" class="gold"/></g></svg></div>
+<div class="prereqs">Builds on <a href="/series/ai-kitchen/04-neural-networks/">chapter 5</a>. Specific dependencies are in the <a href="/series/ai-kitchen/concepts/#chapter-6">concept map</a>.</div><div class="lesson-body article-content">
+<p>A student who has seen every answer on tomorrow's quiz may score perfectly. That result tells us little about the next quiz. A model can fool us in much the same way.</p>
+<h2 id="section-keep-some-examples-out-of-practice">Keep some examples out of practice</h2>
+<p>A <dfn data-needs="dataset training" id="training-set">training set</dfn> is the collection used to fit model parameters. A <dfn data-needs="training-set hyperparameter" id="validation-set">validation set</dfn> is separate data used to guide development choices, such as the learning rate or when to stop training.</p>
+<p>A <dfn data-needs="validation-set" id="test-set">test set</dfn> is held-out data reserved for a less biased final check after those choices. All three are collections of examples, but they have different jobs.</p>
+<figure data-diagram="split" id="visual-split"><div class="diagram-stage"><svg aria-labelledby="split-title split-desc" role="img" viewbox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><title id="split-title">Split</title><desc id="split-desc">Separate training, validation, and test collections before development choices can leak information. Related examples may need to stay together.</desc><rect class="sage" height="76" rx="2" width="96" x="13" y="48"></rect><path class="wire" d="M25 66 h60 M25 79 h48"></path><text class="fine" text-anchor="middle" x="61" y="107">Practice</text><path class="wire" d="M13 48 L61 83 L109 48"></path><rect class="gold" height="76" rx="2" width="96" x="132" y="48"></rect><path class="wire" d="M144 66 h60 M144 79 h48"></path><text class="fine" text-anchor="middle" x="180" y="107">Rehearsal</text><path class="wire" d="M132 48 L180 83 L228 48"></path><rect class="blue" height="76" rx="2" width="96" x="251" y="48"></rect><path class="wire" d="M263 66 h60 M263 79 h48"></path><text class="fine" text-anchor="middle" x="299" y="107">Final check</text><path class="wire" d="M251 48 L299 83 L347 48"></path></svg></div><ol class="flow"><li><strong>Use different jobs</strong><span>Fit on practice examples. Choose settings with rehearsal examples. Reserve the final check.</span></li></ol><figcaption>Separate training, validation, and test collections before development choices can leak information. Related examples may need to stay together.</figcaption></figure>
+<p>Imagine three envelopes: practice cards, rehearsal cards, and sealed quiz cards. Repeatedly opening the sealed envelope to choose changes turns it into another rehearsal envelope. Its score no longer gives the independent check we wanted.</p>
+<h2 id="section-recognize-two-different-failures">Recognize two different failures</h2>
+<p><dfn data-needs="training-set test-set" id="generalization">Generalization</dfn> is a model's ability to perform usefully on new examples beyond those used to fit it. New does not mean arbitrary: a model trained on cafe orders should not be expected to predict aircraft repairs.</p>
+<p><dfn data-needs="generalization" id="overfitting">Overfitting</dfn> happens when a model fits peculiarities of training data that do not carry over well to new cases. Imagine a wiggly line that visits every practice dot but swings wildly between them. Perfect practice results can accompany poor predictions.</p>
+<p><dfn data-needs="generalization" id="underfitting">Underfitting</dfn> happens when the model or training fails to capture enough useful structure, even in the practice data. A constant guess for every order may miss the basic relationship between order size and preparation time.</p>
+<figure data-diagram="fit" id="visual-fit"><div class="diagram-stage"><svg aria-labelledby="fit-title fit-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="fit-title">Fit</title><desc id="fit-desc">Illustrative fits only: a flat guess misses the trend; a wiggly fit can chase individual examples. Held-out results decide what generalizes.</desc><path class="wire" d="M30 185 H336 M30 185 V22"></path><circle class="sage" cx="55" cy="156" r="5"></circle><circle class="sage" cx="110" cy="132" r="5"></circle><circle class="sage" cx="166" cy="105" r="5"></circle><circle class="sage" cx="220" cy="89" r="5"></circle><circle class="sage" cx="295" cy="46" r="5"></circle><path class="wire" d="M38 123 H331"></path><path class="accent-wire" d="M40 167 L321 38"></path><path class="wire" d="M40 185 C55 35 84 230 110 132 S151 20 166 105 S205 180 220 89 S269 0 295 46"></path><text text-anchor="middle" x="180" y="220">Simple trend or needless wiggles?</text></svg></div><figcaption>Illustrative fits only: a flat guess misses the trend; a wiggly fit can chase individual examples. Held-out results decide what generalizes.</figcaption></figure>
+<p>We compare training and held-out results, inspect mistakes, and ask whether the split resembles the intended use. Extra training is not always the answer.</p>
+<h2 id="section-stop-answers-sneaking-across-the-boundary">Stop answers sneaking across the boundary</h2>
+<p><dfn data-needs="feature test-set" id="leakage">Data leakage</dfn> occurs when information unavailable at prediction time influences model development or evaluation in a misleading way. Giving the model an order's completion time as a clue is one obvious leak.</p>
+<p>Less obvious: put near-duplicate photographs of the same fruit in both practice and test sets. Or compute a data-cleaning setting using the whole dataset before separating the test examples. The test has helped the system prepare for itself.</p>
+<p>For orders collected over time, a check using later orders can be more realistic than randomly mixing dates. Related examples may need to stay together. There is no single split recipe that suits every task.</p>
+<figure data-diagram="leak" id="visual-leak"><div class="diagram-stage"><svg aria-labelledby="leak-title leak-desc" role="img" viewbox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><title id="leak-title">Leak</title><desc id="leak-desc">A test example that influences fitting or model choices contaminates an independent check. Duplicate cases and preprocessing can leak information too.</desc><rect class="sage" height="76" rx="2" width="96" x="15" y="55"></rect><path class="wire" d="M27 73 h60 M27 86 h48"></path><text class="fine" text-anchor="middle" x="63" y="114">Practice</text><rect class="blue" height="76" rx="2" width="96" x="251" y="55"></rect><path class="wire" d="M263 73 h60 M263 86 h48"></path><text class="fine" text-anchor="middle" x="299" y="114">Final test</text><path class="accent-wire" d="M180 51 V164"></path><path class="wire" d="M250 94 H115 m8 -6 l-8 6 8 6"></path><text class="fine" text-anchor="middle" x="180" y="39">Keep the boundary</text><text class="fine" text-anchor="middle" x="180" y="190">Answer information crossing back</text></svg></div><figcaption>A test example that influences fitting or model choices contaminates an independent check. Duplicate cases and preprocessing can leak information too.</figcaption></figure>
+<h2 id="section-restraining-the-fit">Restraining the fit</h2>
+<p><dfn data-needs="overfitting loss" id="regularization">Regularization</dfn> is a family of techniques that discourages some kinds of overly complex fitting. One approach adds a penalty for large weights. It makes the optimizer balance matching examples against the added penalty.</p>
+<p>Like preferring a simple recipe adjustment over a separate exception for every customer, this can encourage patterns that travel better. It is not a guarantee. Stopping when validation results stop improving, improving data coverage, or choosing a simpler model may also help.</p>
+<details><summary>The practice score improves while the rehearsal score worsens. Celebrate?</summary><p>Pause first. It may be overfitting. Check the examples and learning curves, consider an earlier saved model, and avoid choosing the answer by repeatedly peeking at the final test set.</p></details></div>
+<nav class="chapter-nav" aria-label="Chapter navigation"><a href="/series/ai-kitchen/04-neural-networks/">Previous: Why build a network of little calculators?</a><a href="/series/ai-kitchen/06-tokens-and-embeddings/">Next: Represent information numerically</a></nav></article></main>
+<footer class="footer">AI Kitchen: a first-principles learning guide. Original illustrative drawings and made-up examples.
+No account, model service, or code lab is required. This guide makes no model calls.</footer>
+
+<script src="/series/series-data.js" defer></script>
+<script src="/assets/ai-kitchen.js" defer></script>
+<script src="/assets/search.js" defer></script>
+<script src="/assets/nav-active.js" defer></script>
+<script src="/series/series-nav.js" defer></script>
+<script src="/assets/action-bar.js" defer></script>
+<script src="/assets/article-enhance.js" defer></script>
+<script src="/assets/giscus.js" defer></script>
+</body></html>
