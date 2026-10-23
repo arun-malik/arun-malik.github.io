@@ -82,15 +82,10 @@
         }
         section h2 .icon { font-size: 1.25rem; }
 
-        /* Research cards */
-        .research-card {
-            background: var(--bg-secondary); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
-            transition: border-color 0.2s;
-        }
-        .research-card:hover { border-color: var(--accent); }
-        .research-card h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.375rem; }
-        .research-card p { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 0; line-height: 1.5; }
+        /* Focus list */
+        .focus-list { list-style: none; display: grid; gap: 0.625rem; }
+        .focus-list li { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; }
+        .focus-list strong { color: var(--text); font-weight: 600; }
 
         /* Publications */
         .pub-item { margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--border); }
@@ -116,12 +111,7 @@
         .patent-item .patent-meta a:hover { text-decoration: underline; }
 
         /* Interests list */
-        .interest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
-        .interest-item {
-            font-size: 0.8125rem; padding: 0.5rem 0.75rem;
-            background: var(--bg-secondary); border-radius: 6px;
-            border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem;
-        }
+        .interests { margin-top: 1rem; font-size: 0.8125rem; color: var(--text-secondary); }
 
         footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
         footer p { font-size: 0.8125rem; color: var(--text-secondary); }
@@ -132,7 +122,6 @@
         @media (max-width: 640px) {
             .bio h1 { font-size: 1.5rem; }
             .bio-photo { width: 110px; height: 110px; }
-            .interest-grid { grid-template-columns: 1fr; }
             .timeline-item { flex-direction: column; gap: 0.25rem; }
             .timeline-year { min-width: auto; }
         }
@@ -202,28 +191,13 @@
             <!-- Areas of Focus -->
             <section>
                 <h2><span class="icon">🎯</span> Areas of Focus</h2>
-                <div class="research-card">
-                    <h3>🔐 Cloud Security and Governance</h3>
-                    <p>Zero Trust architectures, identity-driven access control, compliance automation, and governance at scale across Azure environments. Designing security frameworks that protect hyperscale infrastructure without impeding engineering velocity.</p>
-                </div>
-                <div class="research-card">
-                    <h3>🤖 Autonomous Network Operations</h3>
-                    <p>Designing multi-agent AI systems that autonomously resolve network incidents at hyperscale. Achieved 90%+ autonomous resolution rate with zero critical safety incidents through progressive autonomy and layered safety frameworks.</p>
-                </div>
-                <div class="research-card">
-                    <h3>⚡ AI Agent Architectures</h3>
-                    <p>Building skills-based tool architectures for AI agents in production. Focus on composability, governance, and safety in environments where autonomous actions affect global-scale infrastructure.</p>
-                </div>
-                <div class="research-card">
-                    <h3>📈 Evolution of AIOps</h3>
-                    <p>Mapping the progression from reactive operations through rule-based automation to autonomous AI-driven infrastructure management. Developing maturity models and readiness frameworks for organizations adopting autonomous operations.</p>
-                </div>
-                <div class="interest-grid" style="margin-top: 1.25rem;">
-                    <div class="interest-item">🧠 LLM Tool-Use Patterns</div>
-                    <div class="interest-item">🏗️ Distributed Systems</div>
-                    <div class="interest-item">🛡️ SRE & Reliability</div>
-                    <div class="interest-item">📊 Observability</div>
-                </div>
+                <ul class="focus-list">
+                    <li><strong>Cloud Security and Governance:</strong> Zero Trust, access control, and compliance at scale.</li>
+                    <li><strong>Autonomous Network Operations:</strong> Multi-agent incident resolution with layered safety.</li>
+                    <li><strong>AI Agent Architectures:</strong> Composable tools, governance, and safe production actions.</li>
+                    <li><strong>Evolution of AIOps:</strong> Maturity models for the shift from automation to autonomy.</li>
+                </ul>
+                <p class="interests">Also: LLM Tool-Use Patterns &middot; Distributed Systems &middot; SRE &amp; Reliability &middot; Observability</p>
             </section>
 
             <!-- Publications -->
