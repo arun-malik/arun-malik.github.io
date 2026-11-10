@@ -132,27 +132,27 @@
 <p>Calling every row “failed” throws away information the operator needs. Calling every row “escalate to an agent” changes the execution form without answering the recovery question.</p>
 
 <h2 id="retry">The receiving system owns part of the retry contract</h2>
-<p>The <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library discussion of idempotent APIs</a> explains how caller-provided request identifiers express retry intent. It also explains that recording the identifier and performing the mutation must be coordinated atomically. Otherwise the system can record a request without completing it, or complete the effect without recording the request.</p>
+<p>The <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/" target="_blank" rel="noopener">Amazon Builders' Library discussion of idempotent APIs</a> explains how caller-provided request identifiers express retry intent. It also explains that recording the identifier and performing the mutation must be coordinated atomically. Otherwise the system can record a request without completing it, or complete the effect without recording the request.</p>
 <p>For the fictional mailbox extension, the playbook cannot create those semantics on its own. The receiver must define whether a repeated logical submission returns the prior result, how long it remembers requests, and how callers can resolve uncertainty. If that contract is unavailable, the recovery path may require human reconciliation rather than an automatic retry.</p>
 <p>Even an idempotent request can require a fresh permission check. Idempotency concerns repeated effects; authorization concerns whether this identity may make this request now. The concepts solve different problems.</p>
 <p>A pure local function returning the same object twice, as in Part 6, tests neither distributed delivery nor persistence across a crash. It is useful evidence at a smaller boundary.</p>
 
 <h2 id="record">Record enough to support the handoff</h2>
 <p>The owner should be able to distinguish attempted collection, accepted evidence, interpretation, review, and delivery. Attach the contract and implementation versions, relevant policy decision references, and terminal reason. Keep the observation's timestamp separate from the time a model interpreted it or a report was delivered.</p>
-<p><a href="https://opentelemetry.io/docs/concepts/signals/traces/">OpenTelemetry traces</a> provide spans and parent relationships for reconstructing a request's path. That can help correlate these steps. A completed span, however, is not proof that the reported status is correct or that a recipient received the intended report. Outcome verification needs the corresponding contract evidence.</p>
+<p><a href="https://opentelemetry.io/docs/concepts/signals/traces/" target="_blank" rel="noopener">OpenTelemetry traces</a> provide spans and parent relationships for reconstructing a request's path. That can help correlate these steps. A completed span, however, is not proof that the reported status is correct or that a recipient received the intended report. Outcome verification needs the corresponding contract evidence.</p>
 <p>Retention has boundaries too. Record authorized references rather than copying every input into a log. Protect evidence and approval records according to their sensitivity. A reviewer who can see a failure summary need not automatically gain access to all source material.</p>
 
 <h2 id="ownership">Reopening the design is part of operating it</h2>
 <p>Assign an owner before enabling the route. That owner needs a way to disable it, inspect permitted evidence, revise the contract, and decide whether to keep the current form. A drift alert without a responsible recipient is only a message.</p>
 <p>The review may choose a new parser, a retained hybrid interpretation, or an agent-led investigation with explicitly authorized inputs and tools. It may choose no restart. None of those outcomes is a failure to progress.</p>
-<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP's authorization guidance</a> recommends checking permissions on every request and periodically reviewing permissions for unwanted expansion. That principle applies just as much to recovery as to the happy path.</p>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP's authorization guidance</a> recommends checking permissions on every request and periodically reviewing permissions for unwanted expansion. That principle applies just as much to recovery as to the happy path.</p>
 <p>The refusal to proceed is doing useful work when it tells the owner which promise no longer holds. Preserve that signal instead of hiding it behind a more flexible executor.</p>
 
 <h2 id="sources">Sources and scope</h2>
 <ol class="refs">
-  <li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Amazon Builders' Library, Making retries safe with idempotent APIs</a>: explicit retry intent and atomic handling of effects.</li>
-  <li><a href="https://opentelemetry.io/docs/concepts/signals/traces/">OpenTelemetry, Traces</a>: spans, context, events, and request-path reconstruction.</li>
-  <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP, Authorization Cheat Sheet</a>: least privilege, per-request checks, and permission review.</li>
+  <li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/" target="_blank" rel="noopener">Amazon Builders' Library, Making retries safe with idempotent APIs</a>: explicit retry intent and atomic handling of effects.</li>
+  <li><a href="https://opentelemetry.io/docs/concepts/signals/traces/" target="_blank" rel="noopener">OpenTelemetry, Traces</a>: spans, context, events, and request-path reconstruction.</li>
+  <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Authorization Cheat Sheet</a>: least privilege, per-request checks, and permission review.</li>
 </ol>
 <p class="refs">The mailbox, fault cases, and runbook are hypothetical. No distributed recovery system was implemented or tested for this article. The runnable example remains the side-effect-free fixture function from Part 6.</p>
 

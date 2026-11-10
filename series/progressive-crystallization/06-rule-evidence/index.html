@@ -145,7 +145,7 @@
 lab-status.test.cjs
 ce8c029622001627ac54f907447fe4acd3c4c88e334ac1ac53411db220c51f22</code></pre>
 <p>The rule assumes the producer's field meaning is correct and the supplied context is trustworthy. It cannot detect a producer that confidently reports the wrong state. It does not exercise a real collection timeout, report delivery, a model, or approval expiry. It does not establish general equivalence with an interpretation system.</p>
-<p>The <a href="https://sre.google/sre-book/testing-reliability/">Google SRE testing chapter</a> explicitly cautions that passing tests does not necessarily prove reliability. It also distinguishes unit, integration, and system tests. Our pure-function cases cover one unit. Calling them end-to-end validation would conceal precisely the boundaries we still need to examine.</p>
+<p>The <a href="https://sre.google/sre-book/testing-reliability/" target="_blank" rel="noopener">Google SRE testing chapter</a> explicitly cautions that passing tests does not necessarily prove reliability. It also distinguishes unit, integration, and system tests. Our pure-function cases cover one unit. Calling them end-to-end validation would conceal precisely the boundaries we still need to examine.</p>
 
 <h2 id="acceptance">The acceptance decision is narrower than “replace AI”</h2>
 <p>For this toy contract, acceptance means the documented fixture expectations pass, there is no runtime inference in the function, and unsupported evidence does not produce a status guess. The useful conclusion is that this explicit enum mapping can be implemented as ordinary code.</p>
@@ -155,7 +155,7 @@ ce8c029622001627ac54f907447fe4acd3c4c88e334ac1ac53411db220c51f22</code></pre>
 
 <h2 id="sources">Sources and scope</h2>
 <ol class="refs">
-  <li><a href="https://sre.google/sre-book/testing-reliability/">Alex Perry and Max Luebbe, Testing for Reliability</a>, Google SRE, Chapter 17: test levels, uncertainty under change, and limitations of passing tests.</li>
+  <li><a href="https://sre.google/sre-book/testing-reliability/" target="_blank" rel="noopener">Alex Perry and Max Luebbe, Testing for Reliability</a>, Google SRE, Chapter 17: test levels, uncertainty under change, and limitations of passing tests.</li>
   <li>The two linked source files and their named assertions are the primary evidence for the local demonstration. The recorded environment and hashes identify what was run.</li>
 </ol>
 <p class="refs">The example is original, synthetic, and nonproduction. It reports no employer implementation, internal measurement, production accuracy, or comparative savings.</p>

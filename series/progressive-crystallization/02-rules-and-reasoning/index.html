@@ -127,7 +127,7 @@
 </figure>
 
 <h2 id="names-first">Use names first, numbers second</h2>
-<p>Section III of my <a href="https://arxiv.org/html/2607.07052v1#S3">Progressive Crystallization paper, version 1</a> names agent-orchestrated, hybrid, and deterministic playbooks. Its numbering runs from Type 3 for agent orchestration to Type 1 for deterministic execution. For readers using V1, V2, and V3 as shorthand for a possible development story, the order is reversed.</p>
+<p>Section III of my <a href="https://arxiv.org/html/2607.07052v1#S3" target="_blank" rel="noopener">Progressive Crystallization paper, version 1</a> names agent-orchestrated, hybrid, and deterministic playbooks. Its numbering runs from Type 3 for agent orchestration to Type 1 for deterministic execution. For readers using V1, V2, and V3 as shorthand for a possible development story, the order is reversed.</p>
 <dl class="pc-contract">
   <dt>Agent-led</dt><dd>Paper Type 3. Sometimes called V1 in developmental shorthand.</dd>
   <dt>Hybrid</dt><dd>Paper Type 2. Sometimes called V2.</dd>
@@ -135,7 +135,7 @@
 </dl>
 <p>I use the form names throughout this series to avoid making that shorthand carry an argument it cannot support. “Type 1” is not a rating of operational maturity. “V3” is not a promise that a particular system should arrive there.</p>
 <p>The framing here also makes a deliberate distinction from a literal reading of the paper's lifecycle: investigation is one source of knowledge, not a compulsory first stage. A well-understood procedure can start deterministic. A workflow with durable interpretive needs can remain hybrid. The taxonomy is useful without assuming automatic promotion or a universal safety improvement.</p>
-<p>Anthropic's <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a> provides a related distinction. It calls systems with predefined code paths workflows, while agents let models direct their process and tools. Those definitions help describe orchestration. They do not, by themselves, distinguish a fixed workflow with a model call from one with no runtime inference. That is why the hybrid category is useful here.</p>
+<p>Anthropic's <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a> provides a related distinction. It calls systems with predefined code paths workflows, while agents let models direct their process and tools. Those definitions help describe orchestration. They do not, by themselves, distinguish a fixed workflow with a model call from one with no runtime inference. That is why the hybrid category is useful here.</p>
 
 <h2 id="scope">Draw the boundary before choosing a label</h2>
 <p>Suppose an agent-led investigation calls a reusable status checker. The checker always collects the same permitted fields and asks a model to interpret an operator note. Its outer procedure is fixed, so the checker is hybrid. The collector inside it is deterministic. The overall investigation is agent-led.</p>
@@ -161,8 +161,8 @@
 <h2 id="sources">Sources and scope</h2>
 <p class="refs">All traces above are hypothetical. No model comparison or production evaluation was performed. This article offers design distinctions, not a novelty claim or an empirical ranking of forms.</p>
 <ol class="refs">
-  <li><a href="https://arxiv.org/html/2607.07052v1#S3">Arun Malik, Progressive Crystallization, arXiv v1, Section III</a>: source for the three execution-type names and paper numbering. The series uses a nonmandatory selection model and does not reproduce the paper's operational measurements or validate its guarantees.</li>
-  <li><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic, Building effective agents</a>: “What are agents?”, “When (and when not) to use agents”, and “Combining and customizing these patterns.” Vendor architectural guidance, not evidence that the fictional designs are equally effective.</li>
+  <li><a href="https://arxiv.org/html/2607.07052v1#S3" target="_blank" rel="noopener">Arun Malik, Progressive Crystallization, arXiv v1, Section III</a>: source for the three execution-type names and paper numbering. The series uses a nonmandatory selection model and does not reproduce the paper's operational measurements or validate its guarantees.</li>
+  <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Anthropic, Building effective agents</a>: “What are agents?”, “When (and when not) to use agents”, and “Combining and customizing these patterns.” Vendor architectural guidance, not evidence that the fictional designs are equally effective.</li>
 </ol>
 
         </div>

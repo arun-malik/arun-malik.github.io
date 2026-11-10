@@ -79,9 +79,9 @@
     var popup = document.createElement('div');
     popup.className = 'share-popup';
     popup.innerHTML = '<a class="copy-link" href="#">Copy link</a>' +
-      '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl) + '" target="_blank">LinkedIn</a>' +
-      '<a href="https://twitter.com/intent/tweet?url=' + encodeURIComponent(pageUrl) + '&text=' + encodeURIComponent(pageTitle) + '" target="_blank">X / Twitter</a>' +
-      '<a href="https://wa.me/?text=' + encodeURIComponent(pageTitle + ' ' + pageUrl) + '" target="_blank">WhatsApp</a>' +
+      '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl) + '" target="_blank" rel="noopener">LinkedIn</a>' +
+      '<a href="https://twitter.com/intent/tweet?url=' + encodeURIComponent(pageUrl) + '&text=' + encodeURIComponent(pageTitle) + '" target="_blank" rel="noopener">X / Twitter</a>' +
+      '<a href="https://wa.me/?text=' + encodeURIComponent(pageTitle + ' ' + pageUrl) + '" target="_blank" rel="noopener">WhatsApp</a>' +
       '<a href="mailto:?subject=' + encodeURIComponent(pageTitle) + '&body=' + encodeURIComponent('Check this out: ' + pageUrl) + '">Email</a>';
     shareWrap.appendChild(shareBtn);
     shareWrap.appendChild(popup);
