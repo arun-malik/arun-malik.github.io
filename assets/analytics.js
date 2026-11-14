@@ -41,6 +41,7 @@
     else if (path === "/series") { pageType = "series-index"; }
     else if (parts[0] === "about") { pageType = "about"; }
     else if (parts[0] === "contact") { pageType = "contact"; }
+    else if (parts[0] === "resume") { pageType = "resume"; }
     else if (parts[0] === "posts") { pageType = "post"; slug = parts[1] || ""; }
     else if (parts[0] === "series") {
       series = parts[1] || "";
@@ -65,6 +66,31 @@
 
   var ctx = setContext();
   var isArticle = ctx.pageType === "post" || ctx.pageType === "series-post";
+
+  // Count viewer visits separately from clicks that open the viewer.
+  if (ctx.pageType === "resume") {
+    var entry = "direct_or_unknown";
+    if (document.referrer) {
+      var referrer = new URL(document.referrer);
+      entry = referrer.origin === location.origin
+        ? (/^\/about(?:\/|$)/.test(referrer.pathname) ? "about" : "site")
+        : "external";
+    }
+    tag("resume_entry", entry);
+    track("resume_view", { entry: entry });
+  }
+
+  function trackResumeAction(e) {
+    if (e.type === "auxclick" && e.button !== 1) return;
+    var a = e.target.closest && e.target.closest("a[data-resume-action]");
+    if (!a) return;
+    var action = a.getAttribute("data-resume-action");
+    if (action !== "open" && action !== "download" && action !== "pdf_open") return;
+    tag("resume_source", ctx.pageType);
+    track("resume_" + action, { from: ctx.pageType, url: a.getAttribute("href") });
+  }
+  document.addEventListener("click", trackResumeAction, true);
+  document.addEventListener("auxclick", trackResumeAction, true);
 
   // ---- 2. Reading depth (articles only) ------------------------------------
   if (isArticle) {
