@@ -64,5 +64,7 @@ no referenced URL is dead. See `/AGENTS.md` for the full checklist.
   Add `--stage` before a commit to stage the logs. Use explicit paths if unrelated
   changes exist. See `.github/skills/session-log/SKILL.md`: asset subfolders roll
   up to their parent, and logs contain session metadata, not conversations.
+  Append only new sessions; existing rows keep their name and position while
+  `last_seen` refreshes and `updates` increments.
 - Do not commit or push unless the user asks.
 - On commit, add: `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`

@@ -18,6 +18,16 @@ then open `http://localhost:8899/`.
 When you add a post, register it in `posts/index.html`, `feed.xml`, and
 `sitemap.xml`. Series membership is defined in `series/series-data.js`.
 
+Presentation decks live under `talks/<slug>/`; `/talks/` is labeled
+**Presentations** in the navigation. Add decks to `talks/index.html`, the home
+Presentations section, and `sitemap.xml`. Keep published deck and download URLs
+unchanged, including the existing MLOps presentation.
+Keep presentation listings conference-neutral so decks can be reused. Record
+conference appearances and their deck links in the About page's Speaking section.
+Header navigation is Series, Presentations, About, and Contact. Keep the Writing
+archive at `/posts/` accessible through the home page's "View all writing" link,
+not a header item.
+
 ## Keep the index pages in sync (do this every time)
 
 The listing pages are hand-maintained static HTML. They do **not** auto-update
@@ -96,7 +106,9 @@ The full ruleset is in `skills/humanize-writing/SKILL.md`. The essentials:
   commit or push: run `python tools/session_log.py <files-edited-this-session>`.
   Before a commit, add `--stage` to include the updated logs. Use explicit paths
   when unrelated changes are present; with no paths, the script reads git status.
-  Logs record the session ID, name, and first/last timestamps, not conversations.
+  Logs record the session ID, name, first/last timestamps, and update count, not
+  conversations. Append only new sessions; existing sessions keep their original
+  name and position while their last-seen timestamp and update count advance.
   Asset subfolders roll up to their parent; shared root assets log at the root.
   See `.github/skills/session-log/SKILL.md` for folder rules and overrides.
 - Do not commit or push unless the user asks.

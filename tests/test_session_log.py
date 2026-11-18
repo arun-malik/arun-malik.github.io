@@ -53,7 +53,7 @@ class SessionLogTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             session_log.project_folder("../outside/index.html")
 
-    def test_repeated_session_preserves_first_seen_and_other_rows(self):
+    def test_repeated_session_preserves_name_position_and_first_seen(self):
         session_log.record(self.root, "session-a", "First", "2026-11-18 09:00")
         session_log.record(self.root, "session-b", "Other", "2026-11-18 09:01")
         session_log.record(self.root, "session-a", "Renamed", "2026-11-18 09:02")
@@ -63,9 +63,39 @@ class SessionLogTests(unittest.TestCase):
             if not line.startswith("#")
         ]
         self.assertEqual(rows, [
-            ["2026-11-18 09:00", "2026-11-18 09:02", "session-a", "Renamed"],
-            ["2026-11-18 09:01", "2026-11-18 09:01", "session-b", "Other"],
+            ["2026-11-18 09:00", "2026-11-18 09:02", "2", "session-a", "First"],
+            ["2026-11-18 09:01", "2026-11-18 09:01", "1", "session-b", "Other"],
         ])
+
+    def test_legacy_log_migrates_without_duplicate_sessions(self):
+        path = self.root / "session.txt"
+        path.write_text(
+            "# first_seen | last_seen | session_id | session_name\n"
+            "2026-11-18 09:00 | 2026-11-18 09:01 | session-a | Original\n"
+            "2026-11-18 09:02 | 2026-11-18 09:02 | session-b | Other\n",
+            encoding="utf-8",
+        )
+        session_log.record(self.root, "session-a", "Renamed", "2026-11-18 09:03")
+        session_log.record(self.root, "session-c", "New", "2026-11-18 09:04")
+        self.assertEqual(session_log.read_rows(path), [
+            ["2026-11-18 09:00", "2026-11-18 09:03", 2, "session-a", "Original"],
+            ["2026-11-18 09:02", "2026-11-18 09:02", 1, "session-b", "Other"],
+            ["2026-11-18 09:04", "2026-11-18 09:04", 1, "session-c", "New"],
+        ])
+        self.assertIn("| updates |", path.read_text(encoding="utf-8"))
+
+    def test_invalid_log_is_not_overwritten(self):
+        path = self.root / "session.txt"
+        for contents in (
+            "unrecognized row\n",
+            "first | last | invalid | session-a | Original\n",
+            "first | last | 0 | session-a | Original\n",
+        ):
+            with self.subTest(contents=contents):
+                path.write_text(contents, encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "Invalid session log row"):
+                    session_log.record(self.root, "session-a", "Name", "2026-11-18 09:03")
+                self.assertEqual(path.read_text(encoding="utf-8"), contents)
 
     def test_git_status_handles_renames_spaces_and_unicode(self):
         status = (

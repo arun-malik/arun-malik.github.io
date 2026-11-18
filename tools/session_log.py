@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOG = "session.txt"
 HEADER = (
     "# Copilot sessions that edited files in this folder (managed by tools/session_log.py)\n"
-    "# first_seen       | last_seen        | session_id                           | session_name\n"
+    "# first_seen       | last_seen        | updates | session_id                           | session_name\n"
 )
 ASSET_DIRS = {
     "figures", "figs", "assets", "images", "img", "imgs", "media", "photos",
@@ -68,19 +68,43 @@ def project_folder(rel):
     return folder
 
 
+def read_rows(path):
+    """Accept legacy four-column logs with an initial update count of one."""
+    rows = []
+    if not path.exists():
+        return rows
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        columns = [column.strip() for column in line.split("|")]
+        if len(columns) == 4:
+            columns.insert(2, "1")
+        if len(columns) != 5 or not columns[2].isdecimal() or int(columns[2]) < 1:
+            raise ValueError(f"Invalid session log row at {path}:{number}")
+        first, last, updates, sid, name = columns
+        rows.append([first, last, int(updates), sid, name])
+    return rows
+
+
 def record(folder, sid, name, now):
     path = folder / LOG
     if path.is_symlink():
         raise ValueError(f"Refusing to write a symlink: {path}")
-    lines = path.read_text(encoding="utf-8").splitlines(keepends=True) if path.exists() else [HEADER]
-    for index, line in enumerate(lines):
-        columns = [column.strip() for column in line.split("|")]
-        if len(columns) == 4 and columns[2] == sid:
-            lines[index] = f"{columns[0]:<16} | {now:<16} | {sid:<36} | {name}\n"
+    rows = read_rows(path)
+    for row in rows:
+        if row[3] == sid:
+            row[1] = now
+            row[2] += 1
             break
     else:
-        lines.append(f"{now:<16} | {now:<16} | {sid:<36} | {name}\n")
-    path.write_text("".join(lines), encoding="utf-8")
+        rows.append([now, now, 1, sid, name])
+    path.write_text(
+        HEADER + "".join(
+            f"{first:<16} | {last:<16} | {updates:>7} | {row_sid:<36} | {row_name}\n"
+            for first, last, updates, row_sid, row_name in rows
+        ),
+        encoding="utf-8",
+    )
     return path
 
 

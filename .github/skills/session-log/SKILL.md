@@ -6,8 +6,8 @@ description: Record Copilot session metadata in each edited folder. Use whenever
 # Session log
 
 Each edited folder carries a `session.txt` with one row per Copilot session:
-first seen, last seen, session ID, and session name. Log changes before finishing
-a file-editing session, even when no commit is requested.
+first seen, last seen, update count, session ID, and session name. Log changes
+before finishing a file-editing session, even when no commit is requested.
 
 ```powershell
 python tools/session_log.py AGENTS.md posts/example/index.html
@@ -23,7 +23,11 @@ working directory, or absolute, and must stay inside this checkout.
 
 The session ID comes from `COPILOT_AGENT_SESSION_ID`; the name comes from the
 session's local `workspace.yaml`. Use `--id` and `--name` to override them.
-Re-running updates the session's last-seen timestamp without adding another row.
+A row is appended only if the session is not already listed. For an existing
+session, re-running refreshes `last_seen` and increments `updates`, keeping the
+original `first_seen`, name, and row position. New sessions start with `updates`
+set to 1. Older four-column logs migrate automatically, treating existing rows
+as having one update before the current run.
 
 ## Folder rules
 
