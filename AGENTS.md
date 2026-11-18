@@ -92,6 +92,13 @@ The full ruleset is in `skills/humanize-writing/SKILL.md`. The essentials:
 ## Editing conventions
 
 - Edit existing files in place; do not regenerate whole pages.
+- Log every session that edits files, before finishing and before any authorized
+  commit or push: run `python tools/session_log.py <files-edited-this-session>`.
+  Before a commit, add `--stage` to include the updated logs. Use explicit paths
+  when unrelated changes are present; with no paths, the script reads git status.
+  Logs record the session ID, name, and first/last timestamps, not conversations.
+  Asset subfolders roll up to their parent; shared root assets log at the root.
+  See `.github/skills/session-log/SKILL.md` for folder rules and overrides.
 - Do not commit or push unless the user asks.
 - When creating commits, add the trailer:
   `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`

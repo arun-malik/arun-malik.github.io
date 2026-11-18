@@ -4,3 +4,7 @@ _*.txt
 
 node_modules/
 package-lock.json
+
+# Python session logging tools
+__pycache__/
+*.pyc

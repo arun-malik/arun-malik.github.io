@@ -59,5 +59,10 @@ no referenced URL is dead. See `/AGENTS.md` for the full checklist.
 ## Conventions
 
 - Edit existing files in place; do not regenerate whole pages.
+- Before finishing any file-editing session and before any authorized commit or
+  push, run `python tools/session_log.py <files-edited-this-session>`.
+  Add `--stage` before a commit to stage the logs. Use explicit paths if unrelated
+  changes exist. See `.github/skills/session-log/SKILL.md`: asset subfolders roll
+  up to their parent, and logs contain session metadata, not conversations.
 - Do not commit or push unless the user asks.
 - On commit, add: `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`
