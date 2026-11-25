@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 DECK = "/talks/ai-agents-incident-response/"
+CRYSTALLIZATION_DECK = "/talks/progressive-crystallization/"
 
 
 class PageLinks(HTMLParser):
@@ -50,6 +51,8 @@ class PresentationTests(unittest.TestCase):
         urls = PageLinks(source).urls
         self.assertIn(DECK, urls)
         self.assertIn(DECK + "slides.pdf", urls)
+        self.assertIn(CRYSTALLIZATION_DECK, urls)
+        self.assertIn(CRYSTALLIZATION_DECK + "slides.pdf", urls)
         for url in set(urls):
             if urlsplit(url).netloc:
                 continue
@@ -73,8 +76,24 @@ class PresentationTests(unittest.TestCase):
         locations = [
             node.text for node in root.findall("{*}url/{*}loc")
         ]
-        for path in ("/talks/", DECK):
+        for path in ("/talks/", DECK, CRYSTALLIZATION_DECK):
             self.assertIn("https://blog.arunmalik.dev" + path, locations)
+
+    def test_crystallization_deck_and_pdf_are_accessible(self):
+        with urlopen(self.origin + CRYSTALLIZATION_DECK) as response:
+            self.assertEqual(response.status, 200)
+            source = response.read().decode("utf-8")
+        self.assertIn('id="slide-13"', source)
+        self.assertIn('id="speaker-notes-data"', source)
+        self.assertIn("From agent exploration to", source)
+        with urlopen(self.origin + CRYSTALLIZATION_DECK + "slides.pdf") as response:
+            self.assertEqual(response.headers.get_content_type(), "application/pdf")
+            self.assertTrue(response.read().startswith(b"%PDF-"))
+
+    def test_crystallization_deck_is_linked_from_home_and_speaking(self):
+        for path in ("/", "/about/"):
+            with self.subTest(path=path), urlopen(self.origin + path) as response:
+                self.assertIn(CRYSTALLIZATION_DECK, PageLinks(response.read().decode("utf-8")).urls)
 
 
 if __name__ == "__main__":

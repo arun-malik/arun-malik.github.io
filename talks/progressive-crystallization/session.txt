@@ -1,0 +1,3 @@
+# Copilot sessions that edited files in this folder (managed by tools/session_log.py)
+# first_seen       | last_seen        | updates | session_id                           | session_name
+2026-11-25 00:54 | 2026-11-25 00:57 |       2 | 1bc28cdd-024b-4410-96b4-41394ddfb568 | Progressive crystallization presentation publishing

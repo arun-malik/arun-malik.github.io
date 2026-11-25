@@ -1,0 +1,4880 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progressive Crystallization</title>
+<meta name="description" content="From agent exploration to verified software: reusable playbooks, bounded reasoning, authorization, and engineering review. A presentation by Arun Malik.">
+<link rel="canonical" href="https://blog.arunmalik.dev/talks/progressive-crystallization/">
+<meta property="og:title" content="Progressive Crystallization - Arun Malik">
+<meta property="og:description" content="From agent exploration to verified software.">
+<meta property="og:url" content="https://blog.arunmalik.dev/talks/progressive-crystallization/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://blog.arunmalik.dev/assets/og/progressive-crystallization-talk.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root {
+  --font-body: "Segoe UI", "Aptos", sans-serif;
+  --font-mono: "Cascadia Code", "Consolas", monospace;
+  --bg: #ffffff;
+  --bg-soft: #f4f7fb;
+  --text: #101728;
+  --text-dim: #536177;
+  --text-faint: #718096;
+  --border: #dce5ef;
+  --grid: rgba(15, 22, 39, 0.045);
+  --blue: #0b7fc4;
+  --violet: #6845d9;
+  --green: #0d8f67;
+  --blue-soft: rgba(11, 127, 196, 0.12);
+  --violet-soft: rgba(104, 69, 217, 0.12);
+  --green-soft: rgba(13, 143, 103, 0.12);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg: #06080f;
+  --bg-soft: #0b0f1c;
+  --text: #eef2fb;
+  --text-dim: #a1abc0;
+  --text-faint: #737d95;
+  --border: rgba(255, 255, 255, 0.12);
+  --grid: rgba(255, 255, 255, 0.025);
+  --blue: #5ad1ff;
+  --violet: #b79cff;
+  --green: #5fe3b0;
+  --blue-soft: rgba(90, 209, 255, 0.13);
+  --violet-soft: rgba(183, 156, 255, 0.13);
+  --green-soft: rgba(95, 227, 176, 0.13);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.deck {
+  width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.deck::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  position: relative;
+  isolation: isolate;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding: clamp(44px, 7vh, 84px) clamp(48px, 7vw, 112px);
+  background:
+    radial-gradient(70% 90% at 80% 40%, var(--blue-soft), transparent 62%),
+    radial-gradient(50% 65% at 91% 80%, var(--green-soft), transparent 68%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 25%, var(--bg));
+}
+
+.slide--title {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(480px, 1.14fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 88px);
+}
+
+.slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(95% 85% at 55% 45%, #000 25%, transparent 100%);
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  max-width: 720px;
+  animation: enter-copy 900ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.spectrum {
+  display: flex;
+  width: clamp(220px, 24vw, 360px);
+  height: 7px;
+  margin-bottom: clamp(26px, 4vh, 48px);
+  overflow: hidden;
+  border-radius: 999px;
+  box-shadow: 0 10px 34px var(--blue-soft);
+}
+
+.spectrum span {
+  flex: 1;
+}
+
+.spectrum span:nth-child(1) { background: var(--blue); }
+.spectrum span:nth-child(2) { background: linear-gradient(90deg, var(--blue), var(--violet)); }
+.spectrum span:nth-child(3) { background: var(--violet); }
+.spectrum span:nth-child(4) { background: linear-gradient(90deg, var(--violet), var(--green)); }
+.spectrum span:nth-child(5) { background: var(--green); }
+
+.kicker {
+  margin-bottom: clamp(18px, 2.4vh, 28px);
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 0.95vw, 14px);
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+h1 {
+  max-width: 11ch;
+  font-size: clamp(54px, 6.3vw, 102px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+h1 strong {
+  color: var(--green);
+  font-weight: inherit;
+}
+
+.accent-blue { color: var(--blue); }
+.accent-violet { color: var(--violet); }
+
+.slide--title h1.thesis {
+  max-width: 13ch;
+  font-size: clamp(45px, 5.1vw, 82px);
+  line-height: 1.02;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: clamp(34px, 5vh, 58px);
+  color: var(--text-dim);
+  font-size: clamp(17px, 1.45vw, 23px);
+}
+
+.author::before {
+  content: "";
+  width: 38px;
+  height: 2px;
+  background: var(--blue);
+}
+
+.author strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.author--signature::before {
+  display: none;
+}
+
+.metaphor {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1.15;
+  animation: enter-visual 1100ms 120ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.metaphor svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.metaphor .flow {
+  fill: none;
+  stroke: url(#flow-gradient);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-dasharray: 4 8;
+  opacity: 0.55;
+  animation: draw-flow 1.7s 500ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.metaphor .crystal-line {
+  fill: none;
+  stroke: url(#crystal-gradient);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.82;
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+  animation: crystallize 1.8s 650ms cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+.metaphor .fragment {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fragment-in 800ms var(--delay) cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.metaphor .ordered {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-in 650ms var(--delay) cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.metaphor .halo {
+  fill: url(#halo-gradient);
+  opacity: 0;
+  animation: halo-in 1.5s 1.1s ease-out forwards;
+}
+
+.model-card {
+  fill: var(--bg);
+  stroke-width: 1.5;
+}
+
+.model-label,
+.diagram-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 1.1px;
+  fill: var(--text-faint);
+}
+
+.weight-cell {
+  opacity: 0.86;
+}
+
+.workflow-node {
+  fill: var(--bg);
+  stroke-width: 1.8;
+}
+
+.workflow-wire {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.code-line {
+  rx: 4;
+}
+
+.slide-header {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
+}
+
+.slide-header .kicker {
+  margin-bottom: clamp(12px, 1.8vh, 20px);
+}
+
+.slide-header h2 {
+  max-width: 18ch;
+  font-size: clamp(39px, 4.8vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.slide-header h2 strong {
+  color: var(--green);
+  font-weight: inherit;
+}
+
+.slide--code {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(24px, 4vh, 46px);
+  background:
+    radial-gradient(58% 86% at 83% 50%, var(--violet-soft), transparent 68%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 28%, var(--bg));
+}
+
+.slide--code .slide-header h2 {
+  max-width: 34ch;
+  font-size: clamp(36px, 3.4vw, 54px);
+  line-height: 1.02;
+}
+
+.code-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.74fr) minmax(560px, 1.26fr);
+  gap: clamp(28px, 5vw, 78px);
+  align-items: stretch;
+  min-height: 0;
+}
+
+.logic-rail {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.logic-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 17px 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+
+.logic-step::after {
+  content: "";
+  position: absolute;
+  left: 49px;
+  bottom: -15px;
+  width: 1px;
+  height: 15px;
+  background: var(--border);
+}
+
+.logic-step:last-child::after {
+  display: none;
+}
+
+.logic-step .num {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--step);
+  border-radius: 50%;
+  color: var(--step);
+  background: var(--step-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.logic-step:nth-child(1) { --step: var(--blue); --step-soft: var(--blue-soft); }
+.logic-step:nth-child(2) { --step: var(--violet); --step-soft: var(--violet-soft); }
+.logic-step:nth-child(3) { --step: var(--green); --step-soft: var(--green-soft); }
+
+.logic-step strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: clamp(17px, 1.45vw, 23px);
+  letter-spacing: -0.02em;
+}
+
+.logic-step p {
+  color: var(--text-dim);
+  font-size: clamp(12px, 1.05vw, 16px);
+  line-height: 1.45;
+}
+
+.code-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 96%, var(--violet-soft));
+  box-shadow: 0 18px 50px rgba(31, 42, 61, 0.09);
+}
+
+.code-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  color: var(--text-faint);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.code-panel__head span:last-child {
+  color: var(--green);
+}
+
+.code-block {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  padding: clamp(22px, 2.5vw, 38px);
+  font-family: var(--font-mono);
+  font-size: clamp(14px, 1.25vw, 20px);
+  line-height: 1.58;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.slide--code .code-block {
+  padding: clamp(18px, 2vw, 30px);
+  font-size: clamp(13px, 1.1vw, 18px);
+  line-height: 1.48;
+}
+
+.code-block .kw { color: var(--violet); font-weight: 700; }
+.code-block .agent { color: var(--blue); font-weight: 700; }
+.code-block .rule { color: var(--violet); font-weight: 700; }
+.code-block .verify { color: var(--green); font-weight: 700; }
+.code-block .dim { color: var(--text-faint); }
+
+.code-panel__foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 22px 18px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: clamp(12px, 1vw, 15px);
+}
+
+.code-panel__foot::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 20px 0 0 var(--violet), 40px 0 0 var(--green);
+  margin-right: 38px;
+}
+
+.slide--coffee {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(24px, 4vh, 48px);
+  background:
+    radial-gradient(55% 75% at 50% 58%, rgba(185, 121, 8, 0.08), transparent 68%),
+    radial-gradient(45% 72% at 90% 42%, var(--green-soft), transparent 72%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 28%, var(--bg));
+}
+
+.slide--cafe {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(26px, 4.2vh, 50px);
+  background:
+    radial-gradient(52% 76% at 50% 64%, rgba(185, 121, 8, 0.08), transparent 69%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 28%, var(--bg));
+}
+
+.slide--cafe .slide-header {
+  width: 100%;
+  max-width: none;
+}
+
+.slide--cafe .slide-header h2 {
+  width: 100%;
+  max-width: none;
+}
+
+.cafe-cases {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.cafe-case {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(280px, 36vh, 380px);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.5vw, 36px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 95%, var(--case-soft));
+}
+
+.cafe-case::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: var(--case);
+}
+
+.cafe-case:nth-child(1) { --case: var(--blue); --case-soft: var(--blue-soft); }
+.cafe-case:nth-child(2) { --case: var(--violet); --case-soft: var(--violet-soft); }
+.cafe-case:nth-child(3) { --case: var(--green); --case-soft: var(--green-soft); }
+
+.case-label {
+  color: var(--case);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.case-visual {
+  height: clamp(110px, 15vh, 160px);
+  display: grid;
+  place-items: center;
+  margin: 12px 0 18px;
+}
+
+.case-visual svg {
+  width: min(100%, 190px);
+  height: 100%;
+}
+
+.cafe-case h3 {
+  margin-bottom: 10px;
+  font-size: clamp(21px, 1.85vw, 30px);
+  letter-spacing: -0.03em;
+}
+
+.case-action {
+  margin-bottom: 9px;
+  color: var(--case) !important;
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1vw, 14px) !important;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cafe-case p {
+  color: var(--text-dim);
+  font-size: clamp(13px, 1.2vw, 18px);
+  line-height: 1.48;
+}
+
+.cafe-takeaway {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  padding: 11px 20px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  background: var(--bg);
+  font-size: clamp(14px, 1.25vw, 19px);
+  font-weight: 700;
+}
+
+.slide--recipe-refresh {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(18px, 2.5vh, 24px);
+  padding-top: clamp(34px, 4.7vh, 44px);
+  padding-bottom: clamp(30px, 4vh, 38px);
+  background:
+    radial-gradient(50% 80% at 18% 56%, var(--green-soft), transparent 70%),
+    radial-gradient(50% 80% at 84% 56%, var(--blue-soft), transparent 70%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 28%, var(--bg));
+}
+
+.slide--recipe-refresh .slide-header h2 {
+  max-width: 32ch;
+  font-size: clamp(43px, 4vw, 64px);
+  line-height: 1;
+}
+
+.refresh-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(360px, 1fr) 110px minmax(360px, 1fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 46px);
+}
+
+.refresh-panel {
+  min-height: clamp(320px, 40vh, 430px);
+  padding: clamp(24px, 2.7vw, 40px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 95%, var(--panel-soft));
+}
+
+.refresh-panel--retain { --panel: var(--green); --panel-soft: var(--green-soft); }
+.refresh-panel--fresh { --panel: var(--blue); --panel-soft: var(--blue-soft); }
+
+.refresh-panel .case-label {
+  color: var(--panel);
+}
+
+.refresh-panel h3 {
+  margin: 15px 0 22px;
+  font-size: clamp(28px, 2.7vw, 43px);
+  letter-spacing: -0.035em;
+}
+
+.refresh-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 15px;
+  color: var(--text-dim);
+  font-size: clamp(14px, 1.3vw, 19px);
+  line-height: 1.35;
+}
+
+.refresh-item::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--panel);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.refresh-bridge {
+  display: grid;
+  place-items: center;
+  color: var(--violet);
+}
+
+.refresh-bridge svg {
+  width: 100%;
+  height: auto;
+}
+
+.refresh-takeaway {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  text-align: center;
+  color: var(--text);
+  font-size: clamp(18px, 1.7vw, 26px);
+  font-weight: 750;
+}
+
+.runtime-equation {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(245px, 1fr) 46px minmax(280px, 1.12fr) 64px minmax(215px, .82fr) 64px minmax(215px, .82fr);
+  align-items: stretch;
+  gap: 12px;
+}
+
+.runtime-card {
+  min-width: 0;
+  min-height: clamp(310px, 39vh, 410px);
+  padding: clamp(22px, 2.2vw, 34px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 95%, var(--runtime-soft));
+}
+
+.runtime-card--recipe { --runtime: var(--green); --runtime-soft: var(--green-soft); }
+.runtime-card--context { --runtime: var(--blue); --runtime-soft: var(--blue-soft); }
+
+.runtime-card .case-label {
+  color: var(--runtime);
+}
+
+.runtime-card h3 {
+  margin: 14px 0 18px;
+  font-size: clamp(25px, 2.2vw, 36px);
+  letter-spacing: -0.03em;
+}
+
+.runtime-card .refresh-item {
+  margin-top: 13px;
+  font-size: clamp(13px, 1.08vw, 16px);
+}
+
+.runtime-card .refresh-item::before {
+  border-color: var(--runtime);
+}
+
+.equation-symbol,
+.pipeline-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--violet);
+  font-family: var(--font-mono);
+  font-size: clamp(30px, 3vw, 48px);
+  font-weight: 400;
+}
+
+.pipeline-arrow svg {
+  width: 54px;
+  height: 28px;
+}
+
+.runtime-engine,
+.runtime-outcome {
+  position: relative;
+  min-height: clamp(310px, 39vh, 410px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 2vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  text-align: center;
+  background: var(--bg);
+}
+
+.runtime-engine {
+  border-top: 4px solid var(--violet);
+}
+
+.runtime-outcome {
+  border-top: 4px solid var(--green);
+}
+
+.runtime-engine svg,
+.runtime-outcome svg {
+  width: min(100%, 150px);
+  height: 145px;
+}
+
+.runtime-engine h3,
+.runtime-outcome h3 {
+  margin-top: 15px;
+  font-size: clamp(20px, 1.8vw, 29px);
+  letter-spacing: -0.025em;
+}
+
+.runtime-engine p,
+.runtime-outcome p {
+  margin-top: 9px;
+  color: var(--text-dim);
+  font-size: clamp(12px, 1vw, 15px);
+  line-height: 1.42;
+}
+
+.runtime-fallback {
+  margin-top: 15px !important;
+  padding: 7px 11px;
+  border: 1px dashed var(--violet);
+  border-radius: 999px;
+  color: var(--violet) !important;
+  font-family: var(--font-mono);
+  font-size: 10px !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.runtime-takeaway {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--text);
+  font-size: clamp(18px, 1.7vw, 26px);
+  font-weight: 750;
+}
+
+.coffee-process {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) 52px minmax(250px, 1.08fr) 52px minmax(230px, .95fr) 52px minmax(230px, .95fr);
+  align-items: stretch;
+  gap: 10px;
+}
+
+.process-stage {
+  min-width: 0;
+  min-height: clamp(320px, 39vh, 390px);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 1.6vw, 25px);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--stage);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 96%, var(--stage-soft));
+}
+
+.process-stage--order { --stage: var(--blue); --stage-soft: var(--blue-soft); }
+.process-stage--recipe { --stage: var(--green); --stage-soft: var(--green-soft); }
+.process-stage--execute { --stage: var(--violet); --stage-soft: var(--violet-soft); }
+.process-stage--result { --stage: var(--green); --stage-soft: var(--green-soft); }
+
+.process-number {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--stage);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.process-number::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--stage);
+}
+
+.process-stage > h3 {
+  margin: 10px 0 13px;
+  font-size: clamp(23px, 1.8vw, 30px);
+  letter-spacing: -.035em;
+  line-height: 1.06;
+}
+
+.order-ticket {
+  position: relative;
+  padding: 17px 16px 21px;
+  border: 1px solid var(--border);
+  border-radius: 5px 5px 2px 2px;
+  background: var(--bg);
+  box-shadow: 0 16px 34px rgba(31, 42, 61, .09);
+  font-family: var(--font-mono);
+  transform: rotate(-1deg);
+}
+
+.order-ticket::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -7px;
+  left: 0;
+  height: 8px;
+  background:
+    linear-gradient(135deg, transparent 5px, var(--bg) 0) 0 0 / 12px 8px repeat-x,
+    linear-gradient(45deg, var(--bg) 5px, transparent 0) 6px 0 / 12px 8px repeat-x;
+}
+
+.ticket-meta,
+.ticket-line,
+.ticket-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.ticket-meta {
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+  color: var(--text-faint);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ticket-drink {
+  margin: 13px 0 10px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.ticket-line {
+  margin-top: 7px;
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+.ticket-line strong {
+  color: var(--blue);
+}
+
+.ticket-total {
+  margin-top: 13px;
+  padding-top: 9px;
+  border-top: 1px dashed var(--border);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.recipe-sheet {
+  padding: 14px 15px;
+  border: 1px solid color-mix(in srgb, var(--green) 35%, var(--border));
+  border-radius: 13px;
+  background: var(--bg);
+}
+
+.recipe-name {
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.recipe-params {
+  display: grid;
+  gap: 5px;
+  margin: 10px 0 11px;
+  padding: 9px 0;
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px dashed var(--border);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.recipe-params strong {
+  color: var(--blue);
+}
+
+.recipe-step {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 9px;
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 11.5px;
+  line-height: 1.25;
+}
+
+.recipe-step span {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.process-machine,
+.process-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.process-machine svg,
+.process-result svg {
+  width: min(100%, 188px);
+  height: 188px;
+}
+
+.machine-status,
+.result-status,
+.stage-status {
+  align-self: center;
+  margin-top: auto;
+  padding: 9px 13px;
+  border: 1px dashed var(--stage);
+  border-radius: 999px;
+  color: var(--stage);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.process-stage > p:not(.process-number, .machine-status, .result-status, .stage-status) {
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.process-stage--recipe .stage-status {
+  margin-top: 14px;
+}
+
+.process-arrow {
+  display: grid;
+  place-items: center;
+}
+
+.process-arrow svg {
+  width: 48px;
+  height: 28px;
+}
+
+.process-caption {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--text);
+  font-size: clamp(18px, 1.65vw, 25px);
+  font-weight: 750;
+}
+
+.slide--coffee .slide-header h2 {
+  max-width: 21ch;
+}
+
+.coffee-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.88fr) minmax(230px, 0.7fr) minmax(320px, 1.08fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 62px);
+}
+
+.paper {
+  position: relative;
+  min-height: clamp(300px, 39vh, 420px);
+  padding: clamp(24px, 2.7vw, 38px);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 97%, var(--blue-soft));
+  box-shadow: 0 18px 48px rgba(31, 42, 61, 0.1);
+}
+
+.receipt {
+  transform: rotate(-1.6deg);
+  border-radius: 7px 7px 3px 3px;
+  font-family: var(--font-mono);
+}
+
+.recipe {
+  transform: rotate(1.3deg);
+  border-radius: 18px;
+  border-top: 4px solid var(--green);
+}
+
+.paper-label {
+  margin-bottom: 24px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--border);
+  color: var(--text-dim);
+  font-size: clamp(12px, 1.1vw, 16px);
+}
+
+.receipt-row strong {
+  color: var(--text);
+}
+
+.paper-verdict {
+  margin-top: 26px;
+  padding-top: 17px;
+  border-top: 2px solid var(--text);
+  color: var(--text);
+  font-size: clamp(17px, 1.55vw, 24px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.recipe h3 {
+  margin-bottom: 18px;
+  font-size: clamp(24px, 2.3vw, 36px);
+  letter-spacing: -0.03em;
+}
+
+.recipe-step {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+  margin-top: 14px;
+  color: var(--text-dim);
+  font-size: clamp(13px, 1.15vw, 17px);
+  line-height: 1.4;
+}
+
+.recipe-step span {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--green);
+  background: var(--green-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.coffee-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.coffee-center svg {
+  width: min(100%, 260px);
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(31, 42, 61, 0.1));
+}
+
+.coffee-center p {
+  max-width: 24ch;
+  margin-top: 20px;
+  color: var(--text-dim);
+  font-size: clamp(13px, 1.2vw, 18px);
+  line-height: 1.45;
+}
+
+.coffee-center strong {
+  color: var(--text);
+}
+
+.slide--precedent,
+.slide--gap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(26px, 4vh, 44px);
+}
+
+.slide--precedent {
+  background:
+    radial-gradient(54% 78% at 83% 50%, var(--blue-soft), transparent 70%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 30%, var(--bg));
+}
+
+.slide--precedent .slide-header h2,
+.slide--gap .slide-header h2 {
+  max-width: 32ch;
+  font-size: clamp(40px, 4vw, 64px);
+  line-height: 1.02;
+}
+
+.precedent-flow {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 66px minmax(280px, 1.12fr) 66px minmax(240px, 1fr);
+  align-items: stretch;
+  gap: 12px;
+}
+
+.precedent-card {
+  min-height: clamp(300px, 37vh, 390px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(22px, 2.3vw, 34px);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--card-accent);
+  border-radius: 20px;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 95%, var(--card-soft));
+}
+
+.precedent-card--procedure { --card-accent: var(--blue); --card-soft: var(--blue-soft); }
+.precedent-card--engineering { --card-accent: var(--violet); --card-soft: var(--violet-soft); }
+.precedent-card--software { --card-accent: var(--green); --card-soft: var(--green-soft); }
+
+.precedent-card svg {
+  width: 150px;
+  height: 135px;
+}
+
+.precedent-card h3 {
+  margin-top: 13px;
+  font-size: clamp(22px, 1.9vw, 31px);
+  letter-spacing: -.03em;
+}
+
+.precedent-card p {
+  margin-top: 11px;
+  color: var(--text-dim);
+  font-size: clamp(13px, 1.08vw, 16px);
+  line-height: 1.42;
+}
+
+.precedent-card .source-badge {
+  margin-top: auto;
+  padding: 7px 11px;
+  border: 1px dashed var(--card-accent);
+  border-radius: 999px;
+  color: var(--card-accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.story-arrow {
+  display: grid;
+  place-items: center;
+}
+
+.story-arrow svg {
+  width: 58px;
+  height: 30px;
+}
+
+.story-takeaway {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--text);
+  font-size: clamp(17px, 1.55vw, 24px);
+  font-weight: 750;
+}
+
+.story-takeaway small {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.precedent-bridge {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(320px, .74fr) 220px minmax(600px, 1.38fr);
+  align-items: stretch;
+  gap: 18px;
+}
+
+.bridge-panel {
+  min-height: clamp(330px, 39vh, 410px);
+  padding: clamp(23px, 2.2vw, 34px);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--bridge-accent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 95%, var(--bridge-soft));
+}
+
+.bridge-panel--analogy { --bridge-accent: var(--violet); --bridge-soft: var(--violet-soft); }
+.bridge-panel--operations { --bridge-accent: var(--green); --bridge-soft: var(--green-soft); }
+
+.bridge-label {
+  color: var(--bridge-accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.bridge-panel > h3 {
+  margin-top: 11px;
+  font-size: clamp(25px, 2.05vw, 34px);
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.bridge-panel--analogy > h3 {
+  font-size: clamp(24px, 1.8vw, 30px);
+}
+
+.bridge-panel > p:not(.bridge-label, .bridge-pill) {
+  margin-top: 13px;
+  color: var(--text-dim);
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.42;
+}
+
+.analogy-visual {
+  display: grid;
+  grid-template-columns: 1fr 42px 1fr;
+  align-items: center;
+  margin-top: 22px;
+}
+
+.analogy-artifact {
+  min-height: 155px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.analogy-artifact svg {
+  width: 88px;
+  height: 88px;
+}
+
+.analogy-artifact strong {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.analogy-arrow {
+  color: var(--violet);
+  font-size: 34px;
+  text-align: center;
+}
+
+.bridge-pill {
+  width: max-content;
+  margin: 18px auto 0;
+  padding: 8px 12px;
+  border: 1px dashed var(--bridge-accent);
+  border-radius: 999px;
+  color: var(--bridge-accent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.bridge-transfer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.bridge-transfer > strong {
+  max-width: 18ch;
+  color: var(--violet);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.45;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.transfer-pattern {
+  width: 100%;
+  display: grid;
+  gap: 0;
+  margin-top: 14px;
+}
+
+.transfer-stage {
+  padding: 11px 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.transfer-stage b {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.transfer-stage span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.25;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.transfer-arrow {
+  height: 25px;
+  display: grid;
+  place-items: center;
+  color: var(--violet);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.ops-sequence {
+  display: grid;
+  grid-template-columns: 1fr 34px 1fr 34px 1fr;
+  align-items: center;
+  margin-top: 22px;
+}
+
+.ops-step {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.ops-step svg {
+  width: 78px;
+  height: 78px;
+}
+
+.ops-step strong {
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.ops-step span {
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.ops-arrow {
+  color: var(--green);
+  font-size: 28px;
+  text-align: center;
+}
+
+.slide--gap {
+  background:
+    radial-gradient(48% 75% at 72% 55%, var(--violet-soft), transparent 70%),
+    radial-gradient(42% 62% at 15% 55%, var(--blue-soft), transparent 72%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 30%, var(--bg));
+}
+
+.gap-timeline {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 36px);
+}
+
+.gap-timeline::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 73px;
+  right: 7%;
+  left: 7%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--green) 38%, var(--violet) 68%, var(--blue));
+  opacity: .55;
+}
+
+.gap-step {
+  min-height: clamp(300px, 36vh, 380px);
+  padding: clamp(20px, 2vw, 30px);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--step-accent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 96%, var(--step-soft));
+}
+
+.gap-step:nth-child(1) { --step-accent: var(--blue); --step-soft: var(--blue-soft); }
+.gap-step:nth-child(2) { --step-accent: var(--green); --step-soft: var(--green-soft); }
+.gap-step:nth-child(3) { --step-accent: var(--violet); --step-soft: var(--violet-soft); }
+.gap-step:nth-child(4) { --step-accent: var(--blue); --step-soft: var(--blue-soft); }
+
+.gap-step--boundary {
+  border-right: 2px dashed var(--violet);
+  border-left: 2px dashed var(--violet);
+}
+
+.gap-marker {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--step-accent);
+  border-radius: 50%;
+  color: var(--step-accent);
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.gap-step svg {
+  width: 100%;
+  height: 115px;
+  margin: 13px 0 4px;
+}
+
+.gap-step h3 {
+  font-size: clamp(21px, 1.8vw, 29px);
+  letter-spacing: -.03em;
+}
+
+.gap-step p {
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.42;
+}
+
+.gap-boundary-label {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 7px 10px;
+  border: 1px dashed var(--violet);
+  border-radius: 999px;
+  color: var(--violet);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.playbook-map {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px 24px;
+}
+
+.playbook-entry {
+  grid-row: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 18px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.playbook-entry svg {
+  width: 72px;
+  height: 72px;
+}
+
+.playbook-entry strong {
+  font-size: 20px;
+}
+
+.playbook-entry span {
+  color: var(--text-faint);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.playbook-entry::after {
+  content: "→";
+  position: absolute;
+  right: -26px;
+  color: var(--blue);
+  font-size: 29px;
+}
+
+.playbook-system {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--violet);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg) 95%, var(--violet-soft));
+}
+
+.playbook-system__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.playbook-system__head strong {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.playbook-system__head span {
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.playbook-modes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.playbook-mode {
+  min-height: 205px;
+  padding: 17px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+.playbook-mode--deterministic { --mode-color: var(--green); }
+.playbook-mode--hybrid { --mode-color: var(--violet); }
+.playbook-mode--agentic { --mode-color: var(--blue); }
+
+.mode-badge {
+  display: inline-block;
+  padding: 6px 9px;
+  border: 1px solid var(--mode-color);
+  border-radius: 999px;
+  color: var(--mode-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.playbook-mode h3 {
+  margin-top: 12px;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.mode-flow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.mode-flow span {
+  flex: 1;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.mode-flow b {
+  flex: 0 0 auto;
+  color: var(--mode-color);
+  font-size: 18px;
+}
+
+.playbook-mode p {
+  margin-top: 12px;
+  color: var(--text-faint);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.crystallization-loop {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 190px 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 94%, var(--green-soft));
+}
+
+.loop-label strong {
+  display: block;
+  font-size: 16px;
+}
+
+.loop-label span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-faint);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.loop-flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loop-step {
+  flex: 1;
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.loop-arrow {
+  color: var(--green);
+  font-size: 20px;
+}
+
+.loop-pill {
+  max-width: 145px;
+  padding: 8px 10px;
+  border: 1px dashed var(--green);
+  border-radius: 999px;
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: .06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.model-compare {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 185px 1fr;
+  gap: 18px 24px;
+}
+
+.compare-entry {
+  grid-row: 1 / 3;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 18px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.compare-entry svg {
+  width: 68px;
+  height: 68px;
+}
+
+.compare-entry strong {
+  font-size: 20px;
+}
+
+.compare-entry span {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.compare-entry::before,
+.compare-entry::after {
+  content: "→";
+  position: absolute;
+  right: -27px;
+  color: var(--blue);
+  font-size: 28px;
+}
+
+.compare-entry::before { top: 25%; }
+.compare-entry::after { bottom: 25%; color: var(--violet); }
+
+.model-lane {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  align-items: stretch;
+  gap: 15px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.model-lane--traditional {
+  grid-column: 2;
+  grid-row: 1;
+  border-top: 4px solid var(--blue);
+  background: color-mix(in srgb, var(--bg) 97%, var(--blue-soft));
+}
+
+.model-lane--playbook {
+  grid-column: 2;
+  grid-row: 2;
+  border: 2px solid var(--violet);
+  border-left: 6px solid var(--green);
+  background: color-mix(in srgb, var(--bg) 92%, var(--violet-soft));
+  box-shadow: 0 12px 34px rgba(106, 73, 255, .11);
+}
+
+.lane-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lane-label span {
+  color: var(--lane-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.lane-label strong {
+  margin-top: 7px;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.lane-label p {
+  margin-top: 7px;
+  color: var(--text-faint);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.model-lane--traditional .lane-label { --lane-color: var(--blue); }
+.model-lane--playbook .lane-label { --lane-color: var(--violet); }
+
+.traditional-flow {
+  display: grid;
+  grid-template-columns: 1fr 20px .75fr 20px 1fr 20px 1fr;
+  align-items: center;
+  gap: 5px;
+}
+
+.traditional-step,
+.new-step {
+  min-height: 62px;
+  display: grid;
+  place-items: center;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.flow-arrow {
+  color: var(--text-faint);
+  font-size: 18px;
+  text-align: center;
+}
+
+.playbook-lane-content {
+  display: block;
+}
+
+.new-flow {
+  display: grid;
+  grid-template-columns: 145px 34px 1fr 34px 145px;
+  align-items: center;
+  gap: 6px;
+}
+
+.new-step {
+  min-height: 92px;
+  border-color: color-mix(in srgb, var(--violet) 36%, var(--border));
+}
+
+.new-step strong {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.new-step span {
+  display: block;
+  margin-top: 5px;
+  color: var(--text-faint);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.mode-stack {
+  min-height: 146px;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.mode-mini {
+  display: grid;
+  grid-template-columns: 145px 185px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.mode-mini b {
+  display: block;
+  color: var(--mini-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.mode-mini em {
+  display: block;
+  margin-top: 0;
+  color: var(--text);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.mode-mini span {
+  display: block;
+  margin-top: 0;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.mode-mini:nth-child(1) { --mini-color: var(--green); }
+.mode-mini:nth-child(2) { --mini-color: var(--violet); }
+.mode-mini:nth-child(3) { --mini-color: var(--blue); }
+
+.parallel-fork {
+  position: relative;
+  align-self: stretch;
+  min-height: 146px;
+}
+
+.parallel-fork::before {
+  content: "";
+  position: absolute;
+  top: 17%;
+  bottom: 17%;
+  left: 50%;
+  width: 2px;
+  background: var(--violet);
+  opacity: .7;
+  transform: translateX(-50%);
+}
+
+.parallel-fork::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  background: var(--violet);
+  opacity: .7;
+  transform: translateY(-50%);
+}
+
+.parallel-fork--out::after {
+  right: 50%;
+  left: 0;
+}
+
+.parallel-fork--in::after {
+  right: 0;
+  left: 50%;
+}
+
+.parallel-fork i {
+  position: absolute;
+  height: 2px;
+  background: var(--violet);
+  opacity: .7;
+}
+
+.parallel-fork--out i {
+  right: 0;
+  left: 50%;
+}
+
+.parallel-fork--in i {
+  right: 50%;
+  left: 0;
+}
+
+.parallel-fork i:nth-child(1) { top: 17%; }
+.parallel-fork i:nth-child(2) { top: 50%; }
+.parallel-fork i:nth-child(3) { top: 83%; }
+
+.developer-loop-band {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--green);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 94%, var(--green-soft));
+}
+
+.developer-loop-label strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.developer-loop-label span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-faint);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.developer-loop-label small {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.35;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.developer-loop-flow {
+  display: grid;
+  grid-template-columns: 1fr 18px 1fr 18px 1fr 18px 1fr;
+  align-items: center;
+  gap: 5px;
+}
+
+.loop-mini {
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.slide--candidate,
+.slide--promotion,
+.slide--authority,
+.slide--measurement,
+.slide--closing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(24px, 3.2vh, 38px);
+}
+
+.slide--candidate,
+.slide--measurement {
+  background:
+    radial-gradient(50% 70% at 82% 48%, var(--blue-soft), transparent 72%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 30%, var(--bg));
+}
+
+.slide--promotion,
+.slide--closing {
+  background:
+    radial-gradient(48% 72% at 72% 52%, var(--green-soft), transparent 72%),
+    radial-gradient(38% 58% at 16% 55%, var(--violet-soft), transparent 74%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 30%, var(--bg));
+}
+
+.slide--authority {
+  background:
+    radial-gradient(50% 72% at 50% 54%, var(--violet-soft), transparent 73%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 30%, var(--bg));
+}
+
+.slide--candidate .slide-header h2,
+.slide--promotion .slide-header h2,
+.slide--authority .slide-header h2,
+.slide--measurement .slide-header h2,
+.slide--closing .slide-header h2 {
+  max-width: 31ch;
+  font-size: clamp(40px, 4vw, 64px);
+  line-height: 1.02;
+}
+
+.slide--candidate .slide-header h2 {
+  max-width: 36ch;
+  font-size: clamp(38px, 3.7vw, 59px);
+}
+
+.candidate-pipeline {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px;
+}
+
+.candidate-card {
+  position: relative;
+  min-height: 280px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--candidate-color);
+  border-radius: 18px;
+  background: var(--bg);
+}
+
+.candidate-card:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 45%;
+  right: -31px;
+  color: var(--violet);
+  font-size: 28px;
+}
+
+.candidate-card:nth-child(1) { --candidate-color: var(--blue); }
+.candidate-card:nth-child(2) { --candidate-color: var(--violet); }
+.candidate-card:nth-child(3) { --candidate-color: var(--green); }
+.candidate-card:nth-child(4) { --candidate-color: var(--blue); }
+
+.candidate-card svg {
+  width: 68px;
+  height: 68px;
+}
+
+.candidate-card small {
+  display: block;
+  margin-top: 12px;
+  color: var(--candidate-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.candidate-card h3 {
+  margin-top: 7px;
+  font-size: 23px;
+  line-height: 1.08;
+}
+
+.candidate-card p {
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.38;
+}
+
+.candidate-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.candidate-tags span {
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.candidate-warning {
+  grid-column: 2 / 4;
+  justify-self: center;
+  margin-top: -18px;
+  padding: 7px 12px;
+  border: 1px dashed var(--violet);
+  border-radius: 999px;
+  color: var(--violet);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.governed-flow {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.governed-stage {
+  position: relative;
+  min-height: 225px;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--stage-color);
+  border-radius: 15px;
+  background: var(--bg);
+}
+
+.governed-stage:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 43%;
+  right: -20px;
+  color: var(--violet);
+  font-size: 21px;
+}
+
+.governed-stage:nth-child(1),
+.governed-stage:nth-child(4) { --stage-color: var(--blue); }
+.governed-stage:nth-child(2),
+.governed-stage:nth-child(5) { --stage-color: var(--violet); }
+.governed-stage:nth-child(3),
+.governed-stage:nth-child(6) { --stage-color: var(--green); }
+
+.governed-stage small {
+  color: var(--stage-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.governed-stage h3 {
+  margin-top: 10px;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.governed-stage p {
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.38;
+}
+
+.governed-stage span {
+  display: block;
+  margin-top: auto;
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: var(--stage-color);
+  background: color-mix(in srgb, var(--stage-color) 9%, var(--bg));
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.governed-exception {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+  margin: -10px auto 0;
+  padding: 9px 14px;
+  border: 1px dashed var(--violet);
+  border-radius: 999px;
+  color: var(--violet);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.crystallization-cycle {
+  position: relative;
+  z-index: 2;
+  height: 390px;
+}
+
+.cycle-path {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cycle-node {
+  position: absolute;
+  width: 28%;
+  min-height: 128px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--node-color);
+  border-radius: 15px;
+  background: var(--bg);
+}
+
+.cycle-node--1,
+.cycle-node--6 { left: 0; }
+.cycle-node--2,
+.cycle-node--5 { left: 36%; }
+.cycle-node--3,
+.cycle-node--4 { right: 0; }
+.cycle-node--1,
+.cycle-node--2,
+.cycle-node--3 { top: 0; }
+.cycle-node--4,
+.cycle-node--5,
+.cycle-node--6 { bottom: 0; }
+
+.cycle-node--1,
+.cycle-node--4 { --node-color: var(--blue); }
+.cycle-node--2,
+.cycle-node--5 { --node-color: var(--violet); }
+.cycle-node--3,
+.cycle-node--6 { --node-color: var(--green); }
+
+.cycle-node small {
+  color: var(--node-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.cycle-node h3 {
+  margin-top: 6px;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.cycle-node p {
+  margin-top: 7px;
+  color: var(--text-dim);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.cycle-node span {
+  margin-top: auto;
+  padding: 6px 8px;
+  border-radius: 8px;
+  color: var(--node-color);
+  background: color-mix(in srgb, var(--node-color) 9%, var(--bg));
+  font-size: 10px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.cycle-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.cycle-core strong {
+  display: block;
+  font-size: 15px;
+}
+
+.cycle-core span {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.cycle-exception {
+  width: max-content;
+  max-width: 100%;
+  margin: -10px auto 0;
+  padding: 7px 12px;
+  border: 1px dashed var(--violet);
+  border-radius: 999px;
+  color: var(--violet);
+  background: var(--bg);
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.promotion-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.promotion-lane {
+  padding: 23px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--lane-accent);
+  border-radius: 18px;
+  background: var(--bg);
+}
+
+.promotion-lane:first-child { --lane-accent: var(--violet); }
+.promotion-lane:last-child { --lane-accent: var(--green); }
+
+.promotion-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.promotion-head span {
+  padding: 7px 10px;
+  border: 1px solid var(--lane-accent);
+  border-radius: 999px;
+  color: var(--lane-accent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.promotion-head b {
+  color: var(--lane-accent);
+  font-size: 24px;
+}
+
+.promotion-lane h3 {
+  margin-top: 15px;
+  font-size: 26px;
+}
+
+.proof-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 17px;
+}
+
+.proof-item {
+  min-height: 66px;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--text-dim);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.promotion-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 17px;
+}
+
+.promotion-result span {
+  padding: 10px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.promotion-result span:first-child {
+  color: var(--green);
+  background: var(--green-soft);
+}
+
+.promotion-result span:last-child {
+  color: var(--violet);
+  background: var(--violet-soft);
+}
+
+.authority-zones {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 42px;
+}
+
+.authority-zone {
+  position: relative;
+  min-height: 285px;
+  padding: 23px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--zone-color);
+  border-radius: 18px;
+  background: var(--bg);
+}
+
+.authority-zone:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 44%;
+  right: -32px;
+  color: var(--violet);
+  font-size: 28px;
+}
+
+.authority-zone:nth-child(1) { --zone-color: var(--blue); }
+.authority-zone:nth-child(2) { --zone-color: var(--violet); }
+.authority-zone:nth-child(3) { --zone-color: var(--green); }
+
+.authority-zone small {
+  color: var(--zone-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.authority-zone h3 {
+  margin-top: 9px;
+  font-size: 28px;
+}
+
+.authority-zone > p {
+  margin-top: 7px;
+  color: var(--text-faint);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.zone-items {
+  display: grid;
+  gap: 8px;
+  margin-top: 17px;
+}
+
+.zone-items span {
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text-dim);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.authority-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
+  margin: -12px auto 0;
+  padding: 9px 14px;
+  border: 1px dashed var(--violet);
+  border-radius: 999px;
+  color: var(--violet);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.authority-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 220px 34px minmax(0, 1fr) 34px 220px;
+  align-items: center;
+  gap: 12px;
+}
+
+.authority-endpoint {
+  min-height: 276px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--endpoint-color);
+  border-radius: 18px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.authority-endpoint--proposal { --endpoint-color: var(--blue); }
+.authority-endpoint--execution { --endpoint-color: var(--green); }
+
+.authority-endpoint small {
+  color: var(--endpoint-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.authority-endpoint h3 {
+  margin-top: 10px;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.authority-endpoint p {
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.authority-endpoint span {
+  margin-top: 18px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--endpoint-color);
+  background: color-mix(in srgb, var(--endpoint-color) 10%, var(--bg));
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.authority-arrow {
+  color: var(--violet);
+  font-size: 30px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.authority-contract {
+  min-height: 310px;
+  padding: 18px;
+  border: 2px solid var(--violet);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 94%, var(--violet-soft));
+}
+
+.authority-contract > small {
+  display: block;
+  color: var(--violet);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.authority-contract > h3 {
+  margin-top: 5px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.authority-gates {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.authority-gate {
+  min-height: 154px;
+  padding: 12px 9px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gate-color);
+  border-radius: 12px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.authority-gate:nth-child(1),
+.authority-gate:nth-child(2) { --gate-color: var(--blue); }
+.authority-gate:nth-child(3),
+.authority-gate:nth-child(4) { --gate-color: var(--violet); }
+.authority-gate:nth-child(5) { --gate-color: var(--green); }
+
+.authority-gate b {
+  display: block;
+  color: var(--gate-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.authority-gate strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.authority-gate span {
+  display: block;
+  margin-top: 7px;
+  color: var(--text-faint);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.authority-audit {
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1px dashed var(--violet);
+  border-radius: 10px;
+  color: var(--violet);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.authority-risk {
+  width: max-content;
+  max-width: 100%;
+  margin: -12px auto 0;
+  padding: 8px 13px;
+  border: 1px solid var(--green);
+  border-radius: 999px;
+  color: var(--green);
+  background: var(--bg);
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.linked-loops {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 1fr 52px 1fr;
+  gap: 8px;
+}
+
+.linked-loop {
+  display: grid;
+  grid-template-columns: 205px 1fr;
+  align-items: stretch;
+  gap: 16px;
+  padding: 15px 17px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--loop-color);
+  border-radius: 17px;
+  background: var(--bg);
+}
+
+.linked-loop--runtime { --loop-color: var(--green); }
+.linked-loop--engineering { --loop-color: var(--violet); }
+
+.linked-loop__label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 15px;
+  border-right: 1px solid var(--border);
+}
+
+.linked-loop__label small {
+  color: var(--loop-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.linked-loop__label h3 {
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.linked-loop__label p {
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.linked-loop__stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  align-items: center;
+}
+
+.linked-stage {
+  position: relative;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--loop-color);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg) 95%, var(--loop-color));
+  text-align: center;
+}
+
+.linked-stage:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: -17px;
+  color: var(--loop-color);
+  font-size: 18px;
+  transform: translateY(-50%);
+}
+
+.linked-stage strong {
+  font-size: 14px;
+}
+
+.linked-stage span {
+  margin-top: 5px;
+  color: var(--text-faint);
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.loop-bridges {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 0 180px;
+}
+
+.loop-bridge {
+  padding: 7px 11px;
+  border: 1px dashed var(--bridge-color);
+  border-radius: 999px;
+  color: var(--bridge-color);
+  background: var(--bg);
+  font-size: 9px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.loop-bridge:first-child { --bridge-color: var(--violet); }
+.loop-bridge:last-child { --bridge-color: var(--green); }
+
+.loops-exception {
+  width: max-content;
+  max-width: 100%;
+  margin: -13px auto 0;
+  padding: 7px 12px;
+  border: 1px dashed var(--blue);
+  border-radius: 999px;
+  color: var(--blue);
+  background: var(--bg);
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.measurement-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.metric-quadrant {
+  min-height: 145px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--metric-color);
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+.metric-quadrant:nth-child(1) { --metric-color: var(--blue); }
+.metric-quadrant:nth-child(2) { --metric-color: var(--green); }
+.metric-quadrant:nth-child(3) { --metric-color: var(--violet); }
+.metric-quadrant:nth-child(4) { --metric-color: var(--blue); }
+
+.metric-quadrant small {
+  color: var(--metric-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.metric-quadrant h3 {
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.metric-quadrant p {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.38;
+}
+
+.measurement-baseline {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  align-items: center;
+  gap: 16px;
+  margin-top: -8px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--bg);
+}
+
+.measurement-baseline strong {
+  font-size: 15px;
+}
+
+.baseline-modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.baseline-modes span {
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.measurement-dashboard {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.measure-panel {
+  min-height: 160px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--measure-color);
+  border-radius: 15px;
+  background: var(--bg);
+}
+
+.measure-panel:nth-child(1) { --measure-color: var(--violet); }
+.measure-panel:nth-child(2) { --measure-color: var(--blue); }
+.measure-panel:nth-child(3) { --measure-color: var(--green); }
+.measure-panel:nth-child(4) { --measure-color: var(--violet); }
+
+.measure-panel small {
+  color: var(--measure-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.measure-panel h3 {
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+.cost-ledger,
+.portfolio-lanes {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin-top: 13px;
+}
+
+.cost-ledger span,
+.portfolio-lanes span {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-height: 54px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text-dim);
+  background: var(--bg-soft);
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.scale-equation {
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr 24px 1.15fr;
+  align-items: center;
+  gap: 5px;
+  margin-top: 13px;
+}
+
+.scale-equation span {
+  display: grid;
+  place-items: center;
+  min-height: 58px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text-dim);
+  background: var(--bg-soft);
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.scale-equation b {
+  color: var(--blue);
+  font-size: 18px;
+  text-align: center;
+}
+
+.cohort-flow {
+  display: grid;
+  grid-template-columns: 120px 24px 1fr;
+  align-items: center;
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.cohort-source {
+  display: grid;
+  place-items: center;
+  min-height: 82px;
+  padding: 8px;
+  border: 1px solid var(--green);
+  border-radius: 10px;
+  color: var(--green);
+  background: var(--green-soft);
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.cohort-flow > b {
+  color: var(--green);
+  font-size: 20px;
+  text-align: center;
+}
+
+.cohort-results {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.cohort-results span {
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-size: 9px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.measure-note {
+  margin-top: 9px;
+  color: var(--text-faint);
+  font-size: 9px;
+  font-weight: 650;
+  text-align: center;
+}
+
+.measurement-contract {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  gap: 13px;
+  margin-top: -7px;
+  padding: 10px 14px;
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  background: var(--green-soft);
+}
+
+.measurement-contract strong {
+  color: var(--green);
+  font-size: 14px;
+}
+
+.measurement-contract span {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.closing-spectrum {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 38px;
+}
+
+.closing-stage {
+  position: relative;
+  min-height: 245px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--closing-color);
+  border-radius: 18px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.closing-stage:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 46%;
+  right: -30px;
+  color: var(--violet);
+  font-size: 28px;
+}
+
+.closing-stage:nth-child(1) { --closing-color: var(--blue); }
+.closing-stage:nth-child(2) { --closing-color: var(--violet); }
+.closing-stage:nth-child(3) { --closing-color: var(--green); }
+
+.closing-stage svg {
+  width: 76px;
+  height: 76px;
+}
+
+.closing-stage small {
+  display: block;
+  margin-top: 8px;
+  color: var(--closing-color);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.closing-stage h3 {
+  margin-top: 6px;
+  font-size: 24px;
+}
+
+.closing-stage p {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.closing-loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: -8px;
+}
+
+.closing-loop span {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.closing-loop b {
+  color: var(--violet);
+}
+
+.closing-escalation {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px dashed var(--violet);
+  border-radius: 12px;
+  color: var(--violet);
+  font-size: 10px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.closing-actions {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 10px;
+  max-width: 980px;
+  margin: 10px auto 0;
+}
+
+.closing-action {
+  padding: 8px 14px;
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  background: var(--green-soft);
+  color: var(--text-dim);
+  font-size: 10px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.closing-action strong {
+  color: var(--green);
+}
+
+.slide--questions,
+.slide--thanks {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(46% 62% at 50% 48%, var(--blue-soft), transparent 74%),
+    radial-gradient(34% 48% at 72% 66%, var(--green-soft), transparent 76%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg));
+}
+
+.questions-card {
+  width: min(880px, 76vw);
+  min-height: 390px;
+  display: grid;
+  place-items: center;
+  padding: 54px;
+  border: 2px solid var(--blue);
+  border-radius: 28px;
+  background: color-mix(in srgb, var(--bg) 93%, var(--blue-soft));
+  box-shadow: 0 28px 70px color-mix(in srgb, var(--blue) 14%, transparent);
+  text-align: center;
+}
+
+.questions-card svg {
+  width: 112px;
+  height: 112px;
+}
+
+.questions-card h2 {
+  margin-top: 14px;
+  color: var(--blue);
+  font-size: clamp(64px, 7vw, 110px);
+  line-height: .95;
+}
+
+.questions-card p {
+  margin-top: 18px;
+  color: var(--text-dim);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.thanks-stage {
+  width: min(1240px, 86vw);
+  min-height: 620px;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  align-items: center;
+  gap: 22px;
+  padding: 34px 38px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: color-mix(in srgb, var(--bg) 94%, var(--green-soft));
+  box-shadow: 0 28px 76px color-mix(in srgb, var(--green) 12%, transparent);
+}
+
+.thanks-languages {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 14px 18px;
+  align-items: center;
+  color: var(--text-faint);
+  font-size: 16px;
+  font-weight: 650;
+  text-align: center;
+}
+
+.thanks-center {
+  text-align: center;
+}
+
+.namaste-icon {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+  font-size: 76px;
+  line-height: 1;
+}
+
+.thanks-center h2 {
+  margin-top: 10px;
+  color: var(--green);
+  font-size: clamp(72px, 8vw, 126px);
+  line-height: .92;
+}
+
+.thanks-center p {
+  margin-top: 15px;
+  color: var(--text-dim);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.slide-conclusion {
+  position: absolute;
+  z-index: 3;
+  right: clamp(70px, 7vw, 112px);
+  bottom: clamp(54px, 7vh, 66px);
+  left: clamp(70px, 7vw, 112px);
+  text-align: center;
+  color: var(--text);
+  font-size: clamp(18px, 1.65vw, 25px);
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.slide-conclusion small {
+  display: block;
+  margin-top: 8px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.corner-label {
+  position: absolute;
+  right: clamp(26px, 3vw, 48px);
+  bottom: clamp(22px, 3vh, 36px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.theme-toggle,
+.notes-toggle {
+  position: fixed;
+  z-index: 4;
+  top: 20px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-dim);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.notes-toggle {
+  right: 104px;
+}
+
+.notes-toggle[aria-expanded="true"] {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.notes-toggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+.speaker-notes {
+  position: fixed;
+  z-index: 10;
+  top: 68px;
+  right: 24px;
+  width: min(430px, calc(100vw - 48px));
+  max-height: calc(100vh - 92px);
+  overflow: auto;
+  padding: 25px 27px 28px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg) 97%, var(--blue-soft));
+  box-shadow: 0 24px 70px rgba(15, 23, 42, .24);
+}
+
+.speaker-notes[hidden] {
+  display: none;
+}
+
+.speaker-notes__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid var(--border);
+}
+
+.speaker-notes__label {
+  margin-bottom: 7px;
+  color: var(--blue);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.speaker-notes h2 {
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+
+.speaker-notes__close {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-dim);
+  background: var(--bg);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.speaker-notes__body {
+  padding-top: 9px;
+}
+
+.speaker-notes__body p {
+  margin-top: 14px;
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+.speaker-notes__hint {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.deck-nav {
+  position: fixed;
+  z-index: 5;
+  top: 50%;
+  right: 22px;
+  display: grid;
+  gap: 10px;
+  transform: translateY(-50%);
+}
+
+.deck-nav button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.deck-nav button.active {
+  background: var(--blue);
+  transform: scale(1.45);
+}
+
+.theme-toggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+:fullscreen .theme-toggle,
+:fullscreen .notes-toggle,
+:fullscreen .speaker-notes,
+:fullscreen .deck-nav {
+  display: none !important;
+}
+
+@keyframes enter-copy {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes enter-visual {
+  from { opacity: 0; transform: translateX(24px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes draw-flow {
+  from { stroke-dashoffset: 180; opacity: 0; }
+  to { stroke-dashoffset: 0; opacity: 0.55; }
+}
+
+@keyframes crystallize {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fragment-in {
+  from { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+  to { opacity: 0.82; transform: none; }
+}
+
+@keyframes node-in {
+  from { opacity: 0; transform: scale(0.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes halo-in {
+  to { opacity: 0.8; }
+}
+
+@media (max-width: 980px) {
+  .slide--title {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 18px;
+    padding: 56px 42px 34px;
+  }
+
+  h1 {
+    max-width: 14ch;
+    font-size: clamp(46px, 8.8vw, 78px);
+  }
+
+  .author {
+    margin-top: 24px;
+  }
+
+  .metaphor {
+    justify-self: center;
+    width: min(68vw, 560px);
+    max-height: 48vh;
+  }
+
+  .code-layout,
+  .coffee-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .logic-rail {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .logic-step {
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 13px;
+  }
+
+  .logic-step::after {
+    display: none;
+  }
+
+  .coffee-layout {
+    grid-template-columns: 1fr 0.7fr 1fr;
+  }
+
+  .refresh-layout {
+    grid-template-columns: 1fr 70px 1fr;
+  }
+
+  .runtime-equation {
+    grid-template-columns: minmax(190px, 1fr) 34px minmax(220px, 1.1fr) 42px minmax(180px, .8fr) 42px minmax(180px, .8fr);
+    gap: 8px;
+  }
+
+  .coffee-process {
+    grid-template-columns: minmax(190px, 1fr) 34px minmax(210px, 1.08fr) 34px minmax(185px, .95fr) 34px minmax(185px, .95fr);
+    gap: 7px;
+  }
+
+  .precedent-flow {
+    grid-template-columns: minmax(190px, 1fr) 38px minmax(210px, 1.08fr) 38px minmax(190px, 1fr);
+    gap: 8px;
+  }
+
+  .precedent-bridge {
+    grid-template-columns: minmax(260px, .9fr) 110px minmax(390px, 1.3fr);
+    gap: 12px;
+  }
+
+  .gap-timeline {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 620px) {
+  .slide {
+    padding: 70px 24px 32px;
+  }
+
+  .spectrum {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(42px, 13vw, 64px);
+  }
+
+  .metaphor {
+    width: min(92vw, 500px);
+  }
+
+  .slide-header h2 {
+    font-size: clamp(34px, 10vw, 54px);
+  }
+
+  .logic-rail,
+  .coffee-layout,
+  .cafe-cases,
+  .refresh-layout,
+  .runtime-equation,
+  .coffee-process,
+  .precedent-flow,
+  .precedent-bridge,
+  .gap-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .coffee-center {
+    display: none;
+  }
+
+  .refresh-bridge {
+    display: none;
+  }
+
+  .equation-symbol,
+  .pipeline-arrow,
+  .process-arrow,
+  .story-arrow,
+  .bridge-transfer {
+    display: none;
+  }
+
+  .ops-sequence {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .ops-arrow {
+    transform: rotate(90deg);
+  }
+
+  .gap-timeline::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+@page { size: 1920px 1080px; margin: 0; }
+@media print {
+  html, body { height: auto; overflow: visible; }
+  body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { width: 1920px; height: 1080px; break-after: page; }
+  .slide:last-child { break-after: auto; }
+  .theme-toggle, .notes-toggle, .speaker-notes, .deck-nav { display: none !important; }
+  *, *::before, *::after { animation: none !important; }
+}
+</style>
+</head>
+<body>
+<button class="theme-toggle" type="button" aria-label="Switch color theme">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>
+  </svg>
+  <span>Dark</span>
+</button>
+<button class="notes-toggle" type="button" aria-label="Toggle speaker notes" aria-expanded="false" aria-controls="speaker-notes">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M5 4 H19 V20 H5 Z M8 8 H16 M8 12 H16 M8 16 H13"/>
+  </svg>
+  <span>Notes</span>
+</button>
+
+<main class="deck" id="deck">
+<section class="slide slide--title" id="slide-1" aria-label="Opening slide">
+  <section class="copy">
+    <div class="spectrum" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <p class="kicker">Progressive Crystallization</p>
+    <h1 class="thesis">From agent exploration to <strong>verified software.</strong></h1>
+    <p class="author author--signature">- <strong>Arun Malik</strong></p>
+  </section>
+
+  <figure class="metaphor" aria-label="Multiple open-weight models converge through an explicit decision workflow into crystallized code">
+    <svg viewBox="0 0 800 660" role="img">
+      <defs>
+        <linearGradient id="flow-gradient" x1="170" y1="330" x2="610" y2="330" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="var(--blue)"/>
+          <stop offset="0.52" stop-color="var(--violet)"/>
+          <stop offset="1" stop-color="var(--green)"/>
+        </linearGradient>
+        <radialGradient id="halo-gradient">
+          <stop offset="0" stop-color="var(--green-soft)"/>
+          <stop offset="1" stop-color="var(--green-soft)" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <ellipse class="halo" cx="690" cy="335" rx="160" ry="225"/>
+
+      <g aria-label="Agentic model space">
+        <rect x="-10" y="42" width="238" height="566" rx="25" fill="var(--blue-soft)" fill-opacity=".28" stroke="url(#flow-gradient)" stroke-opacity=".48" stroke-width="1.5" stroke-dasharray="7 7"/>
+        <rect x="12" y="30" width="88" height="25" rx="12.5" fill="var(--bg)" stroke="var(--blue)" stroke-width="1.4"/>
+        <text class="diagram-label" x="29" y="47" fill="var(--blue)">AGENTIC</text>
+      </g>
+
+      <g transform="translate(10 72)">
+        <rect class="model-card" width="184" height="126" rx="17" stroke="var(--blue)"/>
+        <text class="model-label" x="17" y="27">OPEN WEIGHTS · A</text>
+        <g transform="translate(18 48)">
+          <rect class="weight-cell" width="18" height="18" rx="3" fill="var(--blue)"/>
+          <rect class="weight-cell" x="25" width="18" height="18" rx="3" fill="var(--blue-soft)"/>
+          <rect class="weight-cell" x="50" width="18" height="18" rx="3" fill="var(--violet)"/>
+          <rect class="weight-cell" x="75" width="18" height="18" rx="3" fill="var(--blue)"/>
+          <rect class="weight-cell" x="100" width="18" height="18" rx="3" fill="var(--violet-soft)"/>
+          <rect class="weight-cell" x="125" width="18" height="18" rx="3" fill="var(--blue)"/>
+          <rect class="weight-cell" y="25" width="18" height="18" rx="3" fill="var(--blue-soft)"/>
+          <rect class="weight-cell" x="25" y="25" width="18" height="18" rx="3" fill="var(--violet)"/>
+          <rect class="weight-cell" x="50" y="25" width="18" height="18" rx="3" fill="var(--blue)"/>
+          <rect class="weight-cell" x="75" y="25" width="18" height="18" rx="3" fill="var(--violet-soft)"/>
+          <rect class="weight-cell" x="100" y="25" width="18" height="18" rx="3" fill="var(--blue)"/>
+          <rect class="weight-cell" x="125" y="25" width="18" height="18" rx="3" fill="var(--violet)"/>
+        </g>
+      </g>
+
+      <g transform="translate(0 267)">
+        <rect class="model-card" width="184" height="126" rx="17" stroke="var(--violet)"/>
+        <text class="model-label" x="17" y="27">OPEN WEIGHTS · B</text>
+        <g transform="translate(18 50)">
+          <path class="workflow-wire" stroke="var(--violet)" d="M0 21 L32 0 L64 27 L96 4 L128 29 L150 7"/>
+          <path class="workflow-wire" stroke="var(--blue)" d="M0 48 L32 27 L64 52 L96 29 L128 54 L150 35"/>
+          <circle cx="0" cy="21" r="5" fill="var(--violet)"/><circle cx="32" cy="0" r="5" fill="var(--blue)"/>
+          <circle cx="64" cy="27" r="5" fill="var(--violet)"/><circle cx="96" cy="4" r="5" fill="var(--blue)"/>
+          <circle cx="128" cy="29" r="5" fill="var(--violet)"/><circle cx="150" cy="7" r="5" fill="var(--blue)"/>
+        </g>
+      </g>
+
+      <g transform="translate(18 462)">
+        <rect class="model-card" width="184" height="126" rx="17" stroke="var(--green)"/>
+        <text class="model-label" x="17" y="27">OPEN WEIGHTS · C</text>
+        <g transform="translate(24 47)" fill="none" stroke="var(--green)" stroke-width="1.6">
+          <circle cx="18" cy="30" r="13"/><circle cx="68" cy="9" r="13"/>
+          <circle cx="68" cy="51" r="13"/><circle cx="124" cy="30" r="13"/>
+          <path d="M31 25 L55 14 M31 35 L55 46 M81 9 L111 24 M81 51 L111 36"/>
+        </g>
+      </g>
+
+      <path class="flow" d="M194 135 C242 135 241 238 285 284"/>
+      <path class="flow" d="M184 330 C226 330 247 330 285 330"/>
+      <path class="flow" d="M202 525 C244 525 246 421 285 376"/>
+
+      <g class="ordered" style="--delay:760ms">
+        <text class="diagram-label" x="276" y="222">DECISION WORKFLOW</text>
+        <circle class="workflow-node" cx="298" cy="330" r="14" stroke="var(--blue)"/>
+        <path class="workflow-wire" d="M312 330 H337" stroke="var(--blue)"/>
+
+        <path class="workflow-node" d="M370 288 L412 330 L370 372 L328 330 Z" stroke="var(--violet)"/>
+        <text class="diagram-label" x="350" y="334">RULE?</text>
+
+        <path class="workflow-wire" d="M370 288 V264 H441" stroke="var(--violet)"/>
+        <rect class="workflow-node" x="441" y="239" width="82" height="50" rx="11" stroke="var(--blue)"/>
+        <text class="diagram-label" x="460" y="268">ACTION</text>
+
+        <path class="workflow-wire" d="M370 372 V396 H441" stroke="var(--violet)"/>
+        <rect class="workflow-node" x="441" y="371" width="82" height="50" rx="11" stroke="var(--green)"/>
+        <text class="diagram-label" x="456" y="400">FALLBACK</text>
+
+        <path class="workflow-wire" d="M523 264 H542 V309" stroke="var(--blue)"/>
+        <path class="workflow-wire" d="M523 396 H542 V351" stroke="var(--green)"/>
+        <path class="workflow-node" d="M542 309 L563 330 L542 351 L521 330 Z" stroke="var(--green)"/>
+        <path class="workflow-wire" d="M563 330 H591" stroke="var(--green)" stroke-width="3"/>
+        <path d="M579 320 L592 330 L579 340" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <g class="ordered" style="--delay:980ms">
+        <rect x="602" y="150" width="180" height="360" rx="22" fill="var(--bg)" stroke="var(--green)" stroke-width="2"/>
+        <text class="diagram-label" x="623" y="190" fill="var(--green)">CRYSTALLIZED CODE</text>
+        <rect class="code-line" x="623" y="224" width="91" height="10" fill="var(--green)"/>
+        <rect class="code-line" x="640" y="255" width="111" height="10" fill="var(--blue)"/>
+        <rect class="code-line" x="640" y="286" width="82" height="10" fill="var(--violet)"/>
+        <rect class="code-line" x="657" y="317" width="101" height="10" fill="var(--green)"/>
+        <rect class="code-line" x="657" y="348" width="70" height="10" fill="var(--blue)"/>
+        <rect class="code-line" x="640" y="379" width="122" height="10" fill="var(--violet)"/>
+        <rect class="code-line" x="623" y="410" width="96" height="10" fill="var(--green)"/>
+        <rect x="623" y="461" width="138" height="2" rx="1" fill="var(--border)"/>
+      </g>
+    </svg>
+  </figure>
+
+  <p class="corner-label">01</p>
+</section>
+
+<section class="slide slide--cafe" id="slide-2" aria-label="Three kinds of coffee request">
+  <header class="slide-header">
+    <p class="kicker">Where reasoning belongs</p>
+    <h2>Not every coffee order needs the same kind of <strong>intelligence.</strong></h2>
+  </header>
+
+  <div class="cafe-cases">
+    <article class="cafe-case">
+      <p class="case-label">01 · New drink</p>
+      <div class="case-visual" aria-hidden="true">
+        <svg viewBox="0 0 200 150">
+          <path d="M60 54 H138 L129 126 Q125 140 99 140 Q73 140 69 126 Z" fill="var(--bg)" stroke="var(--blue)" stroke-width="3"/>
+          <path d="M139 72 H151 Q174 72 174 94 Q174 116 145 116 H132" fill="none" stroke="var(--blue)" stroke-width="3"/>
+          <path d="M78 37 C68 18 91 14 82 0 M104 36 C94 17 118 12 108 0" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M23 33 L28 44 L40 49 L28 54 L23 66 L18 54 L6 49 L18 44 Z" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="2"/>
+          <circle cx="163" cy="35" r="8" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="2"/>
+          <path d="M157 35 H169 M163 29 V41" stroke="var(--violet)" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>How should we make it?</h3>
+      <p class="case-action">Explore</p>
+      <p>No recipe exists. Agentic discovery and judgment are useful.</p>
+    </article>
+
+    <article class="cafe-case">
+      <p class="case-label">02 · Ambiguous order</p>
+      <div class="case-visual" aria-hidden="true">
+        <svg viewBox="0 0 200 150">
+          <path d="M22 26 H126 Q140 26 140 40 V83 Q140 97 126 97 H72 L45 119 L51 97 H22 Q8 97 8 83 V40 Q8 26 22 26 Z" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="3"/>
+          <text x="72" y="72" text-anchor="middle" font-family="var(--font-body)" font-size="54" font-weight="800" fill="var(--violet)">?</text>
+          <path d="M116 66 H176 Q190 66 190 80 V112 Q190 126 176 126 H160 L165 143 L143 126 H116 Q102 126 102 112 V80 Q102 66 116 66 Z" fill="var(--bg)" stroke="var(--blue)" stroke-width="2.5"/>
+          <circle cx="128" cy="96" r="4" fill="var(--blue)"/><circle cx="145" cy="96" r="4" fill="var(--blue)"/><circle cx="162" cy="96" r="4" fill="var(--blue)"/>
+        </svg>
+      </div>
+      <h3>What did the customer mean?</h3>
+      <p class="case-action">Interpret</p>
+      <p>The procedure may exist, but one bounded ambiguity still requires judgment.</p>
+    </article>
+
+    <article class="cafe-case">
+      <p class="case-label">03 · Covered order</p>
+      <div class="case-visual" aria-hidden="true">
+        <svg viewBox="0 0 200 150">
+          <rect x="18" y="14" width="84" height="122" rx="10" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+          <path d="M35 42 H84 M35 60 H76 M35 78 H84 M35 96 H68" stroke="var(--green)" stroke-width="5" stroke-linecap="round"/>
+          <path d="M116 56 H177 L169 124 Q166 137 147 137 Q128 137 125 124 Z" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+          <path d="M177 72 H185 Q197 72 197 89 Q197 106 173 106" fill="none" stroke="var(--green)" stroke-width="3"/>
+          <path d="M135 42 C126 25 147 20 139 6 M157 42 C148 25 169 20 161 6" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Which recipe applies?</h3>
+      <p class="case-action">Route</p>
+      <p>Map the request to a supported recipe, refresh current conditions, then let software execute and verify it.</p>
+    </article>
+  </div>
+
+  <p class="slide-conclusion">Which decisions still need to be decisions?</p>
+  <p class="corner-label">02</p>
+</section>
+
+<section class="slide slide--recipe-refresh" id="slide-3" aria-label="Turn a coffee order into a verified result using a reusable recipe">
+  <header class="slide-header">
+    <p class="kicker">The reusable path</p>
+    <h2>The order supplies parameters. <strong>The recipe supplies the workflow.</strong></h2>
+  </header>
+
+  <div class="coffee-process">
+    <article class="process-stage process-stage--order">
+      <p class="process-number">01 · Order</p>
+      <h3>Customer request</h3>
+      <div class="order-ticket" aria-label="Receipt for a turmeric oat milk latte">
+        <div class="ticket-meta">
+          <span>Order #042</span>
+          <span>1 item</span>
+        </div>
+        <p class="ticket-drink">TURMERIC OAT MILK LATTE</p>
+        <div class="ticket-line"><span>Milk</span><strong>Oat</strong></div>
+        <div class="ticket-line"><span>Temperature</span><strong>Extra hot</strong></div>
+        <div class="ticket-line"><span>Sugar syrup</span><strong>1 shot</strong></div>
+        <div class="ticket-total"><span>Runtime parameters</span><span>✓</span></div>
+      </div>
+      <p class="stage-status">Parameters captured</p>
+    </article>
+
+    <div class="process-arrow" aria-hidden="true">
+      <svg viewBox="0 0 54 28">
+        <path d="M3 14 H43 M34 5 L44 14 L34 23" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <article class="process-stage process-stage--recipe">
+      <p class="process-number">02 · Recipe</p>
+      <h3>Reusable workflow</h3>
+      <div class="recipe-sheet">
+        <p class="recipe-name">turmeric-latte.recipe</p>
+        <div class="recipe-params">
+          <span>milk = <strong>order.milk</strong></span>
+          <span>temp = <strong>order.temperature</strong></span>
+          <span>syrup = <strong>order.syrup</strong></span>
+        </div>
+        <p class="recipe-step"><span>1</span>Pull the espresso shot</p>
+        <p class="recipe-step"><span>2</span>Steam milk with turmeric</p>
+        <p class="recipe-step"><span>3</span>Add syrup and combine</p>
+        <p class="recipe-step"><span>4</span>Check temperature and finish</p>
+      </div>
+      <p class="stage-status">Recipe matched</p>
+    </article>
+
+    <div class="process-arrow" aria-hidden="true">
+      <svg viewBox="0 0 54 28">
+        <path d="M3 14 H43 M34 5 L44 14 L34 23" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <article class="process-stage process-stage--execute process-machine">
+      <p class="process-number">03 · Execution</p>
+      <h3>Espresso machine</h3>
+      <svg viewBox="0 0 240 220" aria-hidden="true">
+        <defs>
+          <linearGradient id="machine-cup-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="var(--blue)"/>
+            <stop offset=".5" stop-color="var(--violet)"/>
+            <stop offset="1" stop-color="var(--green)"/>
+          </linearGradient>
+        </defs>
+        <rect x="25" y="10" width="190" height="198" rx="18" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="4"/>
+        <rect x="42" y="28" width="156" height="48" rx="9" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+        <circle cx="64" cy="52" r="7" fill="var(--green)"/>
+        <circle cx="86" cy="52" r="7" fill="var(--blue)"/>
+        <circle cx="122" cy="52" r="13" fill="var(--bg-soft)" stroke="var(--violet)" stroke-width="3"/>
+        <path d="M122 52 L129 45" stroke="var(--green)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M151 44 H181 M151 54 H177 M151 64 H171" stroke="var(--text-dim)" stroke-width="3.5" stroke-linecap="round"/>
+        <rect x="55" y="88" width="130" height="102" rx="10" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+        <path d="M82 88 H158 V108 H82 Z" fill="var(--bg-soft)" stroke="var(--violet)" stroke-width="3"/>
+        <rect x="97" y="106" width="46" height="14" rx="5" fill="var(--text)" opacity=".84"/>
+        <path d="M143 113 H178" stroke="var(--text)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M108 120 V133 M132 120 V133" stroke="var(--text)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M109 135 C103 124 116 119 110 108 M132 135 C126 124 139 119 133 108" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M91 137 H149 L144 176 Q141 190 120 190 Q99 190 96 176 Z" fill="var(--bg)" stroke="url(#machine-cup-gradient)" stroke-width="4"/>
+        <path d="M149 149 H162 Q177 149 177 164 Q177 179 146 179" fill="none" stroke="var(--green)" stroke-width="4"/>
+        <circle cx="211" cy="91" r="7" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+        <path d="M216 96 L228 116 L220 153" fill="none" stroke="var(--text-dim)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M216 153 H225" stroke="var(--blue)" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="220" cy="153" r="3" fill="var(--blue)"/>
+        <path d="M48 208 V216 M192 208 V216" stroke="var(--violet)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <p>Apply the recipe using current ingredients and machine state.</p>
+      <p class="machine-status">Workflow running</p>
+    </article>
+
+    <div class="process-arrow" aria-hidden="true">
+      <svg viewBox="0 0 54 28">
+        <path d="M3 14 H43 M34 5 L44 14 L34 23" fill="none" stroke="var(--violet)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <article class="process-stage process-stage--result process-result">
+      <p class="process-number">04 · Result</p>
+      <h3>Turmeric latte</h3>
+      <svg viewBox="0 0 280 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="result-cup-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="var(--blue)"/>
+            <stop offset=".5" stop-color="var(--violet)"/>
+            <stop offset="1" stop-color="var(--green)"/>
+          </linearGradient>
+        </defs>
+        <path d="M80 98 H204 L190 234 Q184 266 142 266 Q100 266 94 234 Z" fill="var(--bg)" stroke="url(#result-cup-gradient)" stroke-width="4"/>
+        <path d="M202 130 H221 Q254 130 254 164 Q254 198 214 198 H196" fill="none" stroke="var(--green)" stroke-width="4"/>
+        <ellipse cx="142" cy="98" rx="62" ry="17" fill="#f2cf72" stroke="var(--green)" stroke-width="3"/>
+        <ellipse cx="142" cy="98" rx="49" ry="11" fill="#d39a26" opacity=".88"/>
+        <path d="M112 67 C97 42 126 34 113 9 M145 66 C130 40 162 31 147 5 M176 67 C161 44 190 35 178 12" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+        <path d="M104 230 Q142 246 180 230" fill="none" stroke="var(--green)" stroke-width="3"/>
+      </svg>
+      <p>Oat milk, extra hot, one shot of sugar syrup.</p>
+      <p class="result-status">160°F · verified</p>
+    </article>
+  </div>
+
+  <p class="slide-conclusion">Different parameters. The same repeatable workflow.</p>
+  <p class="corner-label">03</p>
+</section>
+
+<section class="slide slide--coffee" id="slide-4" aria-label="Receipt and recipe distinction using the turmeric latte example">
+  <header class="slide-header">
+    <p class="kicker">One execution is not a reuse contract</p>
+    <h2>A receipt is <strong>not a recipe.</strong></h2>
+  </header>
+
+  <div class="coffee-layout">
+    <article class="paper receipt" aria-label="Receipt from one turmeric latte execution">
+      <p class="paper-label">Receipt · one execution</p>
+      <div class="receipt-row"><span>Order</span><strong>#042</strong></div>
+      <div class="receipt-row"><span>Drink</span><strong>Turmeric oat latte</strong></div>
+      <div class="receipt-row"><span>Milk</span><strong>Oat</strong></div>
+      <div class="receipt-row"><span>Temperature</span><strong>160°F</strong></div>
+      <div class="receipt-row"><span>Sugar syrup</span><strong>1 shot</strong></div>
+      <div class="receipt-row"><span>Outcome</span><strong>Verified</strong></div>
+      <p class="paper-verdict">Evidence that this order worked once.</p>
+    </article>
+
+    <div class="coffee-center" aria-hidden="true">
+      <svg viewBox="0 0 280 300">
+        <defs>
+          <linearGradient id="cup-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="var(--blue)"/>
+            <stop offset=".5" stop-color="var(--violet)"/>
+            <stop offset="1" stop-color="var(--green)"/>
+          </linearGradient>
+        </defs>
+        <path d="M80 98 H204 L190 234 Q184 266 142 266 Q100 266 94 234 Z" fill="var(--bg)" stroke="url(#cup-gradient)" stroke-width="4"/>
+        <path d="M202 130 H221 Q254 130 254 164 Q254 198 214 198 H196" fill="none" stroke="var(--green)" stroke-width="4"/>
+        <ellipse cx="142" cy="98" rx="62" ry="17" fill="#f2cf72" stroke="var(--green)" stroke-width="3"/>
+        <ellipse cx="142" cy="98" rx="49" ry="11" fill="#d39a26" opacity=".88"/>
+        <path d="M112 67 C97 42 126 34 113 9 M145 66 C130 40 162 31 147 5 M176 67 C161 44 190 35 178 12" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+        <path d="M104 230 Q142 246 180 230" fill="none" stroke="var(--green)" stroke-width="3"/>
+      </svg>
+      <p>The cup is the <strong>verified outcome.</strong><br>The documents preserve different knowledge.</p>
+    </div>
+
+    <article class="paper recipe" aria-label="Reusable turmeric latte recipe">
+      <p class="paper-label">Recipe · reusable contract</p>
+      <h3>Turmeric oat latte</h3>
+      <div class="recipe-step"><span>01</span><p>Check that the drink and requested modifiers are supported.</p></div>
+      <div class="recipe-step"><span>02</span><p>Bind milk, temperature, and syrup from the current order.</p></div>
+      <div class="recipe-step"><span>03</span><p>Execute the known preparation steps consistently.</p></div>
+      <div class="recipe-step"><span>04</span><p>Verify temperature and completion; route exceptions for investigation.</p></div>
+      <p class="paper-verdict">A reviewed contract for the next covered order.</p>
+    </article>
+  </div>
+
+  <p class="slide-conclusion">One successful execution is evidence, not permission to repeat it everywhere.</p>
+  <p class="corner-label">04</p>
+</section>
+
+<section class="slide slide--code" id="slide-5" aria-label="Crystallized turmeric latte workflow code">
+  <header class="slide-header">
+    <p class="kicker">What the recipe becomes</p>
+    <h2>The reusable recipe becomes <strong>executable, inspectable software.</strong></h2>
+  </header>
+
+  <div class="code-layout">
+    <div class="logic-rail" aria-label="Reusable decision contract">
+      <article class="logic-step">
+        <span class="num">01</span>
+        <div>
+          <strong>Check coverage</strong>
+          <p>Use the recipe only when it supports the requested drink and modifiers.</p>
+        </div>
+      </article>
+      <article class="logic-step">
+        <span class="num">02</span>
+        <div>
+          <strong>Bind the parameters</strong>
+          <p>Map oat milk, extra-hot temperature, and syrup into the reusable workflow.</p>
+        </div>
+      </article>
+      <article class="logic-step">
+        <span class="num">03</span>
+        <div>
+          <strong>Execute and verify</strong>
+          <p>Run the machine, check the result, and recover explicitly when verification fails.</p>
+        </div>
+      </article>
+    </div>
+
+    <article class="code-panel" aria-label="Example crystallized workflow code">
+      <div class="code-panel__head">
+        <span>turmeric-latte.ts</span>
+        <span>explicit · inspectable · testable</span>
+      </div>
+      <code class="code-block"><span class="kw">function</span> makeTurmericLatte(order, machine) {
+  <span class="kw">if</span> (!recipe.<span class="rule">supports</span>(order))
+    <span class="kw">return</span> <span class="agent">agent.investigate</span>(order);
+
+  <span class="kw">const</span> parameters = recipe.<span class="rule">bind</span>(order);
+  <span class="kw">const</span> result = machine.<span class="rule">execute</span>(
+    recipe.steps, parameters);
+
+  <span class="kw">return</span> recipe.<span class="verify">verify</span>(result)
+    ? result
+    : recipe.<span class="verify">recover</span>(result);
+}</code>
+      <div class="code-panel__foot">Coverage · parameters · execution · verification</div>
+    </article>
+  </div>
+
+  <p class="slide-conclusion">The order changes the parameters, not the execution contract.</p>
+  <p class="corner-label">05</p>
+</section>
+
+<section class="slide slide--precedent" id="slide-6" aria-label="Historical engineering precedent for maintained recovery software">
+  <header class="slide-header">
+    <p class="kicker">From analogy to precedent</p>
+    <h2>The coffee is the analogy. <strong>The engineering move is not new.</strong></h2>
+  </header>
+
+  <div class="precedent-bridge">
+    <article class="bridge-panel bridge-panel--analogy">
+      <p class="bridge-label">Slide 5 · coffee analogy</p>
+      <h3>A recipe becomes inspectable software</h3>
+      <div class="analogy-visual" aria-hidden="true">
+        <div class="analogy-artifact">
+          <svg viewBox="0 0 100 100">
+            <rect x="18" y="9" width="64" height="82" rx="8" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+            <path d="M31 31 H69 M31 45 H62 M31 59 H69" stroke="var(--violet)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M31 75 L38 82 L51 68" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <strong>Reviewed recipe</strong>
+        </div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-artifact">
+          <svg viewBox="0 0 100 100">
+            <rect x="9" y="16" width="82" height="67" rx="10" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="3"/>
+            <path d="M31 38 L20 50 L31 62 M69 38 L80 50 L69 62 M57 31 L43 69" fill="none" stroke="var(--violet)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="80" cy="78" r="14" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+            <path d="M74 78 L79 83 L87 73" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <strong>Maintained code</strong>
+        </div>
+      </div>
+      <p>Parameters vary. The reviewed execution contract persists.</p>
+      <p class="bridge-pill">The metaphor</p>
+    </article>
+
+    <div class="bridge-transfer">
+      <strong>Shared engineering pattern</strong>
+      <div class="transfer-pattern">
+        <div class="transfer-stage">
+          <b>Capture knowledge</b>
+          <span>Recipe · runbook</span>
+        </div>
+        <div class="transfer-arrow" aria-hidden="true">↓</div>
+        <div class="transfer-stage">
+          <b>Engineer the stable path</b>
+          <span>Review · safeguards</span>
+        </div>
+        <div class="transfer-arrow" aria-hidden="true">↓</div>
+        <div class="transfer-stage">
+          <b>Maintain execution</b>
+          <span>Code · automation</span>
+        </div>
+      </div>
+    </div>
+
+    <article class="bridge-panel bridge-panel--operations">
+      <p class="bridge-label">How engineering works today</p>
+      <h3>Operational guidance becomes maintained automation</h3>
+      <div class="ops-sequence">
+        <div class="ops-step">
+          <svg viewBox="0 0 90 90" aria-hidden="true">
+            <rect x="13" y="20" width="43" height="55" rx="6" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="3"/>
+            <rect x="24" y="13" width="43" height="55" rx="6" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+            <rect x="35" y="6" width="43" height="55" rx="6" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+            <path d="M45 23 H68 M45 34 H65 M45 45 H69" stroke="var(--green)" stroke-width="3.5" stroke-linecap="round"/>
+          </svg>
+          <strong>TSGs · runbooks · playbooks</strong>
+          <span>Operational guidance</span>
+        </div>
+        <div class="ops-arrow">→</div>
+        <div class="ops-step">
+          <svg viewBox="0 0 90 90" aria-hidden="true">
+            <rect x="5" y="11" width="27" height="27" rx="5" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+            <rect x="58" y="11" width="27" height="27" rx="5" fill="var(--bg)" stroke="var(--blue)" stroke-width="3"/>
+            <path d="M19 38 V50 H34 M71 38 V50 H56" fill="none" stroke="var(--text-dim)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="45" cy="60" r="16" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="3"/>
+            <circle cx="45" cy="60" r="5" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+            <path d="M45 39 V45 M45 75 V81 M24 60 H30 M60 60 H66 M30 45 L35 50 M55 70 L60 75 M30 75 L35 70 M55 50 L60 45" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M12 24 H25 M65 24 H78" stroke="var(--text-dim)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <strong>Engineers encode the stable path</strong>
+          <span>Safeguards and integration</span>
+        </div>
+        <div class="ops-arrow">→</div>
+        <div class="ops-step">
+          <svg viewBox="0 0 90 90" aria-hidden="true">
+            <rect x="7" y="10" width="76" height="56" rx="9" fill="var(--green-soft)" stroke="var(--green)" stroke-width="3"/>
+            <path d="M20 28 L28 36 L20 44 M34 47 H48" fill="none" stroke="var(--green)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="60" cy="27" r="6" fill="var(--bg)" stroke="var(--violet)" stroke-width="3"/>
+            <circle cx="70" cy="48" r="6" fill="var(--bg)" stroke="var(--blue)" stroke-width="3"/>
+            <circle cx="50" cy="50" r="6" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+            <path d="M63 32 L68 42 M56 31 L52 44 M56 50 H64" fill="none" stroke="var(--text-dim)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="70" cy="68" r="13" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+            <path d="M64 68 L69 73 L77 63" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <strong>Scripts · workflows · automation</strong>
+          <span>Maintained with the software</span>
+        </div>
+      </div>
+      <p>People execute the guidance first. Engineers encode the repeatable path with checks, recovery, and integration.</p>
+      <p class="bridge-pill">A familiar engineering path</p>
+    </article>
+  </div>
+
+  <p class="slide-conclusion">Progressive Crystallization extends a familiar engineering practice.</p>
+  <p class="corner-label">06</p>
+</section>
+
+<section class="slide slide--gap" id="slide-7" aria-label="Playbook execution modes and the developer productivity loop">
+  <header class="slide-header">
+    <p class="kicker">Traditional automation → executable playbooks</p>
+    <h2>The alert is the same. <strong>The operating model changes.</strong></h2>
+  </header>
+
+  <div class="model-compare">
+    <article class="compare-entry">
+      <svg viewBox="0 0 180 120" aria-hidden="true">
+        <path d="M63 83 H117 L108 99 H72 Z" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="3"/>
+        <path d="M75 82 V55 Q75 31 90 31 Q105 31 105 55 V82" fill="var(--bg)" stroke="var(--blue)" stroke-width="3"/>
+        <path d="M85 22 Q90 15 95 22" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="90" cy="105" r="6" fill="var(--blue)"/>
+        <path d="M51 48 Q42 58 51 68 M129 48 Q138 58 129 68" fill="none" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <strong>Alert or task</strong>
+      <span>Same input</span>
+    </article>
+
+    <article class="model-lane model-lane--traditional">
+      <div class="lane-label">
+        <span>Traditional</span>
+        <strong>Automation plus documentation</strong>
+        <p>Gaps leave the executable path.</p>
+      </div>
+      <div class="traditional-flow">
+        <div class="traditional-step">Scripts and workflows</div>
+        <span class="flow-arrow">→</span>
+        <div class="traditional-step">Unsupported gap</div>
+        <span class="flow-arrow">→</span>
+        <div class="traditional-step">Human investigates</div>
+        <span class="flow-arrow">→</span>
+        <div class="traditional-step">TSG or runbook updated</div>
+      </div>
+    </article>
+
+    <article class="model-lane model-lane--playbook">
+      <div class="lane-label">
+        <span>New · highlighted path</span>
+        <strong>Executable playbook</strong>
+        <p>Automation, agents, and human judgment share one contract.</p>
+      </div>
+      <div class="playbook-lane-content">
+        <div class="new-flow">
+          <div class="new-step">
+            <strong>How much is known?</strong>
+            <span>Select the playbook type that matches the uncertainty.</span>
+          </div>
+          <div class="parallel-fork parallel-fork--out" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </div>
+          <div class="mode-stack">
+            <div class="mode-mini">
+              <b>Deterministic playbook</b>
+              <em>Fully known and repeatable</em>
+              <span>Scripts and workflows. No agent needed.</span>
+            </div>
+            <div class="mode-mini">
+              <b>Hybrid playbook</b>
+              <em>One ambiguous decision does not make the whole workflow agentic</em>
+              <span>Collect evidence deterministically → agent makes one bounded decision.</span>
+            </div>
+            <div class="mode-mini">
+              <b>Agent-led playbook</b>
+              <em>Goal known, path ambiguous</em>
+              <span>Agent plans and uses tools with human guardrails.</span>
+            </div>
+          </div>
+          <div class="parallel-fork parallel-fork--in" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </div>
+          <div class="new-step">
+            <strong>Verified outcome</strong>
+            <span>Or human escalation when authority or confidence is insufficient.</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="developer-loop-band">
+      <div class="developer-loop-label">
+        <small>Design time · separate from execution</small>
+        <strong>From manual TSGs to executable assets</strong>
+        <span>Engineers can encode directly; agents can reduce the authoring cost.</span>
+      </div>
+      <div class="developer-loop-flow">
+        <div class="loop-mini">Manual TSG and execution evidence</div>
+        <span class="flow-arrow">→</span>
+        <div class="loop-mini">Engineer writes directly or agent drafts code and tests</div>
+        <span class="flow-arrow">→</span>
+        <div class="loop-mini">Engineer reviews and validates</div>
+        <span class="flow-arrow">→</span>
+        <div class="loop-mini">Executable playbook or reusable skill ships</div>
+      </div>
+    </aside>
+  </div>
+
+  <p class="slide-conclusion">Agents handle bounded gaps today. Engineers remove repeatable gaps tomorrow.</p>
+  <p class="corner-label">07</p>
+</section>
+
+<section class="slide slide--authority" id="slide-8" aria-label="Granular authorization boundaries between agent reasoning and permitted tool execution">
+  <header class="slide-header">
+    <p class="kicker">Reasoning is not permission</p>
+    <h2>A recommendation cannot <strong>grant its own authority.</strong></h2>
+  </header>
+
+  <div class="authority-layout">
+    <article class="authority-endpoint authority-endpoint--proposal">
+      <small>Agent reasoning</small>
+      <h3>Proposed action</h3>
+      <p>Evidence, rationale, intended target, requested operation, and expected consequence.</p>
+      <span>Capability</span>
+    </article>
+
+    <div class="authority-arrow" aria-hidden="true">→</div>
+
+    <article class="authority-contract">
+      <small>Granular authorization contract</small>
+      <h3>Every consequence crosses explicit gates</h3>
+      <div class="authority-gates">
+        <div class="authority-gate">
+          <b>01</b>
+          <strong>Identity</strong>
+          <span>Who or what is acting?</span>
+        </div>
+        <div class="authority-gate">
+          <b>02</b>
+          <strong>Tool</strong>
+          <span>Which tools are available?</span>
+        </div>
+        <div class="authority-gate">
+          <b>03</b>
+          <strong>Function</strong>
+          <span>Read, write, or destructive?</span>
+        </div>
+        <div class="authority-gate">
+          <b>04</b>
+          <strong>Parameter</strong>
+          <span>Which targets and values?</span>
+        </div>
+        <div class="authority-gate">
+          <b>05</b>
+          <strong>Approval</strong>
+          <span>What requires a person?</span>
+        </div>
+      </div>
+      <div class="authority-audit">Actor → reasoning decision → tool call → service response → verified outcome</div>
+    </article>
+
+    <div class="authority-arrow" aria-hidden="true">→</div>
+
+    <article class="authority-endpoint authority-endpoint--execution">
+      <small>Permitted consequence</small>
+      <h3>Execute, audit, verify</h3>
+      <p>The authorized operation runs within scope. Its result is independently checked and attributable.</p>
+      <span>Authority</span>
+    </article>
+  </div>
+
+  <div class="authority-risk">Generated commands, configurations, or high-impact actions require stronger validation and explicit approval.</div>
+
+  <p class="slide-conclusion">Capability is not access. Interpretation is not authorization.</p>
+  <p class="corner-label">08</p>
+</section>
+
+<section class="slide slide--candidate" id="slide-9" aria-label="Linked operational recovery and engineering learning loops">
+  <header class="slide-header">
+    <p class="kicker">Two linked loops</p>
+    <h2>Recover the system now. <strong>Improve the procedure deliberately.</strong></h2>
+  </header>
+
+  <div class="linked-loops">
+    <article class="linked-loop linked-loop--runtime">
+      <div class="linked-loop__label">
+        <small>Runtime · operational recovery</small>
+        <h3>Handle this case</h3>
+        <p>Software owns state, deadlines, retries, durable waits, and stopping conditions.</p>
+      </div>
+      <div class="linked-loop__stages">
+        <div class="linked-stage"><strong>Observe</strong><span>Collect fresh, validated evidence</span></div>
+        <div class="linked-stage"><strong>Decide</strong><span>Apply the known rule or bounded judgment</span></div>
+        <div class="linked-stage"><strong>Act</strong><span>Cross the authorization boundary</span></div>
+        <div class="linked-stage"><strong>Verify</strong><span>Recover, retry, roll back, or escalate</span></div>
+      </div>
+    </article>
+
+    <div class="loop-bridges">
+      <div class="loop-bridge">Runtime evidence and exceptions ↓</div>
+      <div class="loop-bridge">↑ Reviewed contract and routing update</div>
+    </div>
+
+    <article class="linked-loop linked-loop--engineering">
+      <div class="linked-loop__label">
+        <small>Design time · engineering learning</small>
+        <h3>Improve the next case</h3>
+        <p>Human actions are evidence, not unquestionable labels. Review the outcome and context.</p>
+      </div>
+      <div class="linked-loop__stages">
+        <div class="linked-stage"><strong>Preserve evidence</strong><span>Inputs, decisions, tools, failures, unknowns</span></div>
+        <div class="linked-stage"><strong>Draft contract</strong><span>Scope, typed behavior, exceptions, owner</span></div>
+        <div class="linked-stage"><strong>Test and review</strong><span>Replay, counterexamples, dependencies</span></div>
+        <div class="linked-stage"><strong>Promote</strong><span>Release only the covered variant</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="loops-exception">No automatic promotion: unsupported, unsafe, or unverified cases remain visible.</div>
+
+  <p class="slide-conclusion">Runtime handles the incident. Engineering changes the maintained system.</p>
+  <p class="corner-label">09</p>
+</section>
+
+<section class="slide slide--measurement" id="slide-10" aria-label="Qualitative measurement dashboard for total effort, scale, denominator, and execution portfolio">
+  <header class="slide-header">
+    <p class="kicker">Measure the whole operating system</p>
+    <h2>Not just the model call. <strong>Not just the successful path.</strong></h2>
+  </header>
+
+  <div class="measurement-dashboard">
+    <article class="measure-panel">
+      <small>Total-cost ledger</small>
+      <h3>Zero inference is not zero cost</h3>
+      <div class="cost-ledger">
+        <span>Judgment</span><span>Tools</span><span>People</span><span>Infrastructure</span><span>Maintenance</span><span>Exceptions</span>
+      </div>
+      <p class="measure-note">Pay for judgment where it changes the result; account for the complete path.</p>
+    </article>
+
+    <article class="measure-panel">
+      <small>Scale multiplier</small>
+      <h3>Small recurring decisions compound</h3>
+      <div class="scale-equation">
+        <span>One repeated decision</span><b>×</b><span>Operational recurrence</span><b>=</b><span>Cumulative effort and risk</span>
+      </div>
+      <p class="measure-note">Scale motivates engineering discipline; it does not prove causal savings.</p>
+    </article>
+
+    <article class="measure-panel">
+      <small>Full denominator</small>
+      <h3>Keep every eligible outcome visible</h3>
+      <div class="cohort-flow">
+        <div class="cohort-source">Eligible cases</div>
+        <b>→</b>
+        <div class="cohort-results">
+          <span>Verified outcome</span><span>Human escalation</span><span>Unsupported</span><span>Unknown or unverified</span>
+        </div>
+      </div>
+      <p class="measure-note">Do not report only accepted cases or relabel every remainder as failure.</p>
+    </article>
+
+    <article class="measure-panel">
+      <small>Execution portfolio</small>
+      <h3>Different scenarios keep different forms</h3>
+      <div class="portfolio-lanes">
+        <span>Agent-led<br>path uncertain</span>
+        <span>Hybrid<br>judgment bounded</span>
+        <span>Deterministic<br>decisions specified</span>
+      </div>
+      <p class="measure-note">No target percentages. No mandatory maturity ladder. Compare like-for-like scenarios.</p>
+    </article>
+  </div>
+
+  <div class="measurement-contract">
+    <strong>Same verified outcome contract</strong>
+    <span>Coverage · recovery · cleanup · escalation · total effort · maintained correctness</span>
+  </div>
+
+  <p class="slide-conclusion">Optimize verified recovery per unit of risk and total effort, not automation purity.</p>
+  <p class="corner-label">10</p>
+</section>
+
+<section class="slide slide--closing" id="slide-11" aria-label="Closing synthesis of progressive crystallization as a division of labor between AI, software, and people">
+  <header class="slide-header">
+    <p class="kicker">Closing synthesis</p>
+    <h2>Give AI the unknown. <strong>Give software the understood.</strong></h2>
+  </header>
+
+  <div class="closing-spectrum">
+    <article class="closing-stage">
+      <svg viewBox="0 0 90 90" aria-hidden="true">
+        <circle cx="38" cy="38" r="22" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="3"/>
+        <path d="M54 54 L73 73" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M29 31 H47 M29 40 H43" stroke="var(--text-dim)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M67 18 V32 M60 25 H74" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <small>Unknown</small>
+      <h3>Investigate</h3>
+      <p>A new failure or unfamiliar request needs evidence gathering, hypothesis testing, and visible uncertainty.</p>
+    </article>
+
+    <article class="closing-stage">
+      <svg viewBox="0 0 90 90" aria-hidden="true">
+        <rect x="10" y="18" width="70" height="49" rx="10" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="3"/>
+        <path d="M23 34 H45 M23 47 H40" stroke="var(--violet)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="65" cy="42" r="10" fill="var(--bg)" stroke="var(--blue)" stroke-width="3"/>
+        <path d="M65 32 V52 M55 42 H75" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <small>Developing understanding</small>
+      <h3>Capture and bound</h3>
+      <p>A hybrid playbook keeps deterministic evidence collection while an agent interprets only the ambiguous decision.</p>
+    </article>
+
+    <article class="closing-stage">
+      <svg viewBox="0 0 90 90" aria-hidden="true">
+        <rect x="9" y="16" width="72" height="54" rx="10" fill="var(--green-soft)" stroke="var(--green)" stroke-width="3"/>
+        <path d="M24 34 H65 M24 47 H55" stroke="var(--green)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="68" cy="69" r="13" fill="var(--bg)" stroke="var(--green)" stroke-width="3"/>
+        <path d="M62 69 L67 74 L75 64" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <small>Understood</small>
+      <h3>Execute and verify</h3>
+      <p>A reviewed procedure runs as maintained software and returns to investigation when its assumptions stop holding.</p>
+    </article>
+  </div>
+
+  <div class="closing-loop">
+    <span>Observe</span><b>→</b><span>Investigate</span><b>→</b><span>Capture</span><b>→</b><span>Review</span><b>→</b><span>Promote</span><b>→</b><span>Verify</span><b>→</b><span>Learn</span>
+  </div>
+  <div class="closing-actions">
+    <div class="closing-action"><strong>Start tomorrow:</strong> choose one recurring question; define its evidence, authority, exceptions, and verified outcome.</div>
+    <div class="closing-escalation">Every stage keeps a visible path to human review and escalation</div>
+  </div>
+
+  <p class="slide-conclusion">Progressive Crystallization places judgment where it belongs.</p>
+  <p class="corner-label">11</p>
+</section>
+
+<section class="slide slide--questions" id="slide-12" aria-label="Questions and discussion">
+  <div class="questions-card">
+    <div>
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <path d="M60 18 C39 18 25 34 25 54 C25 68 32 77 42 84 V91 H78 V84 C88 77 95 68 95 54 C95 34 81 18 60 18Z" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M48 56 Q60 68 72 56 M60 65 V91 M43 100 H77 M47 109 H73" fill="none" stroke="var(--blue)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M60 4 V11 M19 20 L26 27 M101 20 L94 27 M9 57 H18 M111 57 H102" fill="none" stroke="var(--violet)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <h2>Questions?</h2>
+      <p>Questions, counterexamples, and disagreements are welcome.</p>
+    </div>
+  </div>
+  <p class="corner-label">12</p>
+</section>
+
+<section class="slide slide--thanks" id="slide-13" aria-label="Thank you in multiple languages">
+  <div class="thanks-stage">
+    <div class="thanks-languages" aria-hidden="true">
+      <span>Merci</span><span>Gracias</span><span>Danke</span><span>Grazie</span><span>Obrigado</span><span>Спасибо</span><span>谢谢</span>
+      <span>ありがとう</span><span>شكرا</span><span>감사합니다</span><span>Teşekkürler</span><span>Dank je</span><span>Tack</span><span>Kiitos</span>
+      <span>Dziękuję</span><span>Děkuji</span><span>Köszönöm</span><span>Hvala</span><span>Ďakujem</span><span>Mahalo</span><span>Asante</span>
+    </div>
+
+    <div class="thanks-center">
+      <div class="namaste-icon" aria-hidden="true">🙏</div>
+      <h2>Thank You</h2>
+    </div>
+
+    <div class="thanks-languages" aria-hidden="true">
+      <span>धन्यवाद</span><span>Salamat</span><span>ধন্যবাদ</span><span>ਧੰਨਵਾਦ</span><span>நன்றி</span><span>ధన్యవాదాలు</span><span>ಧನ್ಯವಾದಗಳು</span>
+      <span>આભાર</span><span>شکریہ</span><span>Дякую</span><span>Ευχαριστώ</span><span>תודה</span><span>ขอบคุณ</span><span>Cảm ơn</span>
+      <span>Terima kasih</span><span>Mulțumesc</span><span>متشکرم</span><span>መሰግናለሁ</span><span>ຂອບໃຈ</span><span>Tak</span><span>Takk</span>
+    </div>
+  </div>
+  <p class="corner-label">13</p>
+</section>
+</main>
+
+<aside class="speaker-notes" id="speaker-notes" hidden aria-labelledby="speaker-notes-title">
+  <div class="speaker-notes__head">
+    <div>
+      <p class="speaker-notes__label">Speaker notes</p>
+      <h2 id="speaker-notes-title"></h2>
+    </div>
+    <button class="speaker-notes__close" type="button" aria-label="Close speaker notes">×</button>
+  </div>
+  <div class="speaker-notes__body" id="speaker-notes-body"></div>
+  <p class="speaker-notes__hint">Press N to show or hide notes</p>
+</aside>
+
+<script id="speaker-notes-data" type="application/json">
+[
+  {
+    "title": "From agent exploration to verified software",
+    "script": "Progressive Crystallization asks a simple question: where should reasoning live once a task becomes better understood?\n\nWhen the situation is genuinely unknown, agent exploration is valuable. It can gather context, test hypotheses, and help us discover a useful path. But if the same decision keeps returning, asking an agent to reconstruct that reasoning every time is not intelligence. It is understanding that has not yet been preserved.\n\nThe goal is to move reviewed knowledge into explicit, inspectable software while keeping unresolved cases visible. That software still needs scope, authority, verification, recovery, and a route back to investigation when its assumptions stop holding.\n\nThat is the transformation we will follow: from agent exploration to verified software."
+  },
+  {
+    "title": "Where reasoning belongs",
+    "script": "Before deciding what should become software, we need to distinguish three different jobs.\n\nA new drink has no established recipe. Exploration and judgment are part of the work. An ambiguous order may have a known procedure, but someone still has to interpret what the customer meant. A covered order is different. The useful decision is simply which supported recipe applies.\n\nOnce that mapping is explicit, software can execute the known workflow and verify the result. An agent is still useful when the mapping remains ambiguous or the request falls outside the supported boundary.\n\nThe important question is not whether an agent can participate. The question is: which decisions still need to be decisions?"
+  },
+  {
+    "title": "The reusable path",
+    "script": "Now take the covered case and follow it from request to result.\n\nThe order supplies the runtime parameters: turmeric latte, oat milk, extra hot, and one shot of sugar syrup. The recipe supplies the reusable workflow: supported inputs, preparation steps, stopping conditions, and verification criteria.\n\nThe espresso machine is the executor. It applies that recipe using current ingredients and current machine state. The result is not accepted merely because the procedure finished. We check that the requested drink was produced and that the temperature and other expected properties are correct.\n\nThe parameters can change from order to order. The repeatable workflow does not have to be rediscovered each time."
+  },
+  {
+    "title": "A receipt is not a recipe",
+    "script": "A successful execution gives us useful evidence, but it is not yet a reusable contract.\n\nThe receipt records what happened for one order: the selected drink, the supplied parameters, and the reported outcome. It proves that this particular turmeric oat latte was produced and verified.\n\nThe recipe has a different responsibility. It defines which requests are supported, how order parameters enter the workflow, which preparation steps are permitted, how success is verified, and when an exception must return to investigation.\n\nThis is why crystallization is not replay. One successful execution can teach us something, but engineering review establishes whether that behavior is safe and valid to repeat for the next covered order."
+  },
+  {
+    "title": "What the recipe becomes",
+    "script": "Once the recipe has been reviewed as a contract, we can express it as ordinary software.\n\nThe code first checks coverage. If the requested drink or modifier is unsupported, the case returns to investigation rather than forcing the known path. For a covered order, the workflow binds the current parameters, executes the explicit preparation steps, and verifies the result.\n\nFailure handling is part of the contract. If verification fails, recovery is explicit rather than hidden inside a new reasoning transcript.\n\nThe implementation can now be inspected, tested, versioned, monitored, and maintained. The order changes the parameters, but it does not change the execution contract."
+  },
+  {
+    "title": "From analogy to precedent",
+    "script": "We just turned a coffee recipe into inspectable software. The coffee is only the analogy. The engineering move itself is not new, and it did not begin with agents.\n\nThe center of the slide shows the shared pattern. First, capture recurring knowledge in an explicit artifact, whether that is a recipe, troubleshooting guide, runbook, or playbook. Next, engineers review the stable path and add safeguards. Finally, that knowledge moves into code or automation that can be maintained and executed repeatedly.\n\nThis is already how engineering teams improve operational work. People follow operational guidance during real incidents and recurring operations. As the path becomes understood and repeatable, engineers encode the stable parts into scripts, workflows, services, or other automation.\n\nThat conversion is deliberate engineering work. Preconditions, integration points, verification, failure handling, and a route back to a person all have to be designed. The resulting automation is tested, versioned, monitored, and maintained with the software. The parts that are still ambiguous remain in the human path.\n\nThat is the connection to Progressive Crystallization. It extends a familiar engineering practice: move validated, recurring knowledge from guidance and repeated human execution into a maintained execution mechanism. It does not mean an agent automatically compiles a runbook into production automation."
+  },
+  {
+    "title": "Traditional automation to executable playbooks",
+    "script": "Slide 6 showed the familiar engineering path: stable operational knowledge becomes maintained software. This slide compares what happens after the same alert or task enters two different operating models.\n\nIn the traditional path, scripts and workflows execute the known procedure. When they reach an unsupported condition, the executable path ends. A person investigates, and the new knowledge often returns as an updated troubleshooting guide or runbook. Documentation and automation remain separate, and the gap may be rediscovered during a future occurrence.\n\nThe highlighted path uses an executable playbook as the shared runtime contract. The first question is how much of the execution path is already known. That determines the playbook type; the three types are parallel choices, not sequential stages.\n\nA deterministic playbook is selected when the path is fully known and repeatable. Deterministic steps collect the evidence and apply a known rule. No agent is needed.\n\nA hybrid playbook is selected when evidence can be collected predictably but interpreting one part of that evidence still requires judgment. One ambiguous decision does not make the whole workflow agentic. Deterministic steps gather the required data and perform the known checks. A bounded agent interprets only the ambiguous evidence and makes only the decision authorized by the playbook.\n\nAn agent-led playbook is selected when even the next useful observation is uncertain. The agent chooses what evidence to gather, interprets the findings, and uses tools within guardrails, with human approval at consequential boundaries.\n\nAll three playbook types converge on the same final contract: verify the outcome, or escalate to a person when confidence, safety, or authority is insufficient.\n\nThe separate band below is not part of runtime execution. It shows the developer-productivity shift away from leaving stable operational knowledge only in a manual TSG. The TSG and execution evidence become source material. If the procedure is already understood, an engineer can encode it directly. An agent can optionally accelerate the work by drafting playbook or skill code and tests. In either case, an engineer reviews and validates the implementation before it ships.\n\nTSGs and runbooks can remain useful for explanation, policy, and context, but they no longer have to be the final operating artifact. Agents handle bounded gaps today. Engineers remove repeatable gaps tomorrow."
+  },
+  {
+    "title": "Reasoning is not permission",
+    "script": "An agent may be able to describe an operation, generate a command, or select a tool. None of those capabilities grants permission to create the consequence.\n\nThe left side of the slide is reasoning. It produces a proposal: the supporting evidence, intended target, requested operation, and expected result. Before execution, that proposal crosses a granular authorization contract.\n\nFirst, identity: which person, service, or approved automation policy is acting? The agent cannot silently exceed that authority. Second, tool scope: only tools approved for this scenario should be available. Third, function scope: reading state, writing state, and performing destructive or administrative actions are different permissions. Fourth, parameter scope: even an allowed function must be constrained to approved targets, resources, commands, and values. Fifth, approval scope: consequential or irreversible operations may require explicit human or policy approval.\n\nThe result must remain attributable. The audit chain connects the initiating actor, reasoning decision, tool call, service response, and independently verified outcome.\n\nGenerated commands, configurations, and remediation plans deserve stronger scrutiny because they create novel artifacts. Validation, review, and approval should increase with the possible consequence.\n\nThis is why reasoning and authority remain separate. Capability is not access. Interpretation is not authorization."
+  },
+  {
+    "title": "Two linked loops",
+    "script": "Progressive Crystallization contains two linked loops with different owners, cadences, and standards of evidence.\n\nThe upper loop is operational recovery. It handles the case happening now. Software owns durable state, deadlines, retries, waits, and stopping conditions. It collects fresh evidence, applies a known rule or a bounded reasoning step, crosses the authorization boundary, and independently verifies the consequence. Failed verification leads to retry, rollback, safe state, or escalation rather than success-shaped closure.\n\nThe lower loop is engineering learning. Runtime evidence is preserved after the case: inputs, observations, decisions, tool calls, human interventions, failures, outcomes, and unknowns. An engineer, optionally assisted by an agent, drafts a candidate contract. Review tries to disprove it with replay, counterexamples, dependency inspection, and refusal tests. Only the covered variant is promoted through an owned release process.\n\nHuman action is useful evidence, but it is not an unquestionable gold label. Its context and outcome still have to be verified. Repeated success may start review; it does not automatically complete promotion.\n\nThe two connectors are deliberate. Runtime exceptions feed the engineering loop. Reviewed contracts and routing updates feed the runtime loop. Unsupported, unsafe, and unverified cases remain visible. Runtime handles the incident. Engineering changes the maintained system."
+  },
+  {
+    "title": "Measure the whole operating system",
+    "script": "If we measure only avoided model calls, we will optimize the wrong thing.\n\nThe first panel is the total-cost ledger. Zero inference is not zero cost. We still pay for tools, infrastructure, human review, maintenance, and exception handling. Judgment is worth paying for when it changes the result, but removing it is not automatically an economic win.\n\nThe second panel explains scale without making a numerical claim. A small recurring decision can create significant cumulative effort and risk when it appears throughout operational work. Scale motivates engineering discipline; it does not prove causal savings.\n\nThe third panel keeps the full denominator visible. Start with the eligible population, then account for verified outcomes, human escalations, unsupported cases, and unknown or unverified results. Do not report only accepted cases, and do not label every remaining case as a failure without evidence.\n\nThe fourth panel shows an execution portfolio. Agent-led, hybrid, and deterministic are different forms for different scenarios. The deck does not claim target percentages or a mandatory maturity ladder.\n\nAll designs should be compared against the same outcome contract: coverage, independently verified recovery, cleanup, escalation behavior, total effort, and maintained correctness. Optimize verified recovery per unit of risk and total effort, not automation purity."
+  },
+  {
+    "title": "Closing synthesis",
+    "script": "We can now return to the cafe.\n\nWhen the drink is new, experimentation is the work. When the order is ambiguous, interpretation is useful. But when the order is known and the recipe is within contract, we should not pay an agent to rediscover the procedure every time.\n\nThat does not mean judgment disappears. We refresh the evidence, validate the target and authority, verify the outcome, and stop when the assumptions no longer hold.\n\nThat is Progressive Crystallization. Operational experience becomes a clearer scenario. The scenario becomes a reviewed procedure. The procedure may become bounded automation. Evidence from execution improves the next version.\n\nYou can start with one recurring operational question. Define the evidence it needs, the authority it is allowed to exercise, the exceptions that must remain visible, and the outcome that independently proves success. Then decide which part still needs judgment and which part is ready to become software.\n\nThe agent is valuable at the frontier, where the system is still learning what matters. Engineering decides what is stable enough to encode. Verification remains necessary after the action. The destination is not no AI. It is a better division of labor: give AI the unknown, give software the understood, and give people a visible path whenever the evidence is not enough."
+  },
+  {
+    "title": "Questions",
+    "script": "Thank you. I would welcome questions, counterexamples, or disagreements.\n\nIn particular, I am interested in where you see the boundary between useful runtime judgment and knowledge that is stable enough to become maintained software."
+  },
+  {
+    "title": "Thank You",
+    "script": "Thank you for your time and for the discussion."
+  }
+]
+</script>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const button = document.querySelector(".theme-toggle");
+  const label = button.querySelector("span");
+  const deck = document.getElementById("deck");
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const notesButton = document.querySelector(".notes-toggle");
+  const notesPanel = document.getElementById("speaker-notes");
+  const notesClose = document.querySelector(".speaker-notes__close");
+  const notesTitle = document.getElementById("speaker-notes-title");
+  const notesBody = document.getElementById("speaker-notes-body");
+  const notesData = JSON.parse(document.getElementById("speaker-notes-data").textContent);
+
+  function setTheme(theme) {
+    root.dataset.theme = theme;
+    label.textContent = theme === "dark" ? "Light" : "Dark";
+  }
+
+  setTheme("light");
+  button.addEventListener("click", function () {
+    setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+  });
+
+  function renderNotes(index) {
+    const item = notesData[index];
+    if (!item) return;
+    notesTitle.textContent = (index + 1) + ". " + item.title;
+    notesBody.replaceChildren();
+    item.script.split(/\n\s*\n/).forEach(function (paragraph) {
+      const element = document.createElement("p");
+      element.textContent = paragraph;
+      notesBody.appendChild(element);
+    });
+  }
+
+  function setNotes(open) {
+    notesPanel.hidden = !open;
+    notesButton.setAttribute("aria-expanded", String(open));
+    if (open) renderNotes(currentSlide());
+  }
+
+  notesButton.addEventListener("click", function () {
+    setNotes(notesPanel.hidden);
+  });
+  notesClose.addEventListener("click", function () {
+    setNotes(false);
+  });
+
+  const nav = document.createElement("nav");
+  nav.className = "deck-nav";
+  nav.setAttribute("aria-label", "Slide navigation");
+
+  const dots = slides.map(function (slide, index) {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+    dot.addEventListener("click", function () {
+      go(index);
+    });
+    nav.appendChild(dot);
+    return dot;
+  });
+
+  document.body.appendChild(nav);
+
+  function currentSlide() {
+    return Math.max(0, Math.min(slides.length - 1, Math.round(deck.scrollTop / deck.clientHeight)));
+  }
+
+  function slideFromHash() {
+    const match = window.location.hash.match(/^#slide-(\d+)$/);
+    if (!match) return 0;
+    return Math.max(0, Math.min(slides.length - 1, Number(match[1]) - 1));
+  }
+
+  function updateHash(index) {
+    const hash = "#slide-" + (index + 1);
+    if (window.location.hash === hash) return;
+    try {
+      window.history.replaceState(null, "", hash);
+    } catch (error) {
+      window.location.hash = hash;
+    }
+  }
+
+  function updateNav() {
+    const current = currentSlide();
+    dots.forEach(function (dot, index) {
+      dot.classList.toggle("active", index === current);
+    });
+    renderNotes(current);
+    updateHash(current);
+  }
+
+  function go(index, behavior) {
+    const target = Math.max(0, Math.min(slides.length - 1, index));
+    deck.scrollTo({
+      top: slides[target].offsetTop,
+      behavior: behavior || "smooth"
+    });
+  }
+
+  deck.addEventListener("scroll", updateNav, { passive: true });
+  window.addEventListener("resize", updateNav);
+  window.addEventListener("hashchange", function () {
+    go(slideFromHash(), "auto");
+  });
+  window.addEventListener("keydown", function (event) {
+    if (event.key.toLowerCase() === "n") {
+      event.preventDefault();
+      setNotes(notesPanel.hidden);
+      return;
+    }
+    if (event.key === "Escape" && !notesPanel.hidden) {
+      event.preventDefault();
+      setNotes(false);
+      return;
+    }
+    if (event.target.matches("button")) return;
+    const current = currentSlide();
+    if (["ArrowRight", "ArrowDown", "PageDown", " "].includes(event.key)) {
+      event.preventDefault();
+      go(current + 1);
+    } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
+      event.preventDefault();
+      go(current - 1);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      go(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      go(slides.length - 1);
+    }
+  });
+
+  go(slideFromHash(), "auto");
+  updateNav();
+}());
+</script>
+</body>
+</html>
