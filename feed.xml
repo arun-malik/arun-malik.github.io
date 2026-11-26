@@ -5,10 +5,20 @@
   <link href="https://blog.arunmalik.dev/feed.xml" rel="self"/>
   <link href="https://blog.arunmalik.dev/"/>
   <id>https://blog.arunmalik.dev/</id>
-  <updated>2026-09-28T23:53:21-07:00</updated>
+  <updated>2026-11-26T09:00:00-08:00</updated>
   <author>
     <name>Arun Malik</name>
   </author>
+
+  <entry>
+    <title>What a sandbox does not solve for an AI agent</title>
+    <link href="https://blog.arunmalik.dev/posts/sandbox-boundaries/"/>
+    <id>https://blog.arunmalik.dev/posts/sandbox-boundaries/</id>
+    <published>2026-11-26T09:00:00-08:00</published>
+    <updated>2026-11-26T09:00:00-08:00</updated>
+    <summary>An isolated agent can still make the wrong production change. Isolation, identity, and per-action approval are separate controls.</summary>
+    <category term="AI Agents"/><category term="Security"/>
+  </entry>
 
   <entry>
     <title>Can a machine learn from a bowl of fruit?</title>

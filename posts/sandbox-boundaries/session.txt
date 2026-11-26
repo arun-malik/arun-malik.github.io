@@ -1,0 +1,3 @@
+# Copilot sessions that edited files in this folder (managed by tools/session_log.py)
+# first_seen       | last_seen        | updates | session_id                           | session_name
+2026-11-20 00:53 | 2026-11-26 01:54 |       5 | 48c93d26-edb3-45ed-a226-820d28066b1e | PBlog
