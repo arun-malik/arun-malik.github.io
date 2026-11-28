@@ -1,0 +1,24 @@
+Configuration,Benchmark ID,Rank at 50%,Rank at 80%,H50 minutes,H80 minutes
+Mythos Preview (early)*,claude_mythos_preview_early_inspect,1,1,1044.780145,185.911829
+Claude Opus 4.6,claude_opus_4_6_inspect,2,3,718.80683,69.874587
+Gemini 3.1 Pro,gemini_3_1_pro,3,2,384.147435,89.801503
+GPT-5.2,gpt_5_2,4,4,352.249302,66.002649
+GPT-5.3-Codex,gpt_5_3_codex,5,5,349.530732,54.739407
+GPT-5.4,gpt_5_4,6,7,341.735276,53.877851
+Claude Opus 4.5,claude_opus_4_5_inspect,7,9,292.994594,49.430584
+Gemini 3 Pro,gemini_3_pro,8,6,224.325884,54.142849
+GPT-5.1-Codex-Max,gpt_5_1_codex_max_inspect,9,8,223.714694,50.632499
+GPT-5,gpt_5_2025_08_07_inspect,10,10,203.012577,38.312431
+o3,o3_inspect,11,11,119.732634,29.981603
+Claude Opus 4.1,claude_4_1_opus_inspect,12,12,100.472004,23.455761
+Claude Opus 4,claude_4_opus_inspect,13,13,100.366123,20.429752
+Claude 3.7 Sonnet,claude_3_7_sonnet_inspect,14,14,60.388937,12.09179
+o1,o1_inspect,15,15,38.831588,7.090121
+Claude 3.5 Sonnet (Oct 2024),claude_3_5_sonnet_20241022_inspect,16,17,20.522872,2.595677
+o1-preview,o1_preview,17,16,20.326586,4.420545
+Claude 3.5 Sonnet (Jun 2024),claude_3_5_sonnet_20240620_inspect,18,18,11.395377,1.671757
+GPT-4o,gpt_4o_inspect,19,19,6.991195,1.267009
+GPT-4 1106,gpt_4_1106_inspect,20,22,4.044959,0.783032
+GPT-4 0314,gpt_4,21,21,3.987428,0.889561
+Claude 3 Opus,claude_3_opus_inspect,22,23,3.952262,0.638973
+GPT-4 Turbo,gpt_4_turbo_inspect,23,20,3.732787,0.927933
