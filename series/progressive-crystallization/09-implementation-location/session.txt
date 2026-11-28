@@ -1,3 +1,0 @@
-# Copilot sessions that edited files in this folder (managed by tools/session_log.py)
-# first_seen       | last_seen        | updates | session_id                           | session_name
-2026-11-27 17:58 | 2026-11-27 17:58 |       1 | cce15e25-e7d4-47a3-9157-bf164219f0aa | (unnamed)
