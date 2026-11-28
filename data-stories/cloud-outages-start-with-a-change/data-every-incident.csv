@@ -1,0 +1,80 @@
+Tracking ID,Date,Title,Trigger,Classification note,Impact hours,Regions named,Multi-region
+SVT2-VCZ,2021-11-16,RCA - Azure Active Directory - Issues when attempting to authenticate,No change cited,code defect,2.67,0,no
+SNCJ-9ZG,2021-12-09,RCA - Errors connecting to SCM App Service and/or Azure Functions deployments,Own change,DNS config change,3.38,0,no
+8T9M-T9G,2021-12-13,RCA - Azure Data Factory V2 - West Europe,No change cited,unhealthy backend,6.0,1,no
+ZN7Y-5DG,2021-12-16,Mitigated - Microsoft Graph API,No change cited,infrastructure issue,3.5,0,no
+S_3M-FZZ,2021-12-16,"RCA - Azure Active Directory - Experiencing sign in issues when attempting to access Azure, Dynamics 365, and/or Microsoft 365 Services",Own change,OS update,1.42,0,no
+9VT8-HPG,2022-01-04,Azure Cosmos DB - East US,No change cited,cluster node timer defect,19.18,1,no
+8V39-P9Z,2022-01-13,RCA - Azure Resource Manager - Issues with management and resource operations,Own change,code modification,35.0,7,yes
+PKJ8-TTZ,2022-01-13,Azure Data Factory V2 - West Europe - Mitigated,Own change,backend change,33.83,0,no
+SMWW-BDZ,2022-02-02,RCA - Azure AD - Service Management Failures,Own change,dependency change,2.27,0,yes
+SL1P-TSZ,2022-02-12,RCA - Azure SQL DB and Cosmos DB Unavailable,No change cited,certificate race condition,71.97,0,no
+ZS1T-LCG,2022-02-12,Virtual Machines - West US - Resolved,No change cited,not stated,1.87,1,no
+9TDP-N8G,2022-02-16,RCA - SQL Database and App Service - West Europe,Physical,hardware failure during maintenance,8.0,1,no
+ZNRZ-HDG,2022-03-01,RCA - Azure Resource Manager - Service Management Operation Failures,Own change,config change,39.32,0,no
+TTCR-NTZ,2022-03-16,RCA - Azure AD B2C: Authentication Failures and Error Notifications,No change cited,maintenance load,1.15,0,no
+Y__5-9C0,2022-04-08,RCA - Service Management Operation Errors Across Azure Services in East US 2,No change cited,retry storm after zonal failure,26.25,1,no
+YL23-V90,2022-05-31,RCA - Azure Active Directory Sign In logs,Own change,change,12.32,0,no
+NMB2-ND0,2022-06-07,Post Incident Review (PIR) - Datacenter cooling event - East US 2,Physical,power and cooling,11.82,1,no
+YVTL-RS0,2022-06-28,Post Incident Review (PIR)  - Azure Software Load Balancer - Multiple Regions,Own change,code deployment reordered load balancer backends,70.57,0,no
+YKDK-TT8,2022-06-29,Post Incident Review (PIR) - Wide Area Network - Multiple Regions,Physical,router hardware failure,17.57,2,yes
+3TBL-PD8,2022-07-21,Post Incident Review (PIR) - SQL Database - West Europe,Own change,operator action changed cache config,9.72,1,no
+7SHM-P88,2022-07-29,Post Incident Review (PIR): Network Connectivity Issues,No change cited,traffic surge,5.33,14,yes
+YTYN-5T8,2022-08-12,Post Incident Review (PIR) - Azure Communication Services - Multiple Regions,Own change,database capacity change exposed latent bug,9.28,0,no
+YLBJ-790,2022-08-18,Post Incident Review (PIR) - Azure Key Vault - Provisioning Failures,No change cited,traffic spike,9.87,0,yes
+MMXN-RZ0,2022-08-27,Post Incident Review (PIR) - Datacenter power event - West US 2,Physical,power event,23.22,1,no
+2TWN-VT0,2022-08-30,Post Incident Review (PIR) - Canonical Ubuntu issue impacted VMs and AKS,Vendor update,third-party OS update (Ubuntu),34.0,0,yes
+YV8C-DT0,2022-09-07,Post Incident Review (PIR) - Azure Front Door - Connectivity Issues,No change cited,traffic spike,3.75,0,no
+3TPC-DT8,2022-09-07,Post Incident Review (PIR) - Azure Cosmos DB - North Europe,Own change,load-balancing regression surfaced during maintenance,7.52,1,no
+JKWW-JP8,2022-10-26,Post Incident Review (PIR) - Azure Cosmos DB - East US,Own change,config plus diagnostic change,5.58,1,no
+YTGZ-1Z8,2022-11-02,Post Incident Review (PIR) - Enrolling new certificates / Provisioning new resources - Azure Public / Government / China,Own change,feature enhancement shipped latent bug,29.22,0,no
+6S_Q-JT8,2023-01-18,Post Incident Review (PIR): Single zone power event: West Europe,Physical,power loss during maintenance,3.43,1,no
+7NBR-T98,2023-01-23,Post Incident Review (PIR) - Intermittent networking issues - South Central US,Physical,hardware failure,3.98,1,no
+VSG1-B90,2023-01-25,Post Incident Review (PIR): Azure Networking: Global WAN issues,Own change,engineer WAN router change,5.58,0,no
+BS81-390,2023-01-31,Post Incident Review (PIR) - Service management issues - East US 2,No change cited,resource creation policy issue,19.05,1,no
+VN11-JD8,2023-02-07,Post Incident Review (PIR) - Multi-service outage: Asia-Pacific Area,Physical,power and cooling,32.18,2,yes
+R_36-P80,2023-03-06,Post Incident Review (PIR) - Azure Storage - West Europe,Own change,throttling configuration rollout,14.08,1,no
+RNQ2-NC8,2023-03-23,Post Incident Review (PIR): Azure Resource Manager: West Europe,No change cited,storage lock contention under load,5.17,1,yes
+QNPD-NC8,2023-06-09,Post Incident Review (PIR) - Azure Portal - Errors accessing the Azure portal,No change cited,DDoS attack,1.83,0,no
+VLB8-1Z0,2023-06-16,Post Incident Review (PIR) - Networking connectivity issues - West Europe,Own change,incorrect topology description fed network automation,4.85,2,yes
+FVHB-188,2023-07-05,Post Incident Review (PIR) - Networking fiber cut - West Europe,Physical,"fiber cut, weather",8.63,2,yes
+XMGF-5Z0,2023-07-06,Post Incident Review (PIR) - Azure Monitor - Logs data access issues,Own change,code deployment,9.75,0,yes
+VVTQ-J98,2023-08-30,Post Incident Review (PIR) - Services impacted after power/cooling issue - Australia East,Physical,"power and cooling, chillers",105.5,1,no
+2LZ0-3DG,2023-09-16,"Post Incident Review (PIR): Services impacted by power, BIOS, and Virtual Machine issues: East US",Physical,UPS power failure,11.6,1,no
+NKRF-1TG,2024-01-21,Post Incident Review (PIR) - Azure Resource Manager - Services impacted by ARM failures,Own change,maintenance config change exposed latent defect,7.47,5,yes
+VT60-RPZ,2024-03-14,Post Incident Review (PIR) - Network connectivity - Multiple services impacted in South Africa North and South Africa West,Physical,subsea cable cuts,24.45,2,yes
+QS3K-BPZ,2024-04-19,"Post Incident Review (PIR) - Azure Database for MySQL/MariaDB in West US, Azure Databricks in 3 regions",Own change,hardware refresh DNS move,3.07,3,yes
+V_BH-7DZ,2024-04-22,Post Incident Review (PIR): DNS resolution issues impacted Azure in China,Own change,domain decommission change,2.25,2,yes
+FTVR-L9Z,2024-07-12,Post Incident Review (PIR): Managed Identities for Azure resources: Failures in Australia East,Own change,key rotation migration,5.55,1,no
+4L44-3F0,2024-07-13,Post Incident Review (PIR): Azure OpenAI Service: Errors in multiple regions,Own change,automation deleted resources from stale config,23.58,15,yes
+1K80-N_8,2024-07-18,Post Incident Review (PIR): Storage: Impact to multiple services in Central US,Own change,allow-list update,24.33,1,no
+1VT1-LX0,2024-07-19,Virtual Machines startup failures due to CrowdStrike Falcon Agent update issue,Vendor update,third-party security agent update (CrowdStrike),,0,no
+KTY1-HW8,2024-07-30,Post Incident Review (PIR): Azure Front Door: Connectivity issues in multiple regions,No change cited,DDoS attack,2.22,0,no
+0N_5-PQ0,2024-08-05,Post Incident Review (PIR): Azure Front Door: Intermittent issues with Microsoft services using AFD,Own change,edge config change,1.45,0,yes
+HVZN-VB0,2024-09-05,Post Incident Review (PIR): Azure Resource Manager: Control plane issues in China North 3,Own change,certificate rotation change,13.5,1,yes
+1LG8-1X0,2024-09-16,"Post Incident Review (PIR): Azure Virtual Desktop: Unable to create new connections, impacting US regions",No change cited,replica redo degradation,1.83,9,yes
+HSKF-FB0,2024-09-27,Post Incident Review (PIR): Azure Resource Manager: Issues in Azure US Government regions,Own change,database misconfiguration change,1.63,3,yes
+PSM0-BQ8,2024-11-13,Post Incident Review (PIR): Azure Storage: Unreachable Blob and Data Lake storage accounts in multiple regions,Own change,deletion of Traffic Manager profiles,11.67,33,yes
+CNF4-N_0,2024-12-26,Post Incident Review (PIR): Services impacted after zonal power issue: South Central US,Physical,power event,24.83,3,yes
+PLP3-1W8,2025-01-08,Post Incident Review (PIR): Networking issues impacting Azure Services in East US 2,Own change,manual replica recycling during feature enablement,50.22,1,no
+TMS9-J_8,2025-02-25,Post Incident Review (PIR): Microsoft Entra ID: DNS authentication failures using Seamless SSO and Microsoft Entra Connect Sync,Own change,DNS cleanup change,8.55,0,no
+ZT0X-9B8,2025-03-03,Post Incident Review (PIR): Network Connectivity: Toronto edge site issues,Physical,hardware failure,2.25,0,no
+Z_SZ-NV8,2025-03-18,Post Incident Review (PIR): Network Connectivity: Availability issues in East US,Physical,fiber cut during maintenance,10.88,1,no
+VKY3-PF8,2025-09-10,Post Incident Review (PIR): Service management operations failures in East US 2,Own change,allocator service change,9.78,1,no
+BT6W-FX0,2025-09-26,Post Incident Review (PIR): Network Connectivity: Multiple services impacted in Switzerland North,Own change,certificate config change via expedited path,22.08,1,no
+QKNQ-PB8,2025-10-09,Post Incident Review (PIR): Azure Portal and other management portals: Access issues in multiple regions,Own change,failover script removed a config value,4.27,0,no
+QNBQ-5W8,2025-10-09,Post Incident Review (PIR): Azure Front Door: Access issues in multiple regions,Own change,software defect rolled out,8.17,0,no
+YKYN-BWZ,2025-10-29,Post Incident Review (PIR): Azure Front Door: Connectivity issues across multiple regions,Own change,customer config sequence across two control-plane builds,8.4,0,no
+2LGD-9VG,2025-11-05,Post Incident Review (PIR): Thermal event impacting multiple services in AZ01: West Europe,Physical,power and cooling event,9.53,1,no
+ML7_-DWG,2025-12-08,Post Incident Review (PIR): Azure Resource Manager: Service management failures affecting Azure Government,Own change,automated key rotation,3.15,0,no
+JSNV-FBZ,2025-12-08,Post Incident Review (PIR): Azure Resource Manager: Service management failures affecting Azure in China,Own change,automated key rotation,9.17,0,no
+FV31-PQG,2025-12-22,Post Incident Review (PIR): Entra Privileged Identity Management: Customers experiencing API failures,Own change,database config change rolled out,10.42,0,no
+FNJ8-VQZ,2026-02-02,"Post Incident Review (PIR): Virtual Machines, Managed identities for Azure resources, and dependent services: Service management issues in multiple regions",Own change,policy remediation workflow change,6.45,2,yes
+_SVS-5_G,2026-02-07,Post Incident Review (PIR): Power event impacting multiple services: West US,Physical,"transformer failure, power",20.43,1,no
+8GCS-858,2026-03-09,Post Incident Review (PIR): Azure OpenAI: GPT-5.2 availability degradation in 7 regions,Own change,model config update incompatible with engine,20.2,7,yes
+5GP8-W0G,2026-04-24,Post Incident Review (PIR): Multiple services: Control plane issues in East US,No change cited,"lock contention, failover failed",11.87,1,no
+LYXT-C1Z,2026-05-29,Post Incident Review (PIR): Azure OpenAI Service: Latency and intermittent failures in multiple regions,Own change,upstream API change caused retry storm,7.43,1,yes
+GHRP-84G,2026-05-29,Post Incident Review (PIR): Multiple services: Power/cooling issues in West US 2,Physical,"lightning strike, power",22.1,1,no
+ZJV6-SGG,2026-07-23,Post Incident Review (PIR): Network connectivity: Issues accessing resources in West US,Own change,repair workflow defect widened maintenance scope,4.95,1,no
+7QL5-Z50,2026-09-29,"Post Incident Review (PIR): Azure OpenAI Service, Foundry Agent Service, Foundry Models, and Azure AI services: Intermittent request failures and latency in Sweden Central",Own change,planned deployment cleared caches at peak,5.92,1,yes
+7Q30-010,2026-09-30,Post Incident Review (PIR): Network Connectivity: Gateway service degradation in multiple regions,Own change,planned update rollout resumed,5.75,33,yes
