@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="CISA KEV, patch management, vulnerability management, BOD 26-04, exploited vulnerabilities, EPSS, CVE disclosure, patch SLA">
+    <!-- Open Graph / Social Cards -->
+    <meta property="og:title" content="The real patch window starts at disclosure, and it is now 14 days">
+    <meta property="og:description" content="Join CISA&#x27;s Known Exploited Vulnerabilities catalog to CVE publication dates and the federal clock looks very different. Half of new entries are now due within 14 days of the CVE going public, a third of deadlines land on weekends, and most looked low-risk to prediction models the day before.">
+    <meta property="og:url" content="https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The real patch window starts at disclosure, and it is now 14 days">
+    <meta name="twitter:description" content="Join CISA&#x27;s Known Exploited Vulnerabilities catalog to CVE publication dates and the federal clock looks very different. Half of new entries are now due within 14 days of the CVE going public, a third of deadlines land on weekends, and most looked low-risk to prediction models the day before.">
+    <link rel="alternate" type="application/atom+xml" title="Arun Malik" href="/feed.xml">
+    <meta name="publish-at" content="2026-11-30T06:00-08:00">
+    <title>The real patch window starts at disclosure, and it is now 14 days - Arun Malik</title>
+    <meta name="description" content="Join CISA&#x27;s Known Exploited Vulnerabilities catalog to CVE publication dates and the federal clock looks very different. Half of new entries are now due within 14 days of the CVE going public, a third of deadlines land on weekends, and most looked low-risk to prediction models the day before.">
+    <link rel="canonical" href="https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "uti9a22v45");
+    </script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SFX09D06W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9SFX09D06W');
+    </script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "The real patch window starts at disclosure, and it is now 14 days", "description": "Join CISA's Known Exploited Vulnerabilities catalog to CVE publication dates and the federal clock looks very different. Half of new entries are now due within 14 days of the CVE going public, a third of deadlines land on weekends, and most looked low-risk to prediction models the day before.", "datePublished": "2026-11-30", "url": "https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/", "image": "https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/og.png", "isPartOf": {"@type": "CollectionPage", "name": "Data Stories", "url": "https://blog.arunmalik.dev/data-stories/"}, "author": {"@type": "Person", "name": "Arun Malik", "url": "https://blog.arunmalik.dev/about/"}}</script>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #ffffff; --bg-secondary: #f6f8fa; --text: #1f2328;
+            --text-secondary: #656d76; --accent: #2563eb; --border: #d0d7de;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        [data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #0d1117; --bg-secondary: #161b22; --text: #e6edf3;
+            --text-secondary: #a0a9b5; --accent: #79b8ff; --border: #30363d;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 1rem; line-height: 1.8; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+        a { color: var(--accent); text-underline-offset: 0.18em; }
+        a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+        .skip-link { position: absolute; top: -5rem; left: 1rem; z-index: 10000; background: var(--bg); padding: 0.5rem 1rem; }
+        .skip-link:focus { top: 0.5rem; }
+        .site-header { padding: 2.5rem 0 1.75rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+        .site-nav, .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+        .site-nav { justify-content: space-between; }
+        .site-name { font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .nav-links { gap: 1.25rem; }
+        .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .theme-btn { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0.25rem; border: none; background: none; color: var(--text-secondary); cursor: pointer; }
+        .crumb { margin: 0 0 0.75rem; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+        .crumb a { text-decoration: none; }
+        .blog-header { padding-bottom: 1.5rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--border); }
+        h1 { margin: 0 0 1rem; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.18; letter-spacing: -0.035em; text-wrap: balance; }
+        .blog-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.8125rem; color: var(--text-secondary); }
+        .blog-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+        .blog-tags span { padding: 0.1rem 0.6rem; border: 1px solid var(--border); border-radius: 999px; font-size: 0.75rem; color: var(--text-secondary); }
+        .lede { font-size: 1.15rem; line-height: 1.7; }
+        .content p { margin: 0 0 1.25rem; }
+        .content h2 { margin: 2.75rem 0 1rem; font-size: 1.4rem; line-height: 1.35; letter-spacing: -0.015em; }
+        .kstats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 1.75rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .kstat { padding: 1rem 1.25rem 1rem 0; }
+        .kstat + .kstat { padding-left: 1.25rem; border-left: 1px solid var(--border); }
+        .kv { font-size: 2rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+        .kl { margin-top: 0.35rem; font-size: 0.8125rem; line-height: 1.5; color: var(--text-secondary); }
+        .chart-figure { margin: 2.25rem 0; padding: 1.25rem 1.25rem 1rem; border: 1px solid var(--border); border-radius: 10px; }
+        .chart-title { margin: 0 0 0.15rem !important; font-weight: 700; line-height: 1.45; }
+        .chart-hint { margin: 0 0 0.75rem !important; font-size: 0.8125rem; line-height: 1.6; color: var(--text-secondary); }
+        .ds-chart { width: 100%; }
+        .ds-data { margin-top: 0.75rem; font-size: 0.8125rem; }
+        .ds-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+        .ds-data[open] summary { margin-bottom: 0.5rem; }
+        .ds-data { overflow-x: auto; }
+        figcaption { margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.7; }
+        .data-sources { padding-left: 1.25rem; font-size: 0.9375rem; }
+        .data-sources li { margin-bottom: 0.85rem; }
+        .assumptions { padding-left: 1.25rem; font-size: 0.9375rem; }
+        .assumptions li { margin-bottom: 0.6rem; }
+        .method { padding: 1rem 1.15rem; border-left: 3px solid var(--accent); background: var(--bg-secondary); font-size: 0.9375rem; }
+        .insights-intro { color: var(--text-secondary); }
+        .insight { margin: 2.5rem 0 3rem; }
+        .insight-n { margin: 0 0 0.2rem !important; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+        .insight h3 { margin: 0 0 0.75rem; font-size: 1.25rem; line-height: 1.4; letter-spacing: -0.01em; }
+        .insight .chart-figure { margin: 1.25rem 0 1rem; }
+        .insight-method { font-size: 0.875rem; line-height: 1.7; color: var(--text-secondary); padding-left: 0.9rem; border-left: 2px solid var(--border); }
+        .pull { margin: 2.25rem 0; padding: 0.35rem 0 0.35rem 1.35rem; border-left: 5px solid var(--accent); }
+        .pull p { margin: 0 !important; font-size: clamp(1.3rem, 3.2vw, 1.65rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.015em; text-wrap: balance; }
+        .so-what { padding: 0.8rem 1rem; border-radius: 8px; background: color-mix(in srgb, var(--accent) 9%, var(--bg)); font-weight: 600; line-height: 1.6; }
+        .so-what span { display: block; margin-bottom: 0.15rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+        .ds-table { width: 100%; border-collapse: collapse; }
+        .ds-table th, .ds-table td { padding: 0.3rem 0.6rem; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+        .ds-table th:first-child, .ds-table td:last-child:not(:nth-child(2)) { text-align: left; }
+        @media (max-width: 680px) { .container { padding: 0 1.15rem; } .site-header { padding-top: 1.5rem; } .chart-figure { padding: 0.75rem; } .kstat + .kstat { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); } }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to article</a>
+    <div class="container">
+        <header class="site-header">
+            <nav class="site-nav" aria-label="Main navigation">
+                <a class="site-name" href="/">Arun Malik</a>
+                <div class="nav-links">
+                    <a href="/series/">Series</a>
+                    <a href="/data-stories/" class="active" aria-current="page">Data Stories</a>
+                    <a href="/talks/">Presentations</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <button class="theme-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+                        <svg id="sunIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main id="main-content">
+            <article>
+                <header class="blog-header">
+                    <p class="crumb"><a href="../">Data stories</a> &middot; Security</p>
+                    <h1>The real patch window starts at disclosure, and it is now 14 days</h1>
+                    <div class="blog-meta"><span>Arun Malik</span><span>&middot;</span><span><time datetime="2026-11-30">November 30, 2026</time></span><span>&middot;</span><span>Data story</span></div>
+                    <div class="blog-tags" aria-label="Topics"><span>Data Story</span><span>Security</span></div>
+                </header>
+                <div class="content">
+                    <p class="lede">Join CISA&#x27;s Known Exploited Vulnerabilities catalog to CVE publication dates and the federal clock looks very different. Half of new entries are now due within 14 days of the CVE going public, a third of deadlines land on weekends, and most looked low-risk to prediction models the day before.</p>
+                    <div class="kstats"><div class="kstat"><div class="kv">14 days</div><div class="kl">median, public CVE to KEV deadline since Jun 10 (2025: 47)</div></div><div class="kstat"><div class="kv">31%</div><div class="kl">of deadlines since Jun 10 fall on a weekend (2025: none)</div></div><div class="kstat"><div class="kv">68%</div><div class="kl">had no EPSS score, or one under 1%, the day before listing</div></div></div>
+                    <figure class="chart-figure" id="chart-deadline-mix" aria-labelledby="title-deadline-mix">
+                        <p class="chart-title" id="title-deadline-mix">The proof: new KEV entries per month, by time allowed to remediate</p>
+                        <p class="chart-hint">Click a deadline band in the legend to hide it, drag the slider or scroll to zoom into a period, and use the icons to switch between stacked bars, side by side bars and lines.</p>
+                        <div class="ds-chart" data-spec="spec-deadline-mix" style="height:460px" role="img" aria-label="The proof: new KEV entries per month, by time allowed to remediate"></div>
+                        <script type="application/json" id="spec-deadline-mix">{"id": "kev-patch-window-shrinks-deadline-mix", "option": {"dataset": {"source": [["Month added", "21 days", "14 days", "5 to 7 days", "3 days or less"], ["Jan 25", 12, 0, 2, 0], ["Feb 25", 27, 0, 0, 0], ["Mar 25", 32, 0, 0, 0], ["Apr 25", 14, 0, 1, 0], ["May 25", 24, 0, 0, 0], ["Jun 25", 20, 0, 0, 0], ["Jul 25", 16, 0, 0, 4], ["Aug 25", 12, 0, 2, 1], ["Sep 25", 14, 0, 0, 2], ["Oct 25", 31, 0, 0, 0], ["Nov 25", 9, 0, 2, 0], ["Dec 25", 15, 0, 5, 0], ["Jan 26", 15, 0, 0, 2], ["Feb 26", 22, 0, 0, 6], ["Mar 26", 7, 14, 0, 5], ["Apr 26", 0, 23, 0, 8], ["May 26", 0, 13, 1, 7], ["Jun 26", 0, 6, 0, 17], ["Jul 26", 0, 4, 0, 22], ["Aug 26", 0, 9, 0, 22], ["Sep 26", 0, 9, 0, 34], ["Oct 26", 0, 7, 0, 29], ["Nov 26", 0, 10, 0, 32]]}, "color": ["#8c959f", "#d4a72c", "#8250df", "#cf222e"], "legend": {"top": 0, "left": 0}, "grid": {"left": 8, "right": 16, "top": 84, "bottom": 56, "containLabel": true}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "fmt:int"}, "xAxis": {"type": "category", "axisTick": {"alignWithLabel": true}}, "yAxis": {"type": "value", "name": "New entries", "minInterval": 1}, "dataZoom": [{"type": "slider", "bottom": 6, "height": 22}, {"type": "inside"}], "series": [{"type": "bar", "stack": "due", "barCategoryGap": "28%", "emphasis": {"focus": "series"}}, {"type": "bar", "stack": "due", "barCategoryGap": "28%", "emphasis": {"focus": "series"}}, {"type": "bar", "stack": "due", "barCategoryGap": "28%", "emphasis": {"focus": "series"}}, {"type": "bar", "stack": "due", "barCategoryGap": "28%", "emphasis": {"focus": "series"}, "markLine": {"silent": true, "symbol": "none", "lineStyle": {"color": "#1f2328", "type": "dashed", "width": 1.5}, "label": {"formatter": "BOD 26-04\nJun 10", "position": "end", "fontWeight": "bold", "lineHeight": 16}, "data": [{"xAxis": "Jun 26"}]}}]}, "magic": ["stack", "bar", "line"], "zoom": null, "static": {"grid": {"top": 110, "bottom": 8, "right": 8}, "legend": {"itemWidth": 30, "itemHeight": 20, "itemGap": 30}, "xAxis": {"axisLabel": {"interval": 2}}, "yAxis": {"name": ""}, "series": [{}, {}, {}, {"markLine": {"label": {"fontSize": 22, "lineHeight": 28}}}]}}</script>
+                        <details class="ds-data"><summary>Show the data table</summary><table class="ds-table"><thead><tr><th scope="col">Month added</th><th scope="col">21 days</th><th scope="col">14 days</th><th scope="col">5 to 7 days</th><th scope="col">3 days or less</th></tr></thead><tbody><tr><th scope="row">Jan 25</th><td>12</td><td>0</td><td>2</td><td>0</td></tr><tr><th scope="row">Feb 25</th><td>27</td><td>0</td><td>0</td><td>0</td></tr><tr><th scope="row">Mar 25</th><td>32</td><td>0</td><td>0</td><td>0</td></tr><tr><th scope="row">Apr 25</th><td>14</td><td>0</td><td>1</td><td>0</td></tr><tr><th scope="row">May 25</th><td>24</td><td>0</td><td>0</td><td>0</td></tr><tr><th scope="row">Jun 25</th><td>20</td><td>0</td><td>0</td><td>0</td></tr><tr><th scope="row">Jul 25</th><td>16</td><td>0</td><td>0</td><td>4</td></tr><tr><th scope="row">Aug 25</th><td>12</td><td>0</td><td>2</td><td>1</td></tr><tr><th scope="row">Sep 25</th><td>14</td><td>0</td><td>0</td><td>2</td></tr><tr><th scope="row">Oct 25</th><td>31</td><td>0</td><td>0</td><td>0</td></tr><tr><th scope="row">Nov 25</th><td>9</td><td>0</td><td>2</td><td>0</td></tr><tr><th scope="row">Dec 25</th><td>15</td><td>0</td><td>5</td><td>0</td></tr><tr><th scope="row">Jan 26</th><td>15</td><td>0</td><td>0</td><td>2</td></tr><tr><th scope="row">Feb 26</th><td>22</td><td>0</td><td>0</td><td>6</td></tr><tr><th scope="row">Mar 26</th><td>7</td><td>14</td><td>0</td><td>5</td></tr><tr><th scope="row">Apr 26</th><td>0</td><td>23</td><td>0</td><td>8</td></tr><tr><th scope="row">May 26</th><td>0</td><td>13</td><td>1</td><td>7</td></tr><tr><th scope="row">Jun 26</th><td>0</td><td>6</td><td>0</td><td>17</td></tr><tr><th scope="row">Jul 26</th><td>0</td><td>4</td><td>0</td><td>22</td></tr><tr><th scope="row">Aug 26</th><td>0</td><td>9</td><td>0</td><td>22</td></tr><tr><th scope="row">Sep 26</th><td>0</td><td>9</td><td>0</td><td>34</td></tr><tr><th scope="row">Oct 26</th><td>0</td><td>7</td><td>0</td><td>29</td></tr><tr><th scope="row">Nov 26</th><td>0</td><td>10</td><td>0</td><td>32</td></tr></tbody></table></details>
+                        <figcaption>CISA Known Exploited Vulnerabilities catalog, JSON feed v2026.11.27 (dueDate minus dateAdded). Chart by Arun Malik. <a href="data-deadline-mix.csv" download>Download the data (CSV)</a>.</figcaption>
+                    </figure>
+                    <noscript><p><img src="card.png" alt="Share of new KEV entries already due, by days since the CVE went public" width="100%"></p></noscript>
+                    <p>Every KEV entry carries a <code>dateAdded</code> and a <code>dueDate</code>. The chart above is the simple view: in 2025, 226 of 245 new entries (92.2%) gave federal agencies 21 days. Since June 10, 2026, when CISA issued <a href="https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk" target="_blank" rel="noopener">BOD 26-04</a>, 151 of 191 (79.1%) give <strong>3 days or less</strong>. Volume is up too: 324 additions through November 27, 45% more than the same period in 2025.</p>
+                    <p>That is the headline everyone will quote. It is also the least useful part of the data, because it starts the clock at the wrong moment and hides when the work actually lands. I joined the catalog to two more public datasets to see what the simple chart does not show.</p>
+                    <h2 id="insights">What the raw data does not show at first glance</h2>
+                    <p class="insights-intro">The chart above is the proof. The findings below are derived: they come from joining, re-cutting or reasoning across the data, and each one shows how it was derived.</p>
+                    <section class="insight" id="insight-disclosure" aria-labelledby="ih-disclosure">
+                        <p class="insight-n">Insight 1</p>
+                        <h3 id="ih-disclosure">The window that matters is disclosure to deadline, and it shrank from 47 days to 14</h3>
+                        <p>KEV measures time from <em>listing</em> to deadline. But your exposure starts when the CVE is published. Joining each entry to its CVE publication date shows the full clock. In 2025 the median entry was due 47 days after the CVE went public. Since June 10, 2026 it is <strong>14 days</strong>. Half of new entries (51.3%) are now due within two weeks of disclosure, up from 6.5% in 2025, and 30.7% are due within a single week. CISA is also listing faster: median disclosure to listing fell from 26 days to 7.</p>
+                        <p class="so-what"><span>So what</span>Write your SLA from CVE publication, not from KEV listing: half of new entries are now due within two weeks of disclosure.</p>
+                    <figure class="chart-figure" id="chart-disclosure-to-deadline" aria-labelledby="title-disclosure-to-deadline">
+                        <p class="chart-title" id="title-disclosure-to-deadline">Share of new KEV entries already due, by days since the CVE went public</p>
+                        <p class="chart-hint">Read up from any day on the log scale. Higher and further left means less time between public disclosure and the deadline. Click a legend item to hide a period. Drag the slider or scroll to zoom into the first two weeks.</p>
+                        <div class="ds-chart" data-spec="spec-disclosure-to-deadline" style="height:440px" role="img" aria-label="Share of new KEV entries already due, by days since the CVE went public"></div>
+                        <script type="application/json" id="spec-disclosure-to-deadline">{"id": "kev-patch-window-shrinks-disclosure-to-deadline", "option": {"dataset": {"source": [["Days after public CVE disclosure", "2025", "Jan 1 to Jun 9, 2026", "Since Jun 10, 2026"], [1, 1.2, 0.0, 0.5], [2, 1.6, 0.8, 2.1], [3, 1.6, 6.0, 13.2], [5, 1.6, 9.0, 25.9], [7, 5.3, 9.8, 30.7], [10, 6.1, 12.8, 40.2], [14, 6.5, 18.0, 51.3], [21, 22.0, 36.1, 61.4], [30, 42.4, 45.9, 66.1], [45, 49.0, 49.6, 72.5], [60, 55.9, 54.1, 76.7], [90, 61.2, 57.9, 79.4], [180, 69.0, 64.7, 84.7], [365, 76.7, 72.9, 89.4], [730, 81.6, 79.7, 91.5], [1825, 90.2, 88.7, 95.8], [3650, 97.1, 93.2, 96.8]]}, "color": ["#8c959f", "#d4a72c", "#b42318"], "legend": {"top": 0, "left": 0}, "grid": {"left": 8, "right": 28, "top": 64, "bottom": 34, "containLabel": true}, "tooltip": {"trigger": "axis", "valueFormatter": "fmt:pct1"}, "xAxis": {"type": "log", "logBase": 10, "min": 1, "max": 3650, "name": "Days after the CVE was made public (log scale)", "nameLocation": "middle", "nameGap": 30, "axisLabel": {"formatter": "fmt:int"}}, "yAxis": {"type": "value", "max": 100, "axisLabel": {"formatter": "{value}%"}}, "series": [{"type": "line", "name": "2025", "encode": {"x": 0, "y": 1}, "symbolSize": 6, "lineStyle": {"width": 2.5}}, {"type": "line", "name": "Jan 1 to Jun 9, 2026", "encode": {"x": 0, "y": 2}, "symbolSize": 6, "lineStyle": {"width": 2.5}}, {"type": "line", "name": "Since Jun 10, 2026", "encode": {"x": 0, "y": 3}, "symbolSize": 7, "lineStyle": {"width": 4}, "markLine": {"silent": true, "symbol": "none", "lineStyle": {"type": "dashed", "color": "#57606a"}, "label": {"formatter": "14 days", "position": "end"}, "data": [{"xAxis": 14}]}, "markPoint": {"symbol": "circle", "symbolSize": 12, "label": {"position": "left", "fontWeight": "bold", "distance": 10}, "data": [{"coord": [14, 51.3], "value": "51%", "label": {"formatter": "51% since Jun 10"}}, {"coord": [14, 6.5], "value": "6.5%", "itemStyle": {"color": "#8c959f"}, "label": {"formatter": "6.5% in 2025", "position": "right"}}]}}]}, "magic": [], "zoom": "x", "static": {"legend": {"top": 0}, "grid": {"top": 96, "bottom": 64}, "xAxis": {"nameGap": 44}}}</script>
+                        <details class="ds-data"><summary>Show the data table</summary><table class="ds-table"><thead><tr><th scope="col">Days after public CVE disclosure</th><th scope="col">2025</th><th scope="col">Jan 1 to Jun 9, 2026</th><th scope="col">Since Jun 10, 2026</th></tr></thead><tbody><tr><th scope="row">1</th><td>1.2</td><td>0.0</td><td>0.5</td></tr><tr><th scope="row">2</th><td>1.6</td><td>0.8</td><td>2.1</td></tr><tr><th scope="row">3</th><td>1.6</td><td>6.0</td><td>13.2</td></tr><tr><th scope="row">5</th><td>1.6</td><td>9.0</td><td>25.9</td></tr><tr><th scope="row">7</th><td>5.3</td><td>9.8</td><td>30.7</td></tr><tr><th scope="row">10</th><td>6.1</td><td>12.8</td><td>40.2</td></tr><tr><th scope="row">14</th><td>6.5</td><td>18.0</td><td>51.3</td></tr><tr><th scope="row">21</th><td>22.0</td><td>36.1</td><td>61.4</td></tr><tr><th scope="row">30</th><td>42.4</td><td>45.9</td><td>66.1</td></tr><tr><th scope="row">45</th><td>49.0</td><td>49.6</td><td>72.5</td></tr><tr><th scope="row">60</th><td>55.9</td><td>54.1</td><td>76.7</td></tr><tr><th scope="row">90</th><td>61.2</td><td>57.9</td><td>79.4</td></tr><tr><th scope="row">180</th><td>69.0</td><td>64.7</td><td>84.7</td></tr><tr><th scope="row">365</th><td>76.7</td><td>72.9</td><td>89.4</td></tr><tr><th scope="row">730</th><td>81.6</td><td>79.7</td><td>91.5</td></tr><tr><th scope="row">1825</th><td>90.2</td><td>88.7</td><td>95.8</td></tr><tr><th scope="row">3650</th><td>97.1</td><td>93.2</td><td>96.8</td></tr></tbody></table></details>
+                        <figcaption>CISA KEV catalog v2026.11.27 joined to CVE publication dates from the CVE List (cvelistV5). Chart by Arun Malik. <a href="data-disclosure-to-deadline.csv" download>Download the data (CSV)</a>.</figcaption>
+                    </figure>
+                        <p class="insight-method"><strong>How I derived this:</strong> For each of the 569 entries added from January 1, 2025, I fetched the CVE record from the CVE Program's cvelistV5 repository and took <code>cveMetadata.datePublished</code> (found for 567). Disclosure to deadline is <code>dueDate - datePublished</code> in days. The chart is a cumulative distribution: for each day on the x axis, the share of entries whose deadline had passed by then.</p>
+                    </section>
+                    <section class="insight" id="insight-weekends" aria-labelledby="ih-weekends">
+                        <p class="insight-n">Insight 2</p>
+                        <h3 id="ih-weekends">One in three federal deadlines now lands on a weekend</h3>
+                        <p>In 2025 not a single KEV deadline fell on a Saturday or Sunday: nearly every due date was 21 days after a weekday listing, so it landed on a weekday. Since June 10, <strong>60 of 191 deadlines (31%) fall on a weekend</strong>, and Friday is now the busiest due day (47). The reason is arithmetic: additions cluster on Tuesdays and Wednesdays, around Patch Tuesday, and three days later is Friday or Saturday. Of the 151 entries with 3 days or less, 52 (34%) contain only <strong>one business day</strong>. On-call, change freezes and weekend approvals are now part of patch SLAs.</p>
+                        <p class="so-what"><span>So what</span>Weekend change approval is now part of patch readiness, not an exception process.</p>
+                    <figure class="chart-figure" id="chart-weekend-deadlines" aria-labelledby="title-weekend-deadlines">
+                        <p class="chart-title" id="title-weekend-deadlines">KEV due dates since June 10, 2026, by calendar day</p>
+                        <p class="chart-hint">Each square is a day; darker means more KEV deadlines that day. The bottom two rows are Saturdays and Sundays. Drag the colour scale handles to filter.</p>
+                        <div class="ds-chart" data-spec="spec-weekend-deadlines" style="height:300px" role="img" aria-label="KEV due dates since June 10, 2026, by calendar day"></div>
+                        <script type="application/json" id="spec-weekend-deadlines">{"id": "kev-patch-window-shrinks-weekend-deadlines", "option": {"tooltip": {"formatter": "tpl:{0}: {1} KEV deadline(s)"}, "visualMap": {"min": 1, "max": 8, "orient": "horizontal", "left": "center", "bottom": 0, "itemHeight": 160, "calculable": true, "inRange": {"color": ["#fcd0cc", "#b42318"]}}, "calendar": {"range": ["2026-06-01", "2026-12-31"], "top": 30, "left": 44, "right": 12, "bottom": 56, "cellSize": ["auto", 24], "dayLabel": {"firstDay": 1, "nameMap": "EN"}, "monthLabel": {"nameMap": "EN"}, "yearLabel": {"show": false}, "splitLine": {"show": false}, "itemStyle": {"borderWidth": 3}}, "series": [{"type": "heatmap", "coordinateSystem": "calendar", "data": [["2026-06-14", 1], ["2026-06-15", 1], ["2026-06-18", 1], ["2026-06-19", 1], ["2026-06-21", 1], ["2026-06-26", 4], ["2026-06-28", 2], ["2026-06-29", 1], ["2026-07-02", 1], ["2026-07-04", 1], ["2026-07-10", 4], ["2026-07-13", 2], ["2026-07-16", 1], ["2026-07-17", 3], ["2026-07-18", 1], ["2026-07-19", 3], ["2026-07-24", 3], ["2026-07-25", 2], ["2026-07-28", 1], ["2026-07-29", 1], ["2026-07-30", 1], ["2026-08-01", 1], ["2026-08-04", 1], ["2026-08-06", 1], ["2026-08-07", 3], ["2026-08-08", 1], ["2026-08-10", 2], ["2026-08-14", 2], ["2026-08-20", 1], ["2026-08-21", 4], ["2026-08-23", 1], ["2026-08-24", 1], ["2026-08-25", 1], ["2026-08-27", 1], ["2026-08-28", 1], ["2026-08-29", 3], ["2026-08-30", 2], ["2026-09-02", 1], ["2026-09-03", 1], ["2026-09-05", 5], ["2026-09-09", 3], ["2026-09-10", 1], ["2026-09-11", 2], ["2026-09-12", 3], ["2026-09-13", 2], ["2026-09-14", 4], ["2026-09-16", 2], ["2026-09-17", 1], ["2026-09-18", 1], ["2026-09-19", 3], ["2026-09-21", 3], ["2026-09-22", 2], ["2026-09-23", 1], ["2026-09-24", 1], ["2026-09-25", 6], ["2026-09-27", 2], ["2026-09-28", 3], ["2026-09-30", 2], ["2026-10-03", 1], ["2026-10-04", 1], ["2026-10-05", 2], ["2026-10-07", 1], ["2026-10-11", 5], ["2026-10-13", 1], ["2026-10-16", 2], ["2026-10-17", 4], ["2026-10-18", 1], ["2026-10-19", 2], ["2026-10-23", 3], ["2026-10-26", 2], ["2026-10-29", 2], ["2026-10-31", 1], ["2026-11-01", 2], ["2026-11-02", 1], ["2026-11-03", 3], ["2026-11-06", 1], ["2026-11-10", 2], ["2026-11-11", 1], ["2026-11-12", 4], ["2026-11-13", 3], ["2026-11-16", 2], ["2026-11-18", 1], ["2026-11-20", 1], ["2026-11-21", 3], ["2026-11-23", 4], ["2026-11-24", 4], ["2026-11-26", 2], ["2026-11-27", 3], ["2026-11-28", 8], ["2026-11-30", 3], ["2026-12-01", 1], ["2026-12-02", 1], ["2026-12-09", 2]]}]}, "magic": [], "zoom": null, "static": {}}</script>
+                        <details class="ds-data"><summary>Show the data table</summary><table class="ds-table"><thead><tr><th scope="col">Due date</th><th scope="col">KEV entries due</th></tr></thead><tbody><tr><th scope="row">2026-06-14</th><td>1</td></tr><tr><th scope="row">2026-06-15</th><td>1</td></tr><tr><th scope="row">2026-06-18</th><td>1</td></tr><tr><th scope="row">2026-06-19</th><td>1</td></tr><tr><th scope="row">2026-06-21</th><td>1</td></tr><tr><th scope="row">2026-06-26</th><td>4</td></tr><tr><th scope="row">2026-06-28</th><td>2</td></tr><tr><th scope="row">2026-06-29</th><td>1</td></tr><tr><th scope="row">2026-07-02</th><td>1</td></tr><tr><th scope="row">2026-07-04</th><td>1</td></tr><tr><th scope="row">2026-07-10</th><td>4</td></tr><tr><th scope="row">2026-07-13</th><td>2</td></tr><tr><th scope="row">2026-07-16</th><td>1</td></tr><tr><th scope="row">2026-07-17</th><td>3</td></tr><tr><th scope="row">2026-07-18</th><td>1</td></tr><tr><th scope="row">2026-07-19</th><td>3</td></tr><tr><th scope="row">2026-07-24</th><td>3</td></tr><tr><th scope="row">2026-07-25</th><td>2</td></tr><tr><th scope="row">2026-07-28</th><td>1</td></tr><tr><th scope="row">2026-07-29</th><td>1</td></tr><tr><th scope="row">2026-07-30</th><td>1</td></tr><tr><th scope="row">2026-08-01</th><td>1</td></tr><tr><th scope="row">2026-08-04</th><td>1</td></tr><tr><th scope="row">2026-08-06</th><td>1</td></tr><tr><th scope="row">2026-08-07</th><td>3</td></tr><tr><th scope="row">2026-08-08</th><td>1</td></tr><tr><th scope="row">2026-08-10</th><td>2</td></tr><tr><th scope="row">2026-08-14</th><td>2</td></tr><tr><th scope="row">2026-08-20</th><td>1</td></tr><tr><th scope="row">2026-08-21</th><td>4</td></tr><tr><th scope="row">2026-08-23</th><td>1</td></tr><tr><th scope="row">2026-08-24</th><td>1</td></tr><tr><th scope="row">2026-08-25</th><td>1</td></tr><tr><th scope="row">2026-08-27</th><td>1</td></tr><tr><th scope="row">2026-08-28</th><td>1</td></tr><tr><th scope="row">2026-08-29</th><td>3</td></tr><tr><th scope="row">2026-08-30</th><td>2</td></tr><tr><th scope="row">2026-09-02</th><td>1</td></tr><tr><th scope="row">2026-09-03</th><td>1</td></tr><tr><th scope="row">2026-09-05</th><td>5</td></tr><tr><th scope="row">2026-09-09</th><td>3</td></tr><tr><th scope="row">2026-09-10</th><td>1</td></tr><tr><th scope="row">2026-09-11</th><td>2</td></tr><tr><th scope="row">2026-09-12</th><td>3</td></tr><tr><th scope="row">2026-09-13</th><td>2</td></tr><tr><th scope="row">2026-09-14</th><td>4</td></tr><tr><th scope="row">2026-09-16</th><td>2</td></tr><tr><th scope="row">2026-09-17</th><td>1</td></tr><tr><th scope="row">2026-09-18</th><td>1</td></tr><tr><th scope="row">2026-09-19</th><td>3</td></tr><tr><th scope="row">2026-09-21</th><td>3</td></tr><tr><th scope="row">2026-09-22</th><td>2</td></tr><tr><th scope="row">2026-09-23</th><td>1</td></tr><tr><th scope="row">2026-09-24</th><td>1</td></tr><tr><th scope="row">2026-09-25</th><td>6</td></tr><tr><th scope="row">2026-09-27</th><td>2</td></tr><tr><th scope="row">2026-09-28</th><td>3</td></tr><tr><th scope="row">2026-09-30</th><td>2</td></tr><tr><th scope="row">2026-10-03</th><td>1</td></tr><tr><th scope="row">2026-10-04</th><td>1</td></tr><tr><th scope="row">2026-10-05</th><td>2</td></tr><tr><th scope="row">2026-10-07</th><td>1</td></tr><tr><th scope="row">2026-10-11</th><td>5</td></tr><tr><th scope="row">2026-10-13</th><td>1</td></tr><tr><th scope="row">2026-10-16</th><td>2</td></tr><tr><th scope="row">2026-10-17</th><td>4</td></tr><tr><th scope="row">2026-10-18</th><td>1</td></tr><tr><th scope="row">2026-10-19</th><td>2</td></tr><tr><th scope="row">2026-10-23</th><td>3</td></tr><tr><th scope="row">2026-10-26</th><td>2</td></tr><tr><th scope="row">2026-10-29</th><td>2</td></tr><tr><th scope="row">2026-10-31</th><td>1</td></tr><tr><th scope="row">2026-11-01</th><td>2</td></tr><tr><th scope="row">2026-11-02</th><td>1</td></tr><tr><th scope="row">2026-11-03</th><td>3</td></tr><tr><th scope="row">2026-11-06</th><td>1</td></tr><tr><th scope="row">2026-11-10</th><td>2</td></tr><tr><th scope="row">2026-11-11</th><td>1</td></tr><tr><th scope="row">2026-11-12</th><td>4</td></tr><tr><th scope="row">2026-11-13</th><td>3</td></tr><tr><th scope="row">2026-11-16</th><td>2</td></tr><tr><th scope="row">2026-11-18</th><td>1</td></tr><tr><th scope="row">2026-11-20</th><td>1</td></tr><tr><th scope="row">2026-11-21</th><td>3</td></tr><tr><th scope="row">2026-11-23</th><td>4</td></tr><tr><th scope="row">2026-11-24</th><td>4</td></tr><tr><th scope="row">2026-11-26</th><td>2</td></tr><tr><th scope="row">2026-11-27</th><td>3</td></tr><tr><th scope="row">2026-11-28</th><td>8</td></tr><tr><th scope="row">2026-11-30</th><td>3</td></tr><tr><th scope="row">2026-12-01</th><td>1</td></tr><tr><th scope="row">2026-12-02</th><td>1</td></tr><tr><th scope="row">2026-12-09</th><td>2</td></tr></tbody></table></details>
+                        <figcaption>CISA KEV catalog v2026.11.27, due dates of entries added Jun 10 to Nov 27, 2026. Chart by Arun Malik. <a href="data-weekend-deadlines.csv" download>Download the data (CSV)</a>.</figcaption>
+                    </figure>
+                        <p class="insight-method"><strong>How I derived this:</strong> Weekday of each <code>dueDate</code>, for entries added in 2025 and from June 10 to November 27, 2026. Business days count Monday to Friday after <code>dateAdded</code> up to and including <code>dueDate</code>; US federal holidays are not removed, so the real count can be lower.</p>
+                    </section>
+                    <section class="insight" id="insight-epss" aria-labelledby="ih-epss">
+                        <p class="insight-n">Insight 3</p>
+                        <h3 id="ih-epss">Prediction scores mostly missed these vulnerabilities before CISA listed them</h3>
+                        <p>Many teams prioritise with FIRST's Exploit Prediction Scoring System (EPSS). The day before CISA listed them, <strong>68% of entries added since June 10 had no EPSS score at all or a score under 1%</strong>. 52 of the 54 unscored entries had been public for a day or less, so the model had not caught up. And the share that already scored 10% or more <em>fell</em>, from 21.6% in 2025 to 12.6%, because listings now arrive earlier in a CVE's life. If an EPSS threshold is the trigger for your fastest SLA, most of these would not have tripped it in time.</p>
+                        <p class="so-what"><span>So what</span>Treat a KEV listing as a trigger on its own. Do not wait for a prediction score to catch up.</p>
+                    <figure class="chart-figure" id="chart-epss-blindspot" aria-labelledby="title-epss-blindspot">
+                        <p class="chart-title" id="title-epss-blindspot">EPSS score the day before CISA listed each entry (% of new KEV entries)</p>
+                        <p class="chart-hint">EPSS is FIRST&#x27;s daily probability that a CVE will be exploited in the next 30 days. Hover a segment for the share. Use the toolbar icons to switch between stacked and side by side bars and compare each score band directly.</p>
+                        <div class="ds-chart" data-spec="spec-epss-blindspot" style="height:300px" role="img" aria-label="EPSS score the day before CISA listed each entry (% of new KEV entries)"></div>
+                        <script type="application/json" id="spec-epss-blindspot">{"id": "kev-patch-window-shrinks-epss-blindspot", "option": {"dataset": {"source": [["Period added", "No EPSS score yet", "Under 1%", "1% to 10%", "10% or more"], ["2025", 24.9, 44.5, 9.0, 21.6], ["Jan 1 to Jun 9, 2026", 27.8, 33.8, 12.8, 25.6], ["Since Jun 10, 2026", 28.3, 39.8, 19.4, 12.6]]}, "color": ["#afb8c1", "#fcd0cc", "#f0796f", "#b42318"], "legend": {"top": 0, "left": 0}, "grid": {"left": 8, "right": 16, "top": 40, "bottom": 8, "containLabel": true}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "fmt:pct1"}, "xAxis": {"type": "value", "max": 100, "axisLabel": {"formatter": "{value}%"}}, "yAxis": {"type": "category", "inverse": true, "axisTick": {"show": false}}, "series": [{"type": "bar", "stack": "e", "barWidth": "52%", "label": {"show": true, "formatter": "fmt:pct", "color": "#1f2328"}}, {"type": "bar", "stack": "e", "barWidth": "52%", "label": {"show": true, "formatter": "fmt:pct", "color": "#1f2328"}}, {"type": "bar", "stack": "e", "barWidth": "52%", "label": {"show": true, "formatter": "fmt:pct", "color": "#1f2328"}}, {"type": "bar", "stack": "e", "barWidth": "52%", "label": {"show": true, "formatter": "fmt:pct", "color": "#ffffff"}}]}, "magic": ["stack", "tiled"], "zoom": null, "static": {}}</script>
+                        <details class="ds-data"><summary>Show the data table</summary><table class="ds-table"><thead><tr><th scope="col">Period added</th><th scope="col">No EPSS score yet</th><th scope="col">Under 1%</th><th scope="col">1% to 10%</th><th scope="col">10% or more</th></tr></thead><tbody><tr><th scope="row">2025</th><td>24.9</td><td>44.5</td><td>9.0</td><td>21.6</td></tr><tr><th scope="row">Jan 1 to Jun 9, 2026</th><td>27.8</td><td>33.8</td><td>12.8</td><td>25.6</td></tr><tr><th scope="row">Since Jun 10, 2026</th><td>28.3</td><td>39.8</td><td>19.4</td><td>12.6</td></tr></tbody></table></details>
+                        <figcaption>CISA KEV catalog v2026.11.27 joined to FIRST EPSS scores for the day before each entry&#x27;s dateAdded. Chart by Arun Malik. <a href="data-epss-blindspot.csv" download>Download the data (CSV)</a>.</figcaption>
+                    </figure>
+                        <p class="insight-method"><strong>How I derived this:</strong> For each entry I queried the FIRST EPSS API with <code>date</code> set to the day before <code>dateAdded</code> and bucketed the score. "No EPSS score yet" means the API returned no record for that CVE on that date.</p>
+                    </section>
+                    <h2>What this means if you are not a federal agency</h2>
+                    <blockquote class="pull"><p>The patch clock no longer starts at the KEV listing, and it no longer stops for the weekend.</p></blockquote>
+                    <p>KEV due dates quietly became the default SLA in many enterprise vulnerability programs. Taken together, the three findings change how that SLA should be written: measure from disclosure, not from listing; staff for weekends; and treat a KEV listing as a trigger on its own, not something that waits for a prediction score to cross a threshold.</p>
+                    <p>Three questions for your team: How many hours after a KEV listing do we know whether it touches our estate? Who approves a production change at 6pm on a Friday? And which of our SLAs still depend on a score that may not exist yet?</p>
+                    <h2 id="method">How these numbers were produced</h2>
+                    <div class="method"><p>Base data: the CISA KEV JSON feed, catalog version 2026.11.27 (1,808 entries). I use entries added from January 1, 2025 to November 27, 2026 (569). Remediation window is <code>dueDate - dateAdded</code>; every value in that period is exactly 1, 2, 3, 5, 7, 14 or 21 days. Two joins: CVE publication dates from the CVE Program's cvelistV5 repository (<code>datePublished</code>, 567 of 569 found) and FIRST EPSS scores for the day before each listing (API <code>date</code> parameter). Cohorts are 2025, January 1 to June 9 2026, and June 10 to November 27 2026. Each insight states its own derivation. Every chart has its data table and a CSV on this page.</p></div>
+                    <h2 id="assumptions">Assumptions and limitations</h2>
+                    <ul class="assumptions">
+                        <li><strong>Due date is a proxy for urgency.</strong> The KEV <code>dueDate</code> is the deadline for US federal civilian agencies under CISA directives. It is not a legal requirement for private companies and does not measure how fast anyone actually patched.</li>
+                        <li><strong>Correlation, not attribution.</strong> Short deadlines appeared before BOD 26-04 (the first 3-day due date of 2026 was on January 27). I mark June 10 as context, not as the single cause of the change.</li>
+                        <li><strong>Directive details are context only.</strong> I describe BOD 26-04 from CISA's directive page and public reporting. No number on this page is computed from the directive; all numbers come from the catalog feed.</li>
+                        <li><strong>Grouping the shortest deadlines.</strong> I combine 1, 2 and 3 day due dates into one "3 days or less" band, and 5 and 7 day due dates into "5 to 7 days", to keep the chart readable. The CSV keeps the same bands.</li>
+                        <li><strong>2026 is a partial year.</strong> November 2026 covers November 1 to 27 only. Year-over-year growth (+45%) compares equal year-to-date windows, not full years.</li>
+                        <li><strong>2021 and 2022 are left out of trend claims.</strong> The catalog launched in November 2021 with a large backfill of older CVEs, so early annual totals are not comparable.</li>
+                        <li><strong>The catalog changes over time.</strong> CISA can edit or remove entries. Numbers reflect the catalog as published on November 27, 2026.</li>
+                        <li><strong>The enterprise SLA point is my judgment.</strong> The claim that many enterprise programs reuse KEV due dates is an observation from practice, not a measured statistic.</li>
+                        <li><strong>Publication date stands in for disclosure.</strong> I use the CVE record's <code>datePublished</code>. Some vulnerabilities are discussed or exploited before a CVE is published, so true exposure can start earlier than shown.</li>
+                        <li><strong>Two entries lack a publication date.</strong> 2 of 191 post-June 10 entries had no CVE record I could fetch; they are excluded from the disclosure analysis only.</li>
+                        <li><strong>EPSS is as served, not as rebuilt.</strong> Scores are what the FIRST API returns today for each past date. FIRST has updated the EPSS model over time, so scores are not perfectly comparable across periods.</li>
+                        <li><strong>Weekends, not holidays.</strong> The weekend and business-day counts ignore US federal holidays, so they understate how many deadlines fall on non-working days.</li>
+                        <li><strong>Cohorts are not equal length.</strong> The post-June 10 cohort covers about five and a half months; shares, not counts, are compared across periods.</li>
+                    </ul>
+                    <h2 id="sources">Sources and datasets</h2>
+                    <p>All figures come from the public sources below. Credit for the underlying data belongs to them; the charts, groupings and any mistakes are mine. Charts are built with <a href="https://echarts.apache.org/" target="_blank" rel="noopener">Apache ECharts</a>.</p>
+                    <ol class="data-sources">
+                        <li><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">Known Exploited Vulnerabilities Catalog</a>, Cybersecurity and Infrastructure Security Agency (CISA) (accessed Nov 27, 2026). Dataset: <a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json" target="_blank" rel="noopener">known_exploited_vulnerabilities.json (catalog version 2026.11.27)</a>. Used for: every deadline, weekday and cohort count. License: US government work, public domain.</li>
+                        <li><a href="https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk" target="_blank" rel="noopener">BOD 26-04: Prioritizing Security Updates Based on Risk</a>, Cybersecurity and Infrastructure Security Agency (CISA) (issued Jun 10, 2026). Dataset: <a href="https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk" target="_blank" rel="noopener">Directive text (no dataset)</a>. Used for: policy context and the June 10 marker only.</li>
+                        <li><a href="https://www.cve.org/" target="_blank" rel="noopener">CVE List (cvelistV5)</a>, CVE Program (MITRE, sponsored by CISA) (accessed Nov 28, 2026). Dataset: <a href="https://github.com/CVEProject/cvelistV5" target="_blank" rel="noopener">cvelistV5 JSON records (cveMetadata.datePublished)</a>. Used for: CVE publication dates for the disclosure-to-deadline analysis. License: CVE Terms of Use.</li>
+                        <li><a href="https://www.first.org/epss/" target="_blank" rel="noopener">Exploit Prediction Scoring System (EPSS) API</a>, Forum of Incident Response and Security Teams (FIRST) (accessed Nov 28, 2026). Dataset: <a href="https://api.first.org/data/v1/epss" target="_blank" rel="noopener">EPSS API, historical scores by date</a>. Used for: EPSS score the day before each KEV listing.</li>
+                    </ol>
+                </div>
+            </article>
+        </main>
+    </div>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const sun = document.getElementById('sunIcon');
+        const moon = document.getElementById('moonIcon');
+        function setTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            sun.style.display = dark ? 'block' : 'none';
+            moon.style.display = dark ? 'none' : 'block';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!isDark);
+        });
+    </script>
+    <script src="../../assets/vendor/echarts/echarts.min.js"></script>
+    <script src="../../assets/datastory.js"></script>
+    <script src="/assets/site-header.js"></script>
+    <script src="/assets/nav-active.js"></script>
+    <script src="/assets/site-footer.js"></script>
+    <script src="/series/series-data.js"></script>
+    <script src="/assets/search.js"></script><script src="/assets/article-enhance.js"></script>
+    <script src="/assets/action-bar.js?v=2"></script>
+    <script src="/assets/reading-save.js"></script>
+    <script src="/assets/giscus.js"></script>
+    <script src="/assets/analytics.js" defer></script>
+</body>
+</html>

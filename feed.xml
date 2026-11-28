@@ -9,6 +9,17 @@
   <author>
     <name>Arun Malik</name>
   </author>
+<!-- embargo:2026-11-30T06:00-08:00 -->
+  <entry>
+    <title>The real patch window starts at disclosure, and it is now 14 days</title>
+    <link href="https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/"/>
+    <id>https://blog.arunmalik.dev/data-stories/kev-patch-window-shrinks/</id>
+    <published>2026-11-30T06:00:00-08:00</published>
+    <updated>2026-11-30T06:00:00-08:00</updated>
+    <summary>Join CISA&#x27;s Known Exploited Vulnerabilities catalog to CVE publication dates and the federal clock looks very different. Half of new entries are now due within 14 days of the CVE going public, a third of deadlines land on weekends, and most looked low-risk to prediction models the day before.</summary>
+    <category term="Data Story"/><category term="Security"/>
+  </entry>
+<!-- /embargo -->
 
   <entry>
     <title>What a sandbox does not solve for an AI agent</title>
