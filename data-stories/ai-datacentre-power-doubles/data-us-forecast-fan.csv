@@ -1,0 +1,8 @@
+Year,Series,TWh,Basis
+2014,LBNL estimate,58,reported
+2018,LBNL estimate,76,derived: 58 x 1.07^4
+2023,LBNL estimate,176,reported
+2024,IEA cross-check,187,derived: 45% x 415
+2028,LBNL low case,325,reported
+2028,LBNL high case,580,reported
+2028,2014 to 2023 trend continued,326,derived: 176 x 1.131^5
