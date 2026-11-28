@@ -1,0 +1,20 @@
+Task,Currently use (%),Expect to use more (%),Expect to use less (%),Do not use and do not plan to (%),Not part of my workflow (%),Net momentum (pts),Pull ratio (expect more / currently use)
+"Deploying, operating, or troubleshooting production systems",19.9,23.3,7.4,36.0,22.0,15.9,1.17
+Finding or fixing security issues,34.6,37.9,6.6,14.7,19.1,31.3,1.1
+"Generating visual, audio, or multimedia elements",17.5,18.8,5.3,24.1,42.9,13.5,1.07
+Creating or configuring development/test environments,28.1,28.8,6.7,28.7,17.9,22.1,1.02
+"Writing tickets, requirements, plans, or project updates",27.8,28.0,7.5,30.5,17.2,20.5,1.01
+"Analyzing data, logs, metrics, or query results",41.9,37.5,5.7,16.3,13.0,31.8,0.89
+"Writing emails, messages, summaries, or other communication",23.5,20.8,8.2,45.9,10.9,12.6,0.89
+"Product, UX, or visual design",30.3,25.4,5.0,15.1,34.6,20.4,0.84
+"Reviewing code, pull requests, or design decisions",40.5,32.4,8.7,22.6,10.1,23.7,0.8
+"Searching, summarizing, or interpreting internal knowledge",49.7,36.1,5.7,15.8,7.9,30.4,0.73
+Understanding or onboarding to a new codebase,49.7,35.1,5.7,12.9,11.6,29.4,0.71
+"Writing documentation, comments, or knowledge base content",51.1,35.9,7.0,16.3,6.7,28.9,0.7
+Answering complex or ambiguous technical questions,50.0,32.7,11.4,17.9,4.4,21.3,0.65
+Generating code in an unfamiliar area,56.0,33.8,11.0,12.3,4.3,22.8,0.6
+Writing or improving tests,58.1,35.0,5.6,8.5,10.4,29.4,0.6
+Architecture or technical design exploration,47.4,28.2,8.2,19.2,12.1,20.0,0.59
+"Debugging, troubleshooting, or refactoring code",63.8,36.1,8.2,8.8,2.7,27.9,0.57
+Answering straightforward technical questions,59.4,29.0,7.5,16.5,4.2,21.5,0.49
+Generating code in a familiar area,69.3,31.2,7.7,9.0,2.3,23.5,0.45
