@@ -9,6 +9,17 @@
   <author>
     <name>Arun Malik</name>
   </author>
+<!-- embargo:2026-12-02T06:00-08:00 -->
+  <entry>
+    <title>Developers&#x27; next AI wave is security and ops, exactly where trust is lowest</title>
+    <link href="https://blog.arunmalik.dev/data-stories/dev-ai-trust-gap/"/>
+    <id>https://blog.arunmalik.dev/data-stories/dev-ai-trust-gap/</id>
+    <published>2026-12-02T06:00:00-08:00</published>
+    <updated>2026-12-02T06:00:00-08:00</updated>
+    <summary>Stack Overflow&#x27;s 2026 survey shows what developers use AI for today. Re-cut the full 19-task table by momentum and a different story appears: the next wave is security and production operations, and only 6.6% of developers trust AI with important decisions.</summary>
+    <category term="Data Story"/><category term="AI"/>
+  </entry>
+<!-- /embargo -->
 <!-- embargo:2026-12-07T06:00-08:00 -->
   <entry>
     <title>Data centres could take up to half of new US electricity demand by 2028</title>
@@ -40,17 +51,6 @@
     <updated>2026-12-14T06:00:00-08:00</updated>
     <summary>I classified 287 public outage write-ups from four independent sources: 182 company postmortems collected across the industry, plus the published incident reviews of AWS, Azure and Google Cloud. In every source a change is the most common trigger, between 44% and 63%. Pooled, 163 of 287 (57%) started with something someone shipped.</summary>
     <category term="Data Story"/><category term="Cloud reliability"/><category term="SRE"/>
-  </entry>
-<!-- /embargo -->
-<!-- embargo:2026-12-02T06:00-08:00 -->
-  <entry>
-    <title>Developers&#x27; next AI wave is security and ops, exactly where trust is lowest</title>
-    <link href="https://blog.arunmalik.dev/data-stories/dev-ai-trust-gap/"/>
-    <id>https://blog.arunmalik.dev/data-stories/dev-ai-trust-gap/</id>
-    <published>2026-12-02T06:00:00-08:00</published>
-    <updated>2026-12-02T06:00:00-08:00</updated>
-    <summary>Stack Overflow&#x27;s 2026 survey shows what developers use AI for today. Re-cut the full 19-task table by momentum and a different story appears: the next wave is security and production operations, and only 6.6% of developers trust AI with important decisions.</summary>
-    <category term="Data Story"/><category term="AI"/>
   </entry>
 <!-- /embargo -->
 <!-- embargo:2026-11-30T06:00-08:00 -->
