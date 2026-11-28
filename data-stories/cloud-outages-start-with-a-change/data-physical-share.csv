@@ -1,0 +1,5 @@
+Dataset,Classified incidents,Physical,Physical %,No change cited,of which a provider or upstream outage
+Cross-industry postmortems,182,15,8.2,62,8
+AWS summaries,18,6,33.3,4,
+Azure reviews,79,17,21.5,17,
+Google Cloud incidents,8,2,25.0,1,

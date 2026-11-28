@@ -1,0 +1,6 @@
+Dataset,Classified incidents,Excluded,Change %,Physical %,No change cited %,Change count,Physical count,No change cited count
+All four combined (287),287,40,56.8,13.9,29.3,163,40,84
+Cross-industry postmortems (182),182,40,57.7,8.2,34.1,105,15,62
+AWS summaries (18),18,0,44.4,33.3,22.2,8,6,4
+Azure reviews (79),79,0,57.0,21.5,21.5,45,17,17
+Google Cloud incidents (8),8,0,62.5,25.0,12.5,5,2,1

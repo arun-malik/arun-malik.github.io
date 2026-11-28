@@ -11,12 +11,12 @@
   </author>
 <!-- embargo:2026-12-14T06:00-08:00 -->
   <entry>
-    <title>Most big cloud outages start with a change, not a storm</title>
+    <title>Most outages start with a change, not a storm</title>
     <link href="https://blog.arunmalik.dev/data-stories/cloud-outages-start-with-a-change/"/>
     <id>https://blog.arunmalik.dev/data-stories/cloud-outages-start-with-a-change/</id>
     <published>2026-12-14T06:00:00-08:00</published>
     <updated>2026-12-14T06:00:00-08:00</updated>
-    <summary>I classified every post-incident review Azure has published since late 2021. 45 of 79 were triggered by a deployment, a configuration change, a rotation or a vendor update. Since 2024 that share is 73%, and changes account for two thirds of the incidents that hit more than one region.</summary>
+    <summary>I classified 287 public outage write-ups from four independent sources: 182 company postmortems collected across the industry, plus the published incident reviews of AWS, Azure and Google Cloud. In every source a change is the most common trigger, between 44% and 63%. Pooled, 163 of 287 (57%) started with something someone shipped.</summary>
     <category term="Data Story"/><category term="Cloud reliability"/><category term="SRE"/>
   </entry>
 <!-- /embargo -->
