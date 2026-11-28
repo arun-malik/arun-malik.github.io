@@ -4,6 +4,9 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # Daily redeploy so scheduled posts (tools/embargo.py) go live: 14:30 UTC = 06:30 PST / 07:30 PDT.
+  schedule:
+    - cron: "30 14 * * *"
 
 permissions:
   contents: read
@@ -23,6 +26,9 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
+
+      - name: Hide posts scheduled for later
+        run: python3 tools/embargo.py --apply
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
