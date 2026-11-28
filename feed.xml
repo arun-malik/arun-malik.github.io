@@ -9,17 +9,6 @@
   <author>
     <name>Arun Malik</name>
   </author>
-<!-- embargo:2026-12-14T06:00-08:00 -->
-  <entry>
-    <title>Most outages start with a change, not a storm</title>
-    <link href="https://blog.arunmalik.dev/data-stories/cloud-outages-start-with-a-change/"/>
-    <id>https://blog.arunmalik.dev/data-stories/cloud-outages-start-with-a-change/</id>
-    <published>2026-12-14T06:00:00-08:00</published>
-    <updated>2026-12-14T06:00:00-08:00</updated>
-    <summary>I classified 287 public outage write-ups from four independent sources: 182 company postmortems collected across the industry, plus the published incident reviews of AWS, Azure and Google Cloud. In every source a change is the most common trigger, between 44% and 63%. Pooled, 163 of 287 (57%) started with something someone shipped.</summary>
-    <category term="Data Story"/><category term="Cloud reliability"/><category term="SRE"/>
-  </entry>
-<!-- /embargo -->
 <!-- embargo:2026-12-09T06:00-08:00 -->
   <entry>
     <title>How much agent capability survives a higher reliability bar</title>
@@ -29,6 +18,17 @@
     <updated>2026-12-09T06:00:00-08:00</updated>
     <summary>A longer task horizon is not a dependable delegation budget. Requiring 80% rather than 50% predicted success removes 81.1% of the median evaluated configuration&#x27;s horizon in METR Time Horizon 1.1. The threshold also reverses Claude Opus 4.6 and Gemini 3.1 Pro on point estimates, not statistically established superiority.</summary>
     <category term="Data Story"/><category term="AI"/>
+  </entry>
+<!-- /embargo -->
+<!-- embargo:2026-12-14T06:00-08:00 -->
+  <entry>
+    <title>Most outages start with a change, not a storm</title>
+    <link href="https://blog.arunmalik.dev/data-stories/cloud-outages-start-with-a-change/"/>
+    <id>https://blog.arunmalik.dev/data-stories/cloud-outages-start-with-a-change/</id>
+    <published>2026-12-14T06:00:00-08:00</published>
+    <updated>2026-12-14T06:00:00-08:00</updated>
+    <summary>I classified 287 public outage write-ups from four independent sources: 182 company postmortems collected across the industry, plus the published incident reviews of AWS, Azure and Google Cloud. In every source a change is the most common trigger, between 44% and 63%. Pooled, 163 of 287 (57%) started with something someone shipped.</summary>
+    <category term="Data Story"/><category term="Cloud reliability"/><category term="SRE"/>
   </entry>
 <!-- /embargo -->
 <!-- embargo:2026-12-07T06:00-08:00 -->
